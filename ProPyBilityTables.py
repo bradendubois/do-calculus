@@ -167,8 +167,8 @@ class CausalGraph:
             filename = self.default_file_location
 
         # Load the file, then we parse it
-        with open(filename) as file:
-            loaded_file = json.load(file)
+        with open(filename) as json_file:
+            loaded_file = json.load(json_file)
 
         for variable in loaded_file["variables"]:
 
@@ -708,7 +708,7 @@ if os.path.isdir(graph_file_folder):
 
     graph_file = "causal_graph.json"
 
-    files = sorted(os.listdir(graph_file_folder))
+    files = sorted([file_name for file_name in os.listdir(graph_file_folder) if file_name.endswith(".json")])
 
     if len(files) == 1:
         graph_file = files[0]
