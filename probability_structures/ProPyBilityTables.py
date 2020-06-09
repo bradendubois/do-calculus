@@ -7,13 +7,15 @@
 #                                                       #
 #########################################################
 
+# Python libraries
 import json             # Used to load tables/data
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
-import os               # Used to list directory contents to select graphs
-from probability_structures.ProbabilityExceptions import *    # Exceptions for Probability-computations
-from probability_structures.VariableStructures import *
+
+# Other modules of project
+from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations
+from probability_structures.VariableStructures import *         # The Outcome and Variable classes
 
 
 class ConditionalProbabilityTable:
@@ -703,31 +705,4 @@ class BackdoorController:
         return path_list
 
 
-graph_file_folder = "causal_graphs"
-if os.path.isdir(graph_file_folder):
 
-    graph_file = "causal_graph.json"
-
-    files = sorted([file_name for file_name in os.listdir(graph_file_folder) if file_name.endswith(".json")])
-
-    if len(files) == 1:
-        graph_file = files[0]
-    else:
-
-        print("Files located in:", graph_file_folder)
-        for file_index in range(len(files)):
-            print("  ", str(file_index+1) + ")", files[file_index])
-
-        file = input("Selection: ")
-        while not file.isdigit() and 1 <= int(file) <= len(files):
-            file = input("Selection: ")
-
-        graph_file = files[int(file)-1]
-
-    print("\nLoading:", graph_file, "\n")
-    CG = CausalGraph(graph_file_folder + "/" + graph_file)
-else:
-    # Specify a path to a graph file if desired
-    CG = CausalGraph()
-
-CG.run()

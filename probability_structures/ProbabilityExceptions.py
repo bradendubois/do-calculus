@@ -1,3 +1,13 @@
+#########################################################
+#                                                       #
+#   Probability Exceptions                              #
+#                                                       #
+#   Author: Braden Dubois (braden.dubois@usask.ca)      #
+#   Written for: Dr. Eric Neufeld                       #
+#                                                       #
+#########################################################
+
+
 class ProbabilityException(Exception):
     """
     A base Exception to catch all Probability-code-related Exceptions,

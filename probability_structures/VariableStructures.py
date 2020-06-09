@@ -1,3 +1,11 @@
+#########################################################
+#                                                       #
+#   VariableStructures.py                               #
+#                                                       #
+#   Author: Braden Dubois (braden.dubois@usask.ca)      #
+#   Written for: Dr. Eric Neufeld                       #
+#                                                       #
+#########################################################
 
 
 class Outcome:
@@ -53,7 +61,7 @@ class Variable:
     def __hash__(self) -> int:
         return hash(self.name + str(self.outcomes) + str(self.parents))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.name == other.name and \
                set(self.outcomes) == set(other.outcomes) and \
                set(self.parents) == set(other.parents)
