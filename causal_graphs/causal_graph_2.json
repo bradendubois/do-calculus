@@ -14,7 +14,7 @@
         ]
       }]
     }
-  },{
+  }, {
     "name": "Y",
     "outcomes": ["y", "~y"],
     "parents": [],

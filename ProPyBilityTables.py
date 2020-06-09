@@ -13,71 +13,7 @@ import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
 import os               # Used to list directory contents to select graphs
 from ProbabilityExceptions import *    # Exceptions for Probability-computations
-
-
-class Outcome:
-    """
-    A basic "Outcome" of a variable, representing a specific outcome such as "X = x".
-    This does essentially act as a Pair<string, string>-like.
-    """
-
-    def __init__(self, name: str, outcome: str):
-        """
-        Constructor for an Outcome
-        :param name: The name of the variable. Ex: "X"
-        :param outcome: The specific outcome of the variable. Ex: "x" or "~x"
-        """
-        self.name = name
-        self.outcome = outcome
-
-    def __str__(self) -> str:
-        return self.name + " = " + self.outcome
-
-    def __hash__(self) -> int:
-        return hash(self.name + self.outcome)
-
-    def __eq__(self, other) -> bool:
-        return self.name == other.name and self.outcome == other.outcome
-
-
-class Variable:
-    """
-    Represents a basic "Variable", as part of a Conditional Probability Table or the like.
-    Has a name, list of potential outcomes, and some list of parent variables.
-    """
-
-    def __init__(self, name: str, outcomes: list, parents: list, reach=None):
-        """
-        A basic Variable for use in a CPT or Causal Graph
-        :param name: The name of the Variable, "X"
-        :param outcomes: A list of all potential outcomes of the variable: ["x", "~x"]
-        :param parents: A list of strings representing the names of all the parents of this Variable
-        :param reach: An optional set of Variables which are reachable from this Variable
-        """
-        self.name = name
-        self.outcomes = outcomes
-        self.parents = parents
-
-        if reach is None:
-            reach = set()
-        self.reach = reach
-
-    def __str__(self) -> str:
-        return self.name + ": <" + ",".join(self.outcomes) + ">, <-- " + ",".join(self.parents)
-
-    def __hash__(self) -> int:
-        return hash(self.name + str(self.outcomes) + str(self.parents))
-
-    def __eq__(self, other):
-        return self.name == other.name and \
-               set(self.outcomes) == set(other.outcomes) and \
-               set(self.parents) == set(other.parents)
-
-    def __copy__(self):
-        return Variable(self.name, self.outcomes.copy(), self.parents.copy(), reach=self.reach.copy())
-
-    def copy(self):
-        return self.__copy__()
+from VariableStructures import *
 
 
 class ConditionalProbabilityTable:
@@ -217,9 +153,14 @@ class CausalGraph:
 
     def __init__(self, filename=None):
 
-        self.variables = dict()      # Maps a string name to the Variable object instantiated
-        self.tables = dict()         # Maps a string name *and* corresponding variable to a list of corresponding tables
-        self.outcomes = dict()       # Maps a string name *and* corresponding variable to a list of outcome values
+        self.variables = dict()       # Maps string name to the Variable object instantiated
+        self.tables = dict()          # Maps string name *and* corresponding variable to a list of corresponding tables
+        self.outcomes = dict()        # Maps string name *and* corresponding variable to a list of outcome values
+
+        self.determination = dict()
+
+        # Maps string name *and* corresponding variable to a function used to determine its value
+        self.functions = dict()
 
         # Allow a specified file location
         if filename is None:
@@ -245,18 +186,39 @@ class CausalGraph:
             self.outcomes[name] = variable["outcomes"]
             self.outcomes[var] = variable["outcomes"]
 
-            # Load in all the tables
-            for table in variable["tables"]:
+            # Is the variable determined by a function or direct tables?
+            determination = variable["determination"]
+            determination_type = determination["type"]
 
-                # Dictionary "tables" maps a variable/name to all the tables that show its probabilities
-                if name not in self.tables:
-                    self.tables[name] = []
-                    self.tables[self.variables[name]] = []
+            if determination["type"] == "table":
 
-                cpt = ConditionalProbabilityTable(self.variables[name], table["given"], table["rows"])
+                self.determination[name] = "table"
+                self.determination[var] = "table"
 
-                self.tables[name].append(cpt)
-                self.tables[self.variables[name]].append(cpt)
+                # Load in all the tables
+                for table in determination["tables"]:
+
+                    # Dictionary "tables" maps a variable/name to all the tables that show its probabilities
+                    if name not in self.tables:
+                        self.tables[name] = []
+                        self.tables[self.variables[name]] = []
+
+                    cpt = ConditionalProbabilityTable(self.variables[name], table["given"], table["rows"])
+
+                    self.tables[name].append(cpt)
+                    self.tables[self.variables[name]].append(cpt)
+
+            elif determination_type == "function":
+
+                self.determination[name] = "function"
+                self.determination[var] = "function"
+
+                self.functions[name] = determination["function"]
+                self.functions[variable] = determination["function"]
+
+            else:
+                print("ERROR; Variable", name, "determination cannot be found.")
+                exit(-1)
 
         # Reach initialization through recursive parent reverse-reach
         def reach_initialization(current: Variable, reachable_children: set):
