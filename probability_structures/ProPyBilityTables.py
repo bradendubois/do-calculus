@@ -12,8 +12,8 @@ import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
 import os               # Used to list directory contents to select graphs
-from ProbabilityExceptions import *    # Exceptions for Probability-computations
-from VariableStructures import *
+from probability_structures.ProbabilityExceptions import *    # Exceptions for Probability-computations
+from probability_structures.VariableStructures import *
 
 
 class ConditionalProbabilityTable:
