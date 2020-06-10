@@ -8,7 +8,21 @@
 #########################################################
 
 from probability_structures.ProPyBilityTables import *
+from regression_tests.RegressionTesting import *
+
 import os               # Used to list directory contents to select graphs
+
+
+## TODO - Improve the actual relaying of whether the tests passed/failed, whether to proceed/stop
+# Run all regression tests first
+results = validate()
+
+if not results[0]:
+    print("Regression tests failed.")
+    print(results)
+    exit(0)
+
+print(results)
 
 # Default Graph Folder
 graph_file_folder = "causal_graphs"

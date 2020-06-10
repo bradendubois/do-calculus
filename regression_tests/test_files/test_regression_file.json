@@ -1,0 +1,14 @@
+{
+  "test_file": "causal_graph.json",
+  "tests": [
+    {
+      "name": "Basic Probability Test: G1, P(Y = y | X = x)",
+      "type": "probability",
+      "args": [
+        "Y = y",
+        "X = x"
+      ],
+      "expected_result": 0.342857
+    }
+  ]
+}

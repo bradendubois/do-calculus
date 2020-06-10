@@ -28,7 +28,7 @@
         ]
       }]
     }
-  },{
+  }, {
     "name": "A",
     "outcomes": ["a", "~a"],
     "parents": ["X"],

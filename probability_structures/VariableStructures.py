@@ -20,8 +20,8 @@ class Outcome:
         :param name: The name of the variable. Ex: "X"
         :param outcome: The specific outcome of the variable. Ex: "x" or "~x"
         """
-        self.name = name
-        self.outcome = outcome
+        self.name = name.strip()
+        self.outcome = outcome.strip()
 
     def __str__(self) -> str:
         return self.name + " = " + self.outcome
@@ -47,9 +47,9 @@ class Variable:
         :param parents: A list of strings representing the names of all the parents of this Variable
         :param reach: An optional set of Variables which are reachable from this Variable
         """
-        self.name = name
-        self.outcomes = outcomes
-        self.parents = parents
+        self.name = name.strip()
+        self.outcomes = [outcome.strip() for outcome in outcomes]
+        self.parents = [parent.strip() for parent in parents]
 
         if reach is None:
             reach = set()

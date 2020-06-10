@@ -23,3 +23,6 @@ class ProbabilityIndeterminableException(ProbabilityException):
     options
     """
     pass
+
+
+# TODO - Some kind of exception here to indicate when a given test SHOULD crash, but didn't?

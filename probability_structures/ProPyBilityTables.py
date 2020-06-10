@@ -461,7 +461,7 @@ class CausalGraph:
                     try:
                         return self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries)
                     except ProbabilityException:
-                        print("Couldn't resolve by removing non-parent ancestors.")
+                        self.computation_output("Couldn't resolve by removing non-parent ancestors.")
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
