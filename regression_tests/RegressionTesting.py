@@ -8,9 +8,8 @@
 #########################################################
 
 import os
-import json
 
-from probability_structures.ProPyBilityTables import *
+from probability_structures.CausalGraph import *
 from config.config_mgr import access
 
 # Default regression test directory

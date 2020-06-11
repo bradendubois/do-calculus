@@ -1,25 +1,27 @@
 #########################################################
 #                                                       #
-#   ProPyBilityRunner.py (Name is a Work In Progress)   #
+#   main.py / Probability Runner                        #
 #                                                       #
 #   Author: Braden Dubois (braden.dubois@usask.ca)      #
 #   Written for: Dr. Eric Neufeld                       #
 #                                                       #
 #########################################################
 
-from probability_structures.ProPyBilityTables import *
+from probability_structures.CausalGraph import *
 from regression_tests.RegressionTesting import *
 
 import os               # Used to list directory contents to select graphs
 from config.config_mgr import access
 
-## TODO - Improve the actual relaying of whether the tests passed/failed, whether to proceed/stop
-
 # If set, run any tests before starting up
 if access("runRegressionTestsOnLaunch"):
+
+    # (success_boolean, message) tuple returned
     results = validate()
 
     if not results[0] and access("outputRegressionResults") == "failure":
+        print(results)
+    elif access("outputRegressionResults") == "always":
         print(results)
 
     if not results[0] and access("exitIfRegressionFailure"):
@@ -27,9 +29,6 @@ if access("runRegressionTestsOnLaunch"):
 
 # Does the directory of graphs exist?
 if os.path.isdir(access("graph_file_folder")):
-
-    # The default file to look for
-    graph_file = "causal_graph.json"
 
     # Find all JSON files in that directory
     files = sorted([file_name for file_name in os.listdir(access("graph_file_folder")) if file_name.endswith(".json")])
