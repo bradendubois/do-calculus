@@ -1,11 +1,12 @@
 {
   "runRegressionTestsOnLaunch": true,
-  "outputRegressionResults": true,
+  "outputRegressionResults": "failure",
   "outputRegressionComputation": false,
   "exitIfRegressionFailure": false,
   "graph_file_folder": "causal_graphs",
   "logAllComputation": true,
   "loggingLocation": "logging",
-  "storeAllResolvedCalculations": false,
-  "defaultRegressionRepetition": 10
+  "storeAllResolvedCalculations": true,
+  "defaultRegressionRepetition": 10,
+  "printCausalGraphInfoOnInstantiation": true
 }

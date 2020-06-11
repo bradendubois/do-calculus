@@ -157,6 +157,7 @@ class CausalGraph:
 
         self.determination = dict() # Maybe unused as now
 
+        self.store_computation_results = access("storeAllResolvedCalculations")
         self.stored_computations = dict()
 
         self.open_write_file = None
@@ -242,9 +243,8 @@ class CausalGraph:
             reach_initialization(self.variables[variable], set())
 
         # Print all the variables out with their reach
-        if not self.silent_computation:
-            for variable in self.variables:
-                print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
+        # for variable in self.variables:
+        #    print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
 
         parser = argparse.ArgumentParser(description="Compute probabilities.")
         parser.add_argument("-s", help="Silent computation; only show resulting probabilities.", action="store_true")
@@ -414,7 +414,7 @@ class CausalGraph:
             self.open_write_file.write(end)
 
     def store_computation(self, string_representation: str, probability: float):
-        if access("storeAllResolvedCalculations") and string_representation not in self.stored_computations:
+        if self.store_computation_results and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = probability
 
     def probability(self, head: list, body: list, queries=None, recursion_level=0) -> float:
@@ -423,6 +423,7 @@ class CausalGraph:
         :param head: A list of some number of Outcome objects
         :param body: A list of some number of Outcome objects
         :param queries: A list of probabilities we are going down a DFS search to solve. Used to detect infinite loops.
+        :param recursion_level: Used for horizontal offsets in outputting info
         :return: A probability between [0.0, 1.0]
         """
 
@@ -438,11 +439,11 @@ class CausalGraph:
             self.computation_output("Already trying:", self.p_str(head, body), "returning.", horizontal_displacement=recursion_level)
             raise ProbabilityException
 
+        # If the calculation has been done and cached, just return it from storage
         if self.p_str(head, body) in self.stored_computations:
             result = self.stored_computations[self.p_str(head, body)]
             self.computation_output("Computation already calculated:", self.p_str(head, body), "=", result, horizontal_displacement=recursion_level)
             return result
-
 
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
         new_queries = queries.copy() + [self.p_str(head, body)]

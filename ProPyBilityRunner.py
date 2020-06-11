@@ -19,7 +19,7 @@ from config.config_mgr import access
 if access("runRegressionTestsOnLaunch"):
     results = validate()
 
-    if access("outputRegressionResults"):
+    if not results[0] and access("outputRegressionResults") == "failure":
         print(results)
 
     if not results[0] and access("exitIfRegressionFailure"):

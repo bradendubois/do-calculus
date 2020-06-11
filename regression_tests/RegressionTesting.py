@@ -42,7 +42,7 @@ def run_test_file(test_file: str) -> (bool, str):
         for outcome in causal_graph.variables[variable].outcomes:
             result = causal_graph.probability([Outcome(variable, outcome)], [])
             total += result
-        assert within_precision(total, 1.0, 4), variable.name + " does not sum to 1.0 across its outcomes."
+        assert within_precision(total, 1.0, 4), variable + " does not sum to 1.0 across its outcomes."
 
     # Run each test
     for test in loaded_test_file["tests"]:
@@ -101,8 +101,8 @@ def run_test_file(test_file: str) -> (bool, str):
             return False, "[ERROR: " + test["name"] + "]: " + str(e)
 
         # All other exceptions indicate that the test crashed when it shouldn't
-        #except Exception as e:
-        #    return False, "[CRASH: " + test["name"] + "]: " + str(e)
+        except Exception as e:
+            return False, "[CRASH: " + test["name"] + "]: " + str(e)
 
     return True, "All tests in " + test_file + "Passed."
 
