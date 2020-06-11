@@ -11,6 +11,7 @@ import os
 import json
 
 from probability_structures.ProPyBilityTables import *
+from config.config_mgr import access
 
 # Default regression test directory
 regression_test_directory = "regression_tests/test_files"
@@ -31,7 +32,8 @@ def run_test_file(test_file: str) -> (bool, str):
         loaded_test_file = json.load(f)
 
     # Load the Causal Graph of the given file
-    causal_graph = CausalGraph("causal_graphs/" + loaded_test_file["test_file"], silent_computation=True)
+    causal_graph = CausalGraph("causal_graphs/" + loaded_test_file["test_file"])
+    causal_graph.silent_computation = not access("outputRegressionComputation")
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
@@ -39,7 +41,6 @@ def run_test_file(test_file: str) -> (bool, str):
         total = 0.0
         for outcome in causal_graph.variables[variable].outcomes:
             result = causal_graph.probability([Outcome(variable, outcome)], [])
-            print(result)
             total += result
         assert within_precision(total, 1.0, 4), variable.name + " does not sum to 1.0 across its outcomes."
 
@@ -79,15 +80,29 @@ def run_test_file(test_file: str) -> (bool, str):
 
                     result = causal_graph.probability(head, body)
                     total += result
+
                 assert within_precision(total, 1.0, 4), str(total) + " not summing to 1.0."
+
+            if test["type"] == "determinism":
+                results = []
+                head = create_outcomes(*args[0].split(","))
+                body = []
+                if len(args) > 1:
+                    body = create_outcomes(*args[1].split(","))
+
+                for i in range(access("defaultRegressionRepetition")):
+                    result = causal_graph.probability(head, body)
+                    if result not in results:
+                        results.append(result)
+                assert len(results) == 1, "Repeated tests yielding multiple results."
 
         # AssertionErrors indicate the wrong response
         except AssertionError as e:
             return False, "[ERROR: " + test["name"] + "]: " + str(e)
 
         # All other exceptions indicate that the test crashed when it shouldn't
-        except Exception as e:
-            return False, "[CRASH: " + test["name"] + "]: " + str(e)
+        #except Exception as e:
+        #    return False, "[CRASH: " + test["name"] + "]: " + str(e)
 
     return True, "All tests in " + test_file + "Passed."
 

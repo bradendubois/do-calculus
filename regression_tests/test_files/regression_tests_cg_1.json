@@ -1,0 +1,42 @@
+{
+  "test_file": "causal_graph.json",
+  "tests": [
+    {
+      "name": "Basic Probability Test: P(Y = y | X = x)",
+      "type": "probability",
+      "args": [
+        "Y = y",
+        "X = x"
+      ],
+      "expected_result": 0.342857
+    }, {
+      "name": "Basic Probability Test: P(Y = ~y | Z = ~z)",
+      "type": "probability",
+      "args": [
+        "Y = ~y",
+        "Z = ~z"
+      ],
+      "expected_result": 0.28
+    }, {
+      "name": "Basic Compliment Test: P(X = x) + P(X = ~x)",
+      "type": "complement",
+      "args": [
+        ["X = x"],
+        ["X = ~x"]
+      ]
+    }, {
+      "name": "Basic Compliment Test: P(Y = y) + P(Y = ~y)",
+      "type": "complement",
+      "args": [
+        ["Y = y"],
+        ["Y = ~y"]
+      ]
+    }, {
+      "name": "Deterministic Output Test: P(Y = y) repeated 10x.",
+      "type": "determinism",
+      "args": [
+        "Y = y"
+      ]
+    }
+  ]
+}

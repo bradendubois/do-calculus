@@ -6,5 +6,6 @@
   "graph_file_folder": "causal_graphs",
   "logAllComputation": true,
   "loggingLocation": "logging",
-  "storeAllResolvedCalculations": true
+  "storeAllResolvedCalculations": false,
+  "defaultRegressionRepetition": 10
 }
