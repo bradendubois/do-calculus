@@ -16,7 +16,7 @@ import argparse         # Allow command-line flag parsing
 # Other modules of project
 from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations
 from probability_structures.VariableStructures import *         # The Outcome and Variable classes
-
+from config.config_mgr import access
 
 class ConditionalProbabilityTable:
     """
@@ -155,7 +155,9 @@ class CausalGraph:
         self.tables = dict()          # Maps string name *and* corresponding variable to a list of corresponding tables
         self.outcomes = dict()        # Maps string name *and* corresponding variable to a list of outcome values
 
-        self.determination = dict()
+        self.determination = dict() # Maybe unused as now
+
+        self.stored_computations = dict()
 
         self.open_write_file = None
 
@@ -387,8 +389,8 @@ class CausalGraph:
         Optional output of any number of strings unless output is suppressed
         :param message: Any number of strings to print
         :param join: A string used to join the messages
-
         :param end: The end symbol outputted at the end of the series of strings
+        :param horizontal_displacement: The amount of space at the beginning of every line to indent by
         :return:
         """
 
@@ -411,6 +413,10 @@ class CausalGraph:
         if self.open_write_file:
             self.open_write_file.write(end)
 
+    def store_computation(self, string_representation: str, probability: float):
+        if access("storeAllResolvedCalculations") and string_representation not in self.stored_computations:
+            self.stored_computations[string_representation] = probability
+
     def probability(self, head: list, body: list, queries=None, recursion_level=0) -> float:
         """
         Compute the probability of some head given some body
@@ -431,6 +437,12 @@ class CausalGraph:
         if self.p_str(head, body) in queries:
             self.computation_output("Already trying:", self.p_str(head, body), "returning.", horizontal_displacement=recursion_level)
             raise ProbabilityException
+
+        if self.p_str(head, body) in self.stored_computations:
+            result = self.stored_computations[self.p_str(head, body)]
+            self.computation_output("Computation already calculated:", self.p_str(head, body), "=", result, horizontal_displacement=recursion_level)
+            return result
+
 
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
         new_queries = queries.copy() + [self.p_str(head, body)]
@@ -481,7 +493,10 @@ class CausalGraph:
                         self.computation_output(self.p_str(head, [as_outcome] + body), "*", end=" ", horizontal_displacement=recursion_level)
                         self.computation_output(self.p_str([as_outcome], body), horizontal_displacement=recursion_level)
 
-                        total += self.probability(head, [as_outcome] + body, new_queries, recursion_level=recursion_level+1) * self.probability([as_outcome], body, new_queries, recursion_level+1)
+                        single_result = self.probability(head, [as_outcome] + body, new_queries, recursion_level=recursion_level+1) * self.probability([as_outcome], body, new_queries, recursion_level+1)
+                        total += single_result
+
+                    self.store_computation(self.p_str(head, body), total)
                     return total
 
                 except ProbabilityException:
@@ -505,7 +520,14 @@ class CausalGraph:
 
                 self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body), horizontal_displacement=recursion_level)
 
-                return self.probability(move, head + new_body, new_queries, recursion_level+1) * self.probability(head, new_body, new_queries, recursion_level+1) / self.probability(move, new_body, new_queries, recursion_level+1)
+                result_1 = self.probability(move, head + new_body, new_queries, recursion_level+1)
+                result_2 = self.probability(head, new_body, new_queries, recursion_level+1)
+                result_3 = self.probability(move, new_body, new_queries, recursion_level + 1)
+
+                result = result_1 * result_2 / result_3
+                self.store_computation(self.p_str(head, body), result)
+                return result
+
             except ProbabilityException:
                 pass
 
@@ -525,7 +547,10 @@ class CausalGraph:
                 self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), horizontal_displacement=recursion_level)
 
                 # flip flop flippy flop
-                return self.probability(body, head, new_queries, recursion_level+1) * self.probability(head, [], new_queries, recursion_level+1) / self.probability(body, [], new_queries, recursion_level+1)
+                result = self.probability(body, head, new_queries, recursion_level+1) * self.probability(head, [], new_queries, recursion_level+1) / self.probability(body, [], new_queries, recursion_level+1)
+                self.store_computation(self.p_str(head, body), result)
+                return result
+
             except ProbabilityException:
                 self.computation_output("Failed to resolve by Bayes'", horizontal_displacement=recursion_level)
 
@@ -538,7 +563,9 @@ class CausalGraph:
                 non_parent_ancestors = [anc for anc in body if anc.name not in self.variables[body[0].name].parents]
                 for non_parent_ancestor in non_parent_ancestors:
                     try:
-                        return self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, recursion_level+1)
+                        result = self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, recursion_level+1)
+                        self.store_computation(self.p_str(head, body), result)
+                        return result
                     except ProbabilityException:
                         self.computation_output("Couldn't resolve by removing non-parent ancestors.", horizontal_displacement=recursion_level)
 
