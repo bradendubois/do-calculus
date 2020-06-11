@@ -149,11 +149,7 @@ class CausalGraph:
 
     default_file_location = "causal_graph.json"
 
-    # Toggle whether to suppress the computation output when computing probabilities
-    #   Pass in a "-s" to turn this on, and only output conclusions
-    silent_computation = False
-
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, silent_computation=False):
 
         self.variables = dict()       # Maps string name to the Variable object instantiated
         self.tables = dict()          # Maps string name *and* corresponding variable to a list of corresponding tables
@@ -161,8 +157,14 @@ class CausalGraph:
 
         self.determination = dict()
 
+        self.open_write_file = None
+
         # Maps string name *and* corresponding variable to a function used to determine its value
         self.functions = dict()
+
+        # Toggle whether to suppress the computation output when computing probabilities
+        #   Pass in a "-s" to turn this on, and only output conclusions
+        self.silent_computation = silent_computation
 
         # Allow a specified file location
         if filename is None:
@@ -238,8 +240,9 @@ class CausalGraph:
             reach_initialization(self.variables[variable], set())
 
         # Print all the variables out with their reach
-        for variable in self.variables:
-            print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
+        if not self.silent_computation:
+            for variable in self.variables:
+                print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
 
         parser = argparse.ArgumentParser(description="Compute probabilities.")
         parser.add_argument("-s", help="Silent computation; only show resulting probabilities.", action="store_true")
@@ -314,8 +317,13 @@ class CausalGraph:
             return
 
         try:
+
+            self.open_write_file = open("logging/" + self.p_str(outcome, given_variables), "w")
             probability = self.probability(outcome, given_variables)
-            print("P = " + "{0:.2f}".format(probability))
+            self.open_write_file.write(str(probability) + "\n")
+            self.open_write_file.close()
+
+            print("P = " + "{0:.10f}".format(probability))
 
         # Catch only exceptions for indeterminable queries
         #   We would still want other errors to come through
@@ -374,20 +382,36 @@ class CausalGraph:
             string += " | " + ", ".join([str(var) for var in rhs])
         return string + ")"
 
-    def computation_output(self, *message: str, join=" ", end="\n"):
+    def computation_output(self, *message: str, join=" ", end="\n", horizontal_displacement=0):
         """
         Optional output of any number of strings unless output is suppressed
         :param message: Any number of strings to print
         :param join: A string used to join the messages
+
         :param end: The end symbol outputted at the end of the series of strings
         :return:
         """
+
+        indent = int(horizontal_displacement) * "  "
+
         if not self.silent_computation:
-            for component in message:
-                print(component, end=join)
+            print(indent, end="")
+
+        for component in message:
+
+            if not self.silent_computation:
+                print(str(component).replace("\n", "\n" + indent, 100), end=join)
+
+            if self.open_write_file:
+                self.open_write_file.write(indent + str(component).replace("\n",  "\n" + indent, 100) + join)
+
+        if not self.silent_computation:
             print(end=end)
 
-    def probability(self, head: list, body: list, queries=None) -> float:
+        if self.open_write_file:
+            self.open_write_file.write(end)
+
+    def probability(self, head: list, body: list, queries=None, recursion_level=0) -> float:
         """
         Compute the probability of some head given some body
         :param head: A list of some number of Outcome objects
@@ -397,7 +421,7 @@ class CausalGraph:
         """
 
         # Print the actual query being made on each recursive call to help follow
-        self.computation_output("Trying:", self.p_str(head, body))
+        self.computation_output("Trying:", self.p_str(head, body), horizontal_displacement=recursion_level)
 
         # Keep a list of queries being passed through recursive calls to avoid infinite loops
         if queries is None:
@@ -405,94 +429,32 @@ class CausalGraph:
 
         # If a string representation of this query is stored, we are in a loop and should stop
         if self.p_str(head, body) in queries:
+            self.computation_output("Already trying:", self.p_str(head, body), "returning.", horizontal_displacement=recursion_level)
             raise ProbabilityException
 
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
         new_queries = queries.copy() + [self.p_str(head, body)]
 
         ###############################################
-        #            Single element on LHS            #
-        ###############################################
-        if len(head) == 1:
-
-            ###############################################
-            #         Attempt direct-table lookup         #
-            ###############################################
-
-            self.computation_output("\nQuerying table for: ", self.p_str(head, body))
-            if self.has_table(head[0].name, set(body)):
-
-                # Get the table
-                table = self.get_table(head[0].name, set(body))
-                self.computation_output(str(table))
-
-                # Directly look up the corresponding row in the table
-                #   Assumes a table has all combinations of values defined
-                probability = table.probability_lookup(head, set([item.outcome for item in body]))
-                self.computation_output(self.p_str(head, body), "=", probability)
-
-                return probability
-            else:
-                self.computation_output("Not Found\n")
-
-            ###############################################
-            #                 Bayes' Rule                 #
-            #      P(z | x) = P(x | z) * P(z) / P(x)      #
-            ###############################################
-
-            try:
-                self.computation_output("Attempting application of Bayes' Rule")
-                self.computation_output(self.p_str(head, body), "=", end=" ")
-                self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []))
-
-                # flip flop flippy flop
-                return self.probability(body, head, new_queries) * self.probability(head, [], new_queries) / self.probability(body, [], new_queries)
-            except ProbabilityException:
-                self.computation_output("Failed to resolve by Bayes'")
-
-            ###############################################
-            #        Eliminate non-parent ancestors       #
-            ###############################################
-
-            # A big list of Trues is created if body is all ancestors
-            if False not in [head[0].name in self.variables[var.name].reach for var in body]:
-                non_parent_ancestors = [anc for anc in body if anc.name not in self.variables[body[0].name].parents]
-                for non_parent_ancestor in non_parent_ancestors:
-                    try:
-                        return self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries)
-                    except ProbabilityException:
-                        self.computation_output("Couldn't resolve by removing non-parent ancestors.")
-
-        ##################################################################
-        #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
-        ##################################################################
-
-        if set(head).issubset(set(body)):
-            self.computation_output("Identity rule:", self.p_str(head, head), " = 1.0")
-            self.computation_output("Therefore,", self.p_str(head, body), "= 1.0")
-            return 1.0
-
-        ###############################################
-        #    Detect children of the LHS in the RHS    #
-        #      p(a|Cd) = p(d|aC) p(a|C) / p(d|C)      #
+        #         Attempt direct-table lookup         #
         ###############################################
 
-        reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
-        children_in_rhs = set([var.name for var in body]) & reachable_from_head
-        if len(children_in_rhs) > 0:
+        if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
-            self.computation_output("Children of the LHS in the RHS:", ",".join(children_in_rhs))
-            try:
-                # Not elegant, but simply take one of the children from the body out and recurse
-                move = list(children_in_rhs).pop(0)
-                move = [item for item in body if item.name == move]
-                new_body = [variable for variable in body if variable != move[0]]
+            self.computation_output("\nQuerying table for: ", self.p_str(head, body), horizontal_displacement=recursion_level)
 
-                self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body)),
+            # Get the table
+            table = self.get_table(head[0].name, set(body))
+            self.computation_output(str(table), horizontal_displacement=recursion_level)
 
-                return self.probability(move, head + new_body, new_queries) * self.probability(head, new_body, new_queries) / self.probability(move, new_body, new_queries)
-            except ProbabilityException:
-                pass
+            # Directly look up the corresponding row in the table
+            #   Assumes a table has all combinations of values defined
+            probability = table.probability_lookup(head, set([item.outcome for item in body]))
+            self.computation_output(self.p_str(head, body), "=", probability, horizontal_displacement=recursion_level)
+
+            return probability
+        else:
+            self.computation_output("Not Found\n", horizontal_displacement=recursion_level)
 
         ###############################################
         #                Jeffrey's Rule               #
@@ -516,14 +478,78 @@ class CausalGraph:
                     for parent_outcome in add_parent.outcomes:
                         as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", end=" ")
-                        self.computation_output(self.p_str([as_outcome], body))
+                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", end=" ", horizontal_displacement=recursion_level)
+                        self.computation_output(self.p_str([as_outcome], body), horizontal_displacement=recursion_level)
 
-                        total += self.probability(head, [as_outcome] + body, new_queries) * self.probability([as_outcome], body, new_queries)
+                        total += self.probability(head, [as_outcome] + body, new_queries, recursion_level=recursion_level+1) * self.probability([as_outcome], body, new_queries, recursion_level+1)
                     return total
 
                 except ProbabilityException:
-                    self.computation_output("Failed to resolve by Jeffrey's Rule")
+                    self.computation_output("Failed to resolve by Jeffrey's Rule", horizontal_displacement=recursion_level)
+
+        ###############################################
+        #    Detect children of the LHS in the RHS    #
+        #      p(a|Cd) = p(d|aC) p(a|C) / p(d|C)      #
+        ###############################################
+
+        reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
+        children_in_rhs = set([var.name for var in body]) & reachable_from_head
+        if len(children_in_rhs) > 0:
+
+            self.computation_output("Children of the LHS in the RHS:", ",".join(children_in_rhs), horizontal_displacement=recursion_level)
+            try:
+                # Not elegant, but simply take one of the children from the body out and recurse
+                move = list(children_in_rhs).pop(0)
+                move = [item for item in body if item.name == move]
+                new_body = [variable for variable in body if variable != move[0]]
+
+                self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body), horizontal_displacement=recursion_level)
+
+                return self.probability(move, head + new_body, new_queries, recursion_level+1) * self.probability(head, new_body, new_queries, recursion_level+1) / self.probability(move, new_body, new_queries, recursion_level+1)
+            except ProbabilityException:
+                pass
+
+        ###############################################
+        #            Single element on LHS            #
+        ###############################################
+        if len(head) == 1 and not missing_parents and not reachable_from_head:
+
+            ###############################################
+            #                 Bayes' Rule                 #
+            #      P(z | x) = P(x | z) * P(z) / P(x)      #
+            ###############################################
+
+            try:
+                self.computation_output("Attempting application of Bayes' Rule", horizontal_displacement=recursion_level)
+                self.computation_output(self.p_str(head, body), "=", end=" ", horizontal_displacement=recursion_level)
+                self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), horizontal_displacement=recursion_level)
+
+                # flip flop flippy flop
+                return self.probability(body, head, new_queries, recursion_level+1) * self.probability(head, [], new_queries, recursion_level+1) / self.probability(body, [], new_queries, recursion_level+1)
+            except ProbabilityException:
+                self.computation_output("Failed to resolve by Bayes'", horizontal_displacement=recursion_level)
+
+            ###############################################
+            #        Eliminate non-parent ancestors       #
+            ###############################################
+
+            # A big list of Trues is created if body is all ancestors
+            if False not in [head[0].name in self.variables[var.name].reach for var in body]:
+                non_parent_ancestors = [anc for anc in body if anc.name not in self.variables[body[0].name].parents]
+                for non_parent_ancestor in non_parent_ancestors:
+                    try:
+                        return self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, recursion_level+1)
+                    except ProbabilityException:
+                        self.computation_output("Couldn't resolve by removing non-parent ancestors.", horizontal_displacement=recursion_level)
+
+        ##################################################################
+        #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
+        ##################################################################
+
+        if set(head).issubset(set(body)):
+            self.computation_output("Identity rule:", self.p_str(head, head), " = 1.0", horizontal_displacement=recursion_level)
+            self.computation_output("Therefore,", self.p_str(head, body), "= 1.0", horizontal_displacement=recursion_level)
+            return 1.0
 
         ###############################################
         #             Reverse product rule            #
@@ -532,9 +558,9 @@ class CausalGraph:
 
         if len(head) > 1:
             try:
-                return self.probability(head[:-1], [head[-1]] + body, new_queries) * self.probability([head[-1]], body, new_queries)
+                return self.probability(head[:-1], [head[-1]] + body, new_queries, recursion_level+1) * self.probability([head[-1]], body, new_queries, recursion_level+1)
             except ProbabilityException:
-                self.computation_output("Failed to resolve by reverse product rule.")
+                self.computation_output("Failed to resolve by reverse product rule.", horizontal_displacement=recursion_level)
 
         ###############################################
         #               Cannot compute                #

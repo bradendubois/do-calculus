@@ -21,7 +21,7 @@ def create_outcomes(*outcome_statements):
 
 
 def within_precision(a: float, b: float, decimals: int) -> bool:
-    return abs(a - b) < 1 ** (-1 * decimals)
+    return abs(a - b) < 1 / (10 ** decimals)
 
 
 def run_test_file(test_file: str) -> (bool, str):
@@ -31,8 +31,17 @@ def run_test_file(test_file: str) -> (bool, str):
         loaded_test_file = json.load(f)
 
     # Load the Causal Graph of the given file
-    causal_graph = CausalGraph("causal_graphs/" + loaded_test_file["test_file"])
-    causal_graph.silent_computation = True
+    causal_graph = CausalGraph("causal_graphs/" + loaded_test_file["test_file"], silent_computation=True)
+
+    # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
+    for variable in causal_graph.variables:
+
+        total = 0.0
+        for outcome in causal_graph.variables[variable].outcomes:
+            result = causal_graph.probability([Outcome(variable, outcome)], [])
+            print(result)
+            total += result
+        assert within_precision(total, 1.0, 4), variable.name + " does not sum to 1.0 across its outcomes."
 
     # Run each test
     for test in loaded_test_file["tests"]:
@@ -49,12 +58,28 @@ def run_test_file(test_file: str) -> (bool, str):
                 #   SHOULD crash. Raise a DidNotCrashWhenShould exception.
 
                 head = create_outcomes(*args[0].split(","))
-                body = create_outcomes(*args[1].split(","))
+                body = []
+                if len(args) > 1:
+                    body = create_outcomes(*args[1].split(","))
 
                 result = causal_graph.probability(head, body)
                 expected = test["expected_result"]
 
+                # print(result, expected)
+
                 assert within_precision(result, expected, 5), str(result) + " did not match expected: " + str(expected)
+
+            if test["type"] == "complement":
+                total = 0.0
+                for arg_set in args:
+                    head = create_outcomes(*arg_set[0].split(","))
+                    body = []
+                    if len(arg_set) > 1:
+                        body = create_outcomes(*arg_set[1].split(","))
+
+                    result = causal_graph.probability(head, body)
+                    total += result
+                assert within_precision(total, 1.0, 4), str(total) + " not summing to 1.0."
 
         # AssertionErrors indicate the wrong response
         except AssertionError as e:
