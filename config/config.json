@@ -1,8 +1,10 @@
 {
   "runRegressionTestsOnLaunch": true,
   "outputRegressionResults": true,
+  "outputRegressionComputation": false,
   "exitIfRegressionFailure": false,
   "graph_file_folder": "causal_graphs",
   "logAllComputation": true,
-  "loggingLocation": "logging"
+  "loggingLocation": "logging",
+  "storeAllResolvedCalculations": true
 }
