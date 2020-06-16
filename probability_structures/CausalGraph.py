@@ -390,17 +390,17 @@ class CausalGraph:
             string += " | " + ", ".join([str(var) for var in rhs])
         return string + ")"
 
-    def computation_output(self, *message: str, join=" ", end="\n", horizontal_displacement=0):
+    def computation_output(self, *message: str, join=" ", end="\n", x_offset=0):
         """
         Optional output of any number of strings unless output is suppressed
         :param message: Any number of strings to print
         :param join: A string used to join the messages
         :param end: The end symbol outputted at the end of the series of strings
-        :param horizontal_displacement: The amount of space at the beginning of every line to indent by
+        :param x_offset: The amount of space at the beginning of every line to indent by
         :return:
         """
 
-        indent = int(horizontal_displacement) * "  "
+        indent = int(x_offset) * "  "
 
         if not self.silent_computation:
             print("\n" + indent, end="")
@@ -426,18 +426,18 @@ class CausalGraph:
         if self.store_computation_results and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = probability
 
-    def probability(self, head: list, body: list, queries=None, recursion_level=0) -> float:
+    def probability(self, head: list, body: list, queries=None, depth=0) -> float:
         """
         Compute the probability of some head given some body
         :param head: A list of some number of Outcome objects
         :param body: A list of some number of Outcome objects
         :param queries: A list of probabilities we are going down a DFS search to solve. Used to detect infinite loops.
-        :param recursion_level: Used for horizontal offsets in outputting info
+        :param depth: Used for horizontal offsets in outputting info
         :return: A probability between [0.0, 1.0]
         """
 
         # Print the actual query being made on each recursive call to help follow
-        self.computation_output("Trying:", self.p_str(head, body), horizontal_displacement=recursion_level)
+        self.computation_output("Trying:", self.p_str(head, body), x_offset=depth)
 
         # Keep a list of queries being passed through recursive calls to avoid infinite loops
         if queries is None:
@@ -445,14 +445,19 @@ class CausalGraph:
 
         # If a string representation of this query is stored, we are in a loop and should stop
         if self.p_str(head, body) in queries:
-            self.computation_output("Already trying:", self.p_str(head, body), "returning.", horizontal_displacement=recursion_level)
+            self.computation_output("Already trying:", self.p_str(head, body), "returning.", x_offset=depth)
             raise ProbabilityException
 
         # If the calculation has been done and cached, just return it from storage
         if self.p_str(head, body) in self.stored_computations:
             result = self.stored_computations[self.p_str(head, body)]
-            self.computation_output("Computation already calculated:", self.p_str(head, body), "=", result, horizontal_displacement=recursion_level)
+            self.computation_output("Computation already calculated:", self.p_str(head, body), "=", result, x_offset=depth)
             return result
+
+        # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
+        if self.contradictory_outcome_set(head + body):
+            self.computation_output("Two separate outcomes for one variable: 0.0")
+            return 0.0
 
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
         new_queries = queries.copy() + [self.p_str(head, body)]
@@ -463,20 +468,30 @@ class CausalGraph:
 
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
-            self.computation_output("\nQuerying table for: ", self.p_str(head, body), horizontal_displacement=recursion_level)
+            self.computation_output("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
 
             # Get the table
             table = self.get_table(head[0].name, set(body))
-            self.computation_output(str(table), horizontal_displacement=recursion_level)
+            self.computation_output(str(table), x_offset=depth)
 
             # Directly look up the corresponding row in the table
             #   Assumes a table has all combinations of values defined
             probability = table.probability_lookup(head, set([item.outcome for item in body]))
-            self.computation_output(self.p_str(head, body), "=", probability, horizontal_displacement=recursion_level)
+            self.computation_output(self.p_str(head, body), "=", probability, x_offset=depth)
 
             return probability
         else:
-            self.computation_output("Not Found\n", horizontal_displacement=recursion_level)
+            self.computation_output("Not Found\n", x_offset=depth)
+
+        ##################################################################
+        #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
+        ##################################################################
+
+        if set(head).issubset(set(body)):
+            self.computation_output("Identity rule:", self.p_str(head, head), " = 1.0", x_offset=depth)
+            if len(head) > len(body):
+                self.computation_output("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
+            return 1.0
 
         ###############################################
         #                Jeffrey's Rule               #
@@ -486,7 +501,7 @@ class CausalGraph:
         # TODO - Try checking each of the values in head, not just the first
         missing_parents = self.missing_parents(head[0].name, set([parent.name for parent in body] + [parent.name for parent in head]))
         if missing_parents:
-            self.computation_output("Attempting application of Jeffrey's Rule")
+            self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
 
             # Try an approach beginning with each missing parent
             for missing_parent in missing_parents:
@@ -500,16 +515,16 @@ class CausalGraph:
                     for parent_outcome in add_parent.outcomes:
                         as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", horizontal_displacement=recursion_level)
+                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
 
-                        single_result = self.probability(head, [as_outcome] + body, new_queries, recursion_level=recursion_level+1) * self.probability([as_outcome], body, new_queries, recursion_level+1)
+                        single_result = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1) * self.probability([as_outcome], body, new_queries, depth + 1)
                         total += single_result
 
                     self.store_computation(self.p_str(head, body), total)
                     return total
 
                 except ProbabilityException:
-                    self.computation_output("Failed to resolve by Jeffrey's Rule", horizontal_displacement=recursion_level)
+                    self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
 
         ###############################################
         #    Detect children of the LHS in the RHS    #
@@ -520,18 +535,18 @@ class CausalGraph:
         children_in_rhs = set([var.name for var in body]) & reachable_from_head
         if len(children_in_rhs) > 0:
 
-            self.computation_output("Children of the LHS in the RHS:", ",".join(children_in_rhs), horizontal_displacement=recursion_level)
+            self.computation_output("Children of the LHS in the RHS:", ",".join(children_in_rhs), x_offset=depth)
             try:
                 # Not elegant, but simply take one of the children from the body out and recurse
                 move = list(children_in_rhs).pop(0)
                 move = [item for item in body if item.name == move]
                 new_body = [variable for variable in body if variable != move[0]]
 
-                self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body), horizontal_displacement=recursion_level)
+                self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body), x_offset=depth)
 
-                result_1 = self.probability(move, head + new_body, new_queries, recursion_level+1)
-                result_2 = self.probability(head, new_body, new_queries, recursion_level+1)
-                result_3 = self.probability(move, new_body, new_queries, recursion_level + 1)
+                result_1 = self.probability(move, head + new_body, new_queries, depth + 1)
+                result_2 = self.probability(head, new_body, new_queries, depth + 1)
+                result_3 = self.probability(move, new_body, new_queries, depth + 1)
 
                 result = result_1 * result_2 / result_3
                 self.store_computation(self.p_str(head, body), result)
@@ -551,17 +566,17 @@ class CausalGraph:
             ###############################################
 
             try:
-                self.computation_output("Attempting application of Bayes' Rule", horizontal_displacement=recursion_level)
-                self.computation_output(self.p_str(head, body), "=", end=" ", horizontal_displacement=recursion_level)
-                self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), horizontal_displacement=recursion_level)
+                self.computation_output("Attempting application of Bayes' Rule", x_offset=depth)
+                self.computation_output(self.p_str(head, body), "=", end=" ", x_offset=depth)
+                self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), x_offset=depth)
 
                 # flip flop flippy flop
-                result = self.probability(body, head, new_queries, recursion_level+1) * self.probability(head, [], new_queries, recursion_level+1) / self.probability(body, [], new_queries, recursion_level+1)
+                result = self.probability(body, head, new_queries, depth + 1) * self.probability(head, [], new_queries, depth + 1) / self.probability(body, [], new_queries, depth + 1)
                 self.store_computation(self.p_str(head, body), result)
                 return result
 
             except ProbabilityException:
-                self.computation_output("Failed to resolve by Bayes'", horizontal_displacement=recursion_level)
+                self.computation_output("Failed to resolve by Bayes'", x_offset=depth)
 
             ###############################################
             #        Eliminate non-parent ancestors       #
@@ -572,20 +587,11 @@ class CausalGraph:
                 non_parent_ancestors = [anc for anc in body if anc.name not in self.variables[body[0].name].parents]
                 for non_parent_ancestor in non_parent_ancestors:
                     try:
-                        result = self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, recursion_level+1)
+                        result = self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, depth + 1)
                         self.store_computation(self.p_str(head, body), result)
                         return result
                     except ProbabilityException:
-                        self.computation_output("Couldn't resolve by removing non-parent ancestors.", horizontal_displacement=recursion_level)
-
-        ##################################################################
-        #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
-        ##################################################################
-
-        if set(head).issubset(set(body)):
-            self.computation_output("Identity rule:", self.p_str(head, head), " = 1.0", horizontal_displacement=recursion_level)
-            self.computation_output("Therefore,", self.p_str(head, body), "= 1.0", horizontal_displacement=recursion_level)
-            return 1.0
+                        self.computation_output("Couldn't resolve by removing non-parent ancestors.", x_offset=depth)
 
         ###############################################
         #             Reverse product rule            #
@@ -594,15 +600,22 @@ class CausalGraph:
 
         if len(head) > 1:
             try:
-                return self.probability(head[:-1], [head[-1]] + body, new_queries, recursion_level+1) * self.probability([head[-1]], body, new_queries, recursion_level+1)
+                return self.probability(head[:-1], [head[-1]] + body, new_queries, depth + 1) * self.probability([head[-1]], body, new_queries, depth + 1)
             except ProbabilityException:
-                self.computation_output("Failed to resolve by reverse product rule.", horizontal_displacement=recursion_level)
+                self.computation_output("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
         #               Cannot compute                #
         ###############################################
 
         raise ProbabilityIndeterminableException
+
+    def contradictory_outcome_set(self, outcomes: list) -> bool:
+        for left in range(len(outcomes)-1):
+            for right in range(left+1, len(outcomes)):
+                if outcomes[left].name == outcomes[right].name and outcomes[left].outcome != outcomes[right].outcome:
+                    return True
+        return False
 
     def missing_parents(self, variable: str or Variable, parent_subset: set) -> list:
         if isinstance(variable, str):
