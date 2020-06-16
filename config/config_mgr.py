@@ -49,7 +49,7 @@ def initialize_configuration_file():
     if not os.path.isfile(config_dir + "/" + config_file):
         print("Default configuration file not found...", end="")
         with open(config_dir + "/" + config_file, "w") as f:
-            json.dump(default_configuration_file, f)
+            json.dump(default_configuration_file, f, indent=4, sort_keys=True)
         print("Created.")
 
 

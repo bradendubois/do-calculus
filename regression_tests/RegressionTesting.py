@@ -22,6 +22,19 @@ def create_outcomes(*outcome_statements):
     return [Outcome(*outcome.split("=")) for outcome in outcome_statements]
 
 
+def create_head_and_body(head_and_body: list) -> tuple:
+    """
+    Create the head and body for a probability test
+    :param head_and_body: A list, of one/two strings, which are split into Outcomes
+    :return: a tuple (head, body)
+    """
+    head = create_outcomes(*head_and_body[0].split(","))
+    body = []
+    if len(head_and_body) > 1:
+        body = create_outcomes(*head_and_body[1].split(","))
+    return head, body
+
+
 def within_precision(a: float, b: float) -> bool:
     """
     Check whether two values differ by an amount less than some number of digits of precision
@@ -69,10 +82,7 @@ def run_test_file(test_file: str) -> (bool, str):
             if test["type"] == "probability":
 
                 # Construct a list of "Outcomes" from the given args
-                head = create_outcomes(*args[0].split(","))
-                body = []
-                if len(args) > 1:
-                    body = create_outcomes(*args[1].split(","))
+                head, body = create_head_and_body(args)
 
                 result = causal_graph.probability(head, body)
                 expected = test["expected_result"]
@@ -82,10 +92,9 @@ def run_test_file(test_file: str) -> (bool, str):
             if test["type"] == "summation":
                 total = 0.0
                 for arg_set in args:
-                    head = create_outcomes(*arg_set[0].split(","))
-                    body = []
-                    if len(arg_set) > 1:
-                        body = create_outcomes(*arg_set[1].split(","))
+
+                    # Construct a list of "Outcomes" from the given args
+                    head, body = create_head_and_body(arg_set)
 
                     result = causal_graph.probability(head, body)
                     total += result
@@ -95,15 +104,15 @@ def run_test_file(test_file: str) -> (bool, str):
 
             if test["type"] == "determinism":
                 results = []
-                head = create_outcomes(*args[0].split(","))
-                body = []
-                if len(args) > 1:
-                    body = create_outcomes(*args[1].split(","))
+
+                # Construct a list of "Outcomes" from the given args
+                head, body = create_head_and_body(args)
 
                 for i in range(access("regression_determinism_repetition")):
                     result = causal_graph.probability(head, body)
                     if result not in results:
                         results.append(result)
+
                 assert len(results) == 1, "Repeated tests yielding multiple results."
 
         # AssertionErrors indicate the wrong response
