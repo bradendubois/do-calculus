@@ -9,6 +9,8 @@
 
 # Python libraries
 import json             # Used to load tables/data
+import os
+
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
@@ -322,6 +324,9 @@ class CausalGraph:
 
         try:
 
+            if not os.path.isdir(access("loggingLocation")):
+                os.makedirs(access("loggingLocation"))
+
             self.open_write_file = open("logging/" + self.p_str(outcome, given_variables), "w")
             probability = self.probability(outcome, given_variables)
             self.open_write_file.write(str(probability) + "\n")
@@ -399,7 +404,10 @@ class CausalGraph:
         indent = int(horizontal_displacement) * "  "
 
         if not self.silent_computation:
-            print(indent, end="")
+            print("\n" + indent, end="")
+
+        if self.open_write_file:
+            self.open_write_file.write("\n" + indent)
 
         for component in message:
 
@@ -407,7 +415,7 @@ class CausalGraph:
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
             if self.open_write_file:
-                self.open_write_file.write(indent + str(component).replace("\n",  "\n" + indent, 100) + join)
+                self.open_write_file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
         if not self.silent_computation:
             print(end=end)
@@ -493,8 +501,7 @@ class CausalGraph:
                     for parent_outcome in add_parent.outcomes:
                         as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", end=" ", horizontal_displacement=recursion_level)
-                        self.computation_output(self.p_str([as_outcome], body), horizontal_displacement=recursion_level)
+                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", horizontal_displacement=recursion_level)
 
                         single_result = self.probability(head, [as_outcome] + body, new_queries, recursion_level=recursion_level+1) * self.probability([as_outcome], body, new_queries, recursion_level+1)
                         total += single_result

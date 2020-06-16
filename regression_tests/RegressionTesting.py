@@ -10,7 +10,7 @@
 import os
 
 from probability_structures.CausalGraph import *
-from config.config_mgr import access
+from config.config_mgr import *
 
 # Default regression test directory
 regression_test_directory = "regression_tests/test_files"
@@ -32,7 +32,7 @@ def run_test_file(test_file: str) -> (bool, str):
 
     # Load the Causal Graph of the given file
     causal_graph = CausalGraph("causal_graphs/" + loaded_test_file["test_file"])
-    causal_graph.silent_computation = not access("outputRegressionComputation")
+    causal_graph.silent_computation = not output_regression_computation()
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
@@ -116,11 +116,19 @@ def validate() -> (bool, str):
     # Find all JSON files in that directory
     files = sorted([file_name for file_name in os.listdir(regression_test_directory) if file_name.endswith(".json")])
 
+    # Output a header on regression tests being run if toggled
+    if output_regression_computation():
+        print("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
+
     # Run each testing file
     for test_file in files:
 
         results = run_test_file(test_file)
         if not results[0]:
             return False, test_file + " has failed, with error: " + results[1]
+
+    # Output a footer on regression tests being run if toggled
+    if output_regression_computation():
+        print("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
 
     return True, "All Tests Passed."
