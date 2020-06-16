@@ -14,17 +14,17 @@ import os               # Used to list directory contents to select graphs
 from config.config_mgr import *
 
 # If set, run any tests before starting up
-if run_regression_tests_on_launch():
+if access("run_regression_tests_on_launch"):
 
     # (success_boolean, message) tuple returned
-    results = validate()
+    results = validate_all_regression_tests()
 
-    if not results[0] and access("outputRegressionResults") == "failure":
+    if not results[0] and access("output_regression_results") == "failure":
         print(results)
-    elif access("outputRegressionResults") == "always":
+    elif access("output_regression_results") == "always":
         print(results)
 
-    if not results[0] and access("exitIfRegressionFailure"):
+    if not results[0] and access("exit_if_regression_failure"):
         exit(-1)
 
 # Does the directory of graphs exist?
