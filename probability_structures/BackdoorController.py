@@ -7,18 +7,21 @@
 #                                                       #
 #########################################################
 
-# The Outcome and Variable classes
-import itertools
+# Python libraries
+import itertools        # Used for power set / product creation
 
+# The Outcome and Variable classes
 from probability_structures.VariableStructures import Outcome, Variable
 
 
-from itertools import chain, combinations, product
-
-
 def power_set(variable_list):
+    """
+    Quick helper that creates a chain of tuples, which will be the power set of the given list
+    :param variable_list: A list of string variables
+    :return: A chain object of tuples; power set of variable_list
+    """
     p_set = list(variable_list)
-    return chain.from_iterable(combinations(p_set, r) for r in range(len(p_set)+1))
+    return itertools.chain.from_iterable(itertools.combinations(p_set, r) for r in range(len(p_set)+1))
 
 
 class BackdoorController:
@@ -28,19 +31,6 @@ class BackdoorController:
         "    1) Find backdoor paths\n" + \
         "    2) Exit\n" + \
         "  Selection: "
-
-    get_two_variables_prompt = \
-        "\nEnter two variables to find backdoor paths between.\n" + \
-        "  Give two, separated by commas.\n" + \
-        "    Example: X, Y\n" + \
-        "  Input: "
-
-    get_controlled_variables_prompt = \
-        "\nEnter variables being controlled for, in this query.\n" + \
-        "  Give any number, separated by commas.\n" + \
-        "    Example: X, Y, Z\n" + \
-        "  Input: "
-
 
     get_x_set_prompt = \
         "\nEnter a comma-separated list of variables, representing X.\n" + \
@@ -76,6 +66,8 @@ class BackdoorController:
 
         # Calculate all the children/outgoing of a variable. This representation shows the actual paths as in a causal
         #   diagram, but probability calculations really store edges going the opposite direction, child -> parent.
+
+        # TODO - Can probably be done when a causal graph is created?
         self.children = dict()
         for variable in self.variables:
             if variable not in self.children:
@@ -94,19 +86,16 @@ class BackdoorController:
         while True:
 
             try:
-
-                # Get X, Y, Z sets
+                # Get X, Y sets and validate them
                 x = self.get_variable_set(self.get_x_set_prompt)
                 y = self.get_variable_set(self.get_y_set_prompt)
 
-                # z = self.get_variable_set(self.get_z_set_prompt)
-
-                # assert len(x & y & z) == 0  # Ensure they are disjoint sets
                 assert len(x) > 0 and len(y) > 0, "Sets cannot be empty."
                 assert len(x & y) == 0, "X and Y are not disjoint sets."
                 for variable in x | y:
                     assert variable in self.variables, "Variable " + variable + " not in the graph."
 
+                # Calculate all the subsets possible
                 valid_z_subsets = self.get_all_z_subsets(x, y)
 
                 if len(valid_z_subsets) > 0:
@@ -120,45 +109,6 @@ class BackdoorController:
             except AssertionError as e:
                 print(e.args)
                 continue
-
-            # Clear the controlled variables on each run
-            self.controlled = dict()
-            for variable in self.variables:
-                self.controlled[variable] = False
-
-            # Get two variables to check for backdoor paths between
-            try:
-                split = [item.strip().upper() for item in input(self.get_two_variables_prompt).split(",")]
-                assert len(split) == 2, "Too many variables."
-                assert split[0] in self.variables and split[1] in self.variables
-            except AssertionError:
-                print("Some variable is not defined in this Causal Graph.")
-                continue
-
-            # Get control variables
-            try:
-                # Get optional controlled
-                controlled = []
-                controlled_preprocessed = input(self.get_controlled_variables_prompt).split(",")
-                if controlled_preprocessed != ['']:
-                    controlled = [item.strip().upper() for item in controlled_preprocessed]
-
-                for control in controlled:
-                    assert control in self.variables
-                    self.controlled[control] = True
-            except AssertionError:
-                print("Some control variable is not defined in this Causal Graph.")
-                continue
-
-            body = self.variables[split[0]]
-            head = self.variables[split[1]]
-
-            # Swap the two given so that the order is correct, if X -> Y, and given Y, X, swap.
-            if head.name in body.reach:
-                body, head = head, body
-
-            # Run query
-            self.detect_paths(head, body)
 
             selection = input(self.get_functionality_selection_prompt)
             while selection not in ["1", "2"]:
@@ -194,6 +144,10 @@ class BackdoorController:
                 # Get any/all backdoor paths between this (x, y) and Z combination
                 backdoor_paths = self.get_backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], set(z_subset), [], [])
 
+                # Debugging help
+                # for path in backdoor_paths:
+                #     print([str(item) for item in path])
+
                 # Filter out the paths that don't "enter" x
                 backdoor_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
 
@@ -222,7 +176,13 @@ class BackdoorController:
         return valid_z_subsets
 
     def get_variable_set(self, prompt: str) -> set:
-        return set([item.strip() for item in input(prompt).split(",")])
+        input_set = set([item.strip() for item in input(prompt).split(",")])
+
+        # Empty it if "enter" was the only thing given
+        if input_set == {""}:
+            input_set = set()
+
+        return input_set
 
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
 

@@ -1,12 +1,1 @@
-{
-  "runRegressionTestsOnLaunch": true,
-  "outputRegressionResults": "failure",
-  "output_computation_steps": false,
-  "exitIfRegressionFailure": false,
-  "graph_file_folder": "causal_graphs",
-  "logAllComputation": true,
-  "loggingLocation": "logging",
-  "storeAllResolvedCalculations": true,
-  "defaultRegressionRepetition": 10,
-  "printCausalGraphInfoOnInstantiation": true
-}
+{"run_regression_tests_on_launch": true, "output_levels_of_precision": 5, "output_regression_results": "failure", "output_computation_steps": false, "exitIfRegressionFailure": false, "graph_file_folder": "causal_graphs", "log_computation": true, "logging_directory": "logging", "cache_computation_results": true, "default_regression_repetition": 10, "print_cg_info_on_instantiation": true, "regression_directory": "regression_tests/test_files"}

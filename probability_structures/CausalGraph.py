@@ -8,6 +8,7 @@
 #########################################################
 
 # Python libraries
+import itertools
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
 import numpy as np      # Used in table->str formatting
@@ -160,7 +161,7 @@ class CausalGraph:
 
         self.determination = dict() # Maybe unused as now
 
-        self.store_computation_results = access("storeAllResolvedCalculations")
+        self.store_computation_results = access("cache_computation_results")
         self.stored_computations = dict()
 
         self.open_write_file = None
@@ -246,14 +247,9 @@ class CausalGraph:
             reach_initialization(self.variables[variable], set())
 
         # Print all the variables out with their reach
-        # for variable in self.variables:
-        #    print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
-
-        parser = argparse.ArgumentParser(description="Compute probabilities.")
-        parser.add_argument("-s", help="Silent computation; only show resulting probabilities.", action="store_true")
-        options = parser.parse_args()
-        if options.s:
-            self.silent_computation = True
+        if access("print_cg_info_on_instantiation"):
+            for variable in self.variables:
+                print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
 
     def run(self):
         """
@@ -323,15 +319,15 @@ class CausalGraph:
 
         try:
 
-            if not os.path.isdir(access("loggingLocation")):
-                os.makedirs(access("loggingLocation"))
+            if not os.path.isdir(access("logging_directory")):
+                os.makedirs(access("logging_directory"))
 
             self.open_write_file = open("logging/" + self.p_str(outcome, given_variables), "w")
             probability = self.probability(outcome, given_variables)
             self.open_write_file.write(str(probability) + "\n")
             self.open_write_file.close()
 
-            print("P = " + "{0:.10f}".format(probability))
+            print("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
 
         # Catch only exceptions for indeterminable queries
         #   We would still want other errors to come through
@@ -493,38 +489,40 @@ class CausalGraph:
                 self.computation_output("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
 
-        ###############################################
-        #                Jeffrey's Rule               #
-        # P(y | x) = P(y | z, x) * P(z | x) + P(y | ~z, x) * P(~z | x) === sigma_Z P(y | z, x) * P(z | x)
-        ###############################################
+        #######################################################################################################
+        #                                            Jeffrey's Rule                                           #
+        #   P(y | x) = P(y | z, x) * P(z | x) + P(y | ~z, x) * P(~z | x) === sigma_Z P(y | z, x) * P(z | x)   #
+        #######################################################################################################
 
         # TODO - Try checking each of the values in head, not just the first
-        missing_parents = self.missing_parents(head[0].name, set([parent.name for parent in body] + [parent.name for parent in head]))
-        if missing_parents:
-            self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
+        for outcome in head:
 
-            # Try an approach beginning with each missing parent
-            for missing_parent in missing_parents:
+            missing_parents = self.missing_parents(outcome.name, set([parent.name for parent in body] + [parent.name for parent in head]))
+            if missing_parents:
+                self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
 
-                try:
-                    # Add one parent back in and recurse
-                    add_parent = self.variables[missing_parent]
+                # Try an approach beginning with each missing parent
+                for missing_parent in missing_parents:
 
-                    # Consider the missing parent and sum every probability involving it
-                    total = 0.0
-                    for parent_outcome in add_parent.outcomes:
-                        as_outcome = Outcome(add_parent.name, parent_outcome)
+                    try:
+                        # Add one parent back in and recurse
+                        add_parent = self.variables[missing_parent]
 
-                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
+                        # Consider the missing parent and sum every probability involving it
+                        total = 0.0
+                        for parent_outcome in add_parent.outcomes:
+                            as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        single_result = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1) * self.probability([as_outcome], body, new_queries, depth + 1)
-                        total += single_result
+                            self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
 
-                    self.store_computation(self.p_str(head, body), total)
-                    return total
+                            single_result = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1) * self.probability([as_outcome], body, new_queries, depth + 1)
+                            total += single_result
 
-                except ProbabilityException:
-                    self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+                        self.store_computation(self.p_str(head, body), total)
+                        return total
+
+                    except ProbabilityException:
+                        self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
 
         ###############################################
         #    Detect children of the LHS in the RHS    #
@@ -611,13 +609,23 @@ class CausalGraph:
         raise ProbabilityIndeterminableException
 
     def contradictory_outcome_set(self, outcomes: list) -> bool:
-        for left in range(len(outcomes)-1):
-            for right in range(left+1, len(outcomes)):
-                if outcomes[left].name == outcomes[right].name and outcomes[left].outcome != outcomes[right].outcome:
-                    return True
+        """
+        Check whether a list of outcomes contain any contradictory values, such as Y = y and Y = ~y
+        :param outcomes: A list of Outcome objects
+        :return: True if there is a contradiction/implausibility, False otherwise
+        """
+        for cross in itertools.product(outcomes, outcomes):
+            if cross[0].name == cross[1].name and cross[0].outcome != cross[1].outcome:
+                return True
         return False
 
     def missing_parents(self, variable: str or Variable, parent_subset: set) -> list:
+        """
+        Get a list of all the missing parents of a variable
+        :param variable: A variable object (either string or the object itself)
+        :param parent_subset: A set of parent strings
+        :return: The remaining parents of the given variable, as a list
+        """
         if isinstance(variable, str):
             return [parent for parent in self.variables[variable].parents if parent not in parent_subset]
         elif isinstance(variable, Variable):
