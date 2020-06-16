@@ -18,7 +18,7 @@ from itertools import chain, combinations, product
 
 def power_set(variable_list):
     p_set = list(variable_list)
-    return chain.from_iterable(combinations(p_set, r) for r in range(1, len(p_set)+1))
+    return chain.from_iterable(combinations(p_set, r) for r in range(len(p_set)+1))
 
 
 class BackdoorController:
@@ -107,33 +107,15 @@ class BackdoorController:
                 for variable in x | y:
                     assert variable in self.variables, "Variable " + variable + " not in the graph."
 
-                # Get the power set of all remaining variables, and check which subsets yield causal independence
-                z_power_set = power_set(set(self.variables) - (x | y))
+                valid_z_subsets = self.get_all_z_subsets(x, y)
 
-                # The cross product of X and Y
-                cross_product = list(itertools.product(x, y))
-
-                # A set of all "eligible" subsets of the power set of the compliment of x|y; any
-                #   set in here is one which yields no backdoor backs from X x Y.
-                valid_z_subsets = set()
-
-                # Get the list of all backdoor paths detected in each subset
-                for z_subset in z_power_set:
-
-                    # Cross represents one (x in X, y in Y) tuple
-                    for cross in cross_product:
-
-                        # Get any/all backdoor paths between this (x, y) and Z combination
-                        backdoor_paths = self.get_backdoor_paths(cross[0], cross[1], z_subset)
-                        if len(backdoor_paths) == 0:
-                            valid_z_subsets.add(z_subset)
-
-                if len(valid_z_subsets) == 0:
-                    print("No possible set Z can be constructed to create causal independence.")
-                else:
-                    print("Possible sets Z that yield causal independence.")
+                if len(valid_z_subsets) > 0:
+                    print("\nPossible sets Z that yield causal independence.")
                     for subset in valid_z_subsets:
-                        print("  ", valid_z_subsets)
+                        if len(subset) != 0:
+                            print("  -", "{" + ", ".join(item for item in subset) + "}")
+                else:
+                    print("\nNo possible set Z can be constructed to create causal independence.")
 
             except AssertionError as e:
                 print(e.args)
@@ -188,9 +170,100 @@ class BackdoorController:
                 print("Exiting Backdoor Controller.")
                 break
 
+    def get_all_z_subsets(self, x: set, y: set) -> set:
+
+        # Get the power set of all remaining variables, and check which subsets yield causal independence
+        z_power_set = power_set(set(self.variables) - (x | y))
+
+        # The cross product of X and Y
+        cross_product = list(itertools.product(x, y))
+
+        # A set of all "eligible" subsets of the power set of the compliment of x|y; any
+        #   set in here is one which yields no backdoor backs from X x Y.
+        valid_z_subsets = set()
+
+        # Get the list of all backdoor paths detected in each subset
+        for z_subset in z_power_set:
+
+            # Tentative, indicating that no specific cross product has yet yielded any backdoor paths
+            any_backdoor_paths = False
+
+            # Cross represents one (x in X, y in Y) tuple
+            for cross in cross_product:
+
+                # Get any/all backdoor paths between this (x, y) and Z combination
+                backdoor_paths = self.get_backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], set(z_subset), [], [])
+
+                # Filter out the paths that don't "enter" x
+                backdoor_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
+
+                # TODO - Toggle this output as a setting
+                if len(backdoor_paths) > 0:
+                    any_backdoor_paths = True
+
+                    print("\n", z_subset, "yields backdoor paths between", cross)
+                    for backdoor_path in backdoor_paths:
+                        print("  ", end="")
+
+                        for index in range(len(backdoor_path) - 1):
+                            print(backdoor_path[index].name, end="")
+                            print(" <- " if backdoor_path[index].name in self.children[backdoor_path[index + 1].name] else " -> ", end="")
+                        print(backdoor_path[-1].name)
+                    print()
+
+                else:
+                    print(z_subset, "yielded no backdoor paths for", cross)
+
+            # None found in any cross product -> Valid subset
+            if not any_backdoor_paths:
+                valid_z_subsets.add(z_subset)
+
+        # Return all the subsets
+        return valid_z_subsets
+
     def get_variable_set(self, prompt: str) -> set:
         return set([item.strip() for item in input(prompt).split(",")])
 
+    def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
+
+        def has_controlled_descendant(variable: Variable):
+            for descendant in variable.reach:
+                if descendant in controlled_set:
+                    return True
+            return False
+
+        if x == y:
+            return path_list + [path + [y]]
+
+        if x not in path:
+
+            if previous == "down":
+
+                # We can ascend on a controlled collider, OR an ancestor of a controlled collider
+                if x.name in controlled_set or has_controlled_descendant(x):
+                    for parent in x.parents:
+                        path_list = self.get_backdoor_paths(self.variables[parent], y, controlled_set, path + [x], path_list, "up")
+
+                # We can *continue* to descend on a non-controlled variable
+                if x.name not in controlled_set:
+                    for child in self.children[x.name]:
+                        path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
+
+            if previous == "up":
+
+                if x.name not in controlled_set:
+
+                    # We can *continue* to descend on a non-controlled variable
+                    for parent in x.parents:
+                        path_list = self.get_backdoor_paths(self.variables[parent], y, controlled_set, path + [x], path_list, "up")
+
+                    # We can descend on a non-controlled reverse-collider
+                    for child in self.children[x.name]:
+                        path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
+
+        return path_list
+
+    # TODO - Rework into a boolean "any paths?" detector to improve testing?
     def detect_paths(self, head: Variable, body: Variable):
 
         # Find every path from the body to the head
