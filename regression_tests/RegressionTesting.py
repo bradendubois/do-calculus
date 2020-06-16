@@ -69,7 +69,7 @@ def run_test_file(test_file: str) -> (bool, str):
 
                 assert within_precision(result, expected, 5), str(result) + " did not match expected: " + str(expected)
 
-            if test["type"] == "complement":
+            if test["type"] == "summation":
                 total = 0.0
                 for arg_set in args:
                     head = create_outcomes(*arg_set[0].split(","))
@@ -80,7 +80,8 @@ def run_test_file(test_file: str) -> (bool, str):
                     result = causal_graph.probability(head, body)
                     total += result
 
-                assert within_precision(total, 1.0, 4), str(total) + " not summing to 1.0."
+                expected = test["expected_result"]
+                assert within_precision(total, expected, 4), str(total) + " not summing to " + str(expected) + "."
 
             if test["type"] == "determinism":
                 results = []

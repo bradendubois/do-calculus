@@ -8,7 +8,7 @@
         "Y = y",
         "X = x"
       ],
-      "expected_result": 0.342857
+      "expected_result": 0.35294
     }, {
       "name": "Basic Probability Test: P(Y = ~y | Z = ~z)",
       "type": "probability",
@@ -19,24 +19,34 @@
       "expected_result": 0.28
     }, {
       "name": "Basic Compliment Test: P(X = x) + P(X = ~x)",
-      "type": "complement",
+      "type": "summation",
       "args": [
         ["X = x"],
         ["X = ~x"]
-      ]
+      ],
+      "expected_result": 1.0
     }, {
       "name": "Basic Compliment Test: P(Y = y) + P(Y = ~y)",
-      "type": "complement",
+      "type": "summation",
       "args": [
         ["Y = y"],
         ["Y = ~y"]
-      ]
+      ],
+      "expected_result": 1.0
     }, {
       "name": "Deterministic Output Test: P(Y = y) repeated 10x.",
       "type": "determinism",
       "args": [
         "Y = y"
       ]
+    }, {
+      "name": "Basic Summation Test: P(X = x | Y = y) + P(X = ~x | Y = y)",
+      "type": "summation",
+      "args": [
+        ["X = x", "Y = y"],
+        ["X = ~x", "Y = y"]
+      ],
+      "expected_result": 1.0
     }
   ]
 }
