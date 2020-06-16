@@ -9,8 +9,7 @@
 
 # Python libraries
 import json             # Used to load tables/data
-import os
-
+import os               # Used to create a directory if not found
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
@@ -18,7 +17,7 @@ import argparse         # Allow command-line flag parsing
 # Other modules of project
 from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations
 from probability_structures.VariableStructures import *         # The Outcome and Variable classes
-from config.config_mgr import access
+from config.config_mgr import *
 from probability_structures.BackdoorController import BackdoorController
 
 

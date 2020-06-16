@@ -1,7 +1,7 @@
 {
   "runRegressionTestsOnLaunch": true,
   "outputRegressionResults": "failure",
-  "outputRegressionComputation": false,
+  "output_computation_steps": false,
   "exitIfRegressionFailure": false,
   "graph_file_folder": "causal_graphs",
   "logAllComputation": true,
