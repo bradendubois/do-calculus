@@ -8,7 +8,17 @@
 #########################################################
 
 # The Outcome and Variable classes
+import itertools
+
 from probability_structures.VariableStructures import Outcome, Variable
+
+
+from itertools import chain, combinations, product
+
+
+def power_set(variable_list):
+    p_set = list(variable_list)
+    return chain.from_iterable(combinations(p_set, r) for r in range(1, len(p_set)+1))
 
 
 class BackdoorController:
@@ -29,6 +39,26 @@ class BackdoorController:
         "\nEnter variables being controlled for, in this query.\n" + \
         "  Give any number, separated by commas.\n" + \
         "    Example: X, Y, Z\n" + \
+        "  Input: "
+
+
+    get_x_set_prompt = \
+        "\nEnter a comma-separated list of variables, representing X.\n" + \
+        "  These must be in the causal graph, and will be independent from Y.\n" + \
+        "    Example: A, C, M\n" + \
+        "  Input: "
+
+    get_y_set_prompt = \
+        "\nEnter a comma-separated list of variables, representing Y.\n" + \
+        "  These must be in the causal graph, and will be independent from X.\n" + \
+        "    Example: J, P\n" + \
+        "  Input: "
+
+    get_z_set_prompt = \
+        "\nEnter a comma-separated list of variables, representing Z.\n" + \
+        "  These must be in the causal graph, and will be independent from X and Y.\n" + \
+        "  These represent a set of controlled variables to ensure causal independence between X and Y." + \
+        "    Example: E, N\n" + \
         "  Input: "
 
     def __init__(self, variables: dict):
@@ -62,6 +92,52 @@ class BackdoorController:
         """
 
         while True:
+
+            try:
+
+                # Get X, Y, Z sets
+                x = self.get_variable_set(self.get_x_set_prompt)
+                y = self.get_variable_set(self.get_y_set_prompt)
+
+                # z = self.get_variable_set(self.get_z_set_prompt)
+
+                # assert len(x & y & z) == 0  # Ensure they are disjoint sets
+                assert len(x) > 0 and len(y) > 0, "Sets cannot be empty."
+                assert len(x & y) == 0, "X and Y are not disjoint sets."
+                for variable in x | y:
+                    assert variable in self.variables, "Variable " + variable + " not in the graph."
+
+                # Get the power set of all remaining variables, and check which subsets yield causal independence
+                z_power_set = power_set(set(self.variables) - (x | y))
+
+                # The cross product of X and Y
+                cross_product = list(itertools.product(x, y))
+
+                # A set of all "eligible" subsets of the power set of the compliment of x|y; any
+                #   set in here is one which yields no backdoor backs from X x Y.
+                valid_z_subsets = set()
+
+                # Get the list of all backdoor paths detected in each subset
+                for z_subset in z_power_set:
+
+                    # Cross represents one (x in X, y in Y) tuple
+                    for cross in cross_product:
+
+                        # Get any/all backdoor paths between this (x, y) and Z combination
+                        backdoor_paths = self.get_backdoor_paths(cross[0], cross[1], z_subset)
+                        if len(backdoor_paths) == 0:
+                            valid_z_subsets.add(z_subset)
+
+                if len(valid_z_subsets) == 0:
+                    print("No possible set Z can be constructed to create causal independence.")
+                else:
+                    print("Possible sets Z that yield causal independence.")
+                    for subset in valid_z_subsets:
+                        print("  ", valid_z_subsets)
+
+            except AssertionError as e:
+                print(e.args)
+                continue
 
             # Clear the controlled variables on each run
             self.controlled = dict()
@@ -111,6 +187,9 @@ class BackdoorController:
             if selection == "2":
                 print("Exiting Backdoor Controller.")
                 break
+
+    def get_variable_set(self, prompt: str) -> set:
+        return set([item.strip() for item in input(prompt).split(",")])
 
     def detect_paths(self, head: Variable, body: Variable):
 
