@@ -494,40 +494,45 @@ class CausalGraph:
         #   P(y | x) = P(y | z, x) * P(z | x) + P(y | ~z, x) * P(~z | x) === sigma_Z P(y | z, x) * P(z | x)   #
         #######################################################################################################
 
-        # TODO - Try checking each of the values in head, not just the first
+        # Detect all missing parents
+        missing_parents = set()
         for outcome in head:
+            missing_parents.update(self.missing_parents(outcome.name, set([parent.name for parent in head + body])))
 
-            missing_parents = self.missing_parents(outcome.name, set([parent.name for parent in body] + [parent.name for parent in head]))
-            if missing_parents:
-                self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
+        if missing_parents:
+            self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
 
-                # Try an approach beginning with each missing parent
-                for missing_parent in missing_parents:
+            # Try an approach beginning with each missing parent
+            for missing_parent in missing_parents:
 
-                    try:
-                        # Add one parent back in and recurse
-                        add_parent = self.variables[missing_parent]
+                try:
+                    # Add one parent back in and recurse
+                    add_parent = self.variables[missing_parent]
 
-                        # Consider the missing parent and sum every probability involving it
-                        total = 0.0
-                        for parent_outcome in add_parent.outcomes:
-                            as_outcome = Outcome(add_parent.name, parent_outcome)
+                    # Consider the missing parent and sum every probability involving it
+                    total = 0.0
+                    for parent_outcome in add_parent.outcomes:
 
-                            self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
+                        as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                            single_result = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1) * self.probability([as_outcome], body, new_queries, depth + 1)
-                            total += single_result
+                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
 
-                        self.store_computation(self.p_str(head, body), total)
-                        return total
+                        result_1 = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1)
+                        result_2 = self.probability([as_outcome], body, new_queries, depth + 1)
+                        outcome_result = result_1 * result_2
 
-                    except ProbabilityException:
-                        self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+                        total += outcome_result
 
-        ###############################################
-        #    Detect children of the LHS in the RHS    #
-        #      p(a|Cd) = p(d|aC) p(a|C) / p(d|C)      #
-        ###############################################
+                    self.store_computation(self.p_str(head, body), total)
+                    return total
+
+                except ProbabilityException:
+                    self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+
+        #################################################
+        #     Detect children of the LHS in the RHS     #
+        #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
+        #################################################
 
         reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
         children_in_rhs = set([var.name for var in body]) & reachable_from_head
@@ -540,7 +545,10 @@ class CausalGraph:
                 move = [item for item in body if item.name == move]
                 new_body = [variable for variable in body if variable != move[0]]
 
-                self.computation_output(self.p_str(move, head + new_body), "*", self.p_str(head, new_body), "/", self.p_str(move, new_body), x_offset=depth)
+                str_1 = self.p_str(move, head + new_body)
+                str_2 = self.p_str(head, new_body)
+                str_3 = self.p_str(move, new_body)
+                self.computation_output(str_1, "*", str_2, "/", str_3, x_offset=depth)
 
                 result_1 = self.probability(move, head + new_body, new_queries, depth + 1)
                 result_2 = self.probability(head, new_body, new_queries, depth + 1)
@@ -551,7 +559,7 @@ class CausalGraph:
                 return result
 
             except ProbabilityException:
-                pass
+                self.computation_output("Failed to resolve by flipping")
 
         ###############################################
         #            Single element on LHS            #
