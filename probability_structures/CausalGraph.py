@@ -133,13 +133,6 @@ class CausalGraph:
     A "main" class driving most of the I/O
     """
 
-    functionality_choice_prompt = \
-        "\nSelect:" + \
-        "\n    1) Compute a probability. Ex: P(X | Y)" + \
-        "\n    2) Detect (and control) for \"back-door paths\"." + \
-        "\n    3) Exit" + \
-        "\n  Query: "
-
     get_specific_outcome_prompt =  \
         "\nQuery a specific variable and its outcome." + \
         "\n  Format as: <VARIABLE> = <OUTCOME>" + \
@@ -260,21 +253,27 @@ class CausalGraph:
 
         while True:
 
-            # Get a selection from the user
-            selection = input(self.functionality_choice_prompt).strip()
-            while selection not in ["1", "2", "3"]:
-                selection = input(self.functionality_choice_prompt).strip()
+            options = [
+                # Compute a probability
+                [self.setup_probability_computation, "Compute a probability. Ex: P(X | Y)"],
+                # Compute some variable given that it has a function specified
+                [self.setup_probabilistic_function, "Compute the value of a variable given some function. Ex: f(X) = 42"],
+                # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
+                #   make such changes, so it's easiest to go make this its own "space".
+                [self.setup_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
+                [exit, "Exit"]
+            ]
 
-            # Compute a probability
-            if selection == "1":
-                self.setup_probability_computation()
-            # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
-            #   make such changes, so it's easiest to go make this its own "space".
-            elif selection == "2":
-                self.setup_backdoor_controller()
-            elif selection == "3":
-                print("Exiting.")
-                exit(0)
+            print("\nSelect:\n")
+            for option in range(len(options)):
+                print("    " + str(option+1) + ")" + options[option][1])
+
+            selection = input("\n  Query: ")
+            while not selection.isdigit() or not 1 <= int(selection) <= len(options):
+                selection = input("  Query: ")
+
+            # Call the function corresponding to the selected option
+            options[int(selection)-1][0]()
 
     def setup_probability_computation(self):
         """
@@ -324,7 +323,7 @@ class CausalGraph:
             if not os.path.isdir(access("logging_directory")):
                 os.makedirs(access("logging_directory"))
 
-            self.open_write_file = open("logging/" + self.p_str(outcome, given_variables), "w")
+            self.open_write_file = open(access("logging_directory") + "/" + self.p_str(outcome, given_variables), "w")
             probability = self.probability(outcome, given_variables)
             self.open_write_file.write(str(probability) + "\n")
             self.open_write_file.close()
@@ -335,6 +334,9 @@ class CausalGraph:
         #   We would still want other errors to come through
         except ProbabilityIndeterminableException:
             pass
+
+    def setup_probabilistic_function(self):
+        pass
 
     def setup_backdoor_controller(self):
         """
