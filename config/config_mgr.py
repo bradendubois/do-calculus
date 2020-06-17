@@ -26,7 +26,7 @@ def initialize_configuration_file():
 
         "run_regression_tests_on_launch": True,
         "output_regression_results": "failure",
-        "output_computation_steps": False,
+        "output_computation_steps": True,
         "exit_if_regression_failure": False,
         "graph_file_folder": "causal_graphs",
         "log_computation": True,
@@ -36,7 +36,8 @@ def initialize_configuration_file():
         "print_cg_info_on_instantiation": True,
         "regression_directory": "regression_tests/test_files",
         "regression_levels_of_precision": 5,
-        "output_levels_of_precision": 5
+        "output_levels_of_precision": 5,
+        "output_regression_test_computation": True
     }
 
     # The directory doesn't exist; make it

@@ -53,7 +53,6 @@ def run_test_file(test_file: str) -> (bool, str):
 
     # Load the Causal Graph of the given file
     causal_graph = CausalGraph(access("graph_file_folder") + "/" + loaded_test_file["test_file"])
-    causal_graph.silent_computation = not access("output_computation_steps")
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
@@ -137,11 +136,15 @@ def validate_all_regression_tests() -> (bool, str):
         return False, "Cannot locate any regression tests."
 
     # Find all JSON files in that directory
-    files = sorted([file_name for file_name in access("regression_directory") if file_name.endswith(".json")])
+    files = sorted([file_name for file_name in os.listdir(access("regression_directory")) if file_name.endswith(".json")])
 
     # Output a header on regression tests being run if toggled
     if access("output_regression_computation"):
         print("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
+
+    # Disable the IO/Logger if regression test results not set to output
+    if not access("output_regression_test_computation"):
+        io.disable()
 
     # Run each testing file
     for test_file in files:
@@ -149,6 +152,9 @@ def validate_all_regression_tests() -> (bool, str):
         results = run_test_file(test_file)
         if not results[0]:
             return False, test_file + " has failed, with error: " + results[1]
+
+    # Enable IO if it was disabled
+    io.enable()
 
     # Output a footer on regression tests being run if toggled
     if access("output_regression_computation"):

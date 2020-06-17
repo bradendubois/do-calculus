@@ -14,6 +14,9 @@ class IOLogger:
 
     file = None
 
+    # Used as a way of disabling or suppressing IO/Writing during testing
+    enabled = True
+
     def open(self, filename):
         """
         Open a specified file in the default logging location
@@ -31,7 +34,6 @@ class IOLogger:
         """
         Close the currently opened file, if any.
         """
-
         if self.file:
             self.file.close()
 
@@ -44,6 +46,8 @@ class IOLogger:
         :param x_offset: The amount of space at the beginning of every line to indent by
         :return:
         """
+        if not self.enabled:
+            return
 
         indent = int(x_offset) * "  "
 
@@ -66,6 +70,12 @@ class IOLogger:
 
         if self.file:
             self.file.write(end)
+
+    def disable(self):
+        self.enabled = False
+
+    def enable(self):
+        self.enabled = True
 
 
 io = IOLogger()

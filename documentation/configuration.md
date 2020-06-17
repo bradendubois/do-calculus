@@ -15,3 +15,4 @@ A breakdown of the settings available in ``config/config.json``.
 - **"regression_directory"** = "regression_tests/test_files": The location of regression test files to run.
 - **"regression_levels_of_precision"** = 5: The number of digits of precision calculated and expected results must meet within.
 - **"output_levels_of_precision:** = 5: The number of digits of precision calculated results will be output to.
+- **"output_regression_test_computation"** = \[true, false\]: Whether or not to show steps in computations specifically regarding regression tests.

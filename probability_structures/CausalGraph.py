@@ -149,7 +149,7 @@ class CausalGraph:
 
     default_file_location = "causal_graph.json"
 
-    def __init__(self, filename=None, silent_computation=False):
+    def __init__(self, filename=None):
 
         self.variables = dict()       # Maps string name to the Variable object instantiated
         self.tables = dict()          # Maps string name *and* corresponding variable to a list of corresponding tables
@@ -162,10 +162,6 @@ class CausalGraph:
 
         # Maps string name *and* corresponding variable to a function used to determine its value
         self.functions = dict()
-
-        # Toggle whether to suppress the computation output when computing probabilities
-        #   Pass in a "-s" to turn this on, and only output conclusions
-        self.silent_computation = silent_computation
 
         # Allow a specified file location
         if filename is None:
@@ -243,7 +239,7 @@ class CausalGraph:
         # Print all the variables out with their reach
         if access("print_cg_info_on_instantiation"):
             for variable in self.variables:
-                print(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
+                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
 
     def run(self):
         """
