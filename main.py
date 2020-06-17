@@ -62,7 +62,7 @@ if os.path.isdir(access("graph_file_folder")):
 
         graph_file = files[int(selection) - 1]
 
-    print("\nLoading:", graph_file, "\n")
+    print("\nLoading:", graph_file)
     CG = CausalGraph(access("graph_file_folder") + "/" + graph_file)
 
 # No directory, load whatever default is specified in the Causal Graph

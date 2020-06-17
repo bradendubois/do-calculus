@@ -39,7 +39,9 @@ class IOLogger:
         Close the currently opened file, if any.
         """
         if self.file:
+            self.file.write("\n\n" + 50 * "*" + "\n\n")
             self.file.close()
+        self.file = None
 
     def write(self, *message: str, join=" ", end="\n", x_offset=0):
         """
