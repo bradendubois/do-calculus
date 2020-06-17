@@ -22,6 +22,7 @@ from probability_structures.ProbabilityExceptions import *      # Exceptions for
 from probability_structures.VariableStructures import *         # The Outcome and Variable classes
 from config.config_mgr import *
 from probability_structures.BackdoorController import BackdoorController
+from probability_structures.IO_Logger import *
 
 
 class ConditionalProbabilityTable:
@@ -158,8 +159,6 @@ class CausalGraph:
 
         self.store_computation_results = access("cache_computation_results")
         self.stored_computations = dict()
-
-        self.open_write_file = None
 
         # Maps string name *and* corresponding variable to a function used to determine its value
         self.functions = dict()
@@ -323,10 +322,10 @@ class CausalGraph:
             if not os.path.isdir(access("logging_directory")):
                 os.makedirs(access("logging_directory"))
 
-            self.open_write_file = open(access("logging_directory") + "/" + self.p_str(outcome, given_variables), "w")
+            io.open(self.p_str(outcome, given_variables))
             probability = self.probability(outcome, given_variables)
-            self.open_write_file.write(str(probability) + "\n")
-            self.open_write_file.close()
+            io.write(str(probability) + "\n")
+            io.close()
 
             print("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
 
@@ -390,38 +389,6 @@ class CausalGraph:
             string += " | " + ", ".join([str(var) for var in rhs])
         return string + ")"
 
-    def computation_output(self, *message: str, join=" ", end="\n", x_offset=0):
-        """
-        Optional output of any number of strings unless output is suppressed
-        :param message: Any number of strings to print
-        :param join: A string used to join the messages
-        :param end: The end symbol outputted at the end of the series of strings
-        :param x_offset: The amount of space at the beginning of every line to indent by
-        :return:
-        """
-
-        indent = int(x_offset) * "  "
-
-        if not self.silent_computation:
-            print("\n" + indent, end="")
-
-        if self.open_write_file:
-            self.open_write_file.write("\n" + indent)
-
-        for component in message:
-
-            if not self.silent_computation:
-                print(str(component).replace("\n", "\n" + indent, 100), end=join)
-
-            if self.open_write_file:
-                self.open_write_file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
-
-        if not self.silent_computation:
-            print(end=end)
-
-        if self.open_write_file:
-            self.open_write_file.write(end)
-
     def store_computation(self, string_representation: str, probability: float):
         if self.store_computation_results and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = probability
@@ -436,7 +403,7 @@ class CausalGraph:
 
         # Quick check; ensure this variable actually has a "function"
         if self.determination[var] != "function":
-            self.computation_output("Given", str(var), "is not resolvable by a probabilistic function!")
+            io.write("Given", str(var), "is not resolvable by a probabilistic function!")
             raise Exception
 
         function: str
@@ -449,7 +416,7 @@ class CausalGraph:
             # A different probabilistic variable is involved, resolve it first
             if "val(" in elements[element_idx]:
                 trimmed = elements[element_idx].strip("val()")
-                self.computation_output("Evaluating value for:", trimmed, x_offset=depth)
+                io.write("Evaluating value for:", trimmed, x_offset=depth)
                 result = self.probabilistic_function_resolve(self.variables[trimmed], depth+1)
                 self.store_computation(trimmed, result)
                 elements[element_idx] = str(result)
@@ -465,13 +432,13 @@ class CausalGraph:
                     body = [Outcome(*outcome.split("=")) for outcome in split[1].split(",")]
 
                 result = self.probability(head, body, depth=depth+1)
-                self.computation_output(self.p_str(head, body), "=", str(result), x_offset=depth)
+                io.write(self.p_str(head, body), "=", str(result), x_offset=depth)
                 self.store_computation(self.p_str(head, body), result)
                 elements[element_idx] = str(result)
 
         # Rejoin each independently evaluated piece, evaluate in (what is now) basic arithmetic
         result = eval(" ".join(elements))
-        self.computation_output(var.name, "evaluates to", str(result))
+        io.write(var.name, "evaluates to", str(result))
         self.store_computation(str(var), result)
         return result
 
@@ -486,7 +453,7 @@ class CausalGraph:
         """
 
         # Print the actual query being made on each recursive call to help follow
-        self.computation_output("Trying:", self.p_str(head, body), x_offset=depth)
+        io.write("Trying:", self.p_str(head, body), x_offset=depth)
 
         # Keep a list of queries being passed through recursive calls to avoid infinite loops
         if queries is None:
@@ -494,18 +461,18 @@ class CausalGraph:
 
         # If a string representation of this query is stored, we are in a loop and should stop
         if self.p_str(head, body) in queries:
-            self.computation_output("Already trying:", self.p_str(head, body), "returning.", x_offset=depth)
+            io.write("Already trying:", self.p_str(head, body), "returning.", x_offset=depth)
             raise ProbabilityException
 
         # If the calculation has been done and cached, just return it from storage
         if self.p_str(head, body) in self.stored_computations:
             result = self.stored_computations[self.p_str(head, body)]
-            self.computation_output("Computation already calculated:", self.p_str(head, body), "=", result, x_offset=depth)
+            io.write("Computation already calculated:", self.p_str(head, body), "=", result, x_offset=depth)
             return result
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
         if self.contradictory_outcome_set(head + body):
-            self.computation_output("Two separate outcomes for one variable: 0.0")
+            io.write("Two separate outcomes for one variable: 0.0")
             return 0.0
 
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
@@ -517,20 +484,20 @@ class CausalGraph:
 
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
-            self.computation_output("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
+            io.write("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
 
             # Get the table
             table = self.get_table(head[0].name, set(body))
-            self.computation_output(str(table), x_offset=depth)
+            io.write(str(table), x_offset=depth)
 
             # Directly look up the corresponding row in the table
             #   Assumes a table has all combinations of values defined
             probability = table.probability_lookup(head, set([item.outcome for item in body]))
-            self.computation_output(self.p_str(head, body), "=", probability, x_offset=depth)
+            io.write(self.p_str(head, body), "=", probability, x_offset=depth)
 
             return probability
         else:
-            self.computation_output("Not Found\n", x_offset=depth)
+            io.write("Not Found\n", x_offset=depth)
 
         ###############################################
         #      Check for Function for Resolution      #
@@ -539,22 +506,22 @@ class CausalGraph:
         if len(head) == 1 and self.determination[head[0].name] == "function":
 
             try:
-                self.computation_output("Attempting to resolve", head[0].name, "by a probabilistic function.")
+                io.write("Attempting to resolve", head[0].name, "by a probabilistic function.")
                 result = self.probabilistic_function_resolve(self.variables[head[0].name])
                 self.store_computation(self.p_str(head, body), result)
-                self.computation_output(self.p_str(head, body), "=", str(result))
+                io.write(self.p_str(head, body), "=", str(result))
                 return result
             except ProbabilityException:
-                self.computation_output("Couldn't resolve by a probabilistic function evaluation.")
+                io.write("Couldn't resolve by a probabilistic function evaluation.")
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
         ##################################################################
 
         if set(head).issubset(set(body)):
-            self.computation_output("Identity rule:", self.p_str(head, head), " = 1.0", x_offset=depth)
+            io.write("Identity rule:", self.p_str(head, head), " = 1.0", x_offset=depth)
             if len(head) > len(body):
-                self.computation_output("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
+                io.write("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
 
         #######################################################################################################
@@ -568,7 +535,7 @@ class CausalGraph:
             missing_parents.update(self.missing_parents(outcome.name, set([parent.name for parent in head + body])))
 
         if missing_parents:
-            self.computation_output("Attempting application of Jeffrey's Rule", x_offset=depth)
+            io.write("Attempting application of Jeffrey's Rule", x_offset=depth)
 
             # Try an approach beginning with each missing parent
             for missing_parent in missing_parents:
@@ -583,7 +550,7 @@ class CausalGraph:
 
                         as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        self.computation_output(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
+                        io.write(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
 
                         result_1 = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1)
                         result_2 = self.probability([as_outcome], body, new_queries, depth + 1)
@@ -595,7 +562,7 @@ class CausalGraph:
                     return total
 
                 except ProbabilityException:
-                    self.computation_output("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+                    io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
 
         #################################################
         #     Detect children of the LHS in the RHS     #
@@ -606,7 +573,7 @@ class CausalGraph:
         children_in_rhs = set([var.name for var in body]) & reachable_from_head
         if len(children_in_rhs) > 0:
 
-            self.computation_output("Children of the LHS in the RHS:", ",".join(children_in_rhs), x_offset=depth)
+            io.write("Children of the LHS in the RHS:", ",".join(children_in_rhs), x_offset=depth)
             try:
                 # Not elegant, but simply take one of the children from the body out and recurse
                 move = list(children_in_rhs).pop(0)
@@ -616,7 +583,7 @@ class CausalGraph:
                 str_1 = self.p_str(move, head + new_body)
                 str_2 = self.p_str(head, new_body)
                 str_3 = self.p_str(move, new_body)
-                self.computation_output(str_1, "*", str_2, "/", str_3, x_offset=depth)
+                io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
 
                 result_1 = self.probability(move, head + new_body, new_queries, depth + 1)
                 result_2 = self.probability(head, new_body, new_queries, depth + 1)
@@ -627,7 +594,7 @@ class CausalGraph:
                 return result
 
             except ProbabilityException:
-                self.computation_output("Failed to resolve by flipping")
+                io.write("Failed to resolve by flipping")
 
         ###############################################
         #            Single element on LHS            #
@@ -641,9 +608,9 @@ class CausalGraph:
             ###############################################
 
             try:
-                self.computation_output("Attempting application of Bayes' Rule", x_offset=depth)
-                self.computation_output(self.p_str(head, body), "=", end=" ", x_offset=depth)
-                self.computation_output(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), x_offset=depth)
+                io.write("Attempting application of Bayes' Rule", x_offset=depth)
+                io.write(self.p_str(head, body), "=", end=" ", x_offset=depth)
+                io.write(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), x_offset=depth)
 
                 # flip flop flippy flop
                 result = self.probability(body, head, new_queries, depth + 1) * self.probability(head, [], new_queries, depth + 1) / self.probability(body, [], new_queries, depth + 1)
@@ -651,7 +618,7 @@ class CausalGraph:
                 return result
 
             except ProbabilityException:
-                self.computation_output("Failed to resolve by Bayes'", x_offset=depth)
+                io.write("Failed to resolve by Bayes'", x_offset=depth)
 
             ###############################################
             #        Eliminate non-parent ancestors       #
@@ -666,7 +633,7 @@ class CausalGraph:
                         self.store_computation(self.p_str(head, body), result)
                         return result
                     except ProbabilityException:
-                        self.computation_output("Couldn't resolve by removing non-parent ancestors.", x_offset=depth)
+                        io.write("Couldn't resolve by removing non-parent ancestors.", x_offset=depth)
 
         ###############################################
         #             Reverse product rule            #
@@ -677,7 +644,7 @@ class CausalGraph:
             try:
                 return self.probability(head[:-1], [head[-1]] + body, new_queries, depth + 1) * self.probability([head[-1]], body, new_queries, depth + 1)
             except ProbabilityException:
-                self.computation_output("Failed to resolve by reverse product rule.", x_offset=depth)
+                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
         #               Cannot compute                #
