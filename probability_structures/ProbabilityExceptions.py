@@ -25,4 +25,12 @@ class ProbabilityIndeterminableException(ProbabilityException):
     pass
 
 
+class NotFunctionDeterminableException(ProbabilityException):
+    """
+    Raised when a Variable is attempted to be calculated by a
+    probabilistic function when there is not one.
+    """
+    pass
+
+
 # TODO - Some kind of exception here to indicate when a given test SHOULD crash, but didn't?

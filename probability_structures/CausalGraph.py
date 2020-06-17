@@ -147,25 +147,32 @@ class CausalGraph:
         "\n    Example: 'X = ~x, Z = z'" + \
         "\n  Query: "
 
-    default_file_location = "causal_graph.json"
+    get_probabilistic_variable_prompt = \
+        "\nEnter a specific variable to compute the value of." + \
+        "\n    Example: 'X'" + \
+        "\n  Query: "
 
     def __init__(self, filename=None):
 
         self.variables = dict()       # Maps string name to the Variable object instantiated
-        self.tables = dict()          # Maps string name *and* corresponding variable to a list of corresponding tables
         self.outcomes = dict()        # Maps string name *and* corresponding variable to a list of outcome values
 
-        self.determination = dict() # Maybe unused as now
+        # All map a Variable object and its name to its respective value, if one exists
+        self.determination = dict()   # Maps to "table" or "function", indicating how it is calculated
+        self.tables = dict()          # Maps to corresponding tables
+        self.functions = dict()       # Maps to corresponding functions
 
-        self.store_computation_results = access("cache_computation_results")
+        # If enabled, stores a string representation of a query mapped to its result
         self.stored_computations = dict()
-
-        # Maps string name *and* corresponding variable to a function used to determine its value
-        self.functions = dict()
 
         # Allow a specified file location
         if filename is None:
-            filename = self.default_file_location
+            filename = access("graph_file_folder") + "/" + "causal_graph.json"
+
+        # Ensure the file exists
+        if not os.path.isfile(filename):
+            io.write("ERROR: Can't find:", filename)
+            exit(-1)
 
         # Load the file, then we parse it
         with open(filename) as json_file:
@@ -239,7 +246,7 @@ class CausalGraph:
         # Print all the variables out with their reach
         if access("print_cg_info_on_instantiation"):
             for variable in self.variables:
-                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach)
+                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, end="")
 
     def run(self):
         """
@@ -251,15 +258,17 @@ class CausalGraph:
             options = [
                 # Compute a probability
                 [self.setup_probability_computation, "Compute a probability. Ex: P(X | Y)"],
+
                 # Compute some variable given that it has a function specified
                 [self.setup_probabilistic_function, "Compute the value of a variable given some function. Ex: f(X) = 42"],
+
                 # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
                 #   make such changes, so it's easiest to go make this its own "space".
                 [self.setup_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
                 [exit, "Exit"]
             ]
 
-            print("\nSelect:")
+            print("\n\nSelect:")
             for option in range(len(options)):
                 print("    " + str(option+1) + ") " + options[option][1])
 
@@ -319,7 +328,7 @@ class CausalGraph:
             io.write(str(probability) + "\n")
             io.close()
 
-            print("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
+            io.write("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
 
         # Catch only exceptions for indeterminable queries
         #   We would still want other errors to come through
@@ -327,7 +336,20 @@ class CausalGraph:
             pass
 
     def setup_probabilistic_function(self):
-        pass
+
+        try:
+            # Get and verify variable
+            variable = input(self.get_probabilistic_variable_prompt).strip().upper()
+            assert variable in self.variables
+
+            # Calculate
+            result = self.probabilistic_function_resolve(self.variables[variable])
+            self.store_computation(str(variable), result)
+            io.write(variable, "=", str(result))
+        except AssertionError:
+            print("Variable given not in the graph.")
+        except NotFunctionDeterminableException:
+            io.write("Variable is not resolvable by a probabilistic function.")
 
     def setup_backdoor_controller(self):
         """
@@ -382,7 +404,7 @@ class CausalGraph:
         return string + ")"
 
     def store_computation(self, string_representation: str, probability: float):
-        if self.store_computation_results and string_representation not in self.stored_computations:
+        if access("cache_computation_results") and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = probability
 
     def probabilistic_function_resolve(self, var: Variable, depth=0) -> float:
@@ -395,8 +417,8 @@ class CausalGraph:
 
         # Quick check; ensure this variable actually has a "function"
         if self.determination[var] != "function":
-            io.write("Given", str(var), "is not resolvable by a probabilistic function!")
-            raise Exception
+            io.write("Given", str(var), "is not resolvable by a probabilistic function!", end="")
+            raise NotFunctionDeterminableException
 
         function: str
         function = self.functions[var.name]
