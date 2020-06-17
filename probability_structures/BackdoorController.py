@@ -10,8 +10,8 @@
 # Python libraries
 import itertools        # Used for power set / product creation
 
-# The Outcome and Variable classes
-from probability_structures.VariableStructures import Outcome, Variable
+# The Variable class
+from probability_structures.VariableStructures import Variable
 
 
 def power_set(variable_list):
@@ -101,8 +101,8 @@ class BackdoorController:
                 if len(valid_z_subsets) > 0:
                     print("\nPossible sets Z that yield causal independence.")
                     for subset in valid_z_subsets:
-                        if len(subset) != 0:
-                            print("  -", "{" + ", ".join(item for item in subset) + "}")
+                        print("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""))
+
                 else:
                     print("\nNo possible set Z can be constructed to create causal independence.")
 

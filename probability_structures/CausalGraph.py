@@ -11,11 +11,10 @@
 import itertools
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
-import re
-
+import re               # Used in probabilistic function evaluation
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
-import argparse         # Allow command-line flag parsing
+
 
 # Other modules of project
 from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations

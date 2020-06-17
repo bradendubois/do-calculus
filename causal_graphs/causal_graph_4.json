@@ -1,0 +1,34 @@
+{
+  "name": "Basic Function Test",
+  "variables": [{
+    "name": "A",
+    "outcomes": ["a", "~a"],
+    "parents": [],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
+    }
+  },{
+    "name": "B",
+    "outcomes": ["b", "~b"],
+    "parents": [],
+    "determination": {
+      "type": "function",
+      "function": "2 * p(A=a) + 45"
+    }
+  },{
+    "name": "C",
+    "outcomes": ["c", "~c"],
+    "parents": ["A", "B"],
+    "determination": {
+      "type": "function",
+      "function": "10 * p(A=~a) / val(B) + 1"
+    }
+  }]
+}
