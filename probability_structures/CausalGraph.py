@@ -1,6 +1,6 @@
 #########################################################
 #                                                       #
-#   ProPyBilityTables (Name is a work in progress)      #
+#   Causal Graph                                        #
 #                                                       #
 #   Author: Braden Dubois (braden.dubois@usask.ca)      #
 #   Written for: Dr. Eric Neufeld                       #
@@ -264,9 +264,9 @@ class CausalGraph:
                 [exit, "Exit"]
             ]
 
-            print("\nSelect:\n")
+            print("\nSelect:")
             for option in range(len(options)):
-                print("    " + str(option+1) + ")" + options[option][1])
+                print("    " + str(option+1) + ") " + options[option][1])
 
             selection = input("\n  Query: ")
             while not selection.isdigit() or not 1 <= int(selection) <= len(options):

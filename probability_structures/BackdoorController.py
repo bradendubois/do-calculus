@@ -187,10 +187,7 @@ class BackdoorController:
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
 
         def has_controlled_descendant(variable: Variable):
-            for descendant in variable.reach:
-                if descendant in controlled_set:
-                    return True
-            return False
+            return any(var in controlled_set for var in variable.reach)
 
         if x == y:
             return path_list + [path + [y]]

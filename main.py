@@ -32,6 +32,7 @@ if os.path.isdir(access("graph_file_folder")):
 
     # Find all JSON files in that directory
     files = sorted([file_name for file_name in os.listdir(access("graph_file_folder")) if file_name.endswith(".json")])
+    longest_file_length = max(len(file) for file in files)
 
     # Only one file, just select it
     if len(files) == 1:
@@ -41,11 +42,19 @@ if os.path.isdir(access("graph_file_folder")):
     else:
         print("Files located in:", access("graph_file_folder"))
         for file_index in range(len(files)):
-            print("  ", str(file_index+1) + ")", files[file_index])
+
+            # Show the name as a preview/reminder, if given
+            name = ""
+            with open(access("graph_file_folder") + "/" + files[file_index]) as f:
+                loaded = json.load(f)
+                if "name" in loaded:
+                    name = " " * (longest_file_length - len(files[file_index])) + "- " + loaded["name"]
+
+            print("  ", str(file_index+1) + ")", files[file_index], name)
         print("  ", str(len(files)+1) + ") Exit")
 
         selection = input("Selection: ")
-        while not selection.isdigit() and 1 <= int(selection) <= len(files) + 1:
+        while not selection.isdigit() or not 1 <= int(selection) <= len(files) + 1:
             selection = input("Selection: ")
 
         if selection == str(len(files)+1):
@@ -63,3 +72,6 @@ else:
 
 # Start the software
 CG.run()
+
+print(CG.probabilistic_function_resolve(CG.variables["B"]))
+print(CG.probabilistic_function_resolve(CG.variables["C"]))
