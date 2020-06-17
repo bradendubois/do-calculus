@@ -138,9 +138,13 @@ def validate_all_regression_tests() -> (bool, str):
     # Find all JSON files in that directory
     files = sorted([file_name for file_name in os.listdir(access("regression_directory")) if file_name.endswith(".json")])
 
+    # Running tests but no files?
+    if len(files) == 0 and access("run_regression_tests_on_launch"):
+        io.write("ERROR: Regression tests enabled, but no test files found.")
+
     # Output a header on regression tests being run if toggled
     if access("output_regression_computation"):
-        print("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
+        io.write("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
 
     # Disable the IO/Logger if regression test results not set to output
     if not access("output_regression_test_computation"):
@@ -148,16 +152,15 @@ def validate_all_regression_tests() -> (bool, str):
 
     # Run each testing file
     for test_file in files:
-
         results = run_test_file(test_file)
         if not results[0]:
-            return False, test_file + " has failed, with error: " + results[1]
-
-    # Enable IO if it was disabled
-    io.enable()
+            return False, test_file + " has failed, with error: " + str(results[1])
 
     # Output a footer on regression tests being run if toggled
     if access("output_regression_computation"):
-        print("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
+        io.write("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
+
+    # Enable IO if it was disabled
+    io.enable()
 
     return True, "All Tests Passed."

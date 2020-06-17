@@ -94,3 +94,5 @@ Functions are **case-sensitive** and **spacing-sensitive**, and can involve the 
         - Each variable given should be expressed as ``VARIABLE=OUTCOME``.
         - If there is no "given", the vertical bar "|" should be omitted.
             - **Example**: ``p(Y=y)``
+
+- **Note**: At present, "outcomes" is still a required part of the probabilistic function variables, though they yield continuous evaluations; provide the "outcomes" field, but leave it empty.

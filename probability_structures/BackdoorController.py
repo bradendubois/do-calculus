@@ -12,6 +12,7 @@ import itertools        # Used for power set / product creation
 
 # The Variable class
 from probability_structures.VariableStructures import Variable
+from probability_structures.IO_Logger import *
 
 
 def power_set(variable_list):
@@ -27,7 +28,7 @@ def power_set(variable_list):
 class BackdoorController:
 
     get_functionality_selection_prompt = \
-        "\nSelect an option:\n" + \
+        "\n\nSelect an option:\n" + \
         "    1) Find backdoor paths\n" + \
         "    2) Exit\n" + \
         "  Selection: "
@@ -99,25 +100,22 @@ class BackdoorController:
                 valid_z_subsets = self.get_all_z_subsets(x, y)
 
                 if len(valid_z_subsets) > 0:
-                    print("\nPossible sets Z that yield causal independence.")
+                    io.write("\nPossible sets Z that yield causal independence.", end="")
                     for subset in valid_z_subsets:
-                        print("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""))
-
+                        io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="")
                 else:
-                    print("\nNo possible set Z can be constructed to create causal independence.")
+                    io.write("\nNo possible set Z can be constructed to create causal independence.")
 
             except AssertionError as e:
-                print(e.args)
+                io.write(e.args)
                 continue
 
             selection = input(self.get_functionality_selection_prompt)
             while selection not in ["1", "2"]:
                 selection = input(self.get_functionality_selection_prompt)
 
-            print()     # Some spacing for aesthetic
-
             if selection == "2":
-                print("Exiting Backdoor Controller.")
+                io.write("Exiting Backdoor Controller.", end="")
                 break
 
     def get_all_z_subsets(self, x: set, y: set) -> set:
@@ -151,22 +149,20 @@ class BackdoorController:
                 # Filter out the paths that don't "enter" x
                 backdoor_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
 
-                # TODO - Toggle this output as a setting
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
 
-                    print("\n", z_subset, "yields backdoor paths between", cross)
+                    io.write(z_subset, "yields backdoor paths between", cross, end="")
                     for backdoor_path in backdoor_paths:
-                        print("  ", end="")
-
+                        msg = "  "
                         for index in range(len(backdoor_path) - 1):
-                            print(backdoor_path[index].name, end="")
-                            print(" <- " if backdoor_path[index].name in self.children[backdoor_path[index + 1].name] else " -> ", end="")
-                        print(backdoor_path[-1].name)
-                    print()
+                            msg += backdoor_path[index].name + " "
+                            msg += " <- " if backdoor_path[index].name in self.children[backdoor_path[index + 1].name] else " -> "
+                        msg += backdoor_path[-1].name
+                        io.write(msg)
 
                 else:
-                    print(z_subset, "yielded no backdoor paths for", cross)
+                    io.write(z_subset, "yielded no backdoor paths for", cross, end="")
 
             # None found in any cross product -> Valid subset
             if not any_backdoor_paths:
@@ -221,6 +217,7 @@ class BackdoorController:
         return path_list
 
     # TODO - Rework into a boolean "any paths?" detector to improve testing?
+    #   Everything following is unused
     def detect_paths(self, head: Variable, body: Variable):
 
         # Find every path from the body to the head
