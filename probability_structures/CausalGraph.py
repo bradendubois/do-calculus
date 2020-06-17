@@ -11,6 +11,8 @@
 import itertools
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
+import re
+
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 import argparse         # Allow command-line flag parsing
@@ -225,7 +227,7 @@ class CausalGraph:
                 self.determination[var] = "function"
 
                 self.functions[name] = determination["function"]
-                self.functions[variable] = determination["function"]
+                self.functions[var] = determination["function"]
 
             else:
                 print("ERROR; Variable", name, "determination cannot be found.")
@@ -422,6 +424,55 @@ class CausalGraph:
         if self.store_computation_results and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = probability
 
+    def probabilistic_function_resolve(self, var: Variable, depth=0) -> float:
+        """
+        Resolve a Variable, the value of which is determined by a probabilistic function
+        :param var: The variable to find the value of
+        :param depth: How many levels of recursion deep we are; used for output formatting
+        :return: A float value (not necessarily in [0, 1.0] representing the value of var
+        """
+
+        # Quick check; ensure this variable actually has a "function"
+        if self.determination[var] != "function":
+            self.computation_output("Given", str(var), "is not resolvable by a probabilistic function!")
+            raise Exception
+
+        function: str
+        function = self.functions[var.name]
+
+        # Split into segments and resolve each independently
+        elements = function.split(" ")
+        for element_idx in range(len(elements)):
+
+            # A different probabilistic variable is involved, resolve it first
+            if "val(" in elements[element_idx]:
+                trimmed = elements[element_idx].strip("val()")
+                self.computation_output("Evaluating value for:", trimmed, x_offset=depth)
+                result = self.probabilistic_function_resolve(self.variables[trimmed], depth+1)
+                self.store_computation(trimmed, result)
+                elements[element_idx] = str(result)
+
+            # Some probabilities are involved
+            if "p(" in elements[element_idx]:
+                trimmed = elements[element_idx].strip("p()")
+                split = re.split(r"\|", trimmed)
+
+                head = [Outcome(*outcome.split("=")) for outcome in split[0].split(",")]
+                body = []
+                if len(split) == 2:
+                    body = [Outcome(*outcome.split("=")) for outcome in split[1].split(",")]
+
+                result = self.probability(head, body, depth=depth+1)
+                self.computation_output(self.p_str(head, body), "=", str(result), x_offset=depth)
+                self.store_computation(self.p_str(head, body), result)
+                elements[element_idx] = str(result)
+
+        # Rejoin each independently evaluated piece, evaluate in (what is now) basic arithmetic
+        result = eval(" ".join(elements))
+        self.computation_output(var.name, "evaluates to", str(result))
+        self.store_computation(str(var), result)
+        return result
+
     def probability(self, head: list, body: list, queries=None, depth=0) -> float:
         """
         Compute the probability of some head given some body
@@ -478,6 +529,21 @@ class CausalGraph:
             return probability
         else:
             self.computation_output("Not Found\n", x_offset=depth)
+
+        ###############################################
+        #      Check for Function for Resolution      #
+        ###############################################
+
+        if len(head) == 1 and self.determination[head[0].name] == "function":
+
+            try:
+                self.computation_output("Attempting to resolve", head[0].name, "by a probabilistic function.")
+                result = self.probabilistic_function_resolve(self.variables[head[0].name])
+                self.store_computation(self.p_str(head, body), result)
+                self.computation_output(self.p_str(head, body), "=", str(result))
+                return result
+            except ProbabilityException:
+                self.computation_output("Couldn't resolve by a probabilistic function evaluation.")
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
@@ -564,6 +630,7 @@ class CausalGraph:
         ###############################################
         #            Single element on LHS            #
         ###############################################
+
         if len(head) == 1 and not missing_parents and not reachable_from_head:
 
             ###############################################
