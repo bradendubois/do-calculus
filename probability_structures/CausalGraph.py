@@ -314,10 +314,6 @@ class CausalGraph:
             return
 
         try:
-
-            if not os.path.isdir(access("logging_directory")):
-                os.makedirs(access("logging_directory"))
-
             io.open(self.p_str(outcome, given_variables))
             probability = self.probability(outcome, given_variables)
             io.write(str(probability) + "\n")

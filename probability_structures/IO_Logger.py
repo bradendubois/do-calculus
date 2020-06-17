@@ -27,6 +27,10 @@ class IOLogger:
         if self.file:
             self.close()
 
+        # Create directory if needed
+        if not os.path.isdir(access("logging_directory")):
+            os.makedirs(access("logging_directory"))
+
         # Open new file in write mode
         self.file = open(access("logging_directory") + "/" + filename, "w")
 
