@@ -241,7 +241,8 @@ class CausalGraph:
             # Calculate
             result = self.probabilistic_function_resolve(self.variables[variable])
             self.store_computation(str(variable), result)
-            io.write(variable, "=", str(result))
+            io.write(variable, "= min: {}, max: {}".format(*result))
+
         except AssertionError:
             print("Variable given not in the graph.")
         except NotFunctionDeterminableException:
@@ -299,16 +300,16 @@ class CausalGraph:
             string += " | " + ", ".join([str(var) for var in rhs])
         return string + ")"
 
-    def store_computation(self, string_representation: str, probability: float):
+    def store_computation(self, string_representation: str, result: float or (float, float)):
         if access("cache_computation_results") and string_representation not in self.stored_computations:
-            self.stored_computations[string_representation] = probability
+            self.stored_computations[string_representation] = result
 
-    def probabilistic_function_resolve(self, var: Variable, depth=0) -> float:
+    def probabilistic_function_resolve(self, var: Variable, depth=0) -> (float, float):
         """
         Resolve a Variable, the value of which is determined by a probabilistic function
         :param var: The variable to find the value of
         :param depth: How many levels of recursion deep we are; used for output formatting
-        :return: A float value (not necessarily in [0, 1.0] representing the value of var
+        :return: A float tuple (min, max) representing the range of values of the function
         """
 
         # Quick check; ensure this variable actually has a "function"
@@ -316,8 +317,21 @@ class CausalGraph:
             io.write("Given", str(var), "is not resolvable by a probabilistic function!", end="")
             raise NotFunctionDeterminableException
 
+        function_data: list
+        function_data = self.functions[var.name]
+
         function: str
-        function = self.functions[var.name]
+        function = function_data[0]
+
+        noise: str
+        noise = "0"
+        if len(function_data) > 1:
+            noise = function_data[1]
+
+        # Evaluate each var(foo) value, getting a min and max, and store these
+        #   When we evaluate this function, we will take every possible cross product across
+        #   the set of all resolved var(foo) values, ultimately returning the min and max
+        nested_min_maxes = []
 
         # Split into segments and resolve each independently
         elements = function.split(" ")
@@ -328,8 +342,9 @@ class CausalGraph:
                 trimmed = elements[element_idx].strip("val()")
                 io.write("Evaluating value for:", trimmed, x_offset=depth)
                 result = self.probabilistic_function_resolve(self.variables[trimmed], depth+1)
+                nested_min_maxes.append(result)
                 self.store_computation(trimmed, result)
-                elements[element_idx] = str(result)
+                elements[element_idx] = "{}"
 
             # Some probabilities are involved
             if "p(" in elements[element_idx]:
@@ -346,8 +361,16 @@ class CausalGraph:
                 self.store_computation(self.p_str(head, body), result)
                 elements[element_idx] = str(result)
 
+        # All possible results, we will return the min and max to represent the range
+        all_results = []
+
         # Rejoin each independently evaluated piece, evaluate in (what is now) basic arithmetic
-        result = eval(" ".join(elements))
+        for cross in itertools.product(*nested_min_maxes):
+            result = eval(" ".join(elements).format(*cross))
+            all_results.extend((result - eval(noise), result + eval(noise)))
+            # TODO - Noise should be a higher order function, not just relying on eval?
+
+        result = min(all_results), max(all_results)
         io.write(var.name, "evaluates to", str(result))
         self.store_computation(str(var), result)
         return result

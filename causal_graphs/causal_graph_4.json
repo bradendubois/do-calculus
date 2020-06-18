@@ -20,7 +20,10 @@
     "parents": [],
     "determination": {
       "type": "function",
-      "function": "2 * p(A=a) + 45"
+      "function": [
+        "2 * p(A=a) + 45",
+        "4.0"
+      ]
     }
   },{
     "name": "C",
@@ -28,7 +31,10 @@
     "parents": ["A", "B"],
     "determination": {
       "type": "function",
-      "function": "10 * p(A=~a) / val(B) + 1"
+      "function": [
+        "10 * p(A=~a) / val(B) + 1",
+        "5"
+      ]
     }
   }]
 }
