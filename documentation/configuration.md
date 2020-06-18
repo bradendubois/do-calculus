@@ -16,3 +16,5 @@ A breakdown of the settings available in ``config/config.json``.
 - **"regression_levels_of_precision"** = 5: The number of digits of precision calculated and expected results must meet within.
 - **"output_levels_of_precision:** = 5: The number of digits of precision calculated results will be output to.
 - **"output_regression_test_computation"** = \[true, false\]: Whether or not to show steps in computations specifically regarding regression tests.
+- **"log_all_regression_computation"** = \[true, false\]: Whether to log all the regression test computation
+- **"regression_log_directory"** = "regression": A subdirectory under the default logging location to write regression logs, if enabled.

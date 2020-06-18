@@ -37,7 +37,11 @@ def initialize_configuration_file():
         "regression_directory": "regression_tests/test_files",
         "regression_levels_of_precision": 5,
         "output_levels_of_precision": 5,
-        "output_regression_test_computation": False
+        "output_regression_test_computation": False,
+
+
+        "log_all_regression_computation": True,
+        "regression_log_subdirectory": "regression"
     }
 
     # The directory doesn't exist; make it

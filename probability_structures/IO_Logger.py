@@ -52,12 +52,9 @@ class IOLogger:
         :param x_offset: The amount of space at the beginning of every line to indent by
         :return:
         """
-        if not self.enabled:
-            return
-
         indent = int(x_offset) * "  "
 
-        if access("output_computation_steps"):
+        if self.enabled and access("output_computation_steps"):
             print("\n" + indent, end="")
 
         if self.file:
@@ -65,22 +62,22 @@ class IOLogger:
 
         for component in message:
 
-            if access("output_computation_steps"):
+            if self.enabled and access("output_computation_steps"):
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
             if self.file:
                 self.file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
-        if access("output_computation_steps"):
+        if self.enabled and access("output_computation_steps"):
             print(end=end)
 
         if self.file:
             self.file.write(end)
 
-    def disable(self):
+    def disable_console(self):
         self.enabled = False
 
-    def enable(self):
+    def enable_console(self):
         self.enabled = True
 
 

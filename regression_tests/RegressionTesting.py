@@ -8,6 +8,8 @@
 #########################################################
 
 import os
+import time
+from datetime import datetime
 
 from probability_structures.CausalGraph import *
 from config.config_mgr import *
@@ -170,9 +172,21 @@ def validate_all_regression_tests() -> (bool, str):
     if access("output_regression_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
 
-    # Disable the IO/Logger if regression test results not set to output
+    # Disable the IO/Logger to console if regression test results not set to output
     if not access("output_regression_test_computation"):
-        io.disable()
+        io.disable_console()
+
+    # Open a regression file to log to if enabled
+    if access("log_all_regression_computation"):
+
+        log_dir = access("regression_log_directory")
+
+        # Create the logging directory if it doesn't exist
+        if not os.path.isdir(access("logging_directory") + "/" + log_dir):
+            os.makedirs(access("logging_directory") + "/" + log_dir)
+
+        log_file = log_dir + "/" + "r" + datetime.now().strftime("%Y%m%d_%H-%M-%S")
+        io.open(log_file)
 
     # Run each testing file
     for test_file in files:
@@ -185,6 +199,9 @@ def validate_all_regression_tests() -> (bool, str):
         io.write("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
 
     # Enable IO if it was disabled
-    io.enable()
+    io.enable_console()
+
+    # Close the regression file being written to, if it's open
+    io.close()
 
     return True, "All Tests Passed."
