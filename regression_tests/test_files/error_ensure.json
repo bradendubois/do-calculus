@@ -1,0 +1,13 @@
+{
+  "file_directory": "regression_tests/test_graphs",
+  "test_file": "error_filled_graph.json",
+  "tests": [
+    {
+      "name": "Detect Feedback Loop: val(C) has val(C) as a noise function",
+      "type": "feedback_detection",
+      "args": [
+        "C"
+      ]
+    }
+  ]
+}

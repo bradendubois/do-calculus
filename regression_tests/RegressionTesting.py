@@ -51,11 +51,20 @@ def run_test_file(test_file: str) -> (bool, str):
     with open(access("regression_directory") + "/" + test_file) as f:
         loaded_test_file = json.load(f)
 
+    # Default location assumed unless specified
+    directory = access("graph_file_folder")
+    if "file_directory" in loaded_test_file:
+        directory = loaded_test_file["file_directory"]
+
     # Load the Causal Graph of the given file
-    causal_graph = CausalGraph(access("graph_file_folder") + "/" + loaded_test_file["test_file"])
+    causal_graph = CausalGraph(directory + "/" + loaded_test_file["test_file"])
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
+
+        # Skip variables that rely on functions rather than tables
+        if variable in causal_graph.functions:
+            continue
 
         total = 0.0
         for outcome in causal_graph.variables[variable].outcomes:
@@ -113,6 +122,21 @@ def run_test_file(test_file: str) -> (bool, str):
                         results.append(result)
 
                 assert len(results) == 1, "Repeated tests yielding multiple results."
+
+            if test["type"] == "feedback_loop":
+
+                try:
+                    # This should raise a FunctionFeedbackLoop exception
+                    causal_graph.probabilistic_function_resolve(*causal_graph.functions[args])
+                    raise ExceptionNotFired("A feedback loop in " + args + " was not detected.")
+
+                except FunctionFeedbackLoop:
+                    # Awesome if we get this
+                    pass
+
+        # ExceptionNotFired indicates an exception *should* have been raised but wasn't
+        except ExceptionNotFired as e:
+            return False, "[ERROR: " + test["name"] + "]: " + str(e)
 
         # AssertionErrors indicate the wrong response
         except AssertionError as e:

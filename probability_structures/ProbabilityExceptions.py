@@ -33,4 +33,16 @@ class NotFunctionDeterminableException(ProbabilityException):
     pass
 
 
-# TODO - Some kind of exception here to indicate when a given test SHOULD crash, but didn't?
+class FunctionFeedbackLoop(ProbabilityException):
+    """
+    Raised when some probabilistic function being evaluated encounters a feedback loop
+    and will continue into a stack overflow.
+    """
+    pass
+
+
+class ExceptionNotFired(ProbabilityException):
+    """
+    For use in testing; raised when we *expect* an exception to be thrown and one is not.
+    """
+    pass

@@ -19,11 +19,13 @@ if access("run_regression_tests_on_launch"):
     # (success_boolean, message) tuple returned
     results = validate_all_regression_tests()
 
+    # Output results if config settings specify it
     if not results[0] and access("output_regression_results") == "failure":
         print(results)
     elif access("output_regression_results") == "always":
         print(results)
 
+    # Config settings do allow us to continue even if tests fail
     if not results[0] and access("exit_if_regression_failure"):
         exit(-1)
 
@@ -46,10 +48,10 @@ if os.path.isdir(access("graph_file_folder")):
             # Show the name as a preview/reminder, if given
             name = ""
             with open(access("graph_file_folder") + "/" + files[file_index]) as f:
+                # Load the file and if there is a name, we can fancy up the output
                 loaded = json.load(f)
                 if "name" in loaded:
                     name = " " * (longest_file_length - len(files[file_index])) + "- " + loaded["name"]
-
             print("  ", str(file_index+1) + ")", files[file_index], name)
         print("  ", str(len(files)+1) + ") Exit")
 
@@ -57,6 +59,7 @@ if os.path.isdir(access("graph_file_folder")):
         while not selection.isdigit() or not 1 <= int(selection) <= len(files) + 1:
             selection = input("Selection: ")
 
+        # Last selection is always to exit
         if selection == str(len(files)+1):
             exit(0)
 
@@ -72,6 +75,3 @@ else:
 
 # Start the software
 CG.run()
-
-print(CG.probabilistic_function_resolve(CG.variables["B"]))
-print(CG.probabilistic_function_resolve(CG.variables["C"]))
