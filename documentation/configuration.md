@@ -18,3 +18,5 @@ A breakdown of the settings available in ``config/config.json``.
 - **"output_regression_test_computation"** = \[true, false\]: Whether or not to show steps in computations specifically regarding regression tests.
 - **"log_all_regression_computation"** = \[true, false\]: Whether to log all the regression test computation
 - **"regression_log_directory"** = "regression": A subdirectory under the default logging location to write regression logs, if enabled.
+- **"apply_any_noise"** = \[true, false\]: Whether or not to apply any noise when functions are evaluated. 
+- **"recursive_noise_propagation"** = [true, false\]: Whether or not noise applied to variables should propagate through each nested evaluation, or simply be applied to the final result.

@@ -24,24 +24,33 @@ def initialize_configuration_file():
     # The default values for the config file; updating these won't apply to an already-created file
     default_configuration_file = {
 
+        # Regression tests
         "run_regression_tests_on_launch": True,
         "output_regression_results": "failure",
-        "output_computation_steps": True,
         "exit_if_regression_failure": False,
+
+        # General
+        "output_computation_steps": True,
+        "output_regression_test_computation": False,
+        "print_cg_info_on_instantiation": True,
+
+        # File Directories
         "graph_file_folder": "causal_graphs",
+        "regression_directory": "regression_tests/test_files",
+
+        # Logging Rules/Directories
         "log_computation": True,
+        "log_all_regression_computation": True,
         "logging_directory": "logging",
+        "regression_log_subdirectory": "regression",
+
+        # Accuracy/Formatting/Precision Rules
         "cache_computation_results": False,
         "default_regression_repetition": 10,
-        "print_cg_info_on_instantiation": True,
-        "regression_directory": "regression_tests/test_files",
         "regression_levels_of_precision": 5,
         "output_levels_of_precision": 5,
-        "output_regression_test_computation": False,
-
-
-        "log_all_regression_computation": True,
-        "regression_log_subdirectory": "regression"
+        "apply_any_noise": True,
+        "recursive_noise_propagation": True
     }
 
     # The directory doesn't exist; make it

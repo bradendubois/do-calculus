@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from config.config_mgr import *
+from config.config_manager import *
 
 
 class IOLogger:
@@ -15,7 +15,7 @@ class IOLogger:
     file = None
 
     # Used as a way of disabling or suppressing IO/Writing during testing
-    enabled = True
+    console_enabled = True
 
     def open(self, filename):
         """
@@ -54,7 +54,7 @@ class IOLogger:
         """
         indent = int(x_offset) * "  "
 
-        if self.enabled and access("output_computation_steps"):
+        if self.console_enabled and access("output_computation_steps"):
             print("\n" + indent, end="")
 
         if self.file:
@@ -62,23 +62,23 @@ class IOLogger:
 
         for component in message:
 
-            if self.enabled and access("output_computation_steps"):
+            if self.console_enabled and access("output_computation_steps"):
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
             if self.file:
                 self.file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
-        if self.enabled and access("output_computation_steps"):
+        if self.console_enabled and access("output_computation_steps"):
             print(end=end)
 
         if self.file:
             self.file.write(end)
 
     def disable_console(self):
-        self.enabled = False
+        self.console_enabled = False
 
     def enable_console(self):
-        self.enabled = True
+        self.console_enabled = True
 
 
 io = IOLogger()

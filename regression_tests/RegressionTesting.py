@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 
 from probability_structures.CausalGraph import *
-from config.config_mgr import *
+from config.config_manager import *
 
 
 def create_outcomes(*outcome_statements):

@@ -19,7 +19,7 @@ import math             # Used in table->str formatting
 # Other modules of project
 from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations
 from probability_structures.VariableStructures import *         # The Outcome and Variable classes
-from config.config_mgr import *
+from config.config_manager import *
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.IO_Logger import *
 from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
@@ -95,7 +95,6 @@ class CausalGraph:
             determination_type = determination["type"]
 
             if determination["type"] == "table":
-
                 self.determination[name] = "table"
                 self.determination[var] = "table"
 
@@ -113,13 +112,10 @@ class CausalGraph:
                     self.tables[self.variables[name]].append(cpt)
 
             elif determination_type == "function":
-
                 self.determination[name] = "function"
                 self.determination[var] = "function"
-
                 self.functions[name] = determination["function"]
                 self.functions[var] = determination["function"]
-
             else:
                 print("ERROR; Variable", name, "determination cannot be found.")
                 exit(-1)
@@ -239,7 +235,7 @@ class CausalGraph:
             assert variable in self.variables
 
             # Calculate; results are a (min, max) tuple
-            result = self.probabilistic_function_resolve(*self.functions[variable])
+            result = self.probabilistic_function_resolve(*self.functions[variable], apply_noise=access("apply_any_noise"))
             self.store_computation(str(variable), result)
             io.write(variable, "= min: {}, max: {}".format(*result))
 
@@ -304,11 +300,12 @@ class CausalGraph:
         if access("cache_computation_results") and string_representation not in self.stored_computations:
             self.stored_computations[string_representation] = result
 
-    def probabilistic_function_resolve(self, function: str, noise_function="", depth=0) -> (float, float):
+    def probabilistic_function_resolve(self, function: str, noise_function="", apply_noise=True, depth=0) -> (float, float):
         """
         Resolve a Variable, the value of which is determined by a probabilistic function
         :param function: The function to evaluate for a value
         :param noise_function: A noise function which, when evaluated, is applied to the original value
+        :param apply_noise: Whether or not to apply any noise to the results
         :param depth: How many levels of recursion deep we are; used for output formatting
         :return: A float tuple (min, max) representing the range of values of the function
         """
@@ -324,28 +321,38 @@ class CausalGraph:
             # A different probabilistic variable is involved, resolve it first
             if "val(" in elements[element_idx]:
 
+                # The actual variable to be calculated
                 trimmed = elements[element_idx].strip("val()")
                 io.write("Evaluating value for:", trimmed, x_offset=depth)
-                function_data = self.functions[trimmed]
 
-                result = self.probabilistic_function_resolve(*function_data, depth=depth+1)
+                # Get the function/noise and calculate
+                function_data = self.functions[trimmed]
+                result = self.probabilistic_function_resolve(*function_data, apply_noise=access("recursive_noise_propagation"), depth=depth+1)
+
+                # Store the (min, max) result, cache if desired
                 nested_min_maxes.append(result)
                 self.store_computation(trimmed, result)
+
+                # Replace with a "{}" so that we can do some slick formatting for the main
+                #   function evaluation later
                 elements[element_idx] = "{}"
 
-            # Some probabilities are involved
+            # Probabilities are involved
             if "p(" in elements[element_idx]:
+
+                # The variable to determine the probability of, split at the "|" if given into X | Y
                 trimmed = elements[element_idx].strip("p()")
                 split = re.split(r"\|", trimmed)
 
+                # Create proper Outcome objects for everything
                 head = [Outcome(*outcome.split("=")) for outcome in split[0].split(",")]
                 body = []
                 if len(split) == 2:
                     body = [Outcome(*outcome.split("=")) for outcome in split[1].split(",")]
 
+                # Calculate the probability, substitute it into the original function
                 result = self.probability(head, body, depth=depth+1)
                 io.write(self.p_str(head, body), "=", str(result), x_offset=depth)
-                self.store_computation(self.p_str(head, body), result)
                 elements[element_idx] = str(result)
 
         # All possible results, we will return the min and max to represent the range
@@ -354,12 +361,15 @@ class CausalGraph:
         # Rejoin each independently evaluated piece, evaluate in (what is now) basic arithmetic
         for cross in itertools.product(*nested_min_maxes):
 
+            # Unpack a given cross-product across the string, substituted in anywhere we
+            #   placed a "{}"
             result = eval(" ".join(elements).format(*cross))
 
+            # Calculate and apply noise if given and enabled
             noise = 0
-            if noise_function:
+            if noise_function and apply_noise:
                 print("Here", " ".join(elements).format(*cross))
-                noise_range = self.probabilistic_function_resolve(noise_function, "", depth=depth+1)
+                noise_range = self.probabilistic_function_resolve(noise_function, "", apply_noise=access("recursive_noise_propagation"), depth=depth+1)
                 noise = sum(noise_range) / 2
             all_results.extend((result - noise, result + noise))
 
