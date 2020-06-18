@@ -4,3 +4,4 @@
 config/__pycache__/
 logging/*
 *.pyc
+config/config.json
