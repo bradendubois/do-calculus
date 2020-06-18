@@ -75,16 +75,27 @@ If the ``type`` is "table", the following attribute is necessary:
   "parents": ["PARENT_1", "PARENT_2", "..."],
   "determination": {
     "type": "function",
-    "function": "10 * p(A=~a) / val(B) + 1"
+    "function": [
+      "10 * p(A=~a) / val(B) + 1",
+      "4 * 10"
+    ]
   }
 }
 ```
 
 If the ``type`` is "function", the following attribute is necessary:
 
-- **"function"**: A function determining the value of the variable. "Noise" is still being added, but the function must be supplied as a valid arithmetic string.
+- **"function"**: A two-element list.
+    - The first element is a **function** determining the value of the variable. 
+    - The second element is **noise function**, representing the +- applied to the function's evaluated result.
+    - Both the main function and noise function must be supplied as a valid arithmetic string.
+    - If you want there to be *no noise*, you can do any of the following:
+        - Make the noise function "" since it evaluates to 0.
+        - Make the noise function "0" to be clear to others that nothing is happening.
+        - *Do not include a noise function*; you *must* still supply the ``function`` value as a list, though it will now be 1 element.
 
 Functions are **case-sensitive** and **spacing-sensitive**, and can involve the following:
+
 - **basic arithmetic**: Order of operations, +-*/, parentheses, exponentiation all supported.
 - **nested probabilistic evaluation**: If a Variable *X* is defined in the Causal Graph as being calculated by a (also valid) probabilistic function, you can write ``val(X)`` to reference the evaluation of X.
 - **nested probability evaluation**: The probability of some query can be supplied, by being written as ``p(VAR=V,VAR2=V2|VAR3=V3)``.
@@ -94,5 +105,8 @@ Functions are **case-sensitive** and **spacing-sensitive**, and can involve the 
         - Each variable given should be expressed as ``VARIABLE=OUTCOME``.
         - If there is no "given", the vertical bar "|" should be omitted.
             - **Example**: ``p(Y=y)``
+        - Noise functions can also involve ``p(X)`` or ``val(X)`` evaluations.
+        - "Feedback" loops will not resolve, instead looping forever.
+            - **Example**: ``f(C) = val(C) + 10``
 
 - **Note**: At present, "outcomes" is still a required part of the probabilistic function variables, though they yield continuous evaluations; provide the "outcomes" field, but leave it empty.

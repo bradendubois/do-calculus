@@ -22,7 +22,7 @@
       "type": "function",
       "function": [
         "2 * p(A=a) + 45",
-        "4.0"
+        "1 / 0.4 * p(A=a)"
       ]
     }
   },{
