@@ -118,7 +118,7 @@ def run_test_file(test_file: str) -> (bool, str):
                 # Construct a list of "Outcomes" from the given args
                 head, body = create_head_and_body(args)
 
-                for i in range(access("regression_determinism_repetition")):
+                for i in range(access("default_regression_repetition")):
                     result = causal_graph.probability(head, body)
                     if result not in results:
                         results.append(result)
@@ -179,7 +179,7 @@ def validate_all_regression_tests() -> (bool, str):
     # Open a regression file to log to if enabled
     if access("log_all_regression_computation"):
 
-        log_dir = access("regression_log_directory")
+        log_dir = access("regression_log_subdirectory")
 
         # Create the logging directory if it doesn't exist
         if not os.path.isdir(access("logging_directory") + "/" + log_dir):
