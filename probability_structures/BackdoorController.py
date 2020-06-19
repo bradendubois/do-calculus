@@ -77,7 +77,11 @@ class BackdoorController:
             for parent in self.variables[variable].parents:
                 if parent not in self.children:
                     self.children[parent] = set()
-                self.children[parent].update(variable)
+                self.children[parent].update({variable})
+
+        # for variable in self.children:
+        #     io.write(variable + " has children: " + str(self.children[variable]), end="")
+        # io.write(end="")
 
     def run(self):
         """

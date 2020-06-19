@@ -1,8 +1,8 @@
 {
-  "name": "Square-Game",
+  "name": "Triangle Test",
   "variables": [{
-    "name": "A",
-    "outcomes": ["a", "~a"],
+    "name": "X1",
+    "outcomes": [],
     "parents": [],
     "determination": {
       "type": "table",
@@ -15,7 +15,7 @@
       }]
     }
   },{
-    "name": "B",
+    "name": "X2",
     "outcomes": ["b", "~b"],
     "parents": [],
     "determination": {
@@ -23,12 +23,82 @@
       "function": "2 * p(A=a) + 45"
     }
   },{
-    "name": "C",
+    "name": "X3",
     "outcomes": ["c", "~c"],
-    "parents": ["A", "B"],
+    "parents": ["X1"],
     "determination": {
       "type": "function",
       "function": "10 * p(A=~a) / val(B) + 1"
+    }
+  }, {
+    "name": "X4",
+    "outcomes": [],
+    "parents": ["X1", "X2"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
+    }
+  }, {
+    "name": "X5",
+    "outcomes": [],
+    "parents": ["X2"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
+    }
+  }, {
+    "name": "Xi",
+    "outcomes": [],
+    "parents": ["X3", "X4"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
+    }
+  }, {
+    "name": "X6",
+    "outcomes": [],
+    "parents": ["Xi"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
+    }
+  }, {
+    "name": "Xj",
+    "outcomes": [],
+    "parents": ["X6", "X4", "X5"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["a", [], 0.4],
+          ["~a", [], 0.6]
+        ]
+      }]
     }
   }]
 }
