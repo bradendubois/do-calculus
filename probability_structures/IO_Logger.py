@@ -43,18 +43,19 @@ class IOLogger:
             self.file.close()
         self.file = None
 
-    def write(self, *message: str, join=" ", end="\n", x_offset=0):
+    def write(self, *message: str, join=" ", end="\n", x_offset=0, console_override=False):
         """
         Optional output of any number of strings unless output is suppressed
         :param message: Any number of strings to print
         :param join: A string used to join the messages
         :param end: The end symbol outputted at the end of the series of strings
         :param x_offset: The amount of space at the beginning of every line to indent by
+        :param console_override: An optional flag that ensures info is printed to the console
         :return:
         """
         indent = int(x_offset) * "  "
 
-        if self.console_enabled and access("output_computation_steps"):
+        if self.console_enabled and access("output_computation_steps") or console_override:
             print("\n" + indent, end="")
 
         if self.file:
@@ -62,13 +63,13 @@ class IOLogger:
 
         for component in message:
 
-            if self.console_enabled and access("output_computation_steps"):
+            if self.console_enabled and access("output_computation_steps") or console_override:
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
             if self.file:
                 self.file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
-        if self.console_enabled and access("output_computation_steps"):
+        if self.console_enabled and access("output_computation_steps") or console_override:
             print(end=end)
 
         if self.file:

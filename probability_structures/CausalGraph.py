@@ -231,7 +231,7 @@ class CausalGraph:
             probability = self.probability(outcome, given_variables)
 
             # Log and close
-            io.write("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
+            io.write("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")), console_override=True)
             io.close()
 
         # Catch only exceptions for indeterminable queries
@@ -452,18 +452,9 @@ class CausalGraph:
         #      Check for Function for Resolution      #
         ###############################################
 
-        # TODO - Can probably remove? This should never happen and might be better handled with
-        #   an exception rather than hope this will work out.
         if len(head) == 1 and self.determination[head[0].name] == "function":
-
-            try:
-                io.write("Attempting to resolve", head[0].name, "by a probabilistic function.")
-                result = self.probabilistic_function_resolve(self.variables[head[0].name])
-                self.store_computation(self.p_str(head, body), result)
-                io.write(self.p_str(head, body), "=", str(result))
-                return result
-            except ProbabilityException:
-                io.write("Couldn't resolve by a probabilistic function evaluation.")
+            io.write("Couldn't resolve by a probabilistic function evaluation.")
+            raise ProbabilityException
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
@@ -474,6 +465,8 @@ class CausalGraph:
             if len(head) > len(body):
                 io.write("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
+
+        # Remove any non-parent, non-children?
 
         #######################################################################################################
         #                                            Jeffrey's Rule                                           #
@@ -545,11 +538,30 @@ class CausalGraph:
                 return result
 
             except ProbabilityException:
-                io.write("Failed to resolve by flipping")
+                io.write("Failed to resolve by flipping", x_offset=depth)
 
         ###############################################
         #            Single element on LHS            #
         ###############################################
+
+        # TODO - This whole (thing)
+        if len(head) == 1:
+
+            head_var = self.variables[head[0].name]
+            not_children_or_ancestors = [var for var in body if var.name not in head_var.reach and head_var.name not in self.variables[var.name].reach]
+            non_parent_anc = [var for var in body if head_var.name in self.variables[var.name].reach and var.name not in head_var.parents]
+            not_connected = [var for var in body if var.name not in head_var.reach and var not in non_parent_anc and var.name not in head_var.parents]
+
+            if not_connected:
+                try:
+
+                    io.write("Can drop:", str([str(item) for item in non_parent_anc + not_connected]), x_offset=depth)
+                    result = self.probability(head, [item for item in body if item not in non_parent_anc and item not in not_connected], new_queries, depth+1)
+                    return result
+
+                except ProbabilityException:
+                    pass
+
 
         if len(head) == 1 and not missing_parents and not reachable_from_head:
 
@@ -585,6 +597,10 @@ class CausalGraph:
                         return result
                     except ProbabilityException:
                         io.write("Couldn't resolve by removing non-parent ancestors.", x_offset=depth)
+
+        #else:
+            #print(self.p_str(head, body), str([str(item) for item in missing_parents]))
+            #print(self.p_str(head, body), str([str(item) for item in reachable_from_head]))
 
         ###############################################
         #             Reverse product rule            #
