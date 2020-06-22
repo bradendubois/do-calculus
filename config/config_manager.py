@@ -29,10 +29,12 @@ def initialize_configuration_file():
         "output_regression_results": "failure",
         "exit_if_regression_failure": False,
 
-        # General
+        # Outputting Information
         "output_computation_steps": True,
         "output_regression_test_computation": False,
         "print_cg_info_on_instantiation": True,
+        "output_levels_of_precision": 5,
+        "minimize_backdoor_sets": True,
 
         # File Directories
         "graph_file_folder": "causal_graphs",
@@ -48,7 +50,6 @@ def initialize_configuration_file():
         "cache_computation_results": False,
         "default_regression_repetition": 10,
         "regression_levels_of_precision": 5,
-        "output_levels_of_precision": 5,
         "apply_any_noise": True,
         "recursive_noise_propagation": True
     }

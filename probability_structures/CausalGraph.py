@@ -613,3 +613,4 @@ class CausalGraph:
             return [parent for parent in self.variables[variable].parents if parent not in parent_subset]
         elif isinstance(variable, Variable):
             return [parent for parent in variable.parents if parent not in parent_subset]
+

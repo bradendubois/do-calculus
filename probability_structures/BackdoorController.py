@@ -122,7 +122,7 @@ class BackdoorController:
                 io.write("Exiting Backdoor Controller.", end="")
                 break
 
-    def get_all_z_subsets(self, x: set, y: set) -> set:
+    def get_all_z_subsets(self, x: set, y: set) -> list:
 
         # Get the power set of all remaining variables, and check which subsets yield causal independence
         z_power_set = power_set(set(self.variables) - (x | y))
@@ -172,7 +172,10 @@ class BackdoorController:
             if not any_backdoor_paths:
                 valid_z_subsets.add(z_subset)
 
-        # Return all the subsets
+        # Minimize the sets, if enabled
+        if access("minimize_backdoor_sets"):
+            valid_z_subsets = self.minimal_sets(valid_z_subsets)
+
         return valid_z_subsets
 
     def get_variable_set(self, prompt: str) -> set:
@@ -219,6 +222,19 @@ class BackdoorController:
                         path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
 
         return path_list
+
+    def minimal_sets(self, set_of_sets: set) -> list:
+        """
+        Take a set of sets, and return only the minimal sets
+        :param set_of_sets: A set of sets, each set containing strin
+        :return: A list of minimal sets
+        """
+        sorted_sets = sorted(map(set, set_of_sets), key=len)
+        minimal_subsets = []
+        for s in sorted_sets:
+            if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):
+                minimal_subsets.append(s)
+        return minimal_subsets
 
     # TODO - Rework into a boolean "any paths?" detector to improve testing?
     #   Everything following is unused
@@ -275,6 +291,5 @@ class BackdoorController:
                     path_list = self.all_paths_cumulative(self.variables[neighbour], target, path + [source], path_list, False)
 
         return path_list
-
 
 

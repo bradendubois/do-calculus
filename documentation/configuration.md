@@ -19,4 +19,5 @@ A breakdown of the settings available in ``config/config.json``.
 - **"log_all_regression_computation"** = \[true, false\]: Whether to log all the regression test computation
 - **"regression_log_directory"** = "regression": A subdirectory under the default logging location to write regression logs, if enabled.
 - **"apply_any_noise"** = \[true, false\]: Whether or not to apply any noise when functions are evaluated. 
-- **"recursive_noise_propagation"** = [true, false\]: Whether or not noise applied to variables should propagate through each nested evaluation, or simply be applied to the final result.
+- **"recursive_noise_propagation"** = \[true, false\]: Whether or not noise applied to variables should propagate through each nested evaluation, or simply be applied to the final result.
+- **"minimize_backdoor_sets"** = \[true, false\]: Whether or not to reduce all sets in the Backdoor Controller to a list of *minimal sets*. If enabled, only the minimal sets will be shown; disabled, it can be useful for debugging/seeing all options, but can grow quite large in bigger graphs.
