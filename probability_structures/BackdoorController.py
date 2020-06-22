@@ -124,11 +124,23 @@ class BackdoorController:
 
     def get_all_z_subsets(self, x: set, y: set) -> list:
 
-        # Get the power set of all remaining variables, and check which subsets yield causal independence
-        z_power_set = power_set(set(self.variables) - (x | y))
-
         # The cross product of X and Y
         cross_product = list(itertools.product(x, y))
+
+        # Get every straight-line-path between the cross-product of X and Y; those used cannot be
+        #   part of Z; they would introduce a confounding bias.
+        all_straight_line_paths = []
+        for cross in cross_product:
+            all_straight_line_paths.extend(self.all_paths_cumulative(cross[0], cross[1], [], []))
+            all_straight_line_paths.extend(self.all_paths_cumulative(cross[1], cross[0], [], []))
+
+        # Make a set of all variables used, and exclude them from possible Z sets
+        all_straight_line_path_variables = set()
+        for path in all_straight_line_paths:
+            all_straight_line_path_variables.update(path)
+
+        # Get the power set of all remaining variables, and check which subsets yield causal independence
+        z_power_set = power_set(set(self.variables) - (x | y | all_straight_line_path_variables))
 
         # A set of all "eligible" subsets of the power set of the compliment of x|y; any
         #   set in here is one which yields no backdoor backs from X x Y.
@@ -188,7 +200,18 @@ class BackdoorController:
         return input_set
 
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
-
+        """
+        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
+        This is used in the detection of backdoor paths from Source to Target.
+        This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
+        :param x:
+        :param y:
+        :param controlled_set:
+        :param path:
+        :param path_list:
+        :param previous:
+        :return:
+        """
         def has_controlled_descendant(variable: Variable):
             return any(var in controlled_set for var in variable.reach)
 
@@ -236,6 +259,25 @@ class BackdoorController:
                 minimal_subsets.append(s)
         return minimal_subsets
 
+    def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
+        """
+        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
+        This is used in the detection of backdoor paths from Source to Target.
+        This is a modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
+        :param source: The "source" Variable
+        :param target: The "target"/destination Variable
+        :param path: A current "path" of Variables seen along this traversal.
+        :param path_list: A list which will contain lists of paths
+        :param can_ascend: Used as a flag to determine when we can attempt to traverse from child to parents
+        :return: A list of lists of Variables, where each sublist denotes a path from source to target
+        """
+        if source == target:
+            return path_list + [path + [target]]
+        if source not in path:
+            for child in self.children[source]:
+                path_list = self.all_paths_cumulative(child, target, path + [source], path_list)
+        return path_list
+
     # TODO - Rework into a boolean "any paths?" detector to improve testing?
     #   Everything following is unused
     def detect_paths(self, head: Variable, body: Variable):
@@ -260,36 +302,5 @@ class BackdoorController:
 
         if not found_one_backdoor:
             print("No backdoor paths detected.")
-
-    def all_paths_cumulative(self, source: Variable, target: Variable, path: list, path_list: list, can_ascend=True) -> list:
-        """
-        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
-        This is used in the detection of backdoor paths from Source to Target.
-        This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
-        :param source: The "source" Variable
-        :param target: The "target"/destination Variable
-        :param path: A current "path" of Variables seen along this traversal.
-        :param path_list: A list which will contain lists of paths
-        :param can_ascend: Used as a flag to determine when we can attempt to traverse from child to parents
-        :return: A list of lists of Variables, where each sublist denotes a path from source to target
-        """
-        if source == target:
-            return path_list + [path + [target]]
-
-        if source not in path:
-
-            # If we can ascend (such as when we start from our source) or when we encounter a controlled collider
-            if can_ascend or self.controlled[source.name] and not can_ascend:
-                for parent in source.parents:
-                    # Switch the flag to True since we can go up multiple child->parent levels once we start
-                    path_list = self.all_paths_cumulative(self.variables[parent], target, path + [source], path_list, True)
-
-            # Consider X <- A -> Y, if A is controlled, we can't go down it to reach X and Y
-            if not self.controlled[source.name]:
-                for neighbour in self.children[source.name]:
-                    # Switch the flag to False, once going "down", can't go up until we reach a controlled collider
-                    path_list = self.all_paths_cumulative(self.variables[neighbour], target, path + [source], path_list, False)
-
-        return path_list
 
 
