@@ -223,12 +223,16 @@ class CausalGraph:
             return
 
         try:
+            # Open a file for logging
             io.open(self.p_str(outcome, given_variables))
-            probability = self.probability(outcome, given_variables)
-            io.write(str(probability) + "\n")
-            io.close()
+            io.write("\n", self.p_str(outcome, given_variables) + "\n")
 
+            # Compute the probability
+            probability = self.probability(outcome, given_variables)
+
+            # Log and close
             io.write("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")))
+            io.close()
 
         # Catch only exceptions for indeterminable queries
         #   We would still want other errors to come through

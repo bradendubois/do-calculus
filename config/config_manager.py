@@ -125,6 +125,15 @@ def access(param: str) -> any:
     :return: The specified value, first checking CLI flags, then config file.
     """
 
+    # Quick Check; if the param specified isn't found, maybe the config file is outdated
+    if param not in settings:
+        if input("Configuration Lookup Error;\n" +
+                 "Couldn't find parameter: " + param + "\n" +
+                 "The local config file may be outdated; re-generate?\n" +
+                 "  Re-Generated Configuration File? (Y/N): ").strip().lower() == "y":
+            os.remove(config_dir + "/" + config_file)
+            initialize_configuration_file()
+
     # By default, assume nothing
     value = None
 

@@ -169,7 +169,7 @@ def validate_all_regression_tests() -> (bool, str):
         io.write("ERROR: Regression tests enabled, but no test files found.")
 
     # Output a header on regression tests being run if toggled
-    if access("output_regression_computation"):
+    if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
 
     # Disable the IO/Logger to console if regression test results not set to output
@@ -195,7 +195,7 @@ def validate_all_regression_tests() -> (bool, str):
             return False, test_file + " has failed, with error: " + str(results[1])
 
     # Output a footer on regression tests being run if toggled
-    if access("output_regression_computation"):
+    if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
 
     # Enable IO if it was disabled
