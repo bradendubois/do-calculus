@@ -36,42 +36,45 @@ if os.path.isdir(access("graph_file_folder")):
     files = sorted([file_name for file_name in os.listdir(access("graph_file_folder")) if file_name.endswith(".json")])
     longest_file_length = max(len(file) for file in files)
 
-    # Only one file, just select it
+    # Only one file, just select it and exit when done
     if len(files) == 1:
         graph_file = files[0]
+        print("\nLoading:", graph_file)
+        CausalGraph(access("graph_file_folder") + "/" + graph_file).run()
 
-    # Multiple files, list them and get a selection
+    # Multiple files, list them and get a selection, allow switching
     else:
-        print("Files located in:", access("graph_file_folder"))
-        for file_index in range(len(files)):
+        while True:
+            print("\nFiles located in:", access("graph_file_folder"))
+            for file_index in range(len(files)):
 
-            # Show the name as a preview/reminder, if given
-            name = ""
-            with open(access("graph_file_folder") + "/" + files[file_index]) as f:
-                # Load the file and if there is a name, we can fancy up the output
-                loaded = json.load(f)
-                if "name" in loaded:
-                    name = " " * (longest_file_length - len(files[file_index])) + "- " + loaded["name"]
-            print("  ", str(file_index+1) + ")", files[file_index], name)
-        print("  ", str(len(files)+1) + ") Exit")
+                # Show the name as a preview/reminder, if given
+                name = ""
+                with open(access("graph_file_folder") + "/" + files[file_index]) as f:
+                    # Load the file and if there is a name, we can fancy up the output
+                    loaded = json.load(f)
+                    if "name" in loaded:
+                        name = " " * (longest_file_length - len(files[file_index])) + "- " + loaded["name"]
+                print("  ", str(file_index+1) + ")", files[file_index], name)
+            print("  ", str(len(files)+1) + ") Exit")
 
-        selection = input("Selection: ")
-        while not selection.isdigit() or not 1 <= int(selection) <= len(files) + 1:
             selection = input("Selection: ")
+            while not selection.isdigit() or not 1 <= int(selection) <= len(files) + 1:
+                selection = input("Selection: ")
 
-        # Last selection is always to exit
-        if selection == str(len(files)+1):
-            exit(0)
+            # Last selection is always to exit
+            if selection == str(len(files)+1):
+                exit(0)
 
-        graph_file = files[int(selection) - 1]
+            graph_file = files[int(selection) - 1]
 
-    print("\nLoading:", graph_file)
-    CG = CausalGraph(access("graph_file_folder") + "/" + graph_file)
+            print("\nLoading:", graph_file)
+            CausalGraph(access("graph_file_folder") + "/" + graph_file).run()
 
 # No directory, load whatever default is specified in the Causal Graph
 else:
     # Specify a path to a graph file if desired
     CG = CausalGraph()
 
-# Start the software
-CG.run()
+    # Start the software
+    CG.run()

@@ -140,12 +140,18 @@ class CausalGraph:
             for variable in self.variables:
                 io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, end="")
 
+        # "Startup"
+        self.running = True
+
+    def shutdown(self):
+        self.running = False
+
     def run(self):
         """
         The main REPL area of the project.
         """
 
-        while True:
+        while self.running:
 
             options = [
                 # Compute a probability
@@ -157,7 +163,9 @@ class CausalGraph:
                 # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
                 #   make such changes, so it's easiest to go make this its own "space".
                 [self.setup_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
-                [exit, "Exit"]
+
+                # Exit back to the main IO controller
+                [self.shutdown, "Exit / Switch Graph Files"]
             ]
 
             print("\n\nSelect:")

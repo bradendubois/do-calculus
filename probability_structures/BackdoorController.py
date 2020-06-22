@@ -30,7 +30,7 @@ class BackdoorController:
     get_functionality_selection_prompt = \
         "\n\nSelect an option:\n" + \
         "    1) Find backdoor paths\n" + \
-        "    2) Exit\n" + \
+        "    2) Exit Backdoor Controller\n" + \
         "  Selection: "
 
     get_x_set_prompt = \
