@@ -11,6 +11,7 @@ import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
 # Other modules of project
+from probability_structures.IO_Logger import io
 from probability_structures.VariableStructures import *         # The Outcome and Variable classes
 
 
@@ -62,7 +63,6 @@ class ConditionalProbabilityTable:
 
         # Populate each row
         for i in range(len(self.table_rows)):
-
             row = self.table_rows[i]
 
             # Value of the given variable
@@ -115,4 +115,5 @@ class ConditionalProbabilityTable:
                 return row[2]       # We have our answer
 
         # Iterated over all the rows and didn't find the correct one
+        io.write("Couldn't find row:", str([str(item) for item in outcome]), str([str(item) for item in given]))
         raise Exception
