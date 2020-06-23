@@ -151,6 +151,7 @@ class CausalGraph:
         The main REPL area of the project.
         """
 
+        self.running = True
         while self.running:
 
             options = [
@@ -380,7 +381,6 @@ class CausalGraph:
             # Calculate and apply noise if given and enabled
             noise = 0
             if noise_function and apply_noise:
-                print("Here", " ".join(elements).format(*cross))
                 noise_range = self.probabilistic_function_resolve(noise_function, "", apply_noise=access("recursive_noise_propagation"), depth=depth+1)
                 noise = sum(noise_range) / 2
             all_results.extend((result - noise, result + noise))
@@ -400,6 +400,9 @@ class CausalGraph:
         :param depth: Used for horizontal offsets in outputting info
         :return: A probability between [0.0, 1.0]
         """
+        ###############################################
+        #   Begin with bookkeeping / error-checking   #
+        ###############################################
 
         # Print the actual query being made on each recursive call to help follow
         io.write("Trying:", self.p_str(head, body), x_offset=depth)
@@ -408,15 +411,18 @@ class CausalGraph:
         if queries is None:
             queries = []
 
+        # Create a string representation of this query, and see if it's been done / in-progress / contradictory
+        str_rep = self.p_str(head, body)
+
         # If a string representation of this query is stored, we are in a loop and should stop
-        if self.p_str(head, body) in queries:
-            io.write("Already trying:", self.p_str(head, body), "returning.", x_offset=depth)
+        if str_rep in queries:
+            io.write("Already trying:", str_rep, "returning.", x_offset=depth)
             raise ProbabilityException
 
         # If the calculation has been done and cached, just return it from storage
-        if self.p_str(head, body) in self.stored_computations:
-            result = self.stored_computations[self.p_str(head, body)]
-            io.write("Computation already calculated:", self.p_str(head, body), "=", result, x_offset=depth)
+        if str_rep in self.stored_computations:
+            result = self.stored_computations[str_rep]
+            io.write("Computation already calculated:", str_rep, "=", result, x_offset=depth)
             return result
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
@@ -424,8 +430,31 @@ class CausalGraph:
             io.write("Two separate outcomes for one variable: 0.0")
             return 0.0
 
+        # Check for Function for Resolution
+        if len(head) == 1 and self.determination[head[0].name] == "function":
+            io.write("Couldn't resolve by a probabilistic function evaluation.")
+            raise ProbabilityException
+
         # Create a copy and add the current string; we pass a copy to prevent issues with recursion
-        new_queries = queries.copy() + [self.p_str(head, body)]
+        new_queries = queries.copy() + [str_rep]
+
+        ###############################################
+        #             Reverse product rule            #
+        #   P(y, x | ~z) = P(y | x, ~z) * P(x | ~z)   #
+        ###############################################
+
+        if len(head) > 1:
+            try:
+                io.write("Applying reverse product rule to", str_rep)
+
+                result_1 = self.probability(head[:-1], [head[-1]] + body, new_queries, depth+1)
+                result_2 = self.probability([head[-1]], body, new_queries, depth+1)
+                result = result_1 * result_2
+
+                self.store_computation(self.p_str(head, body), result)
+                return result
+            except ProbabilityException:
+                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
         #         Attempt direct-table lookup         #
@@ -448,14 +477,6 @@ class CausalGraph:
         else:
             io.write("Not Found\n", x_offset=depth)
 
-        ###############################################
-        #      Check for Function for Resolution      #
-        ###############################################
-
-        if len(head) == 1 and self.determination[head[0].name] == "function":
-            io.write("Couldn't resolve by a probabilistic function evaluation.")
-            raise ProbabilityException
-
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
         ##################################################################
@@ -466,25 +487,11 @@ class CausalGraph:
                 io.write("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
 
-        ###############################################
-        #             Reverse product rule            #
-        #   P(y, x | ~z) = P(y | x, ~z) * P(x | ~z)   #
-        ###############################################
-
-        if len(head) > 1:
-            try:
-                return self.probability(head[:-1], [head[-1]] + body, new_queries, depth + 1) * self.probability([head[-1]], body, new_queries, depth + 1)
-            except ProbabilityException:
-                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
-
-        # Remove any non-parent, non-children?
-
         #######################################################################################################
-        #                                            Jeffrey's Rule                                           #
+        #                                  Jeffrey's Rule / Distributive Rule                                 #
         #   P(y | x) = P(y | z, x) * P(z | x) + P(y | ~z, x) * P(~z | x) === sigma_Z P(y | z, x) * P(z | x)   #
         #######################################################################################################
 
-        # Detect all missing parents
         missing_parents = set()
         for outcome in head:
             missing_parents.update(self.missing_parents(outcome.name, set([parent.name for parent in head + body])))
@@ -520,97 +527,59 @@ class CausalGraph:
                     io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
 
         #################################################
+        #                  Bayes' Rule                  #
         #     Detect children of the LHS in the RHS     #
         #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
         #################################################
 
         reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
-        children_in_rhs = set([var.name for var in body]) & reachable_from_head
-        if len(children_in_rhs) > 0:
+        descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
-            io.write("Children of the LHS in the RHS:", ",".join(children_in_rhs), x_offset=depth)
+        if descendants_in_rhs:
+            io.write("Children of the LHS in the RHS:", ",".join(descendants_in_rhs), x_offset=depth)
+
             try:
                 # Not elegant, but simply take one of the children from the body out and recurse
-                move = list(children_in_rhs).pop(0)
-                move = [item for item in body if item.name == move]
-                new_body = [variable for variable in body if variable != move[0]]
+                child = list(descendants_in_rhs).pop(0)
+                child = [item for item in body if item.name == child]
+                new_body = list(set(body) - set(child))
 
-                str_1 = self.p_str(move, head + new_body)
+                str_1 = self.p_str(child, head + new_body)
                 str_2 = self.p_str(head, new_body)
-                str_3 = self.p_str(move, new_body)
+                str_3 = self.p_str(child, new_body)
                 io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
 
-                result_1 = self.probability(move, head + new_body, new_queries, depth + 1)
+                result_1 = self.probability(child, head + new_body, new_queries, depth + 1)
                 result_2 = self.probability(head, new_body, new_queries, depth + 1)
-                result_3 = self.probability(move, new_body, new_queries, depth + 1)
+                result_3 = self.probability(child, new_body, new_queries, depth + 1)
 
+                # flip flop flippy flop
                 result = result_1 * result_2 / result_3
                 self.store_computation(self.p_str(head, body), result)
                 return result
 
             except ProbabilityException:
-                io.write("Failed to resolve by flipping", x_offset=depth)
+                io.write("Failed to resolve by Bayes", x_offset=depth)
 
         ###############################################
         #            Single element on LHS            #
+        #               Drop non-parents              #
         ###############################################
 
-        # TODO - This whole (thing)
-        if len(head) == 100:
+        if len(head) == 1 and not missing_parents and not descendants_in_rhs:
 
             head_var = self.variables[head[0].name]
-            not_children_or_ancestors = [var for var in body if var.name not in head_var.reach and head_var.name not in self.variables[var.name].reach]
-            non_parent_anc = [var for var in body if head_var.name in self.variables[var.name].reach and var.name not in head_var.parents]
-            not_connected = [var for var in body if var.name not in head_var.reach and var not in non_parent_anc and var.name not in head_var.parents]
+            can_drop = [var for var in body if var.name not in head_var.parents]
 
-            if not_connected:
+            if can_drop:
                 try:
-
-                    io.write("Can drop:", str([str(item) for item in non_parent_anc + not_connected]), x_offset=depth)
-                    result = self.probability(head, [item for item in body if item not in non_parent_anc and item not in not_connected], new_queries, depth+1)
+                    io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
+                    result = self.probability(head, [v for v in body if v not in can_drop], new_queries, depth+1)
+                    self.store_computation(self.p_str(head, body), result)
                     return result
 
                 except ProbabilityException:
                     pass
-
-        if len(head) == 1 and not missing_parents and not reachable_from_head:
-
-            ###############################################
-            #                 Bayes' Rule                 #
-            #      P(z | x) = P(x | z) * P(z) / P(x)      #
-            ###############################################
-
-            try:
-                io.write("Attempting application of Bayes' Rule", x_offset=depth)
-                io.write(self.p_str(head, body), "=", end=" ", x_offset=depth)
-                io.write(self.p_str(body, head), "*", self.p_str(head, []), "/", self.p_str(body, []), x_offset=depth)
-
-                # flip flop flippy flop
-                result = self.probability(body, head, new_queries, depth + 1) * self.probability(head, [], new_queries, depth + 1) / self.probability(body, [], new_queries, depth + 1)
-                self.store_computation(self.p_str(head, body), result)
-                return result
-
-            except ProbabilityException:
-                io.write("Failed to resolve by Bayes'", x_offset=depth)
-
-            ###############################################
-            #        Eliminate non-parent ancestors       #
-            ###############################################
-
-            # A big list of Trues is created if body is all ancestors
-            if False not in [head[0].name in self.variables[var.name].reach for var in body]:
-                non_parent_ancestors = [anc for anc in body if anc.name not in self.variables[body[0].name].parents]
-                for non_parent_ancestor in non_parent_ancestors:
-                    try:
-                        result = self.probability(head, list(set(body) - {non_parent_ancestor}), new_queries, depth + 1)
-                        self.store_computation(self.p_str(head, body), result)
-                        return result
-                    except ProbabilityException:
-                        io.write("Couldn't resolve by removing non-parent ancestors.", x_offset=depth)
-
-        #else:
-            #print(self.p_str(head, body), str([str(item) for item in missing_parents]))
-            #print(self.p_str(head, body), str([str(item) for item in reachable_from_head]))
 
         ###############################################
         #               Cannot compute                #
