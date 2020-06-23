@@ -104,7 +104,7 @@ class BackdoorController:
                 valid_z_subsets = self.get_all_z_subsets(x, y)
 
                 if len(valid_z_subsets) > 0:
-                    io.write("\nPossible sets Z that yield causal independence.", end="")
+                    io.write("\nPossible sets Z that yield causal independence.", end="", console_override=True)
                     for subset in valid_z_subsets:
                         io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="")
                 else:

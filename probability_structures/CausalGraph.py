@@ -466,6 +466,17 @@ class CausalGraph:
                 io.write("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
 
+        ###############################################
+        #             Reverse product rule            #
+        #   P(y, x | ~z) = P(y | x, ~z) * P(x | ~z)   #
+        ###############################################
+
+        if len(head) > 1:
+            try:
+                return self.probability(head[:-1], [head[-1]] + body, new_queries, depth + 1) * self.probability([head[-1]], body, new_queries, depth + 1)
+            except ProbabilityException:
+                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
+
         # Remove any non-parent, non-children?
 
         #######################################################################################################
@@ -545,7 +556,7 @@ class CausalGraph:
         ###############################################
 
         # TODO - This whole (thing)
-        if len(head) == 1:
+        if len(head) == 100:
 
             head_var = self.variables[head[0].name]
             not_children_or_ancestors = [var for var in body if var.name not in head_var.reach and head_var.name not in self.variables[var.name].reach]
@@ -561,7 +572,6 @@ class CausalGraph:
 
                 except ProbabilityException:
                     pass
-
 
         if len(head) == 1 and not missing_parents and not reachable_from_head:
 
@@ -601,17 +611,6 @@ class CausalGraph:
         #else:
             #print(self.p_str(head, body), str([str(item) for item in missing_parents]))
             #print(self.p_str(head, body), str([str(item) for item in reachable_from_head]))
-
-        ###############################################
-        #             Reverse product rule            #
-        #   P(y, x | ~z) = P(y | x, ~z) * P(x | ~z)   #
-        ###############################################
-
-        if len(head) > 1:
-            try:
-                return self.probability(head[:-1], [head[-1]] + body, new_queries, depth + 1) * self.probability([head[-1]], body, new_queries, depth + 1)
-            except ProbabilityException:
-                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
         #               Cannot compute                #
