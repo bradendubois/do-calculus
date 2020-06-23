@@ -15,6 +15,13 @@ import argparse     # Allow command-line flag parsing
 config_dir = "config"
 config_file = "config.json"
 
+# A dictionary to hold all the settings;
+#   For CLI overrides, we abstract accessing parameters through "access", never direct indexing.
+settings: dict
+
+# Used such that configuration-file-specified settings can be overridden by a CLI flag
+cli_flag_overrides = dict()
+
 
 def initialize_configuration_file():
     """
@@ -67,9 +74,10 @@ def initialize_configuration_file():
             json.dump(default_configuration_file, f, indent=4, sort_keys=True)
         print("Created.")
 
-
-# Used such that configuration-file-specified settings can be overridden by a CLI flag
-cli_flag_overrides = dict()
+    # Load the configuration file
+    global settings
+    with open(config_dir + "/" + config_file) as config:
+        settings = json.load(config)
 
 
 def cli_arg_parser() -> argparse.Namespace:
@@ -107,15 +115,11 @@ def cli_arg_parser() -> argparse.Namespace:
     return parser.parse_args()
 
 
-# Always try to initialize if not found
+# Always initialize/load the configuration load
 initialize_configuration_file()
 
 # Create parser for CLI flags to override config settings
 parsed_args = cli_arg_parser()
-
-# Load the configuration file
-with open(config_dir + "/" + config_file) as config:
-    settings = json.load(config)
 
 
 def access(param: str) -> any:
@@ -127,7 +131,7 @@ def access(param: str) -> any:
 
     # Quick Check; if the param specified isn't found, maybe the config file is outdated
     if param not in settings:
-        if input("Configuration Lookup Error;\n" +
+        if input("\nConfiguration Lookup Error;\n" +
                  "Couldn't find parameter: " + param + "\n" +
                  "The local config file may be outdated; re-generate?\n" +
                  "  Re-Generated Configuration File? (Y/N): ").strip().lower() == "y":
