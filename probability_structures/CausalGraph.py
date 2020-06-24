@@ -226,13 +226,14 @@ class CausalGraph:
         try:
             # Open a file for logging
             io.open(self.p_str(outcome, given_variables))
-            io.write("\n", self.p_str(outcome, given_variables) + "\n")
+            io.write(self.p_str(outcome, given_variables) + "\n")
 
             # Compute the probability
             probability = self.probability(outcome, given_variables)
 
             # Log and close
-            io.write("P = " + "{0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")), console_override=True)
+            result = "P = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
+            io.write(result, console_override=True)
             io.close()
 
         # Catch only exceptions for indeterminable queries
@@ -405,7 +406,7 @@ class CausalGraph:
         ###############################################
 
         # Print the actual query being made on each recursive call to help follow
-        io.write("Trying:", self.p_str(head, body), x_offset=depth)
+        io.write("Querying:", self.p_str(head, body), x_offset=depth)
 
         # Keep a list of queries being passed through recursive calls to avoid infinite loops
         if queries is None:
@@ -462,7 +463,7 @@ class CausalGraph:
 
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
-            io.write("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
+            # io.write("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
 
             # Get the table
             table = self.get_table(head[0].name, set(body))
@@ -475,7 +476,7 @@ class CausalGraph:
 
             return probability
         else:
-            io.write("Not Found\n", x_offset=depth)
+            io.write("No direct table found.", x_offset=depth)
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
@@ -486,6 +487,42 @@ class CausalGraph:
             if len(head) > len(body):
                 io.write("Therefore,", self.p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
+
+        #################################################
+        #                  Bayes' Rule                  #
+        #     Detect children of the LHS in the RHS     #
+        #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
+        #################################################
+
+        reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
+        descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
+
+        if descendants_in_rhs:
+            io.write("Children of the LHS in the RHS:", ",".join(descendants_in_rhs), x_offset=depth, end="")
+            io.write("Applying Bayes' rule.", x_offset=depth)
+
+            try:
+                # Not elegant, but simply take one of the children from the body out and recurse
+                child = list(descendants_in_rhs).pop(0)
+                child = [item for item in body if item.name == child]
+                new_body = list(set(body) - set(child))
+
+                str_1 = self.p_str(child, head + new_body)
+                str_2 = self.p_str(head, new_body)
+                str_3 = self.p_str(child, new_body)
+                io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
+
+                result_1 = self.probability(child, head + new_body, new_queries, depth + 1)
+                result_2 = self.probability(head, new_body, new_queries, depth + 1)
+                result_3 = self.probability(child, new_body, new_queries, depth + 1)
+
+                # flip flop flippy flop
+                result = result_1 * result_2 / result_3
+                self.store_computation(self.p_str(head, body), result)
+                return result
+
+            except ProbabilityException:
+                io.write("Failed to resolve by Bayes", x_offset=depth)
 
         #######################################################################################################
         #                                  Jeffrey's Rule / Distributive Rule                                 #
@@ -515,7 +552,7 @@ class CausalGraph:
                         io.write(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
 
                         result_1 = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1)
-                        result_2 = self.probability([as_outcome], body, new_queries, depth + 1)
+                        result_2 = self.probability([as_outcome], body, new_queries, depth=depth+1)
                         outcome_result = result_1 * result_2
 
                         total += outcome_result
@@ -525,41 +562,6 @@ class CausalGraph:
 
                 except ProbabilityException:
                     io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
-
-        #################################################
-        #                  Bayes' Rule                  #
-        #     Detect children of the LHS in the RHS     #
-        #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
-        #################################################
-
-        reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
-        descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
-
-        if descendants_in_rhs:
-            io.write("Children of the LHS in the RHS:", ",".join(descendants_in_rhs), x_offset=depth)
-
-            try:
-                # Not elegant, but simply take one of the children from the body out and recurse
-                child = list(descendants_in_rhs).pop(0)
-                child = [item for item in body if item.name == child]
-                new_body = list(set(body) - set(child))
-
-                str_1 = self.p_str(child, head + new_body)
-                str_2 = self.p_str(head, new_body)
-                str_3 = self.p_str(child, new_body)
-                io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
-
-                result_1 = self.probability(child, head + new_body, new_queries, depth + 1)
-                result_2 = self.probability(head, new_body, new_queries, depth + 1)
-                result_3 = self.probability(child, new_body, new_queries, depth + 1)
-
-                # flip flop flippy flop
-                result = result_1 * result_2 / result_3
-                self.store_computation(self.p_str(head, body), result)
-                return result
-
-            except ProbabilityException:
-                io.write("Failed to resolve by Bayes", x_offset=depth)
 
         ###############################################
         #            Single element on LHS            #
@@ -605,8 +607,6 @@ class CausalGraph:
         :param parent_subset: A set of parent strings
         :return: The remaining parents of the given variable, as a list
         """
-        if isinstance(variable, str):
-            return [parent for parent in self.variables[variable].parents if parent not in parent_subset]
-        elif isinstance(variable, Variable):
-            return [parent for parent in variable.parents if parent not in parent_subset]
+        var = variable if isinstance(variable, Variable) else self.variables[variable]
+        return [parent for parent in var.parents if parent not in parent_subset]
 
