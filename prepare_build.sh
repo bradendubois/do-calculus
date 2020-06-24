@@ -28,6 +28,6 @@ mkdir $docs
 
 # Copy the PDFs, not Markdown
 # This specific command probably won't work off my local machine. It just renders a markdown file into pdf
-pandoc documentation/causal_graph_files.md -css ~/.config/pandoc/github-css.css -o "${docs}/Causal Graph Files.pdf"
-pandoc documentation/configuration.md -css ~/.config/pandoc/github-css.css -o "${docs}/Configuration.pdf"
-pandoc documentation/regression_tests.md -css ~/.config/pandoc/github-css.css -o "${docs}/Regression Tests.pdf"
+pandoc documentation/causal_graph_files.md -o "${docs}/Causal Graph Files.pdf"
+pandoc documentation/configuration.md -o "${docs}/Configuration.pdf"
+pandoc documentation/regression_tests.md -o "${docs}/Regression Tests.pdf"

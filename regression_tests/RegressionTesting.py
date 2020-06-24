@@ -50,11 +50,11 @@ def within_precision(a: float, b: float) -> bool:
 def run_test_file(test_file: str) -> (bool, str):
 
     # Load the test file
-    with open(access("regression_directory") + "/" + test_file) as f:
+    with open(root + "/" + access("regression_directory") + "/" + test_file) as f:
         loaded_test_file = json.load(f)
 
     # Default location assumed unless specified
-    directory = access("graph_file_folder")
+    directory = root + "/" + access("graph_file_folder")
     if "file_directory" in loaded_test_file:
         directory = loaded_test_file["file_directory"]
 
@@ -162,7 +162,7 @@ def validate_all_regression_tests() -> (bool, str):
         return False, "Cannot locate any regression tests."
 
     # Find all JSON files in that directory
-    files = sorted([file_name for file_name in os.listdir(access("regression_directory")) if file_name.endswith(".json")])
+    files = sorted([file_name for file_name in os.listdir(root + "/" + access("regression_directory")) if file_name.endswith(".json")])
 
     # Running tests but no files?
     if len(files) == 0 and access("run_regression_tests_on_launch"):

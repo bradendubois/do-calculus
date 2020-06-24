@@ -7,7 +7,10 @@
 #                                                       #
 #########################################################
 
+import os
 from config.config_manager import *
+
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class IOLogger:
@@ -28,11 +31,12 @@ class IOLogger:
             self.close()
 
         # Create directory if needed
-        if not os.path.isdir(access("logging_directory")):
-            os.makedirs(access("logging_directory"))
+        if not os.path.isdir(root + "/" + access("logging_directory")):
+            os.makedirs(root + "/" + access("logging_directory"))
+            os.makedirs(root + "/" + access("logging_directory") + "/" + access("regression_log_subdirectory"))
 
         # Open new file in write mode
-        self.file = open(access("logging_directory") + "/" + filename, "w")
+        self.file = open(root + "/" + access("logging_directory") + "/" + filename, "w")
 
     def close(self):
         """
