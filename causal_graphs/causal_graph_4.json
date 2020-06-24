@@ -16,7 +16,6 @@
     }
   },{
     "name": "B",
-    "outcomes": ["b", "~b"],
     "parents": [],
     "determination": {
       "type": "function",
@@ -27,7 +26,6 @@
     }
   },{
     "name": "C",
-    "outcomes": ["c", "~c"],
     "parents": ["A", "B"],
     "determination": {
       "type": "function",

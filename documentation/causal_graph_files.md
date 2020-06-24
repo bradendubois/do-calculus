@@ -109,4 +109,5 @@ Functions are **case-sensitive** and **spacing-sensitive**, and can involve the 
         - "Feedback" loops will not resolve, instead looping forever.
             - **Example**: ``f(C) = val(C) + 10``
 
-- **Note**: At present, "outcomes" is still a required part of the probabilistic function variables, though they yield continuous evaluations; provide the "outcomes" field, but leave it empty.
+- **Note**: "outcomes" is not a required part of the probabilistic function variables; it can be omitted.
+

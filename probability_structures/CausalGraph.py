@@ -77,18 +77,20 @@ class CausalGraph:
         for variable in loaded_file["variables"]:
 
             name = variable["name"]
-            outcomes = variable["outcomes"]
+            outcomes = []
+            if "outcomes" in variable:
+                outcomes = variable["outcomes"]
             parents = variable["parents"]
 
             # Create a fancy Variable object
             var = Variable(name, outcomes, parents)
 
             # Lookup the object by its name
-            self.variables[variable["name"]] = var
+            self.variables[name] = var
 
             # Store by both the Variable object as well as its name, for ease of access
-            self.outcomes[name] = variable["outcomes"]
-            self.outcomes[var] = variable["outcomes"]
+            self.outcomes[name] = outcomes
+            self.outcomes[var] = outcomes
 
             # Is the variable determined by a function or direct tables?
             determination = variable["determination"]
