@@ -55,8 +55,11 @@ class IOLogger:
         :param end: The end symbol outputted at the end of the series of strings
         :param x_offset: The amount of space at the beginning of every line to indent by
         :param console_override: An optional flag that ensures info is printed to the console
-        :return:
         """
+        # Slight check; if there is nothing to actually be written anywhere, just exit early
+        if not self.console_enabled and not access("output_computation_steps") and not console_override:
+            return
+
         indent = int(x_offset) * "  "
 
         if self.console_enabled and access("output_computation_steps") or console_override:

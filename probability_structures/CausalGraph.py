@@ -7,18 +7,15 @@
 #                                                       #
 #########################################################
 
-# Python libraries
-import itertools
+import itertools        # Used to create cross-products from iterables
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
 import re               # Used in probabilistic function evaluation
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
-
-# Other modules of project
-from probability_structures.ProbabilityExceptions import *      # Exceptions for Probability-computations
-from probability_structures.VariableStructures import *         # The Outcome and Variable classes
+from probability_structures.ProbabilityExceptions import *
+from probability_structures.VariableStructures import *
 from config.config_manager import *
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.IO_Logger import *
@@ -212,7 +209,8 @@ class CausalGraph:
                 print("Improperly entered data.")
                 return
 
-        print(self.p_str(outcome, given_variables))
+        str_rep = self.p_str(outcome, given_variables)
+        io.write("Query:", str_rep, console_override=True)
 
         try:
             # Validate the queried variable and any given
@@ -234,7 +232,7 @@ class CausalGraph:
             probability = self.probability(outcome, given_variables)
 
             # Log and close
-            result = "P = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
+            result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
             io.write(result, console_override=True)
             io.close()
 
@@ -247,18 +245,18 @@ class CausalGraph:
 
         try:
             # Get and verify variable is in the graph
-            variable = input(self.get_probabilistic_variable_prompt).strip().upper()
+            variable = input(self.get_probabilistic_variable_prompt).strip()
             assert variable in self.variables
 
             # Calculate; results are a (min, max) tuple
             result = self.probabilistic_function_resolve(*self.functions[variable], apply_noise=access("apply_any_noise"))
             self.store_computation(str(variable), result)
-            io.write(variable, "= min: {}, max: {}".format(*result))
+            io.write(variable, "= min: {}, max: {}".format(*result), console_override=True)
 
+        except KeyError:
+            io.write("Given variable not resolvable by a probabilistic function.", console_override=True)
         except AssertionError:
-            print("Variable given not in the graph.")
-        except NotFunctionDeterminableException:
-            io.write("Variable is not resolvable by a probabilistic function.")
+            io.write("Variable given not in the graph.", console_override=True)
 
     def setup_backdoor_controller(self):
         """
