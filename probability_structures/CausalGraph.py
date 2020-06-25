@@ -263,7 +263,7 @@ class CausalGraph:
 
                     # Second, we do our P(Z)
                     io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
-                    p_z = self.probability(z_outcomes, [])
+                    p_z = self.probability(z_outcomes, given)
 
                     probability += p_y_x_z * p_z
 
