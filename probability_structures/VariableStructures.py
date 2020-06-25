@@ -71,3 +71,28 @@ class Variable:
 
     def copy(self):
         return self.__copy__()
+
+
+class Intervention(Variable):
+    """
+    Represents an intervention; do(X).
+    """
+
+    def __init__(self, name: str, fixed_outcome: str):
+        self.fixed = fixed_outcome
+        super().__init__(name, [fixed_outcome], [])
+
+    def __str__(self) -> str:
+        return "do(" + self.name + ")" + super().__str__()[len(self.name):]
+
+    def __hash__(self):
+        return hash(self.name + self.fixed)
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+    def __copy__(self):
+        return Intervention(self.name, self.fixed)
+
+    def copy(self):
+        return self.__copy__()
