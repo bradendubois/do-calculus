@@ -78,6 +78,15 @@ primary_config_file = [
             "parameter": "minimize_backdoor_sets",
             "default_value": True,
             "options": [True, False]
+        }, {
+            "parameter_title": "Choosing Z Set in do-calculus",
+            "description": "In the do-calculus of p(Y | do(X)), multiple possible sets Z may serve as a " +
+                           "deconfounding set; control how the set Z is chosen. Either ``ask`` the user to select " +
+                           "one, or choose one at ``random``, or run the query multiple times, using every possible " +
+                           "set, ensuring only one answer is ever computed. The last option is useful in debugging.",
+            "parameter": "z_selection_preference",
+            "default_value": "all",
+            "options": ["ask", "random", "all"]
         }]
     }, {
         "section": "File Directories",
@@ -121,7 +130,7 @@ primary_config_file = [
                            "will be the directory ``regression_log_subdirectory``, which is itself a subdirectory of " +
                            "``logging_directory``.",
             "parameter": "log_all_regression_computation",
-            "default_value": True,
+            "default_value": False,
             "options": [True, False]
         }, {
             "parameter_title": "Logging Directory",

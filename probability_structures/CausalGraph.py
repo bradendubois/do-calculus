@@ -220,6 +220,7 @@ class CausalGraph:
                 y = set([y.name for y in given if isinstance(y, Intervention)])
 
                 deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
+                deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in given if not isinstance(g, Intervention))]
                 assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
 
         except AssertionError as e:
@@ -244,28 +245,81 @@ class CausalGraph:
 
             # There is a do(X) in the given, so we take a de-confounding set Z
             else:
-                z_set = random.choice(deconfounding_sets)
-                io.write("Choosing deconfounding set Z =", str(z_set))
 
-                probability = 0
+                def single_z_set_run(selected_set) -> float:
+                    io.write("Choosing deconfounding set Z =", str(selected_set))
 
-                # We take every possible combination of outcomes of Z and compute each probability separately
-                for cross in itertools.product(*[self.outcomes[var] for var in z_set]):
+                    p = 0
 
-                    # Construct the respective Outcome list of each Z outcome cross product
-                    z_outcomes = []
-                    for cross_idx in range(len(z_set)):
-                        z_outcomes.append(Outcome(list(z_set)[cross_idx], cross[cross_idx]))
+                    # We take every possible combination of outcomes of Z and compute each probability separately
+                    for cross in itertools.product(*[self.outcomes[var] for var in z_set]):
 
-                    # First, we do our P(Y | do(X), Z)
-                    io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
-                    p_y_x_z = self.probability(outcome, given + z_outcomes)
+                        # Construct the respective Outcome list of each Z outcome cross product
+                        z_outcomes = []
 
-                    # Second, we do our P(Z)
-                    io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
-                    p_z = self.probability(z_outcomes, given)
+                        for cross_idx in range(len(z_set)):
+                            z_outcomes.append(Outcome(list(z_set)[cross_idx], cross[cross_idx]))
 
-                    probability += p_y_x_z * p_z
+                        # First, we do our P(Y | do(X), Z)
+                        io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
+                        p_y_x_z = self.probability(outcome, given + z_outcomes)
+
+                        # Second, we do our P(Z)
+                        io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
+                        p_z = self.probability(z_outcomes, given)
+
+                        p += p_y_x_z * p_z
+
+                    return p
+
+                # How to choose the set Z; present them all and allow selection? Random? All?
+                choose_z = access("z_selection_preference")
+
+                # Try every possible Z; still return an answer, ensure only one unique answer is computed
+                if choose_z == "all":
+
+                    # Sentinel value
+                    only_result = None
+
+                    io.write("Computing with every possible Z set.", console_override=True)
+                    for z_set in deconfounding_sets:
+
+                        # Compute with a specific set
+                        result = single_z_set_run(z_set)
+
+                        # Storing first result
+                        if only_result is None:
+                            only_result = result
+
+                        # Results do NOT match; error
+                        elif abs(result - only_result) > 0.0000001:
+                            io.write("Error: Two distinct results from different Z sets: ", str(only_result), "vs", str(result))
+                            raise ProbabilityException
+
+                    probability = only_result
+
+                # Randomly choose a set
+                elif choose_z == "random":
+
+                    z_set = random.choice(deconfounding_sets)
+                    io.write("Choosing a set Z at random:", str(z_set), console_override=True)
+                    probability = single_z_set_run(z_set)
+
+                # Present all sets and allow a choice to be made
+                else:
+
+                    set_selection_prompt = "Select a deconfounding set:\n"
+                    for i in range(len(deconfounding_sets)):
+                        set_selection_prompt += "  " + str(i+1) + ") " + str(deconfounding_sets[i]) + "\n"
+                    io.write(set_selection_prompt, end="", console_override=True)
+
+                    selection = input("Selection: ")
+                    while not selection.isdigit() or not 1 <= int(selection) <= len(deconfounding_sets):
+                        selection = input("Selection: ")
+
+                    selected_set = deconfounding_sets[int(selection)-1]
+                    io.write("Set selected:", str(selected_set), console_override=True)
+                    probability = single_z_set_run(selected_set)
 
             # Log and close
             result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
