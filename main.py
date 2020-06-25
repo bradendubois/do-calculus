@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #########################################################
 #                                                       #
 #   main.py / Probability Runner                        #
@@ -8,7 +10,6 @@
 #########################################################
 
 import os               # Used to list directory contents to select graphs
-
 
 from probability_structures.CausalGraph import *
 from regression_tests.RegressionTesting import *
