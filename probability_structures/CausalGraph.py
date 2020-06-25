@@ -10,6 +10,7 @@
 import itertools        # Used to create cross-products from iterables
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
+import random
 import re               # Used in probabilistic function evaluation
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
@@ -44,6 +45,11 @@ class CausalGraph:
         "\nEnter a specific variable to compute the value of." + \
         "\n    Example: 'X'" + \
         "\n  Query: "
+
+    error_msg_formatting = \
+        "The given data is incorrect:\n" + \
+        " - Some outcome may not be possible for some variable\n" + \
+        " - Some variable may not be defined"
 
     def __init__(self, filename=None):
 
@@ -183,53 +189,83 @@ class CausalGraph:
         """
         Helper that gets data necessary to query a probability.
         """
+        # Declare this variable here for scope; PyCharm can't see that it *must* be defined
+        #   at a later point
+        deconfounding_sets = set()
 
-        # Need an outcome to query, not necessarily any given data though
-        outcome = []
-        outcome_preprocessed = input(self.get_specific_outcome_prompt).split(",")
-
+        # Get our input data first
         try:
-            for out in outcome_preprocessed:
-                outcome_split = [var.strip() for var in out.split("=")]
-                outcome.append(Outcome(outcome_split[0], outcome_split[1]))
-        except IndexError:
-            print("Improperly entered data.")
+            # Need an outcome to query, not necessarily any given data though
+            outcome_preprocessed = input(self.get_specific_outcome_prompt)
+            outcome = parse_outcomes_and_interventions(outcome_preprocessed)
+
+            # Ensure there are no adjustments in the head
+            for out in outcome:
+                assert not isinstance(out, Intervention), "Don't put adjustments in the head."
+
+            # Get optional "given" data and process it
+            given = []
+            given_preprocessed = input(self.get_given_data_prompt)
+            if given_preprocessed != "":
+                given = parse_outcomes_and_interventions(given_preprocessed)
+
+            # Validate the queried variable and any given
+            for out in outcome + given:
+                # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
+                assert out.name in self.variables and out.outcome in self.outcomes[out.name], self.error_msg_formatting
+
+            # If we have an Intervention in given, we need to construct Z
+            if any(isinstance(g, Intervention) for g in given):
+                x = set([x.name for x in outcome])
+                y = set([y.name for y in given if isinstance(y, Intervention)])
+
+                deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
+                assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
+
+        except AssertionError as e:
+            io.write("Error: " + str(e.args), console_override=True)
             return
 
-        given_variables = []
+        except IndexError:
+            io.write("Improperly entered data.", console_override=True)
+            return
 
-        # Get optional "given" data and process it
-        given_preprocessed = input(self.get_given_data_prompt).split(",")
-        if given_preprocessed != ['']:
-            try:
-                for given in given_preprocessed:
-                    given_split = [var.strip() for var in given.split("=")]
-                    given_variables.append(Outcome(given_split[0], given_split[1]))
-            except IndexError:
-                print("Improperly entered data.")
-                return
-
-        str_rep = self.p_str(outcome, given_variables)
+        str_rep = self.p_str(outcome, given)
         io.write("Query:", str_rep, console_override=True)
 
         try:
-            # Validate the queried variable and any given
-            for out in outcome + given_variables:
-                # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
-                assert out.name in self.variables and out.outcome in self.outcomes[out.name]
-        except AssertionError:
-            print("The given data is incorrect:\n" +
-                  " - Some outcome may not be possible for some variable\n" +
-                  " - Some variable may not be defined")
-            return
-
-        try:
             # Open a file for logging
-            io.open(self.p_str(outcome, given_variables))
-            io.write(self.p_str(outcome, given_variables) + "\n")
+            io.open(self.p_str(outcome, given))
+            io.write(self.p_str(outcome, given) + "\n")
 
-            # Compute the probability
-            probability = self.probability(outcome, given_variables)
+            # Compute the probability of a standard query
+            if not any(isinstance(g, Intervention) for g in given):
+                probability = self.probability(outcome, given)
+
+            # There is a do(X) in the given, so we take a de-confounding set Z
+            else:
+                z_set = random.choice(deconfounding_sets)
+                io.write("Choosing deconfounding set Z =", str(z_set))
+
+                probability = 0
+
+                # We take every possible combination of outcomes of Z and compute each probability separately
+                for cross in itertools.product(*[self.outcomes[var] for var in z_set]):
+
+                    # Construct the respective Outcome list of each Z outcome cross product
+                    z_outcomes = []
+                    for cross_idx in range(len(z_set)):
+                        z_outcomes.append(Outcome(list(z_set)[cross_idx], cross[cross_idx]))
+
+                    # First, we do our P(Y | do(X), Z)
+                    io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
+                    p_y_x_z = self.probability(outcome, given + z_outcomes)
+
+                    # Second, we do our P(Z)
+                    io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
+                    p_z = self.probability(z_outcomes, [])
+
+                    probability += p_y_x_z * p_z
 
             # Log and close
             result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
@@ -458,7 +494,15 @@ class CausalGraph:
                 io.write("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
-        #         Attempt direct-table lookup         #
+        #            Interventions / do(X)            #
+        ###############################################
+
+        # Interventions imply that we have fixed X=x
+        if isinstance(head[0], Intervention):
+            return 1.0
+
+        ###############################################
+        #            Attempt direct lookup            #
         ###############################################
 
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
@@ -600,13 +644,42 @@ class CausalGraph:
                 return True
         return False
 
-    def missing_parents(self, variable: str or Variable, parent_subset: set) -> list:
+    def missing_parents(self, variable, parent_subset: set) -> list:
         """
         Get a list of all the missing parents of a variable
-        :param variable: A variable object (either string or the object itself)
+        :param variable: A variable object (either string or the object itself) or an Outcome
         :param parent_subset: A set of parent strings
         :return: The remaining parents of the given variable, as a list
         """
+        # Interventions have no parents, technically!
+        if isinstance(variable, Intervention):
+            return []
+
         var = variable if isinstance(variable, Variable) else self.variables[variable]
         return [parent for parent in var.parents if parent not in parent_subset]
 
+
+def parse_outcomes_and_interventions(line: str) -> list:
+    """
+    Take one string line and parse it into a list of Outcomes and Interventions
+    :param line: A string representing the query
+    :return: A list, of Outcomes and/or Interventions
+    """
+    interventions_preprocessed = re.findall(r'do\([^do]*\)', line)
+    interventions_preprocessed = [item.strip("do(), ") for item in interventions_preprocessed]
+    interventions = []
+    for string in interventions_preprocessed:
+        interventions.extend([item.strip(", ") for item in string.split(", ")])
+
+    outcomes_preprocessed = re.sub(r'do\([^do]*\)', '', line).strip(", ").split(",")
+    outcomes_preprocessed = [item.strip(", ") for item in outcomes_preprocessed]
+    outcomes = [string for string in outcomes_preprocessed if string]
+
+    outcomes = [Outcome(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in outcomes]
+    interventions = [Intervention(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in interventions]
+
+    together = []
+    together.extend(outcomes)
+    together.extend(interventions)
+
+    return together
