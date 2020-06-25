@@ -6,27 +6,22 @@
 #                                                       #
 #########################################################
 
-# Python libraries
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
-# Other modules of project
+from config.config_manager import *
 from probability_structures.IO_Logger import io
-from probability_structures.VariableStructures import *         # The Outcome and Variable classes
+from probability_structures.VariableStructures import *
 
 
 class ConditionalProbabilityTable:
     """
     A basic conditional probability table that reflects the values of one Variable, and any number of conditional
     values
-
     :param variable: A Variable object, representing the variable this table computes a probability for
     :param given: A (possibly empty) list of Variables, representing the parents for the variable given
     :param table_rows: A list of rows in the table, each formatted as [<OUTCOME>, ["<GIVEN_1_OUTCOME>, ...], <P>]
     """
-
-    # When outputting information, the number of digits to round to
-    digits_of_probability_precision = 2
 
     # Padding units on the left/right sides of each cell
     padding = 1
@@ -73,7 +68,7 @@ class ConditionalProbabilityTable:
                 table[i+1][1+given_idx] = row[1][given_idx]
 
             # The probability, to some modifiable number of digits
-            table[i+1][table.shape[1]-1] = "{0:.2f}".format(row[2])
+            table[i+1][table.shape[1]-1] = "{0:.{precision}f}".format(row[2], precision=access("output_levels_of_precision"))
 
         # Wiggle/Padding, column by column
         for column_index in range(1 + len(self.given) + 1):

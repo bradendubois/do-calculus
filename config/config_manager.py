@@ -11,8 +11,12 @@ import json         # Settings data is stored in JSON
 import os           # Used to create a directory/config file if not found
 import argparse     # Allow command-line flag parsing
 
+from config.primary_configuration import *
+
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Default configuration file directory and name
-config_dir = "config"
+config_dir = root + "/" + "config"
 config_file = "config.json"
 
 # A dictionary to hold all the settings;
@@ -22,44 +26,25 @@ settings: dict
 # Used such that configuration-file-specified settings can be overridden by a CLI flag
 cli_flag_overrides = dict()
 
+# This is the "defaults" configuration file, generated from the primary copy located in config/primary...
+defaults = dict()
+
+# This is an actual vanilla configuration file, dumped to a .json file if there isn't one
+default_file = dict()
+
+for section in primary_config_file:
+    for parameter in section["parameters"]:
+        param_key = parameter["parameter"]
+        defaults[param_key] = dict()
+        defaults[param_key]["default"] = parameter["default_value"]
+        defaults[param_key]["options"] = parameter["options"]
+        default_file[param_key] = parameter["default_value"]
+
 
 def initialize_configuration_file():
     """
     Create a default/vanilla config file if it does not already exist
     """
-
-    # The default values for the config file; updating these won't apply to an already-created file
-    default_configuration_file = {
-
-        # Regression tests
-        "run_regression_tests_on_launch": True,
-        "output_regression_results": "failure",
-        "exit_if_regression_failure": False,
-
-        # Outputting Information
-        "output_computation_steps": True,
-        "output_regression_test_computation": False,
-        "print_cg_info_on_instantiation": True,
-        "output_levels_of_precision": 5,
-        "minimize_backdoor_sets": True,
-
-        # File Directories
-        "graph_file_folder": "causal_graphs",
-        "regression_directory": "regression_tests/test_files",
-
-        # Logging Rules/Directories
-        "log_computation": True,
-        "log_all_regression_computation": True,
-        "logging_directory": "logging",
-        "regression_log_subdirectory": "regression",
-
-        # Accuracy/Formatting/Precision Rules
-        "cache_computation_results": False,
-        "default_regression_repetition": 10,
-        "regression_levels_of_precision": 5,
-        "apply_any_noise": True,
-        "recursive_noise_propagation": True
-    }
 
     # The directory doesn't exist; make it
     if not os.path.isdir(config_dir):
@@ -70,8 +55,10 @@ def initialize_configuration_file():
     # The file doesn't exist; make it
     if not os.path.isfile(config_dir + "/" + config_file):
         print("Default configuration file not found...", end="")
+
+        # The default configuration file will be generated from the primary version
         with open(config_dir + "/" + config_file, "w") as f:
-            json.dump(default_configuration_file, f, indent=4, sort_keys=True)
+            json.dump(default_file, f, indent=4, sort_keys=True)
         print("Created.")
 
     # Load the configuration file
@@ -131,19 +118,29 @@ def access(param: str) -> any:
 
     # Quick Check; if the param specified isn't found, maybe the config file is outdated
     if param not in settings:
-        if input("\nConfiguration Lookup Error;\n" +
-                 "Couldn't find parameter: " + param + "\n" +
-                 "The local config file may be outdated; re-generate?\n" +
-                 "  Re-Generated Configuration File? (Y/N): ").strip().lower() == "y":
-            os.remove(config_dir + "/" + config_file)
-            initialize_configuration_file()
+        print("\nConfiguration Lookup Error;\nCouldn't find parameter: " + param + "\n" +
+              "Re-generating configuration file...")
+        os.remove(config_dir + "/" + config_file)
+        initialize_configuration_file()
 
     # By default, assume nothing
     value = None
 
     # A default has been specified in the configuration file
     if param in settings:
-        value = settings[param]
+
+        # A string is used to just say "must be a positive integer"; don't check those
+        if not isinstance(defaults[param]["options"], str):
+
+            # Unsupported option given
+            if settings[param] not in defaults[param]["options"]:
+                print("Parameter: " + param + " has unsupported option: " + str(settings[param]) + "|" +
+                      str(type(settings[param])) + "\nUsing default value: " + str(defaults[param]["default"]))
+                value = defaults[param]["default"]
+            else:
+                value = settings[param]
+        else:
+            value = settings[param]
 
     # A CLI flag has been provided to override the config file
     if param in cli_flag_overrides:
