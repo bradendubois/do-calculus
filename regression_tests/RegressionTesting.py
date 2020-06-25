@@ -11,8 +11,8 @@ import os
 import time
 from datetime import datetime
 
-from probability_structures.CausalGraph import *
 from config.config_manager import *
+from probability_structures.CausalGraph import *
 
 
 def create_outcomes(*outcome_statements):

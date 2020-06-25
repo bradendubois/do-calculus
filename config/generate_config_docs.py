@@ -8,12 +8,12 @@
 #########################################################
 
 # Run this file directly to update documentation on configuration files
-#   Due to path specifications, run it from the root of the project.
 
 import os
-from master_configuration import *
+from config.primary_configuration import *
 
-documentation_file = "documentation/configuration.md"
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+documentation_file = root + "/documentation/configuration.md"
 
 
 def generate_configuration_documentation():
@@ -30,7 +30,7 @@ def generate_configuration_documentation():
         f.write("# Configuration File Settings\n\n")
 
         # The master file is structured as a list of sections
-        for category in master_config_file:
+        for category in primary_config_file:
 
             # Subtitle and description
             f.write("## " + category["section"] + "\n\n")

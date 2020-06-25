@@ -7,10 +7,8 @@
 #                                                       #
 #########################################################
 
-# Python libraries
 import itertools        # Used for power set / product creation
 
-# The Variable class
 from probability_structures.VariableStructures import Variable
 from probability_structures.IO_Logger import *
 
@@ -67,8 +65,6 @@ class BackdoorController:
 
         # Calculate all the children/outgoing of a variable. This representation shows the actual paths as in a causal
         #   diagram, but probability calculations really store edges going the opposite direction, child -> parent.
-
-        # TODO - Can probably be done when a causal graph is created?
         self.children = dict()
         for variable in self.variables:
             if variable not in self.children:
@@ -79,17 +75,12 @@ class BackdoorController:
                     self.children[parent] = set()
                 self.children[parent].update({variable})
 
-        # for variable in self.children:
-        #     io.write(variable + " has children: " + str(self.children[variable]), end="")
-        # io.write(end="")
-
     def run(self):
         """
         Drives the IO of the BackdoorController
         """
 
         while True:
-
             try:
                 # Get X, Y sets and validate them
                 x = self.get_variable_set(self.get_x_set_prompt)
@@ -106,9 +97,9 @@ class BackdoorController:
                 if len(valid_z_subsets) > 0:
                     io.write("\nPossible sets Z that yield causal independence.", end="", console_override=True)
                     for subset in valid_z_subsets:
-                        io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="")
+                        io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="", console_override=True)
                 else:
-                    io.write("\nNo possible set Z can be constructed to create causal independence.")
+                    io.write("\nNo possible set Z can be constructed to create causal independence.", console_override=True)
 
             except AssertionError as e:
                 io.write(e.args)
@@ -190,34 +181,33 @@ class BackdoorController:
 
         return valid_z_subsets
 
-    def get_variable_set(self, prompt: str) -> set:
-        input_set = set([item.strip() for item in input(prompt).split(",")])
-
-        # Empty it if "enter" was the only thing given
-        if input_set == {""}:
-            input_set = set()
-
-        return input_set
-
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
         """
         Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
         This is used in the detection of backdoor paths from Source to Target.
         This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
-        :param x:
-        :param y:
-        :param controlled_set:
-        :param path:
-        :param path_list:
-        :param previous:
-        :return:
+        :param x: The "current"/source Variable
+        :param y: The "target" Variable
+        :param controlled_set: A set of variables, Z, by which movement through any variable is controlled
+        :param path: The current path
+        :param path_list: A list of lists, each sublist being a path
+        :param previous: Whether moving from the previous variable to current we moved "up" (child to parent) or "down"
+            (from parent to child); this movement restriction is involved in backdoor path detection
+        :return: A list of lists, where each sublist is a backdoor path
         """
-        def has_controlled_descendant(variable: Variable):
+
+        def has_controlled_descendant(variable: Variable) -> bool:
+            """
+            :param variable: A Variable defined in the Causal Graph
+            :return: True if Variable has at least one "controlled" descendant, which is in "controlled_set"
+            """
             return any(var in controlled_set for var in variable.reach)
 
+        # Reached target
         if x == y:
             return path_list + [path + [y]]
 
+        # No infinite loops
         if x not in path:
 
             if previous == "down":
@@ -236,7 +226,7 @@ class BackdoorController:
 
                 if x.name not in controlled_set:
 
-                    # We can *continue* to descend on a non-controlled variable
+                    # We can ascend on a non-controlled variable
                     for parent in x.parents:
                         path_list = self.get_backdoor_paths(self.variables[parent], y, controlled_set, path + [x], path_list, "up")
 
@@ -245,19 +235,6 @@ class BackdoorController:
                         path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
 
         return path_list
-
-    def minimal_sets(self, set_of_sets: set) -> list:
-        """
-        Take a set of sets, and return only the minimal sets
-        :param set_of_sets: A set of sets, each set containing strin
-        :return: A list of minimal sets
-        """
-        sorted_sets = sorted(map(set, set_of_sets), key=len)
-        minimal_subsets = []
-        for s in sorted_sets:
-            if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):
-                minimal_subsets.append(s)
-        return minimal_subsets
 
     def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
         """
@@ -278,29 +255,24 @@ class BackdoorController:
                 path_list = self.all_paths_cumulative(child, target, path + [source], path_list)
         return path_list
 
-    # TODO - Rework into a boolean "any paths?" detector to improve testing?
-    #   Everything following is unused
-    def detect_paths(self, head: Variable, body: Variable):
+    def get_variable_set(self, prompt: str) -> set:
+        input_set = set([item.strip() for item in input(prompt).split(",")])
 
-        # Find every path from the body to the head
-        all_paths_to_body = self.all_paths_cumulative(head, body, [], [], True)
-        found_one_backdoor = False
+        # Empty it if "enter" was the only thing given
+        if input_set == {""}:
+            input_set = set()
 
-        for path in all_paths_to_body:
+        return input_set
 
-            # Note that this path is specifically a backdoor path, since it doesn't start by leaving through the body
-            if path[1].name in head.parents:
-                found_one_backdoor = True
-                print("\nBackdoor: ", end="")
-            else:
-                print("Non-backdoor: ", end="")
-
-            for index in range(len(path)-1):
-                print(path[index].name, end="")
-                print(" <- " if path[index].name in self.children[path[index+1].name] else " -> ", end="")
-            print(path[-1].name)
-
-        if not found_one_backdoor:
-            print("No backdoor paths detected.")
-
-
+    def minimal_sets(self, set_of_sets: set) -> list:
+        """
+        Take a set of sets, and return only the minimal sets
+        :param set_of_sets: A set of sets, each set containing strin
+        :return: A list of minimal sets
+        """
+        sorted_sets = sorted(map(set, set_of_sets), key=len)
+        minimal_subsets = []
+        for s in sorted_sets:
+            if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):
+                minimal_subsets.append(s)
+        return minimal_subsets
