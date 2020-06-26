@@ -13,15 +13,7 @@ from datetime import datetime
 
 from config.config_manager import *
 from probability_structures.CausalGraph import *
-
-
-def create_outcomes(*outcome_statements):
-    """
-    Create a list of Outcome objects
-    :param outcome_statements: Any number of strings "VARIABLE = OUTCOME"
-    :return: A list of Outcome objects
-    """
-    return [Outcome(*outcome.split("=")) for outcome in outcome_statements]
+from probability_structures.VariableStructures import *
 
 
 def create_head_and_body(head_and_body: list) -> tuple:
@@ -30,10 +22,10 @@ def create_head_and_body(head_and_body: list) -> tuple:
     :param head_and_body: A list, of one/two strings, which are split into Outcomes
     :return: a tuple (head, body)
     """
-    head = create_outcomes(*head_and_body[0].split(","))
+    head = parse_outcomes_and_interventions(head_and_body[0])
     body = []
     if len(head_and_body) > 1:
-        body = create_outcomes(*head_and_body[1].split(","))
+        body = parse_outcomes_and_interventions(head_and_body[1])
     return head, body
 
 

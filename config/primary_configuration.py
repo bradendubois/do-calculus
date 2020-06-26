@@ -30,7 +30,7 @@ primary_config_file = [
                 "are of the form (success_boolean, success_message).\n\n``always`` and ``never`` are self-explanatory; " +
                 "``failure`` will only print the results if there are errors.",
             "parameter": "output_regression_results",
-            "default_value": "failure",
+            "default_value": "always",
             "options": ["always", "failure", "never"],
         }, {
             "parameter_title": "Exit if Regression Failure",
