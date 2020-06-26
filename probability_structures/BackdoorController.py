@@ -24,6 +24,10 @@ def power_set(variable_list):
 
 
 class BackdoorController:
+    """
+    A specific class used to break up the main Causal Graph; Backdoor paths are found here, as defined by Judea Pearl
+    in Causality / Book of Why / etc.
+    """
 
     get_functionality_selection_prompt = \
         "\n\nSelect an option:\n" + \
@@ -103,6 +107,12 @@ class BackdoorController:
             io.write(e.args, console_override=True)
 
     def get_all_z_subsets(self, x: set, y: set) -> list:
+        """
+        Finds all Z subsets that serve as deconfounding sets between X and Y
+        :param x: Some set of variables X
+        :param y: Some set of variables Y, which we want to find sets Z to give independence from X
+        :return: A list of sets, each set representing a set of variables that are a sufficient Z set
+        """
 
         # The cross product of X and Y
         cross_product = list(itertools.product(x, y))
@@ -114,7 +124,7 @@ class BackdoorController:
             all_straight_line_paths.extend(self.all_paths_cumulative(cross[0], cross[1], [], []))
             all_straight_line_paths.extend(self.all_paths_cumulative(cross[1], cross[0], [], []))
 
-        # Make a set of all variables used, and exclude them from possible Z sets
+        # Make a set of all variables used in paths from X to Y, and exclude them from possible Z sets
         all_straight_line_path_variables = set()
         for path in all_straight_line_paths:
             all_straight_line_path_variables.update(path)
@@ -122,14 +132,14 @@ class BackdoorController:
         # Get the power set of all remaining variables, and check which subsets yield causal independence
         z_power_set = power_set(set(self.variables) - (x | y | all_straight_line_path_variables))
 
-        # A set of all "eligible" subsets of the power set of the compliment of x|y; any
-        #   set in here is one which yields no backdoor backs from X x Y.
+        # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
+        # any set in here is one which yields no backdoor backs from X x Y.
         valid_z_subsets = set()
 
         # Get the list of all backdoor paths detected in each subset
         for z_subset in z_power_set:
 
-            # Tentative, indicating that no specific cross product has yet yielded any backdoor paths
+            # Tentative, indicating that no specific cross product in this subset has yet yielded any backdoor paths
             any_backdoor_paths = False
 
             # Cross represents one (x in X, y in Y) tuple
@@ -142,19 +152,19 @@ class BackdoorController:
                 # for path in backdoor_paths:
                 #     print([str(item) for item in path])
 
-                # Filter out the paths that don't "enter" x
+                # Filter out the paths that don't "enter" x; see the definition of a backdoor path
                 backdoor_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
 
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
-
                     io.write(z_subset, "yields backdoor paths between", cross, end="")
-                    for backdoor_path in backdoor_paths:
+
+                    for path in backdoor_paths:
                         msg = "  "
-                        for index in range(len(backdoor_path) - 1):
-                            msg += backdoor_path[index].name + " "
-                            msg += " <- " if backdoor_path[index].name in self.children[backdoor_path[index + 1].name] else " -> "
-                        msg += backdoor_path[-1].name
+                        for index in range(len(path) - 1):
+                            msg += path[index].name + " "
+                            msg += " <- " if path[index].name in self.children[path[index + 1].name] else " -> "
+                        msg += path[-1].name
                         io.write(msg)
 
                 else:
@@ -168,7 +178,7 @@ class BackdoorController:
         if access("minimize_backdoor_sets"):
             valid_z_subsets = self.minimal_sets(valid_z_subsets)
 
-        return valid_z_subsets
+        return list(valid_z_subsets)
 
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
         """
@@ -234,7 +244,6 @@ class BackdoorController:
         :param target: The "target"/destination Variable
         :param path: A current "path" of Variables seen along this traversal.
         :param path_list: A list which will contain lists of paths
-        :param can_ascend: Used as a flag to determine when we can attempt to traverse from child to parents
         :return: A list of lists of Variables, where each sublist denotes a path from source to target
         """
         if source == target:
@@ -245,6 +254,11 @@ class BackdoorController:
         return path_list
 
     def get_variable_set(self, prompt: str) -> set:
+        """
+        Take a prompt to serve to the user and get a set of variables from the comma-separated response
+        :param prompt:
+        :return:
+        """
         input_set = set([item.strip() for item in input(prompt).split(",")])
 
         # Empty it if "enter" was the only thing given
