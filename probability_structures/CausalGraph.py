@@ -211,9 +211,7 @@ class CausalGraph:
             outcome_preprocessed = input(self.get_specific_outcome_prompt)
             assert outcome_preprocessed != "", "No query being made; the head should not be empty."
             outcome = parse_outcomes_and_interventions(outcome_preprocessed)
-
-            # Ensure there are no adjustments in the head
-            for out in outcome:
+            for out in outcome:     # Ensure there are no adjustments in the head
                 assert not isinstance(out, Intervention), "Don't put adjustments in the head."
 
             # Get optional "given" data and process it
@@ -256,83 +254,9 @@ class CausalGraph:
             if not any(isinstance(g, Intervention) for g in given):
                 probability = self.probability(outcome, given)
 
-            # There is a do(X) in the given, so we take a de-confounding set Z
+            # There is a do(X) in the given, so we take a de-confounding set Z and take Sigma_Z P(Y | do(X)) * P(Z)
             else:
-
-                def single_z_set_run(selected_set) -> float:
-                    io.write("Choosing deconfounding set Z =", str(selected_set))
-
-                    p = 0
-
-                    # We take every possible combination of outcomes of Z and compute each probability separately
-                    for cross in itertools.product(*[self.outcomes[var] for var in selected_set]):
-
-                        # Construct the respective Outcome list of each Z outcome cross product
-                        z_outcomes = []
-
-                        for cross_idx in range(len(selected_set)):
-                            z_outcomes.append(Outcome(list(selected_set)[cross_idx], cross[cross_idx]))
-
-                        # First, we do our P(Y | do(X), Z)
-                        io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
-                        p_y_x_z = self.probability(outcome, given + z_outcomes)
-
-                        # Second, we do our P(Z)
-                        io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
-                        p_z = self.probability(z_outcomes, given)
-
-                        p += p_y_x_z * p_z
-
-                    return p
-
-                # How to choose the set Z; present them all and allow selection? Random? All?
-                choose_z = access("z_selection_preference")
-
-                # Try every possible Z; still return an answer, ensure only one unique answer is computed
-                if choose_z == "all":
-
-                    # Sentinel value
-                    only_result = None
-
-                    io.write("Computing with every possible Z set.", console_override=True)
-                    for z_set in deconfounding_sets:
-
-                        # Compute with a specific set
-                        result = single_z_set_run(z_set)
-
-                        # Storing first result
-                        if only_result is None:
-                            only_result = result
-
-                        # Results do NOT match; error
-                        elif abs(result - only_result) > 0.0000001:
-                            io.write("Error: Two distinct results from different Z sets: ", str(only_result), "vs", str(result))
-                            raise ProbabilityException
-
-                    probability = only_result
-
-                # Randomly choose a set
-                elif choose_z == "random":
-
-                    z_set = random.choice(deconfounding_sets)
-                    io.write("Choosing a set Z at random:", str(z_set), console_override=True)
-                    probability = single_z_set_run(z_set)
-
-                # Present all sets and allow a choice to be made
-                else:
-
-                    set_selection_prompt = "Select a deconfounding set:\n"
-                    for i in range(len(deconfounding_sets)):
-                        set_selection_prompt += "  " + str(i+1) + ") " + str(deconfounding_sets[i]) + "\n"
-                    io.write(set_selection_prompt, end="", console_override=True)
-
-                    selection = input(" Selection: ")
-                    while not selection.isdigit() or not 1 <= int(selection) <= len(deconfounding_sets):
-                        selection = input(" Selection: ")
-
-                    selected_set = deconfounding_sets[int(selection)-1]
-                    io.write("Set selected:", str(selected_set), console_override=True)
-                    probability = single_z_set_run(selected_set)
+                probability = self.handle_intervention_computation(outcome, given, deconfounding_sets)
 
             # Log and close
             result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
@@ -344,8 +268,94 @@ class CausalGraph:
         except ProbabilityIndeterminableException:
             pass
 
-    def setup_probabilistic_function(self):
+    def handle_intervention_computation(self, outcome: list, given: list, deconfounding_sets: list) -> float:
+        """
+        Our "given" includes an Intervention/do(X); choose Z set(s) and return the probability of this do-calculus
+        :param outcome: A list of Outcomes
+        :param given: A list of Outcomes and/or Interventions
+        :param deconfounding_sets: A list of sets, each a sufficient Z
+        :return: A probability between 0 and 1 representing the probability of the query given some chosen Z set(s)
+        """
 
+        def single_z_set_run(given_set) -> float:
+            """
+            Compute a probability from the given x and y, with the given z as a deconfounder
+            :param given_set: A specific set Z
+            :return: A probability P, between 0.0 and 1.0
+            """
+            io.write("Choosing deconfounding set Z =", str(given_set))
+            p = 0.0     # Start at 0
+
+            # We take every possible combination of outcomes of Z and compute each probability separately
+            for cross in itertools.product(*[self.outcomes[var] for var in given_set]):
+
+                # Construct the respective Outcome list of each Z outcome cross product
+                z_outcomes = []
+                for cross_idx in range(len(given_set)):
+                    z_outcomes.append(Outcome(list(given_set)[cross_idx], cross[cross_idx]))
+
+                # First, we do our P(Y | do(X), Z)
+                io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
+                p_y_x_z = self.probability(outcome, given + z_outcomes)
+
+                # Second, we do our P(Z)
+                io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
+                p_z = self.probability(z_outcomes, given)
+
+                p += p_y_x_z * p_z      # Add to our total
+
+            return p
+
+        # How to choose the set Z; present them all and allow selection? Random? All?
+        choose_z = access("z_selection_preference")
+
+        # Try every possible Z; still return an answer, ensure only one unique answer is computed
+        if choose_z == "all":
+
+            # Sentinel value
+            only_result = None
+            io.write("Computing with every possible Z set.", console_override=True)
+
+            # Use every possible set
+            for z_set in deconfounding_sets:
+                result = single_z_set_run(z_set)  # Compute with a specific set
+
+                if only_result is None:  # Storing first result
+                    only_result = result
+
+                # If results do NOT match; error
+                error_msg = "Error: Two distinct results from different Z sets: " + str(only_result) + "vs" + str(result)
+                assert abs(result - only_result) < 0.00000001, error_msg
+
+            probability = only_result
+
+        # Randomly choose a set
+        elif choose_z == "random":
+            z_set = random.choice(deconfounding_sets)
+            io.write("Choosing a set Z at random:", str(z_set), console_override=True)
+            probability = single_z_set_run(z_set)
+
+        # Present all sets and allow a choice to be made
+        else:
+            set_selection_prompt = "Select a deconfounding set:\n"
+            for i in range(len(deconfounding_sets)):
+                set_selection_prompt += "  " + str(i + 1) + ") " + str(deconfounding_sets[i]) + "\n"
+            io.write(set_selection_prompt, end="", console_override=True)
+
+            selection = input(" Selection: ")
+            while not selection.isdigit() or not 1 <= int(selection) <= len(deconfounding_sets):
+                selection = input(" Selection: ")
+
+            selected_set = deconfounding_sets[int(selection) - 1]
+            io.write("Set selected:", str(selected_set), console_override=True)
+            probability = single_z_set_run(selected_set)
+
+        return probability
+
+    def setup_probabilistic_function(self):
+        """
+        Setup and execute a query of some variable which is determined by a function rather than probability tables
+        """
         try:
             # Get and verify variable is in the graph
             variable = input(self.get_probabilistic_variable_prompt).strip()
@@ -360,23 +370,6 @@ class CausalGraph:
             io.write("Given variable not resolvable by a probabilistic function.", console_override=True)
         except AssertionError:
             io.write("Variable given not in the graph.", console_override=True)
-
-    def setup_backdoor_controller(self):
-        """
-        Helper to setup and enter the backdoor controlling area
-        """
-        try:
-            # Copy all the variables to avoid any issues
-            copied_variables = dict()
-            for variable_name in self.variables:
-                copied_variables[variable_name] = self.variables[variable_name].copy()
-
-            # Create and run a BackdoorController
-            controller = BackdoorController(copied_variables)
-            controller.run()  # Run the backdoor controller until closed
-
-        except AssertionError:
-            print("Error: Some variable given may not be defined")
 
     def has_table(self, name: str, given: set) -> bool:
         """
@@ -565,7 +558,7 @@ class CausalGraph:
         ###############################################
 
         # Interventions imply that we have fixed X=x
-        if isinstance(head[0], Intervention):
+        if len(head) == 1 and isinstance(head[0], Intervention):
             return 1.0
 
         ###############################################
@@ -687,7 +680,7 @@ class CausalGraph:
             if can_drop:
                 try:
                     io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
-                    result = self.probability(head, [v for v in body if v not in can_drop], new_queries, depth+1)
+                    result = self.probability(head, list(set(body) - set(can_drop)), new_queries, depth+1)
                     self.store_computation(self.p_str(head, body), result)
                     return result
 
@@ -724,30 +717,3 @@ class CausalGraph:
 
         var = variable if isinstance(variable, Variable) else self.variables[variable]
         return [parent for parent in var.parents if parent not in parent_subset]
-
-
-# TODO - Make this its own module and change any place that strings are parsed into Outcomes/Interventions to use this
-def parse_outcomes_and_interventions(line: str) -> list:
-    """
-    Take one string line and parse it into a list of Outcomes and Interventions
-    :param line: A string representing the query
-    :return: A list, of Outcomes and/or Interventions
-    """
-    interventions_preprocessed = re.findall(r'do\([^do]*\)', line)
-    interventions_preprocessed = [item.strip("do(), ") for item in interventions_preprocessed]
-    interventions = []
-    for string in interventions_preprocessed:
-        interventions.extend([item.strip(", ") for item in string.split(", ")])
-
-    outcomes_preprocessed = re.sub(r'do\([^do]*\)', '', line).strip(", ").split(",")
-    outcomes_preprocessed = [item.strip(", ") for item in outcomes_preprocessed]
-    outcomes = [string for string in outcomes_preprocessed if string]
-
-    outcomes = [Outcome(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in outcomes]
-    interventions = [Intervention(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in interventions]
-
-    together = []
-    together.extend(outcomes)
-    together.extend(interventions)
-
-    return together

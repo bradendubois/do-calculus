@@ -7,6 +7,8 @@
 #                                                       #
 #########################################################
 
+import re       # Used to parse a line of text into respective Outcomes and Interventions
+
 
 class Outcome:
     """
@@ -82,7 +84,7 @@ class Intervention(Outcome):
         super().__init__(name, fixed_outcome)
 
     def __str__(self) -> str:
-        return "do(" + self.name + ")"
+        return "do(" + self.name + "=" + self.outcome + ")"
 
     def __hash__(self):
         return hash(self.name + self.outcome)
@@ -95,3 +97,32 @@ class Intervention(Outcome):
 
     def copy(self):
         return self.__copy__()
+
+
+def parse_outcomes_and_interventions(line: str) -> list:
+    """
+    Take one string line and parse it into a list of Outcomes and Interventions
+    :param line: A string representing the query
+    :return: A list, of Outcomes and/or Interventions
+    """
+    # "do(X=x)", "do(X=x, Y=y)", "do(X-x), do(Y=y)" are all valid ways to write interventions
+    interventions_preprocessed = re.findall(r'do\([^do]*\)', line)
+    interventions_preprocessed = [item.strip("do(), ") for item in interventions_preprocessed]
+    interventions = []
+    for string in interventions_preprocessed:
+        interventions.extend([item.strip(", ") for item in string.split(", ")])
+
+    # Remove all the interventions, leaving only specific Outcomes
+    outcomes_preprocessed = re.sub(r'do\([^do]*\)', '', line).strip(", ").split(",")
+    outcomes_preprocessed = [item.strip(", ") for item in outcomes_preprocessed]
+    outcomes = [string for string in outcomes_preprocessed if string]
+
+    # Convert the outcome and intervention strings into the specific Outcome and Intervention classes
+    outcomes = [Outcome(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in outcomes]
+    interventions = [Intervention(item.split("=")[0].strip(), item.split("=")[1].strip()) for item in interventions]
+
+    together = []
+    together.extend(outcomes)
+    together.extend(interventions)
+
+    return together
