@@ -77,41 +77,30 @@ class BackdoorController:
 
     def run(self):
         """
-        Drives the IO of the BackdoorController
+        Run one Backdoor session and exit
         """
+        try:
+            # Get X, Y sets and validate them
+            x = self.get_variable_set(self.get_x_set_prompt)
+            y = self.get_variable_set(self.get_y_set_prompt)
 
-        while True:
-            try:
-                # Get X, Y sets and validate them
-                x = self.get_variable_set(self.get_x_set_prompt)
-                y = self.get_variable_set(self.get_y_set_prompt)
+            assert len(x) > 0 and len(y) > 0, "Sets cannot be empty."
+            assert len(x & y) == 0, "X and Y are not disjoint sets."
+            for variable in x | y:
+                assert variable in self.variables, "Variable " + variable + " not in the graph."
 
-                assert len(x) > 0 and len(y) > 0, "Sets cannot be empty."
-                assert len(x & y) == 0, "X and Y are not disjoint sets."
-                for variable in x | y:
-                    assert variable in self.variables, "Variable " + variable + " not in the graph."
+            # Calculate all the subsets possible
+            valid_z_subsets = self.get_all_z_subsets(x, y)
 
-                # Calculate all the subsets possible
-                valid_z_subsets = self.get_all_z_subsets(x, y)
+            if len(valid_z_subsets) > 0:
+                io.write("\nPossible sets Z that yield causal independence.", end="", console_override=True)
+                for subset in valid_z_subsets:
+                    io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="", console_override=True)
+            else:
+                io.write("\nNo possible set Z can be constructed to create causal independence.", console_override=True)
 
-                if len(valid_z_subsets) > 0:
-                    io.write("\nPossible sets Z that yield causal independence.", end="", console_override=True)
-                    for subset in valid_z_subsets:
-                        io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="", console_override=True)
-                else:
-                    io.write("\nNo possible set Z can be constructed to create causal independence.", console_override=True)
-
-            except AssertionError as e:
-                io.write(e.args)
-                continue
-
-            selection = input(self.get_functionality_selection_prompt)
-            while selection not in ["1", "2"]:
-                selection = input(self.get_functionality_selection_prompt)
-
-            if selection == "2":
-                io.write("Exiting Backdoor Controller.", end="")
-                break
+        except AssertionError as e:
+            io.write(e.args, console_override=True)
 
     def get_all_z_subsets(self, x: set, y: set) -> list:
 
