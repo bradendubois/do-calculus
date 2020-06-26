@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Whatever version of the project we'll call this
-version="1.0"
+version="1.1"
 
 # Generate an up-to-date version of the configuration documentation
 python config/generate_config_docs.py

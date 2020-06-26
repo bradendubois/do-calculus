@@ -10,7 +10,7 @@
 import itertools        # Used to create cross-products from iterables
 import json             # Used to load tables/data
 import os               # Used to create a directory if not found
-import random
+import random           # Used to pick a random Z set in do-calculus
 import re               # Used in probabilistic function evaluation
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
@@ -159,6 +159,8 @@ class CausalGraph:
         self.running = True
         while self.running:
 
+            # TODO - Actually remove options from "options" that don't make sense, like the functions if there are
+            #  none in the graph
             options = [
                 # Compute a probability
                 [self.setup_probability_computation, "Compute a probability. Ex: P(X | Y)"],
@@ -713,6 +715,7 @@ class CausalGraph:
         return [parent for parent in var.parents if parent not in parent_subset]
 
 
+# TODO - Make this its own module and change any place that strings are parsed into Outcomes/Interventions to use this
 def parse_outcomes_and_interventions(line: str) -> list:
     """
     Take one string line and parse it into a list of Outcomes and Interventions
