@@ -159,15 +159,8 @@ class CausalGraph:
         self.running = True
         while self.running:
 
-            # TODO - Actually remove options from "options" that don't make sense, like the functions if there are
-            #  none in the graph
+            # Start with base options of backdoor controlling and exiting
             options = [
-                # Compute a probability
-                [self.setup_probability_computation, "Compute a probability. Ex: P(X | Y)"],
-
-                # Compute some variable given that it has a function specified
-                [self.setup_probabilistic_function, "Compute the value of a variable given some function. Ex: f(X) = 42"],
-
                 # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
                 #   make such changes, so it's easiest to go make this its own "space".
                 [self.setup_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
@@ -176,10 +169,25 @@ class CausalGraph:
                 [self.shutdown, "Exit / Switch Graph Files"]
             ]
 
+            # We can *add* these two options if they are applicable; i.e, no probability stuff if no tables!
+            #   Just a nice quality-of-life / polish touch
+
+            # Compute some probability variable given that it has tables specified
+            if len(self.tables) > 0:
+                options.insert(0, [self.setup_probability_computation,
+                                   "Compute a probability. Ex: P(X | Y)"])
+
+            # Compute some variable given that it has a function specified
+            if len(self.functions) > 0:
+                options.insert(0, [self.setup_probabilistic_function,
+                                   "Compute the value of a variable given some function. Ex: f(X) = 42"])
+
+            # Actually print the menu, constructed from "options"
             print("\n\nSelect:")
             for option in range(len(options)):
                 print("    " + str(option+1) + ") " + options[option][1])
 
+            # Repeatedly re-query until a valid selection is made
             selection = input("\n  Query: ")
             while not selection.isdigit() or not 1 <= int(selection) <= len(options):
                 selection = input("  Query: ")
@@ -191,14 +199,14 @@ class CausalGraph:
         """
         Helper that gets data necessary to query a probability.
         """
-        # Declare this variable here for scope; PyCharm can't see that it *must* be defined
-        #   at a later point
+        # Declare this variable here for scope; PyCharm can't see that it *must* be defined at a later point
         deconfounding_sets = set()
 
         # Get our input data first
         try:
             # Need an outcome to query, not necessarily any given data though
             outcome_preprocessed = input(self.get_specific_outcome_prompt)
+            assert outcome_preprocessed != "", "No query being made; the head should not be empty."
             outcome = parse_outcomes_and_interventions(outcome_preprocessed)
 
             # Ensure there are no adjustments in the head
