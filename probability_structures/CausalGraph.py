@@ -567,11 +567,11 @@ class CausalGraph:
 
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
-            # io.write("\nQuerying table for: ", self.p_str(head, body), x_offset=depth)
+            io.write("Querying table for: ", self.p_str(head, body), x_offset=depth, end="")
 
             # Get the table
             table = self.get_table(head[0].name, set(body))
-            io.write(str(table), x_offset=depth)
+            io.write(str(table), x_offset=depth, end="")
 
             # Directly look up the corresponding row in the table
             #   Assumes a table has all combinations of values defined
@@ -653,7 +653,7 @@ class CausalGraph:
 
                         as_outcome = Outcome(add_parent.name, parent_outcome)
 
-                        io.write(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), end=" ", x_offset=depth)
+                        io.write(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), x_offset=depth)
 
                         result_1 = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1)
                         result_2 = self.probability([as_outcome], body, new_queries, depth=depth+1)
