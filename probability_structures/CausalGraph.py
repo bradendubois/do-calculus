@@ -262,13 +262,13 @@ class CausalGraph:
                     p = 0
 
                     # We take every possible combination of outcomes of Z and compute each probability separately
-                    for cross in itertools.product(*[self.outcomes[var] for var in z_set]):
+                    for cross in itertools.product(*[self.outcomes[var] for var in selected_set]):
 
                         # Construct the respective Outcome list of each Z outcome cross product
                         z_outcomes = []
 
-                        for cross_idx in range(len(z_set)):
-                            z_outcomes.append(Outcome(list(z_set)[cross_idx], cross[cross_idx]))
+                        for cross_idx in range(len(selected_set)):
+                            z_outcomes.append(Outcome(list(selected_set)[cross_idx], cross[cross_idx]))
 
                         # First, we do our P(Y | do(X), Z)
                         io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
@@ -323,9 +323,9 @@ class CausalGraph:
                         set_selection_prompt += "  " + str(i+1) + ") " + str(deconfounding_sets[i]) + "\n"
                     io.write(set_selection_prompt, end="", console_override=True)
 
-                    selection = input("Selection: ")
+                    selection = input(" Selection: ")
                     while not selection.isdigit() or not 1 <= int(selection) <= len(deconfounding_sets):
-                        selection = input("Selection: ")
+                        selection = input(" Selection: ")
 
                     selected_set = deconfounding_sets[int(selection)-1]
                     io.write("Set selected:", str(selected_set), console_override=True)
