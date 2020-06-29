@@ -13,23 +13,23 @@ import os               # Used to list directory contents to select graphs
 
 from probability_structures.CausalGraph import *
 from regression_tests.RegressionTesting import *
-
 from config.config_manager import *
 
 # If set, run any tests before starting up
 if access("run_regression_tests_on_launch"):
 
-    # (success_boolean, message) tuple returned
+    # List of (success_boolean, message) tuples returned
+    # Last item will be a summary "(false, "there were errors")" / "(true, "no errors")"
     results = validate_all_regression_tests()
 
     # Output results if config settings specify it
-    if not results[0] and access("output_regression_results") == "failure":
-        print(results)
+    if not results[-1][0] and access("output_regression_results") == "failure":
+        print("\n".join(str(result) for result in results))
     elif access("output_regression_results") == "always":
-        print(results)
+        print("\n".join(str(result) for result in results))
 
     # Config settings do allow us to continue even if tests fail
-    if not results[0] and access("exit_if_regression_failure"):
+    if not results[-1][0] and access("exit_if_regression_failure"):
         exit(-1)
 
 # Does the directory of graphs exist?

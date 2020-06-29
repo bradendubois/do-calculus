@@ -40,6 +40,11 @@ def within_precision(a: float, b: float) -> bool:
 
 
 def run_test_file(test_file: str) -> (bool, str):
+    """
+    The main test driver that will run a test file, all the tests in it, plus a few identities
+    :param test_file: The exact name of a test file located in the "regression_directory".
+    :return: A tuple (success_boolean, success_message) indicating success, or failure and error message.
+    """
 
     # Load the test file
     with open(root + "/" + access("regression_directory") + "/" + test_file) as f:
@@ -60,13 +65,19 @@ def run_test_file(test_file: str) -> (bool, str):
         if variable in causal_graph.functions:
             continue
 
-        total = 0.0
-        for outcome in causal_graph.variables[variable].outcomes:
-            result = causal_graph.probability([Outcome(variable, outcome)], [])
-            total += result
-
         try:
+            total = 0.0
+            for outcome in causal_graph.variables[variable].outcomes:
+                result = causal_graph.probability([Outcome(variable, outcome)], [])
+                total += result
+
             assert within_precision(total, 1.0), variable + " does not sum to 1.0 across its outcomes."
+
+        # Indicates an invalid table, missing some row, etc.
+        except MissingTableRow as e:
+            return False, "[ERROR: " + test_file + "]: Invalid table for the graph." + str(e)
+
+        # Didn't match the expected total
         except AssertionError as e:
             return False, e.args
 
@@ -79,8 +90,10 @@ def run_test_file(test_file: str) -> (bool, str):
         # TODO - This limits the kinds of tests possible. Add a kind of flag indicating tests that
         #   SHOULD crash. Raise a DidNotCrashWhenShould exception.
 
+        # Checking "test_type" determines how to proceed
         try:
-            # Only supporting probability tests currently, but checking "test_type" determines how to proceed
+
+            # Simply compare a "given/expected" probability against one calculated by the CG
             if test["type"] == "probability":
 
                 # Construct a list of "Outcomes" from the given args
@@ -91,32 +104,41 @@ def run_test_file(test_file: str) -> (bool, str):
 
                 assert within_precision(result, expected), str(result) + " did not match expected: " + str(expected)
 
+            # Essentially made obsolete by the identity checking above; ensure multiple tests sum to some given total
             if test["type"] == "summation":
+
                 total = 0.0
                 for arg_set in args:
-
                     # Construct a list of "Outcomes" from the given args
                     head, body = create_head_and_body(arg_set)
-
                     result = causal_graph.probability(head, body)
                     total += result
 
                 expected = test["expected_result"]
-                assert within_precision(total, expected), str(total) + " not summing to " + str(expected) + "."
+                assert within_precision(total, expected), str(total) + " not summing to " + str(expected)
 
+            # Ensure that some given test always only returns 1 value; does not require an "expected", but rather is
+            #   a means of error-checking, ensuring that the random ordering of sets does not interfere with the CG
             if test["type"] == "determinism":
-                results = []
 
-                # Construct a list of "Outcomes" from the given args
-                head, body = create_head_and_body(args)
+                only_result = None    # Begin with a sentinel value
+                head, body = create_head_and_body(args)     # Construct a list of "Outcomes" from the given args
 
+                # Set ordering is a property "laid out" at runtime; if we create various different CGs, the ordering
+                #   is likely to change between CGs, which could lead to said inconsistencies
                 for i in range(access("default_regression_repetition")):
-                    result = causal_graph.probability(head, body)
-                    if result not in results:
-                        results.append(result)
 
-                assert len(results) == 1, "Repeated tests yielding multiple results."
+                    determinism_cg = CausalGraph(directory + "/" + loaded_test_file["test_file"])
+                    result = determinism_cg.probability(head, body)
 
+                    if only_result is None:     # Storing the first result calculated
+                        only_result = result
+
+                    # If the results differ by a significant amount, we consider it a "different value"
+                    assert within_precision(only_result, result), "Repeated tests yielding multiple results."
+
+            # Ensure the detection of a "feedback loop" in function-based variables that would devolve into an
+            #   infinite loop/stack overflow
             if test["type"] == "feedback_loop":
 
                 try:
@@ -124,9 +146,13 @@ def run_test_file(test_file: str) -> (bool, str):
                     causal_graph.probabilistic_function_resolve(*causal_graph.functions[args])
                     raise ExceptionNotFired("A feedback loop in " + args + " was not detected.")
 
+                # Awesome if we get this
                 except FunctionFeedbackLoop:
-                    # Awesome if we get this
                     pass
+
+        # Indicates an invalid table, missing some row, etc.
+        except MissingTableRow as e:
+            return False, "[ERROR: " + test["name"] + "]: Invalid table for the graph." + str(e)
 
         # ExceptionNotFired indicates an exception *should* have been raised but wasn't
         except ExceptionNotFired as e:
@@ -140,7 +166,7 @@ def run_test_file(test_file: str) -> (bool, str):
         except Exception as e:
             return False, "[CRASH: " + test["name"] + "]: " + str(e)
 
-    return True, "All tests in " + test_file + "Passed."
+    return True, "All tests in " + test_file + " passed."
 
 
 def validate_all_regression_tests() -> (bool, str):
@@ -180,11 +206,16 @@ def validate_all_regression_tests() -> (bool, str):
         log_file = log_dir + "/" + "r" + datetime.now().strftime("%Y%m%d_%H-%M-%S")
         io.open(log_file)
 
+    # Store all results from each file, so that we could have an error in one file but still test subsequent ones
+    all_regression_results = []
+
     # Run each testing file
     for test_file in files:
         results = run_test_file(test_file)
         if not results[0]:
-            return False, test_file + " has failed, with error: " + str(results[1])
+            all_regression_results.append((False, test_file + " has failed, with error: " + str(results[1])))
+        else:
+            all_regression_results.append(results)
 
     # Output a footer on regression tests being run if toggled
     if access("output_regression_test_computation"):
@@ -196,4 +227,11 @@ def validate_all_regression_tests() -> (bool, str):
     # Close the regression file being written to, if it's open
     io.close()
 
-    return True, "All Tests Passed."
+    # Add the "summary" value
+    # If there is at least one error...
+    if any(not item[0] for item in all_regression_results):
+        all_regression_results.append((False, "There were errors."))
+    else:
+        all_regression_results.append((True, "All Tests Passed."))
+
+    return all_regression_results
