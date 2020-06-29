@@ -97,3 +97,18 @@ Since sets are heavily used and can change ordering when converted to lists, a g
 }
 ```
 
+### Feedback Loop
+
+A basic test to ensure that a given variable, resolvable by a function (see: ``Causal Graph Files``), which **does** lead into a feedback loop / infinite loop (such as: val(C) = val(C) + 1) is detected.
+
+``args`` should be the name of a variable in the graph, which *should* be detected as causing a feedback loop. 
+
+```json
+{
+  "name": "Detect Feedback Loop: val(C) has val(C) as a noise function",
+  "type": "feedback_detection",
+  "args": [
+    "C"
+  ]
+}
+```

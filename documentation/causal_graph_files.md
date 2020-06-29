@@ -26,8 +26,7 @@ Where ``name`` is an *optional* parameter and ``variables`` is a list of variabl
 
 Variables all require the following:
 
-- **"name"**: The actual label of the variable itself, "X", "WEATHER", etc. Generally, it may be helpful to make this name uppercase. Must be unique.
-- **"outcomes"**: A list of strings, representing all possible outcomes for the given variable. Cannot have the same outcome twice in one variable, but two separate variables could have the same outcome.
+- **"name"**: The actual label of the variable itself, "X", "WEATHER", etc. Generally, it may be helpful to make this name uppercase. **Must be unique**.
 - **"parents"**: A list of strings, representing the "parents" of the given variable. Leave empty to represent zero parents.
 - **"determination"**: How the given variable is calculated/evaluated. Consists of the following:
     - **"type"**: Whether the given variable is determined by a table, or a function. Must have the value "table" or "function", respectively.
@@ -58,6 +57,7 @@ Depending on the ``type``, Variables must conform to one of the two following ex
 
 If the ``type`` is "table", the following attribute is necessary:
 
+- **"outcomes"**: A list of strings, representing all possible outcomes for the given variable. Cannot have the same outcome twice in one variable, but two separate variables could have the same outcome.
 - **"tables"**: A list of tables determining the given variable, each table consisting of the following:
     - **"given"**: A list of "given" variables, such as the parents of the variable.
     - **"rows"**: A list of lists, each list representing one "row" in the table, with each sublist formatted as follows:
@@ -71,7 +71,6 @@ If the ``type`` is "table", the following attribute is necessary:
 ```json
 {
   "name": "VARIABLE_NAME",
-  "outcomes": ["OUTCOME_1,", "OUTCOME_2", "..."],
   "parents": ["PARENT_1", "PARENT_2", "..."],
   "determination": {
     "type": "function",

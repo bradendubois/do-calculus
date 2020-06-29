@@ -175,15 +175,15 @@ class CausalGraph:
             # We can *add* these two options if they are applicable; i.e, no probability stuff if no tables!
             #   Just a nice quality-of-life / polish touch
 
-            # Compute some probability variable given that it has tables specified
-            if len(self.tables) > 0:
-                options.insert(0, [self.setup_probability_computation,
-                                   "Compute a probability. Ex: P(X | Y)"])
-
             # Compute some variable given that it has a function specified
             if len(self.functions) > 0:
                 options.insert(0, [self.setup_probabilistic_function,
                                    "Compute the value of a variable given some function. Ex: f(X) = 42"])
+
+            # Compute some probability variable given that it has tables specified
+            if len(self.tables) > 0:
+                options.insert(0, [self.setup_probability_computation,
+                                   "Compute a probability. Ex: P(X | Y)"])
 
             # Actually print the menu, constructed from "options"
             print("\n\nSelect:")
@@ -362,9 +362,11 @@ class CausalGraph:
             assert variable in self.variables
 
             # Calculate; results are a (min, max) tuple
+            io.open("f(" + variable + ")")
             result = self.probabilistic_function_resolve(*self.functions[variable], apply_noise=access("apply_any_noise"))
             self.store_computation(str(variable), result)
             io.write(variable, "= min: {}, max: {}".format(*result), console_override=True)
+            io.close()
 
         except KeyError:
             io.write("Given variable not resolvable by a probabilistic function.", console_override=True)
@@ -419,6 +421,16 @@ class CausalGraph:
         :param depth: How many levels of recursion deep we are; used for output formatting
         :return: A float tuple (min, max) representing the range of values of the function
         """
+        # Create a string representation of the given query
+        str_rep = function
+        if noise_function:
+            str_rep += " +- " + noise_function
+
+        # Check if we cached the result already
+        if str_rep in self.stored_computations:
+            io.write(str_rep, "already computed.", x_offset=depth)
+            return self.stored_computations[str_rep]
+
         # Evaluate each var(foo) value, getting a min and max, and store these
         #   When we evaluate this function, we will take every possible cross product across
         #   the set of all resolved var(foo) values, ultimately returning the min and max
@@ -443,8 +455,7 @@ class CausalGraph:
                 nested_min_maxes.append(result)
                 self.store_computation(trimmed, result)
 
-                # Replace with a "{}" so that we can do some slick formatting for the main
-                #   function evaluation later
+                # Replace with a "{}" so that we can do some slick formatting for the main function evaluation later
                 elements[element_idx] = "{}"
 
             # Probabilities are involved
@@ -455,10 +466,10 @@ class CausalGraph:
                 split = re.split(r"\|", trimmed)
 
                 # Create proper Outcome objects for everything
-                head = [Outcome(*outcome.split("=")) for outcome in split[0].split(",")]
+                head = parse_outcomes_and_interventions(split[0])
                 body = []
                 if len(split) == 2:
-                    body = [Outcome(*outcome.split("=")) for outcome in split[1].split(",")]
+                    body = parse_outcomes_and_interventions(split[1])
 
                 # Calculate the probability, substitute it into the original function
                 result = self.probability(head, body, depth=depth+1)
@@ -483,8 +494,8 @@ class CausalGraph:
             all_results.extend((result - noise, result + noise))
 
         result = min(all_results), max(all_results)
-        io.write(function, "evaluates to", str(result))
-        self.store_computation(function + noise_function, result)
+        io.write(function, "evaluates to", str(result), x_offset=depth)
+        self.store_computation(str_rep, result)
 
         return result
 
@@ -501,15 +512,15 @@ class CausalGraph:
         #   Begin with bookkeeping / error-checking   #
         ###############################################
 
+        # Create a string representation of this query, and see if it's been done / in-progress / contradictory
+        str_rep = self.p_str(head, body)
+
         # Print the actual query being made on each recursive call to help follow
-        io.write("Querying:", self.p_str(head, body), x_offset=depth)
+        io.write("Querying:", str_rep, x_offset=depth)
 
         # Keep a list of queries being passed through recursive calls to avoid infinite loops
         if queries is None:
             queries = []
-
-        # Create a string representation of this query, and see if it's been done / in-progress / contradictory
-        str_rep = self.p_str(head, body)
 
         # If a string representation of this query is stored, we are in a loop and should stop
         if str_rep in queries:
@@ -548,7 +559,7 @@ class CausalGraph:
                 result_2 = self.probability([head[-1]], body, new_queries, depth+1)
                 result = result_1 * result_2
 
-                self.store_computation(self.p_str(head, body), result)
+                self.store_computation(str_rep, result)
                 return result
             except ProbabilityException:
                 io.write("Failed to resolve by reverse product rule.", x_offset=depth)
@@ -622,7 +633,7 @@ class CausalGraph:
 
                 # flip flop flippy flop
                 result = result_1 * result_2 / result_3
-                self.store_computation(self.p_str(head, body), result)
+                self.store_computation(str_rep, result)
                 return result
 
             except ProbabilityException:
@@ -661,7 +672,7 @@ class CausalGraph:
 
                         total += outcome_result
 
-                    self.store_computation(self.p_str(head, body), total)
+                    self.store_computation(str_rep, total)
                     return total
 
                 except ProbabilityException:
@@ -681,7 +692,7 @@ class CausalGraph:
                 try:
                     io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
                     result = self.probability(head, list(set(body) - set(can_drop)), new_queries, depth+1)
-                    self.store_computation(self.p_str(head, body), result)
+                    self.store_computation(str_rep, result)
                     return result
 
                 except ProbabilityException:
