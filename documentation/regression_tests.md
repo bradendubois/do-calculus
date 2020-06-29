@@ -17,6 +17,24 @@ A regression test has the following structure:
 
 Where ``test_file`` is a causal graph file in the configuration-file-specified graph file location.
 
+If you want to run tests on a graph, but not place that graph in the default graph-file location, you can do that;
+include the following argument in the test file: ``"file_directory": "some_new_dir/secret_graphs"``. If this is absent, 
+we check the default graph file location; if included, this is the directory (from the root of the project) that will 
+be searched for the given graph. 
+
+For example, if I wanted to hide a graph from the default list query-able, but still run tests on it, a test file in
+the default test file location might look like the following:
+
+```json
+{
+  "file_directory": "top_secret/secret_graphs",
+  "test_file": "classified_graph_42.json",
+  "tests": [
+  
+  ]
+}
+```
+
 ## Test Types
 
 Each test must be one of the following. The ``name`` is arbitrary, ``type`` must always be specified as shown in each example.

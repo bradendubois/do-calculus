@@ -46,3 +46,10 @@ class ExceptionNotFired(ProbabilityException):
     For use in testing; raised when we *expect* an exception to be thrown and one is not.
     """
     pass
+
+
+class MissingTableRow(ProbabilityException):
+    """
+    Raised when a row is missing from a table and queried.
+    """
+    pass

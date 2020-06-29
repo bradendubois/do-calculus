@@ -32,10 +32,11 @@ class IOLogger:
         if self.file:
             self.close()
 
-        # Create directory if needed
-        if not os.path.isdir(logging_dir):
+        # Create the general logging directory (if needed)
+        if not os.path.isdir(logging_dir) and access("log_computation"):
             os.makedirs(logging_dir)
 
+        # Create the regression test subdirectory (if needed)
         if not os.path.isdir(regression_subdir) and access("log_all_regression_computation"):
             os.makedirs(regression_subdir)
 
@@ -64,15 +65,24 @@ class IOLogger:
         if not self.console_enabled and not access("output_computation_steps") and not console_override:
             return
 
+        # We can put this indent in front of each line of the message passed; this allows us to detect the recursive
+        #   "depth" of our queries, and pass it as a parameter to horizontally offset a message here rather than
+        #   fiddle with that where it's being called/printed
         indent = int(x_offset) * "  "
 
+        # Give some spacing in the terminal between messages
         if self.console_enabled and access("output_computation_steps") or console_override:
             print("\n" + indent, end="")
 
+        # Same as above, but with whatever file could be open
         if self.file:
             self.file.write("\n" + indent)
 
+        # Write each component, bit by bit, where we replace newlines with newlines + that horizontal indentation
         for component in message:
+
+            # 100 is the arbitrary limit I've placed on how many newlines can get replaced, since if it's absent, it
+            #   only replaces the first occurrence, but there'd never be 100+ in one message.
 
             if self.console_enabled and access("output_computation_steps") or console_override:
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
@@ -87,9 +97,15 @@ class IOLogger:
             self.file.write(end)
 
     def disable_console(self):
+        """
+        Disable the console-outputting of the IO Logger
+        """
         self.console_enabled = False
 
     def enable_console(self):
+        """
+        Enable the console-outputting of the IO Logger
+        """
         self.console_enabled = True
 
 
