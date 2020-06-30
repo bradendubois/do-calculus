@@ -293,7 +293,7 @@ class CausalGraph:
                 p_y_x_z = self.probability(outcome, given + z_outcomes)
 
                 # Second, we do our P(Z)
-                io.write("Computing sub-query: ", self.p_str(z_outcomes, []))
+                io.write("Computing sub-query: ", self.p_str(z_outcomes, given))
                 p_z = self.probability(z_outcomes, given)
 
                 p += p_y_x_z * p_z      # Add to our total
@@ -517,6 +517,7 @@ class CausalGraph:
             queries = []
 
         # If a string representation of this query is stored, we are in a loop and should stop
+        # NOTE - This never occurs anymore as improvements have been made.
         if str_rep in queries:
             io.write("Already trying:", str_rep, "returning.", x_offset=depth)
             raise ProbabilityException
@@ -557,14 +558,6 @@ class CausalGraph:
                 return result
             except ProbabilityException:
                 io.write("Failed to resolve by reverse product rule.", x_offset=depth)
-
-        ###############################################
-        #            Interventions / do(X)            #
-        ###############################################
-
-        # Interventions imply that we have fixed X=x
-        if len(head) == 1 and isinstance(head[0], Intervention):
-            return 1.0
 
         ###############################################
         #            Attempt direct lookup            #
@@ -640,7 +633,7 @@ class CausalGraph:
 
         missing_parents = set()
         for outcome in head:
-            missing_parents.update(self.missing_parents(outcome.name, set([parent.name for parent in head + body])))
+            missing_parents.update(self.missing_parents(outcome, set([parent.name for parent in head + body])))
 
         if missing_parents:
             io.write("Attempting application of Jeffrey's Rule", x_offset=depth)
@@ -671,6 +664,14 @@ class CausalGraph:
 
                 except ProbabilityException:
                     io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+
+        ###############################################
+        #            Interventions / do(X)            #
+        ###############################################
+
+        # Interventions imply that we have fixed X=x
+        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
+            return 1.0
 
         ###############################################
         #            Single element on LHS            #
@@ -720,5 +721,11 @@ class CausalGraph:
         if isinstance(variable, Intervention):
             return []
 
-        var = variable if isinstance(variable, Variable) else self.variables[variable]
+        if isinstance(variable, str):
+            var = self.variables[variable]
+        elif isinstance(variable, Outcome):
+            var = self.variables[variable.name]
+        else:
+            var = variable
+
         return [parent for parent in var.parents if parent not in parent_subset]
