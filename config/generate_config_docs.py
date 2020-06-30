@@ -11,8 +11,13 @@
 
 # Run this file directly to update documentation on configuration files
 
+# PyCharm might warn of primary_configuration and primary_config_file not being defined / resolved, but that is okay;
+#   it wants it prefaced with config. since the root of the project requires this from that cwd, but when this file is
+#   directly run, it wouldn't make sense to include config., since primary_configuration is in the *same* directory as
+#   this file.
+
 import os
-from config.primary_configuration import *
+from primary_configuration import *
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 documentation_file = root + "/documentation/configuration.md"
@@ -45,7 +50,7 @@ def generate_configuration_documentation():
 
                 # This is the header/markdown required for a table
                 f.write("| Setting Name | Options | Default Value |\n|:-:|:-:|:-:|\n")
-                f.write("| " + parameter["parameter"] + " | " + str(parameter["options"]) + " | " + str(parameter["default_value"]) + " |\n\n")
+                f.write("| ``" + parameter["parameter"] + "`` | " + str(parameter["options"]) + " | " + str(parameter["default_value"]) + " |\n\n")
 
 
 if __name__ == "__main__":
