@@ -10,8 +10,8 @@ python config/generate_config_docs.py
 build_dir="probability-code-$version"
 mkdir $build_dir
 
+# Copy the "main" file
 cp main.py $build_dir
-cp README.md $build_dir
 
 # All directories to copy
 directories=("causal_graphs" "config" "probability_structures" "regression_tests")
@@ -28,6 +28,15 @@ mkdir $docs
 
 # Copy the PDFs, not Markdown
 # This specific command probably won't work off my local machine. It just renders a markdown file into pdf
-pandoc documentation/causal_graph_files.md -o "${docs}/Causal Graph Files.pdf"
-pandoc documentation/configuration.md -o "${docs}/Configuration.pdf"
-pandoc documentation/regression_tests.md -o "${docs}/Regression Tests.pdf"
+find ./documentation -name "*.md" -print0 | while read -d $'\0' file
+do
+  # echo "File: ${file}"
+  doc_name=${file%.md}
+  doc_name=${doc_name#./documentation/}
+  doc_name=$(echo -e "${doc_name}" | sed -re 's,_, ,g' -e 's/\<./\U&/g')
+
+  # echo "Doc: ${doc_name}"
+  pandoc "${file}" -o "${docs}/${doc_name}.pdf"
+done
+
+pandoc "README.md" -o "${build_dir}/README.pdf"
