@@ -35,7 +35,10 @@ class ConditionalProbabilityTable:
 
         # Clean up the rows; Each is formatted as: [outcome of variable, list of outcomes of parents, probability]
         for row in table_rows:
-            self.table_rows.append([Outcome(variable.name, row[0]), row[1], float(row[2])])
+            outcomes = []
+            for i in range(len(self.given)):
+                outcomes.append(Outcome(self.given[i], row[1][i]))
+            self.table_rows.append([Outcome(variable.name, row[0]), outcomes, float(row[2])])
 
     def __str__(self) -> str:
         """
@@ -98,16 +101,16 @@ class ConditionalProbabilityTable:
         else:
             return False
 
-    def probability_lookup(self, outcome: list, given: set) -> float:
+    def probability_lookup(self, outcome: list, given: list) -> float:
         """
         Directly lookup the probability for the row corresponding to the queried outcome and given data
         :param outcome: The specific outcome to lookup
-        :param given: A set of [<VARIABLE>, <OUTCOME>] sub-lists of known data
+        :param given: A list of Outcome objects
         :return: A probability corresponding to the respective row. Raises an Exception otherwise.
         """
         for row in self.table_rows:
             # If the outcome for this row matches, and each outcome for the given data matches...
-            if outcome[0] == row[0] and set(row[1]) == given:
+            if outcome[0] == row[0] and set(row[1]) == set(given):
                 return row[2]       # We have our answer
 
         # Iterated over all the rows and didn't find the correct one

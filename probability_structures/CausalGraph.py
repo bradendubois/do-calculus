@@ -580,7 +580,7 @@ class CausalGraph:
 
             # Directly look up the corresponding row in the table
             #   Assumes a table has all combinations of values defined
-            probability = table.probability_lookup(head, set([item.outcome for item in body]))
+            probability = table.probability_lookup(head, body)
             io.write(self.p_str(head, body), "=", probability, x_offset=depth)
 
             return probability
