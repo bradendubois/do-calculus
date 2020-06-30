@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Whatever version of the project we'll call this
-version="1.1"
+version="1.3"
 
 # Generate an up-to-date version of the configuration documentation
 python config/generate_config_docs.py
@@ -14,7 +14,7 @@ mkdir $build_dir
 cp main.py $build_dir
 
 # All directories to copy
-directories=("causal_graphs" "config" "probability_structures" "regression_tests")
+directories=("causal_graphs" "config" "probability_structures" "regression_tests" "utilities")
 
 # Copy all the directories (documentation is handled separately)
 for directory in "${directories[@]}"

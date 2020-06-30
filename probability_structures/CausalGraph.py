@@ -312,7 +312,10 @@ class CausalGraph:
 
             # Use every possible set
             for z_set in deconfounding_sets:
+
+                io.write("Computing with Z Set:", str(z_set))
                 result = single_z_set_run(z_set)  # Compute with a specific set
+                print(str(z_set), str(result))
 
                 if only_result is None:  # Storing first result
                     only_result = result
@@ -580,6 +583,14 @@ class CausalGraph:
         else:
             io.write("No direct table found.", x_offset=depth)
 
+        ###############################################
+        #            Interventions / do(X)            #
+        ###############################################
+
+        # Interventions imply that we have fixed X=x
+        if isinstance(head[0], Intervention) and len(head) == 1:# and not descendants_in_rhs:
+            return 1.0
+        
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
         ##################################################################
@@ -626,6 +637,7 @@ class CausalGraph:
             except ProbabilityException:
                 io.write("Failed to resolve by Bayes", x_offset=depth)
 
+
         #######################################################################################################
         #                                  Jeffrey's Rule / Distributive Rule                                 #
         #   P(y | x) = P(y | z, x) * P(z | x) + P(y | ~z, x) * P(~z | x) === sigma_Z P(y | z, x) * P(z | x)   #
@@ -664,14 +676,6 @@ class CausalGraph:
 
                 except ProbabilityException:
                     io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
-
-        ###############################################
-        #            Interventions / do(X)            #
-        ###############################################
-
-        # Interventions imply that we have fixed X=x
-        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
-            return 1.0
 
         ###############################################
         #            Single element on LHS            #
