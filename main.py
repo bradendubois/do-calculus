@@ -9,10 +9,7 @@
 #                                                       #
 #########################################################
 
-import os               # Used to list directory contents to select graphs
-
-from probability_structures.CausalGraph import *
-from regression_tests.RegressionTesting import *
+from utilities.RegressionTesting import *
 from config.config_manager import *
 
 # If set, run any tests before starting up

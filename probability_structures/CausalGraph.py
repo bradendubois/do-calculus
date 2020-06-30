@@ -8,18 +8,12 @@
 #########################################################
 
 import itertools        # Used to create cross-products from iterables
-import json             # Used to load tables/data
-import os               # Used to create a directory if not found
 import random           # Used to pick a random Z set in do-calculus
-import re               # Used in probabilistic function evaluation
-import numpy as np      # Used in table->str formatting
-import math             # Used in table->str formatting
 
-from probability_structures.ProbabilityExceptions import *
+from utilities.ProbabilityExceptions import *
 from probability_structures.VariableStructures import *
-from config.config_manager import *
 from probability_structures.BackdoorController import BackdoorController
-from probability_structures.IO_Logger import *
+from utilities.IO_Logger import *
 from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 
 

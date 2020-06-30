@@ -1,6 +1,6 @@
 #########################################################
 #                                                       #
-#   BackdoorController                                  #
+#   Backdoor Controller                                 #
 #                                                       #
 #   Author: Braden Dubois (braden.dubois@usask.ca)      #
 #   Written for: Dr. Eric Neufeld                       #
@@ -10,7 +10,7 @@
 import itertools        # Used for power set / product creation
 
 from probability_structures.VariableStructures import Variable
-from probability_structures.IO_Logger import *
+from utilities.IO_Logger import *
 
 
 def power_set(variable_list):
