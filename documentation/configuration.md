@@ -12,7 +12,7 @@ Control whether or not to have the regression suite run on launch.
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| run_regression_tests_on_launch | [True, False] | True |
+| ``run_regression_tests_on_launch`` | [True, False] | True |
 
 #### Output Regression Results
 
@@ -22,7 +22,7 @@ If regression tests are enabled, control whether or not to output the results of
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| output_regression_results | ['always', 'failure', 'never'] | failure |
+| ``output_regression_results`` | ['always', 'failure', 'never'] | always |
 
 #### Exit if Regression Failure
 
@@ -30,7 +30,7 @@ If regression tests are enabled and any test fails, control whether to exit the 
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| exit_if_regression_failure | [True, False] | False |
+| ``exit_if_regression_failure`` | [True, False] | False |
 
 ## Output Control
 
@@ -42,7 +42,7 @@ If enabled, each step of a query will be output to the console. This will show t
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| output_computation_steps | [True, False] | True |
+| ``output_computation_steps`` | [True, False] | False |
 
 #### Output Regression Step Computation
 
@@ -50,7 +50,7 @@ If enabled, shows all steps involved in regression tests; similar to the above, 
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| output_regression_test_computation | [True, False] | True |
+| ``output_regression_test_computation`` | [True, False] | False |
 
 #### Print Causal Graph Info on Instantiation
 
@@ -58,7 +58,7 @@ If enabled, when a Causal Graph is loaded from a file, information on each varia
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| print_cg_info_on_instantiation | [True, False] | True |
+| ``print_cg_info_on_instantiation`` | [True, False] | True |
 
 #### Output Levels of Precision
 
@@ -66,7 +66,7 @@ How many digits of precision to output a result to.
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| output_levels_of_precision | any positive integer | 5 |
+| ``output_levels_of_precision`` | any positive integer | 5 |
 
 #### Minimize Backdoor Sets
 
@@ -74,7 +74,15 @@ If enabled, when sets X and Y are given, and all feasible sets Z to ensure causa
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| minimize_backdoor_sets | [True, False] | True |
+| ``minimize_backdoor_sets`` | [True, False] | True |
+
+#### Choosing Z Set in do-calculus
+
+In the do-calculus of p(Y | do(X)), multiple possible sets Z may serve as a deconfounding set; control how the set Z is chosen. Either ``ask`` the user to select one, or choose one at ``random``, or run the query multiple times, using every possible set, ensuring only one answer is ever computed. The last option is useful in debugging.
+
+| Setting Name | Options | Default Value |
+|:-:|:-:|:-:|
+| ``z_selection_preference`` | ['ask', 'random', 'all'] | all |
 
 ## File Directories
 
@@ -86,7 +94,7 @@ A specific directory in which multiple graph files can be placed; they will be l
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| graph_file_folder | any valid path in the project | causal_graphs |
+| ``graph_file_folder`` | any valid path in the project | causal_graphs |
 
 #### Regression Test Directory
 
@@ -94,7 +102,7 @@ A specific directory in which each regression test file can be placed; all test 
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| regression_directory | any valid path in the project | regression_tests/test_files |
+| ``regression_directory`` | any valid path in the project | regression_tests/test_files |
 
 ## Logging Rules / Directories
 
@@ -108,7 +116,7 @@ If enabled, queries will be logged to a file with a name conforming to the query
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| log_computation | [True, False] | True |
+| ``log_computation`` | [True, False] | True |
 
 #### Log All Regression Computation
 
@@ -116,7 +124,7 @@ If enabled, when regression tests are run on launch, all computation involved wi
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| log_all_regression_computation | [True, False] | True |
+| ``log_all_regression_computation`` | [True, False] | False |
 
 #### Logging Directory
 
@@ -124,7 +132,7 @@ The directory in which queries or regression tests will be logged, if they are e
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| logging_directory | any valid path in the project | logging |
+| ``logging_directory`` | any valid path in the project | logging |
 
 #### Regression Log Subdirectory
 
@@ -132,7 +140,7 @@ The subdirectory of ``logging_directory`` in which regression tests will be logg
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| regression_log_subdirectory | any valid path name | regression |
+| ``regression_log_subdirectory`` | any valid path name | regression |
 
 ## Accuracy / Formatting / Precision Rules
 
@@ -144,7 +152,7 @@ If enabled, any time a specific query is computed, its results will be cached; i
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| cache_computation_results | [True, False] | True |
+| ``cache_computation_results`` | [True, False] | True |
 
 #### Default Regression Test Repetition
 
@@ -152,7 +160,7 @@ In *deterministic* regression tests (see: ``Regression Tests``), this value spec
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| default_regression_repetition | any positive integer | 10 |
+| ``default_regression_repetition`` | any positive integer | 10 |
 
 #### Regression Test Result Precision
 
@@ -160,7 +168,7 @@ In a regression test (see: ``Regression Tests``) where an 'expected value' is pr
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| regression_levels_of_precision | any positive integer | 5 |
+| ``regression_levels_of_precision`` | any positive integer | 5 |
 
 #### Apply Function Noise
 
@@ -168,7 +176,7 @@ In evaluating the value of variable where a function is provided rather than a t
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| apply_any_noise | [True, False] | True |
+| ``apply_any_noise`` | [True, False] | True |
 
 #### Recursive Noise Propagation
 
@@ -176,5 +184,5 @@ If ``apply_any_noise`` is enabled, this parameter will control whether any neste
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| recursive_noise_propagation | [True, False] | True |
+| ``recursive_noise_propagation`` | [True, False] | True |
 
