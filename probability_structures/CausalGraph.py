@@ -699,18 +699,7 @@ class CausalGraph:
 
         raise ProbabilityIndeterminableException
 
-    def contradictory_outcome_set(self, outcomes: list) -> bool:
-        """
-        Check whether a list of outcomes contain any contradictory values, such as Y = y and Y = ~y
-        :param outcomes: A list of Outcome objects
-        :return: True if there is a contradiction/implausibility, False otherwise
-        """
-        for cross in itertools.product(outcomes, outcomes):
-            if cross[0].name == cross[1].name and cross[0].outcome != cross[1].outcome:
-                return True
-        return False
-
-    def missing_parents(self, variable, parent_subset: set) -> list:
+    def missing_parents(self, variable: str or Variable or Outcome or Intervention, parent_subset: set) -> list:
         """
         Get a list of all the missing parents of a variable
         :param variable: A variable object (either string or the object itself) or an Outcome
@@ -729,3 +718,14 @@ class CausalGraph:
             var = variable
 
         return [parent for parent in var.parents if parent not in parent_subset]
+
+    def contradictory_outcome_set(self, outcomes: list) -> bool:
+        """
+        Check whether a list of outcomes contain any contradictory values, such as Y = y and Y = ~y
+        :param outcomes: A list of Outcome objects
+        :return: True if there is a contradiction/implausibility, False otherwise
+        """
+        for cross in itertools.product(outcomes, outcomes):
+            if cross[0].name == cross[1].name and cross[0].outcome != cross[1].outcome:
+                return True
+        return False
