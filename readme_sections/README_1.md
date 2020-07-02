@@ -11,7 +11,6 @@ Written for Dr. Eric Neufeld, written by Braden Dubois (braden.dubois@usask.ca).
 - [Running](#requirements)
 - [Usage](#usage)
 - [Further Documentation](#further-documentation)
-- [Acknowledgements](#acknowledgements)
 
 ## Requirements
 

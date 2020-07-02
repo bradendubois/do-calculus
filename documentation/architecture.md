@@ -95,20 +95,21 @@ The ``probability_lookup`` is the most important; we want to go through, row by 
 
 ### Backdoor Controller
 
-For the Backdoor Controller, most of it is fairly straightforward; the key to the backdoor detection algorithm is understanding the meaning of a backdoor path, and especially so on "blocking" these paths. You find that a variable might be necessarily in Z, but in putting it there (as in the case of a collider) can still *open* a path; the path-finding must be nuanced enough to understand that something in Z or not in Z changes whether we can go "up" (child to parent), "down" (parent to child), or both.
+For the Backdoor Controller, most of it is fairly straightforward; the key to the backdoor detection algorithm is understanding the meaning of a backdoor path, and especially so on "blocking" these paths. You find that a variable might be necessarily in Z, but in putting it in Z (as in the case of a collider) can still *open* a path; the path-finding must be nuanced enough to understand that something in Z or not in Z changes whether we can go "up" (child to parent), "down" (parent to child), or both.
 
-Generally, however, we want to find all sufficient sets Z. We begin by taking all variables in G, and removing any that could not possibly be in Z. This is easy enough; we cannot have a variable in X or Y in Z. We can not have a variable along a straight-forward path from X to Y in Z either; the use of an incredibly helpful path algorithm provided by Dr. Neufeld is employed here. We take the remaining variables (after removing X, Y, and X->Y) and take the power set; any possible set in this may be a sufficient Z if it blocks all paths.
+Generally, however, we want to find all sufficient sets Z. We begin by taking all variables in G, and removing any that could not possibly be in Z. This is easy enough; we cannot have a variable in X or Y in Z. We can not have a variable along a straight-forward path from X to Y in Z either; the use of an incredibly helpful path algorithm provided by Dr. Neufeld is employed here. We take the remaining variables (after removing X, Y, and all variables along X->Y) and take the power set; any possible set in this may be a sufficient Z if it blocks all back-door paths.
 
 The backdoor detection algorithm for backdoor paths from X -> Y, with a de-confounder Z take the cross product of X and Y, and sees if a backdoor path exists along any of these. The actual path-finding is as a follows (starting from x, searching for y):
 
 ```pseudo
-backdoor(x, y, Z, current path, paths, previous movement
+backdoor(x, y, Z, current path, paths, previous movement)
     
     if x == y
         we complete a backdoor path
         return all paths so far, plus this path
 
     if x is not in the path
+
         if previous movement was down
 
             if x is in Z, or a descendant of x is in Z
