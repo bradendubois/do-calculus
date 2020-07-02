@@ -162,6 +162,9 @@ class CausalGraph:
                 #   make such changes, so it's easiest to go make this its own "space".
                 [self.backdoor_controller.run, "Detect (and control) for \"back-door paths\"."],
 
+                # Generate a joint distribution table for the loaded graph
+                [self.generate_joint_distribution_table, "Generate a joint distribution table."],
+
                 # Exit back to the main IO controller
                 [self.shutdown, "Exit / Switch Graph Files"]
             ]
@@ -638,6 +641,9 @@ class CausalGraph:
                 result_1 = self.probability(child, head + new_body, new_queries, depth + 1)
                 result_2 = self.probability(head, new_body, new_queries, depth + 1)
                 result_3 = self.probability(child, new_body, new_queries, depth + 1)
+                if result_3 == 0:
+                    io.write(str_3, "= 0, therefore the result is 0.", x_offset=depth)
+                    return 0
 
                 # flip flop flippy flop
                 result = result_1 * result_2 / result_3
@@ -723,6 +729,32 @@ class CausalGraph:
         ###############################################
 
         raise ProbabilityIndeterminableException
+
+    def generate_joint_distribution_table(self):
+        """
+        Generate and present a joint distribution table for the loaded graph.
+        """
+        # First, lets sort the variables for some nice presentation
+        sort_keys = sorted(self.variables.keys())
+
+        # Get all the possible outcomes for each respective variable, stored as a list of lists, ordered mirroring keys
+        sorted_outcomes = [self.variables[key].outcomes for key in sort_keys]
+
+        results = []
+
+        # Cross product of this list and calculate each probability
+        for cross in itertools.product(*sorted_outcomes):
+
+            # Construct each Outcome by pairing the sorted keys with the outcome chosen
+            outcomes = [Outcome(sort_keys[i], cross[i]) for i in range(len(sort_keys))]
+            result = self.probability(outcomes, [])
+            results.append([",".join(cross), [], result])
+
+        results.append(["Total:", [], sum(r[2] for r in results)])
+
+        # Create the table, then print it (with some aesthetic offsetting)
+        cpt = ConditionalProbabilityTable(Variable(",".join(sort_keys), [], []), [], results)
+        io.write("Joint Distribution Table for: " + ",".join(sort_keys), "\n", str(cpt), x_offset=1, console_override=True)
 
     def missing_parents(self, variable: str or Variable or Outcome or Intervention, parent_subset: set) -> list:
         """

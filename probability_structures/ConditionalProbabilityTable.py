@@ -69,7 +69,7 @@ class ConditionalProbabilityTable:
 
             # Each given variable's value
             for given_idx in range(len(row[1])):
-                table[i+1][1+given_idx] = row[1][given_idx]
+                table[i+1][1+given_idx] = row[1][given_idx].outcome
 
             # The probability, to some modifiable number of digits
             table[i+1][table.shape[1]-1] = "{0:.{precision}f}".format(row[2], precision=access("output_levels_of_precision"))
@@ -79,8 +79,8 @@ class ConditionalProbabilityTable:
             widest_element = max([len(cell) for cell in table[:, column_index]])
             for row_index in range(1 + len(self.table_rows)):
                 cell_value = table[row_index][column_index]
-                l_padding = math.ceil((widest_element - len(cell_value) / 2)) * " " + " " * self.padding
-                r_padding = math.floor((widest_element - len(cell_value) / 2)) * " " + " " * self.padding
+                l_padding = math.ceil(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
+                r_padding = math.floor(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
                 table[row_index][column_index] = l_padding + cell_value + r_padding
 
         # Convert to fancy string
