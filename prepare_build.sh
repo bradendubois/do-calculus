@@ -28,7 +28,7 @@ mkdir $docs
 
 # Copy the PDFs, not Markdown
 # This specific command probably won't work off my local machine. It just renders a markdown file into pdf
-find ./documentation -name "*.md" -print0 | while read -d $'\0' file
+find ./documentation -name "*.md" -print0 | while read -rd $'\0' file
 do
   # echo "File: ${file}"
   doc_name=${file%.md}
@@ -39,4 +39,5 @@ do
   pandoc "${file}" -o "${docs}/${doc_name}.pdf"
 done
 
+pandoc "Quick_Usage.md" -o "${build_dir}/Quick Usage.pdf"
 pandoc "README.md" -o "${build_dir}/README.pdf"
