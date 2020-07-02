@@ -223,7 +223,6 @@ class CausalGraph:
             if any(isinstance(g, Intervention) for g in given):
                 x = set([x.name for x in outcome])
                 y = set([y.name for y in given if isinstance(y, Intervention)])
-
                 deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
                 deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in given if not isinstance(g, Intervention))]
                 assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
@@ -291,10 +290,12 @@ class CausalGraph:
                 # First, we do our P(Y | do(X), Z)
                 io.write("Computing sub-query: ", self.p_str(outcome, given + z_outcomes))
                 p_y_x_z = self.probability(outcome, given + z_outcomes)
+                # print(self.p_str(outcome, given + z_outcomes), "=", p_y_x_z)
 
                 # Second, we do our P(Z)
                 io.write("Computing sub-query: ", self.p_str(z_outcomes, given))
-                p_z = self.probability(z_outcomes, given)
+                p_z = self.probability(z_outcomes, [])
+                # print(self.p_str(z_outcomes, []), "=", p_z)
 
                 p += p_y_x_z * p_z      # Add to our total
 
@@ -557,6 +558,7 @@ class CausalGraph:
                 result_2 = self.probability([head[-1]], body, new_queries, depth+1)
                 result = result_1 * result_2
 
+                io.write(str_rep, "=", str(result), x_offset=depth)
                 self.store_computation(str_rep, result)
                 return result
             except ProbabilityException:
@@ -583,14 +585,6 @@ class CausalGraph:
         else:
             io.write("No direct table found.", x_offset=depth)
 
-        ###############################################
-        #            Interventions / do(X)            #
-        ###############################################
-
-        # Interventions imply that we have fixed X=x
-        if isinstance(head[0], Intervention) and len(head) == 1:# and not descendants_in_rhs:
-            return 1.0
-        
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
         ##################################################################
@@ -607,7 +601,23 @@ class CausalGraph:
         #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
         #################################################
 
-        reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head])
+        intervention_names = [item.name for item in head + body if isinstance(item, Intervention)]
+        def in_place_reach(variable: Outcome) -> list:
+
+            reach = []
+            queue = []
+            queue.append(variable.name)
+
+            while queue:
+                cur = queue.pop()
+                if cur not in intervention_names:
+                    reach.append(cur)
+                    queue.extend(r for r in self.variables if cur in self.variables[r].parents)
+            return reach
+
+        #reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head]) - set(i.name for i in head + body if isinstance(i, Intervention))
+        reachable_from_head = set().union(*[in_place_reach(outcome) for outcome in head])
+
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:
@@ -631,12 +641,12 @@ class CausalGraph:
 
                 # flip flop flippy flop
                 result = result_1 * result_2 / result_3
+                io.write(str_rep, "=", str(result), x_offset=depth)
                 self.store_computation(str_rep, result)
                 return result
 
             except ProbabilityException:
                 io.write("Failed to resolve by Bayes", x_offset=depth)
-
 
         #######################################################################################################
         #                                  Jeffrey's Rule / Distributive Rule                                 #
@@ -671,11 +681,21 @@ class CausalGraph:
 
                         total += outcome_result
 
+                    io.write(str_rep, "=", str(total), x_offset=depth)
                     self.store_computation(str_rep, total)
                     return total
 
                 except ProbabilityException:
                     io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+
+        ###############################################
+        #            Interventions / do(X)            #
+        ###############################################
+
+        # Interventions imply that we have fixed X=x
+        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
+            io.write("Intervention without RHS Children:", str_rep, "= 1.0", x_offset=depth)
+            return 1.0
 
         ###############################################
         #            Single element on LHS            #
@@ -691,6 +711,7 @@ class CausalGraph:
                 try:
                     io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
                     result = self.probability(head, list(set(body) - set(can_drop)), new_queries, depth+1)
+                    io.write(str_rep, "=", str(result), x_offset=depth)
                     self.store_computation(str_rep, result)
                     return result
 
