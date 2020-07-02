@@ -1,0 +1,52 @@
+{
+  "name": "Simulation Test",
+  "variables": [{
+    "name": "A",
+    "outcomes": ["a", "~a"],
+    "parents": ["B", "C"],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": ["B", "C"],
+        "rows": [
+          ["a", ["b", "c"], 0.6],
+          ["a", ["b", "~c"], 0.3],
+          ["a", ["~b", "c"], 0.4],
+          ["a", ["~b", "~c"], 0.9],
+          ["~a", ["b", "c"], 0.4],
+          ["~a", ["b", "~c"], 0.7],
+          ["~a", ["~b", "c"], 0.6],
+          ["~a", ["~b", "~c"], 0.1]
+        ]
+      }]
+    }
+  }, {
+    "name": "B",
+    "outcomes": ["b", "~b"],
+    "parents": [],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["b", [], 0.4],
+          ["~b", [], 0.6]
+        ]
+      }]
+    }
+  }, {
+    "name": "C",
+    "outcomes": ["c", "~c"],
+    "parents": [],
+    "determination": {
+      "type": "table",
+      "tables": [{
+        "given": [],
+        "rows": [
+          ["c", [], 0.7],
+          ["~c", [], 0.3]
+        ]
+      }]
+    }
+  }]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "Triangle Test / Pearl 3.19",
+  "name": "Triangle Test / Pearl Figure 3.4",
   "variables": [{
     "name": "X1",
     "outcomes": ["x1", "~x1"],
