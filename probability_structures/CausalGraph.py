@@ -11,11 +11,11 @@ import itertools        # Used to create cross-products from iterables
 import random           # Used to pick a random Z set in do-calculus
 import operator         # Used to assist in sorting a list of Variables
 
-from utilities.ProbabilityExceptions import *
-from probability_structures.VariableStructures import *
 from probability_structures.BackdoorController import BackdoorController
-from utilities.IO_Logger import *
 from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from probability_structures.VariableStructures import *
+from utilities.IO_Logger import *
+from utilities.ProbabilityExceptions import *
 
 
 class CausalGraph:
@@ -531,6 +531,8 @@ class CausalGraph:
         #   Begin with bookkeeping / error-checking   #
         ###############################################
 
+        # head, body = self.descendant_first_sort(head), self.descendant_first_sort(body)
+
         # Create a string representation of this query, and see if it's been done / in-progress / contradictory
         str_rep = self.p_str(head, body)
 
@@ -811,6 +813,16 @@ class CausalGraph:
         :return: A list, sorted (currently in the form of a topological sort)
         """
         return sorted(variables, key=operator.attrgetter("topological_order"))
+
+    def descendant_first_sort(self, variables: list) -> list:
+        """
+        A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
+        "parent"/"ancestor" to its left
+        :param variables: A list of any number of Variable/Outcome/Intervention instances
+        :return: A sorted list, such that any instance has no ancestor earlier in the list
+        """
+        # We can already do top-down sorting, just reverse the answer
+        return self.variable_sort(variables)[::-1]
 
     def contradictory_outcome_set(self, outcomes: list) -> bool:
         """
