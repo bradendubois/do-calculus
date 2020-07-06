@@ -48,13 +48,3 @@ def debug(function):
         return result
 
     return wrapper_debug
-
-
-# @debug
-# @time
-# def tester(foo, value=4):
-#     print(foo, value)
-#
-#
-# tester("Hi!", value=109)
-
