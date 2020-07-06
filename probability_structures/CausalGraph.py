@@ -180,6 +180,9 @@ class CausalGraph:
                 # Generate a joint distribution table for the loaded graph
                 [self.generate_joint_distribution_table, "Generate a joint distribution table."],
 
+                # See the topological sorting of the graph
+                [self.generate_topological_sort, "See a topological sorting of the graph."],
+
                 # Exit back to the main IO controller
                 [self.shutdown, "Exit / Switch Graph Files"]
             ]
@@ -770,6 +773,16 @@ class CausalGraph:
         # Create the table, then print it (with some aesthetic offsetting)
         cpt = ConditionalProbabilityTable(Variable(",".join(sort_keys), [], []), [], results)
         io.write("Joint Distribution Table for: " + ",".join(sort_keys), "\n", str(cpt), x_offset=1, console_override=True)
+
+    def generate_topological_sort(self):
+        """
+        Generate and present a topological sorting of the graph
+        """
+        maximum_depth = max(self.variables[v].topological_order for v in self.variables)
+        io.write("*** Topological Sort ***", end="", console_override=True)
+        for depth in range(maximum_depth):
+            this_depth = [self.variables[item].name for item in self.variables if self.variables[item].topological_order == depth]
+            io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="", console_override=True)
 
     def missing_parents(self, variable: str or Variable or Outcome or Intervention, parent_subset: set) -> list:
         """
