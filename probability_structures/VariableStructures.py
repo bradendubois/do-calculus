@@ -41,17 +41,19 @@ class Variable:
     Has a name, list of potential outcomes, and some list of parent variables.
     """
 
-    def __init__(self, name: str, outcomes: list, parents: list, reach=None):
+    def __init__(self, name: str, outcomes: list, parents: list, reach=None, topological_order=0):
         """
         A basic Variable for use in a CPT or Causal Graph
         :param name: The name of the Variable, "X"
         :param outcomes: A list of all potential outcomes of the variable: ["x", "~x"]
         :param parents: A list of strings representing the names of all the parents of this Variable
         :param reach: An optional set of Variables which are reachable from this Variable
+        :param topological_order: Used in the ordering of Variables as defined by a topological sort
         """
         self.name = name.strip()
         self.outcomes = [outcome.strip() for outcome in outcomes]
         self.parents = [parent.strip() for parent in parents]
+        self.topological_order = topological_order
 
         if reach is None:
             reach = set()

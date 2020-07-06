@@ -26,6 +26,7 @@ Multiple libraries are needed to run the project, almost all of which *should* b
 - re (used in probabilistic function evaluation / parsing text into respective Outcomes and Interventions)
 - numpy (used in formatting conditional probability tables to strings)
 - math (used in formatting conditional probability tables to strings)
+- operator (used in getting a class attribute, used in topological sorting)
 
 ## Installation
 

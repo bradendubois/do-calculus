@@ -9,6 +9,7 @@
 
 import itertools        # Used to create cross-products from iterables
 import random           # Used to pick a random Z set in do-calculus
+import operator         # Used to assist in sorting a list of Variables
 
 from utilities.ProbabilityExceptions import *
 from probability_structures.VariableStructures import *
@@ -134,10 +135,24 @@ class CausalGraph:
         for variable in self.variables:
             reach_initialization(self.variables[variable], set())
 
+        def set_topological_ordering(current: Variable, depth=0):
+            """
+            Helper function to initialize the ordering of the Variables in the graph
+            :param current: A Variable to set the ordering of, and then all its children
+            :param depth: How many "levels deep"/variables traversed to reach current
+            """
+            current.topological_order = max(current.topological_order, depth)
+            for child in [c for c in self.variables if current.name in self.variables[c].parents]:
+                set_topological_ordering(self.variables[child], depth+1)
+
+        # Begin the topological ordering, which is started from every "root" in the graph
+        for root_node in [r for r in self.variables if len(self.variables[r].parents) == 0]:
+            set_topological_ordering(self.variables[root_node])
+
         # Print all the variables out with their reach
         if access("print_cg_info_on_instantiation"):
             for variable in self.variables:
-                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, end="")
+                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, "Order:", self.variables[variable].topological_order, end="")
 
         # Create a Backdoor Controller
         self.backdoor_controller = BackdoorController(self.variables)
@@ -775,6 +790,14 @@ class CausalGraph:
             var = variable
 
         return [parent for parent in var.parents if parent not in parent_subset]
+
+    def variable_sort(self, variables: list) -> list:
+        """
+        A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
+        :param variables: A list of any number of Variable/Outcome/Intervention instances
+        :return: A list, sorted (currently in the form of a topological sort)
+        """
+        return sorted(variables, key=operator.attrgetter("topological_order"))
 
     def contradictory_outcome_set(self, outcomes: list) -> bool:
         """
