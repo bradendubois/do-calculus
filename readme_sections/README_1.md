@@ -27,6 +27,8 @@ Multiple libraries are needed to run the project, almost all of which *should* b
 - numpy (used in formatting conditional probability tables to strings)
 - math (used in formatting conditional probability tables to strings)
 - operator (used in getting a class attribute, used in topological sorting)
+- datetime (used in getting the exact current date/time for regression test file names and decorators)
+- functools (used in function wrapping for decorators)
 
 ## Installation
 

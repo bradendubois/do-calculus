@@ -23,6 +23,7 @@ After picking a file, you will be presented with a new set of options, dependant
 - Query the value of a continuous variable, such as f(X).
 - Detect backdoor paths between two sets of variables, X and Y, and find deconfounding sets Z.
 - Generate a Joint Distribution Table
+- See the topological ordering of the loaded graph
 - Switch Graph Files
 
 If there are no variables with probability tables, or no continuous variables, the respective, unavailable options will not be listed.
