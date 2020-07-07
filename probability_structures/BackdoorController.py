@@ -137,14 +137,11 @@ class BackdoorController:
             for cross in cross_product:
 
                 # Get any/all backdoor paths between this (x, y) and Z combination
-                backdoor_paths = self.get_backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], set(z_subset), [], [])
+                backdoor_paths = self.backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], set(z_subset))
 
                 # Debugging help
                 # for path in backdoor_paths:
                 #     print([str(item) for item in path])
-
-                # Filter out the paths that don't "enter" x; see the definition of a backdoor path
-                backdoor_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
 
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
@@ -180,66 +177,76 @@ class BackdoorController:
         :return: True if there are any backdoor paths, False otherwise
         """
         for cross in itertools.product(x, y):
-            paths = self.get_backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], z, [], [])
-            filtered_paths = [path for path in paths if path[1].name not in self.children[path[0].name]]
-            if len(filtered_paths) > 0:
+            if len(self.backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], z)) > 0:
                 return True
         return False
 
-    def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
+    def backdoor_paths(self, x: Variable, y: Variable, controlled_set: set):
         """
-        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
-        This is used in the detection of backdoor paths from Source to Target.
-        This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
-        :param x: The "current"/source Variable
-        :param y: The "target" Variable
+        :param x: The source Variable
+        :param y: The target Variable
         :param controlled_set: A set of variables, Z, by which movement through any variable is controlled
-        :param path: The current path
-        :param path_list: A list of lists, each sublist being a path
-        :param previous: Whether moving from the previous variable to current we moved "up" (child to parent) or "down"
-            (from parent to child); this movement restriction is involved in backdoor path detection
-        :return: A list of lists, where each sublist is a backdoor path
         """
 
-        def has_controlled_descendant(variable: Variable) -> bool:
+        def get_backdoor_paths(current: Variable, path: list, path_list: list, previous="up") -> list:
             """
-            :param variable: A Variable defined in the Causal Graph
-            :return: True if Variable has at least one "controlled" descendant, which is in "controlled_set"
+            Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
+            This is used in the detection of backdoor paths from Source to Target.
+            This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
+            :param current: The current variable we will move away from
+            :param path: The current path
+            :param path_list: A list of lists, each sublist being a path
+            :param previous: Whether moving from the previous variable to current we moved "up" (child to parent) or "down"
+                (from parent to child); this movement restriction is involved in backdoor path detection
+            :return: A list of lists, where each sublist is a backdoor path
             """
-            return any(var in controlled_set for var in variable.reach)
 
-        # Reached target
-        if x == y:
-            return path_list + [path + [y]]
+            def has_controlled_descendant(variable: Variable) -> bool:
+                """
+                :param variable: A Variable defined in the Causal Graph
+                :return: True if Variable has at least one "controlled" descendant, which is in "controlled_set"
+                """
+                return any(var in controlled_set for var in variable.reach)
 
-        # No infinite loops
-        if x not in path:
+            # Reached target
+            if current == y:
+                return path_list + [path + [y]]
 
-            if previous == "down":
+            # No infinite loops
+            if current not in path:
 
-                # We can ascend on a controlled collider, OR an ancestor of a controlled collider
-                if x.name in controlled_set or has_controlled_descendant(x):
-                    for parent in x.parents:
-                        path_list = self.get_backdoor_paths(self.variables[parent], y, controlled_set, path + [x], path_list, "up")
+                if previous == "down":
 
-                # We can *continue* to descend on a non-controlled variable
-                if x.name not in controlled_set:
-                    for child in self.children[x.name]:
-                        path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
+                    # We can ascend on a controlled collider, OR an ancestor of a controlled collider
+                    if current.name in controlled_set or has_controlled_descendant(current):
+                        for parent in current.parents:
+                            path_list = get_backdoor_paths(self.variables[parent], path + [current], path_list, "up")
 
-            if previous == "up":
+                    # We can *continue* to descend on a non-controlled variable
+                    if current.name not in controlled_set:
+                        for child in self.children[current.name]:
+                            path_list = get_backdoor_paths(self.variables[child], path + [current], path_list, "down")
 
-                if x.name not in controlled_set:
+                if previous == "up":
 
-                    # We can ascend on a non-controlled variable
-                    for parent in x.parents:
-                        path_list = self.get_backdoor_paths(self.variables[parent], y, controlled_set, path + [x], path_list, "up")
+                    if current.name not in controlled_set:
 
-                    # We can descend on a non-controlled reverse-collider
-                    for child in self.children[x.name]:
-                        path_list = self.get_backdoor_paths(self.variables[child], y, controlled_set, path + [x], path_list, "down")
+                        # We can ascend on a non-controlled variable
+                        for parent in current.parents:
+                            path_list = get_backdoor_paths(self.variables[parent], path + [current], path_list, "up")
 
-        return path_list
+                        # We can descend on a non-controlled reverse-collider
+                        for child in self.children[current.name]:
+                            path_list = get_backdoor_paths(self.variables[child], path + [current], path_list, "down")
+
+            return path_list
+
+        # Get all possible backdoor paths
+        backdoor_paths = get_backdoor_paths(x, [], [])
+
+        # Filter out the paths that don't "enter" x; see the definition of a backdoor path
+        filtered_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
+        return filtered_paths
 
     def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
         """
