@@ -19,6 +19,10 @@ from utilities.IO_Logger import *
 from utilities.ProbabilityExceptions import *
 
 
+# Union all Variable types with string for functions that can take any of these
+CG_Types = str or Variable or Outcome or Intervention
+
+
 class CausalGraph:
     """
     A "main" class driving most of the I/O
@@ -226,8 +230,6 @@ class CausalGraph:
         """
         Helper that gets data necessary to query a probability.
         """
-        # Declare this variable here for scope; PyCharm can't see that it *must* be defined at a later point
-        deconfounding_sets = set()
 
         # Get our input data first
         try:
@@ -249,14 +251,6 @@ class CausalGraph:
                 # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
                 assert out.name in self.variables and out.outcome in self.outcomes[out.name], self.error_msg_formatting
 
-            # If we have an Intervention in given, we need to construct Z
-            if any(isinstance(g, Intervention) for g in given):
-                x = set([x.name for x in outcome])
-                y = set([y.name for y in given if isinstance(y, Intervention)])
-                deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
-                deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in given if not isinstance(g, Intervention))]
-                assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
-
         except AssertionError as e:
             io.write("Error: " + str(e.args), console_override=True)
             return
@@ -273,13 +267,24 @@ class CausalGraph:
             io.open(self.p_str(outcome, given))
             io.write(self.p_str(outcome, given) + "\n")
 
-            # Compute the probability of a standard query
-            if not any(isinstance(g, Intervention) for g in given):
-                probability = self.probability(outcome, given)
+            # If we have an Intervention in given, we need to construct Z
+            # Then, we take set Z and take Sigma_Z P(Y | do(X)) * P(Z)
+            if any(isinstance(g, Intervention) for g in given):
+                x = set([x.name for x in outcome])
+                y = set([y.name for y in given if isinstance(y, Intervention)])
+                deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
 
-            # There is a do(X) in the given, so we take a de-confounding set Z and take Sigma_Z P(Y | do(X)) * P(Z)
-            else:
+                # Filter out our Z sets with observations in them and verify there are still sets Z
+                deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in given if not isinstance(g, Intervention))]
+                assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
+
+                self.graph.disable_incoming(*[var for var in given if isinstance(var, Intervention)])
                 probability = self.handle_intervention_computation(outcome, given, deconfounding_sets)
+                self.graph.reset_disabled()
+
+            # Otherwise, compute the probability of a standard query
+            else:
+                probability = self.probability(outcome, given)
 
             # Log and close
             result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
@@ -290,6 +295,9 @@ class CausalGraph:
         #   We would still want other errors to come through
         except ProbabilityIndeterminableException:
             pass
+
+        except AssertionError as e:
+            io.write(str(e.args), console_override=True)
 
     def handle_intervention_computation(self, outcome: list, given: list, deconfounding_sets: list) -> float:
         """
@@ -605,14 +613,9 @@ class CausalGraph:
         if len(head) == 1 and self.has_table(head[0].name, set(body)):
 
             io.write("Querying table for: ", self.p_str(head, body), x_offset=depth, end="")
-
-            # Get the table
-            table = self.get_table(head[0].name, set(body))
-            io.write(str(table), x_offset=depth, end="")
-
-            # Directly look up the corresponding row in the table
-            #   Assumes a table has all combinations of values defined
-            probability = table.probability_lookup(head, body)
+            table = self.get_table(head[0].name, set(body))         # Get table
+            io.write(str(table), x_offset=depth, end="")            # Show table
+            probability = table.probability_lookup(head, body)      # Get specific row
             io.write(self.p_str(head, body), "=", probability, x_offset=depth)
 
             return probability
@@ -635,23 +638,7 @@ class CausalGraph:
         #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
         #################################################
 
-        intervention_names = [item.name for item in head + body if isinstance(item, Intervention)]
-        def in_place_reach(variable: Outcome) -> list:
-
-            reach = []
-            queue = []
-            queue.append(variable.name)
-
-            while queue:
-                cur = queue.pop()
-                if cur not in intervention_names:
-                    reach.append(cur)
-                    queue.extend(r for r in self.variables if cur in self.variables[r].parents)
-            return reach
-
-        #reachable_from_head = set().union(*[self.variables[variable.name].reach for variable in head]) - set(i.name for i in head + body if isinstance(i, Intervention))
-        reachable_from_head = set().union(*[in_place_reach(outcome) for outcome in head])
-
+        reachable_from_head = set().union(*[self.graph.full_reach(outcome) for outcome in head])
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:
@@ -797,25 +784,14 @@ class CausalGraph:
             this_depth = [self.variables[item].name for item in self.variables if self.variables[item].topological_order == depth]
             io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="", console_override=True)
 
-    def missing_parents(self, variable: str or Variable or Outcome or Intervention, parent_subset: set) -> list:
+    def missing_parents(self, variable: CG_Types, parent_subset: set) -> list:
         """
         Get a list of all the missing parents of a variable
         :param variable: A variable object (either string or the object itself) or an Outcome
         :param parent_subset: A set of parent strings
         :return: The remaining parents of the given variable, as a list
         """
-        # Interventions have no parents, technically!
-        if isinstance(variable, Intervention):
-            return []
-
-        if isinstance(variable, str):
-            var = self.variables[variable]
-        elif isinstance(variable, Outcome):
-            var = self.variables[variable.name]
-        else:
-            var = variable
-
-        return [parent for parent in var.parents if parent not in parent_subset]
+        return list(self.graph.parents(variable) - parent_subset)
 
     def variable_sort(self, variables: list) -> list:
         """

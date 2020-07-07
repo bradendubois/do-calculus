@@ -18,6 +18,7 @@ CG_Types = str or Variable or Outcome or Intervention
 
 
 class Graph:
+
     """A basic graph, with edge control."""
 
     def __init__(self, v: set, e: set):
@@ -31,12 +32,12 @@ class Graph:
         self.e = e
 
         # Declare the keys (which are vertices)
-        self.incoming = {vertex.strip(): [] for vertex in v}
-        self.outgoing = {vertex.strip(): [] for vertex in v}
+        self.incoming = {vertex.strip(): set() for vertex in v}
+        self.outgoing = {vertex.strip(): set() for vertex in v}
 
         for edge in e:
-            self.outgoing[edge[0].strip()].append(edge[1].strip())
-            self.incoming[edge[1].strip()].append(edge[0].strip())
+            self.outgoing[edge[0].strip()].add(edge[1].strip())
+            self.incoming[edge[1].strip()].add(edge[0].strip())
 
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
@@ -51,7 +52,10 @@ class Graph:
         :return: All parents reachable (which would be none if being controlled)
         """
         label = to_label(v)
-        return {} if label in self.incoming_disabled else self.incoming[label]
+        if label in self.incoming_disabled:
+            return set()
+
+        return {p for p in self.incoming[label] if p not in self.outgoing_disabled}
 
     def children(self, v: CG_Types) -> set:
         """
@@ -60,7 +64,10 @@ class Graph:
         :return: All children reachable (which would be none if being controlled)
         """
         label = to_label(v)
-        return {} if label in self.outgoing_disabled else self.outgoing[label]
+        if label in self.outgoing_disabled:
+            return set()
+
+        return {c for c in self.outgoing[label] if c not in self.incoming_disabled}
 
     def full_ancestors(self, v: CG_Types) -> set:
         """
@@ -89,14 +96,14 @@ class Graph:
 
         children = set()
         queue = []
-        queue.extend(list(self.parents(v)))
+        queue.extend(list(self.children(v)))
 
         while queue:
             current = queue.pop(0)
             children.add(current)
             queue.extend(list(self.children(current)))
 
-        return children
+        return set(children)
 
     def disable_outgoing(self, *disable: CG_Types):
         """
