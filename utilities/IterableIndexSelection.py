@@ -22,12 +22,26 @@ def user_index_selection(header: str, items: list) -> int:
 
     # Actually print the menu, constructed from "options"
     print("\n" + header)
-    for i in range(len(items)):
-        if isinstance(items[i], list):
-            representation = items[i][1]
+
+    # Construct the menu
+    options = []
+    for item in items:
+        if isinstance(item, list) and callable(item[0]):
+            options.append(item[1])
         else:
-            representation = items[i]
-        print("  " + str(i+1) + ") " + str(representation))
+            options.append(item)
+
+    # Find the largest first element on the list to pad stuff by
+    largest_first = max([len(item[0] if isinstance(item, list) else item) for item in options])
+    for i in range(len(options)):
+        if isinstance(options[i], list):
+            final_representation = options[i][0]
+            if len(options[i]) > 1:
+                final_representation += " "*(largest_first - len(options[i][0])) + " - " + options[i][1]
+        else:
+            final_representation = options[i]
+
+        print("  " + str(i+1) + ") " + str(final_representation))
 
     # Repeatedly re-query until a valid selection is made
     selection = input("\n  Query: ")

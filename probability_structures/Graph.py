@@ -42,8 +42,22 @@ class Graph:
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
 
-        # print("Vertices:", ",".join(v for v in self.v))
-        # print("Edges:", ",".join("(" + e[0] + ", " + e[1] + ")" for e in self.e))
+        self.topology_map = {vertex: 0 for vertex in v}
+
+        def initialize_topology(v: CG_Types, depth=0):
+            """
+            Helper function to initialize the ordering of the Variables in the graph
+            :param v: A Variable to set the ordering of, and then all its children
+            :param depth: How many "levels deep"/variables traversed to reach current
+            """
+            label = to_label(v)
+            self.topology_map[label] = max(self.topology_map[label], depth)
+            for child in [c for c in self.outgoing[label]]:
+                initialize_topology(child, depth+1)
+
+        # Begin the topological ordering, which is started from every "root" in the graph
+        for r in [root_node for root_node in v if len(self.incoming[root_node]) == 0]:
+            initialize_topology(r)
 
     def parents(self, v: CG_Types) -> set:
         """
@@ -127,6 +141,15 @@ class Graph:
         """
         self.outgoing_disabled.clear()
         self.incoming_disabled.clear()
+
+
+    def get_topology(self, v: CG_Types) -> int:
+        """
+        Determine the "depth" a given Variable is at in a topological sort of the graph
+        :param v: The variable to determine the depth of
+        :return: Some non-negative integer representing the depth of this variable
+        """
+        return self.topology_map[to_label(v)]
 
 
 def to_label(item: str or Variable or Outcome or Intervention) -> str:

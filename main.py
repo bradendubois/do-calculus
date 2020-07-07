@@ -45,30 +45,28 @@ if os.path.isdir(access("graph_file_folder")):
     # Multiple files, list them and get a selection, allow switching
     else:
         while True:
-            print("\nFiles located in:", access("graph_file_folder"))
-            for file_index in range(len(files)):
 
-                # Show the name as a preview/reminder, if given
-                name = ""
-                with open(access("graph_file_folder") + "/" + files[file_index]) as f:
-                    # Load the file and if there is a name, we can fancy up the output
+            # Generate the menu options list to present and query
+            files_options = []
+            for file in files:
+                with open(access("graph_file_folder") + "/" + file) as f:
+                    single_file = [file]
                     loaded = json.load(f)
                     if "name" in loaded:
-                        name = " " * (longest_file_length - len(files[file_index])) + "- " + loaded["name"]
-                print("  ", str(file_index+1) + ")", files[file_index], name)
-            print("  ", str(len(files)+1) + ") Exit")
+                        single_file.append(loaded["name"])
+                    files_options.append(single_file)
+            files_options.append(["Exit"])
 
-            selection = input("Selection: ")
-            while not selection.isdigit() or not 1 <= int(selection) <= len(files) + 1:
-                selection = input("Selection: ")
+            # Get a selection from the user
+            selection = user_index_selection("Files located in: "+access("graph_file_folder"), files_options)
 
             # Last selection is always to exit
-            if selection == str(len(files)+1):
+            if selection == len(files_options)-1:
                 exit(0)
 
-            graph_file = files[int(selection) - 1]
+            graph_file = files[int(selection)]
 
-            print("\nLoading:", graph_file, "\n")
+            print("\nLoading:", graph_file)
             CausalGraph(access("graph_file_folder") + "/" + graph_file).run()
 
 # No directory, load whatever default is specified in the Causal Graph
