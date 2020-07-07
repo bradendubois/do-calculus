@@ -15,9 +15,10 @@ from probability_structures.BackdoorController import BackdoorController
 from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from probability_structures.Graph import *
 from probability_structures.VariableStructures import *
-from utilities.IO_Logger import *
-from utilities.ProbabilityExceptions import *
 
+from utilities.IO_Logger import *
+from utilities.IterableIndexSelection import *
+from utilities.ProbabilityExceptions import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
@@ -182,49 +183,33 @@ class CausalGraph:
         while self.running:
 
             # Start with base options of backdoor controlling and exiting
-            options = [
-                # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
-                #   make such changes, so it's easiest to go make this its own "space".
+            menu_options = [
                 [self.backdoor_controller.run, "Detect (and control) for \"back-door paths\"."],
-
-                # Pearl's Causality Text outlines 3 rules of do-calculus on pages 85-86
                 [self.test_do_calculus_rules, "Apply and test the 3 rules of do-calculus."],
-
-                # Generate a joint distribution table for the loaded graph
                 [self.generate_joint_distribution_table, "Generate a joint distribution table."],
-
-                # See the topological sorting of the graph
                 [self.generate_topological_sort, "See a topological sorting of the graph."],
-
-                # Exit back to the main IO controller
                 [self.shutdown, "Exit / Switch Graph Files"]
             ]
 
-            # We can *add* these two options if they are applicable; i.e, no probability stuff if no tables!
-            #   Just a nice quality-of-life / polish touch
+            # We *add* these two options if they are applicable; i.e, no probability stuff if no tables!
 
             # Compute some variable given that it has a function specified
             if len(self.functions) > 0:
-                options.insert(0, [self.setup_probabilistic_function,
-                                   "Compute the value of a variable given some function. Ex: f(X) = 42"])
+                menu_options.insert(0, [self.setup_probabilistic_function,
+                                        "Compute the value of a variable given some function. Ex: f(X) = 42"
+                                        ])
 
             # Compute some probability variable given that it has tables specified
             if len(self.tables) > 0:
-                options.insert(0, [self.setup_probability_computation,
-                                   "Compute a probability. Ex: P(X | Y)"])
+                menu_options.insert(0, [self.setup_probability_computation,
+                                        "Compute a probability. Ex: P(X | Y)"
+                                        ])
 
-            # Actually print the menu, constructed from "options"
-            print("\n\nSelect:")
-            for option in range(len(options)):
-                print("    " + str(option+1) + ") " + options[option][1])
-
-            # Repeatedly re-query until a valid selection is made
-            selection = input("\n  Query: ")
-            while not selection.isdigit() or not 1 <= int(selection) <= len(options):
-                selection = input("  Query: ")
+            # Construct the menu and get the user to select an option
+            menu_selection = user_index_selection("Select an option:", menu_options)
 
             # Call the function corresponding to the selected option
-            options[int(selection)-1][0]()
+            menu_options[menu_selection][0]()
 
     def setup_probability_computation(self):
         """
@@ -234,20 +219,20 @@ class CausalGraph:
         # Get our input data first
         try:
             # Need an outcome to query, not necessarily any given data though
-            outcome_preprocessed = input(self.get_specific_outcome_prompt)
-            assert outcome_preprocessed != "", "No query being made; the head should not be empty."
-            outcome = parse_outcomes_and_interventions(outcome_preprocessed)
-            for out in outcome:     # Ensure there are no adjustments in the head
+            head_preprocessed = input(self.get_specific_outcome_prompt)
+            assert head_preprocessed != "", "No query being made; the head should not be empty."
+            head = parse_outcomes_and_interventions(head_preprocessed)
+            for out in head:     # Ensure there are no adjustments in the head
                 assert not isinstance(out, Intervention), "Don't put adjustments in the head."
 
             # Get optional "given" data and process it
-            given = []
-            given_preprocessed = input(self.get_given_data_prompt)
-            if given_preprocessed != "":
-                given = parse_outcomes_and_interventions(given_preprocessed)
+            body = []
+            body_preprocessed = input(self.get_given_data_prompt)
+            if body_preprocessed != "":
+                body = parse_outcomes_and_interventions(body_preprocessed)
 
             # Validate the queried variable and any given
-            for out in outcome + given:
+            for out in head + body:
                 # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
                 assert out.name in self.variables and out.outcome in self.outcomes[out.name], self.error_msg_formatting
 
@@ -255,36 +240,36 @@ class CausalGraph:
             io.write("Error: " + str(e.args), console_override=True)
             return
 
-        except IndexError:
+        except IndexError:      # Happens if just given "X", not "X=x", making the Outcome() crash
             io.write("Improperly entered data.", console_override=True)
             return
 
-        str_rep = self.p_str(outcome, given)
+        str_rep = self.p_str(head, body)
         io.write("Query:", str_rep, console_override=True)
 
         try:
             # Open a file for logging
-            io.open(self.p_str(outcome, given))
-            io.write(self.p_str(outcome, given) + "\n")
+            io.open(self.p_str(head, body))
+            io.write(self.p_str(head, body), "\n")
 
             # If we have an Intervention in given, we need to construct Z
             # Then, we take set Z and take Sigma_Z P(Y | do(X)) * P(Z)
-            if any(isinstance(g, Intervention) for g in given):
-                x = set([x.name for x in outcome])
-                y = set([y.name for y in given if isinstance(y, Intervention)])
+            if any(isinstance(g, Intervention) for g in body):
+                x = set([x.name for x in head])
+                y = set([y.name for y in body if isinstance(y, Intervention)])
                 deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
 
                 # Filter out our Z sets with observations in them and verify there are still sets Z
-                deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in given if not isinstance(g, Intervention))]
+                deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in body if not isinstance(g, Intervention))]
                 assert len(deconfounding_sets) > 0, "No deconfounding set Z can exist for the given data."
 
-                self.graph.disable_incoming(*[var for var in given if isinstance(var, Intervention)])
-                probability = self.handle_intervention_computation(outcome, given, deconfounding_sets)
+                self.graph.disable_incoming(*[var for var in body if isinstance(var, Intervention)])
+                probability = self.handle_intervention_computation(head, body, deconfounding_sets)
                 self.graph.reset_disabled()
 
             # Otherwise, compute the probability of a standard query
             else:
-                probability = self.probability(outcome, given)
+                probability = self.probability(head, body)
 
             # Log and close
             result = str_rep + " = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
@@ -345,48 +330,46 @@ class CausalGraph:
         # Try every possible Z; still return an answer, ensure only one unique answer is computed
         if choose_z == "all":
 
-            # Sentinel value
-            only_result = None
-            io.write("Computing with every possible Z set.", console_override=True)
+            selected = deconfounding_sets
+            message = "Computing with every possible Z set."
 
-            # Use every possible set
-            for z_set in deconfounding_sets:
-
-                io.write("Computing with Z Set:", str(z_set))
-                result = single_z_set_run(z_set)  # Compute with a specific set
-                print(str(z_set), str(result))
-
-                if only_result is None:  # Storing first result
-                    only_result = result
-
-                # If results do NOT match; error
-                error_msg = "Error: Two distinct results from different Z sets: " + str(only_result) + "vs" + str(result)
-                assert abs(result - only_result) < 0.00000001, error_msg
-
-            probability = only_result
-
-        # Randomly choose a set
         elif choose_z == "random":
-            z_set = random.choice(deconfounding_sets)
-            io.write("Choosing a set Z at random:", str(z_set), console_override=True)
-            probability = single_z_set_run(z_set)
 
-        # Present all sets and allow a choice to be made
+            selected = random.choice(deconfounding_sets)
+            message = "Choosing a set Z at random: " + str(selected)
+
+        elif choose_z == "ask":
+
+            # Generate a message to list all sets and ask for one to be selected
+            set_selection = user_index_selection("Select a deconfounding set:", deconfounding_sets)
+            selected = deconfounding_sets[set_selection]
+            message = "Set selected: " + str(selected)
+
         else:
-            set_selection_prompt = "Select a deconfounding set:\n"
-            for i in range(len(deconfounding_sets)):
-                set_selection_prompt += "  " + str(i + 1) + ") " + str(deconfounding_sets[i]) + "\n"
-            io.write(set_selection_prompt, end="", console_override=True)
+            raise Exception("Somehow the Z selection configuration is invalid.")
 
-            selection = input(" Selection: ")
-            while not selection.isdigit() or not 1 <= int(selection) <= len(deconfounding_sets):
-                selection = input(" Selection: ")
+        io.write(message, console_override=True)
 
-            selected_set = deconfounding_sets[int(selection) - 1]
-            io.write("Set selected:", str(selected_set), console_override=True)
-            probability = single_z_set_run(selected_set)
+        # Handle the "all" case and individual case in one by iterating through the list of sets
+        #   Just convert the single-set selections to a single-element list
+        if not isinstance(selected, list):
+            selected = [selected]
 
-        return probability
+        only_result = None      # Sentinel value
+        for z_set in selected:
+
+            io.write("Computing with Z Set:", str(z_set))
+            result = single_z_set_run(z_set)  # Compute with a specific set
+            io.write(str(z_set), str(result), console_override=True)
+
+            if only_result is None:  # Storing first result
+                only_result = result
+
+            # If results do NOT match; error
+            error_msg = "Error: Two distinct results from different Z sets: " + str(only_result) + "vs" + str(result)
+            assert abs(result - only_result) < 0.00000001, error_msg
+
+        return only_result
 
     def setup_probabilistic_function(self):
         """
@@ -445,8 +428,21 @@ class CausalGraph:
         return string + ")"
 
     def store_computation(self, string_representation: str, result: float or (float, float)):
-        if access("cache_computation_results") and string_representation not in self.stored_computations:
-            self.stored_computations[string_representation] = result
+        """
+        Store a computed result mapped by its query/representation, to speed up future queries
+        :param string_representation: Whatever representation for this query: "P(Y | X)", etc.
+        :param result: The actual value to store, float for probabilities, (float, float) for continuous
+        """
+        # Ensure the configuration file is specified to allow caching
+        if access("cache_computation_results"):
+
+            # Not stored yet - store it
+            if string_representation not in self.stored_computations:
+                self.stored_computations[string_representation] = result
+
+            # Stored already but with a different value - something fishy is going on...
+            elif self.stored_computations[string_representation] != result:
+                io.write("Uh-oh:", string_representation, "has already been cached, but with a different value...", console_override=True)
 
     def probabilistic_function_resolve(self, function: str, noise_function="", apply_noise=True, depth=0) -> (float, float):
         """
@@ -535,12 +531,11 @@ class CausalGraph:
 
         return result
 
-    def probability(self, head: list, body: list, queries=None, depth=0) -> float:
+    def probability(self, head: list, body: list, depth=0) -> float:
         """
         Compute the probability of some head given some body
         :param head: A list of some number of Outcome objects
         :param body: A list of some number of Outcome objects
-        :param queries: A list of probabilities we are going down a DFS search to solve. Used to detect infinite loops.
         :param depth: Used for horizontal offsets in outputting info
         :return: A probability between [0.0, 1.0]
         """
@@ -550,23 +545,13 @@ class CausalGraph:
 
         # Sort the head and body if enabled
         if access("topological_sort_variables"):
-            head, body = self.descendant_first_sort(head), self.descendant_first_sort(body)
+            head, body = self.descendant_first_variable_sort(head), self.descendant_first_variable_sort(body)
 
         # Create a string representation of this query, and see if it's been done / in-progress / contradictory
         str_rep = self.p_str(head, body)
 
         # Print the actual query being made on each recursive call to help follow
         io.write("Querying:", str_rep, x_offset=depth)
-
-        # Keep a list of queries being passed through recursive calls to avoid infinite loops
-        if queries is None:
-            queries = []
-
-        # If a string representation of this query is stored, we are in a loop and should stop
-        # NOTE - This never occurs anymore as improvements have been made.
-        if str_rep in queries:
-            io.write("Already trying:", str_rep, "returning.", x_offset=depth)
-            raise ProbabilityException
 
         # If the calculation has been done and cached, just return it from storage
         if str_rep in self.stored_computations:
@@ -584,9 +569,6 @@ class CausalGraph:
             io.write("Couldn't resolve by a probabilistic function evaluation.")
             raise ProbabilityException
 
-        # Create a copy and add the current string; we pass a copy to prevent issues with recursion
-        new_queries = queries.copy() + [str_rep]
-
         ###############################################
         #             Reverse product rule            #
         #   P(y, x | ~z) = P(y | x, ~z) * P(x | ~z)   #
@@ -596,8 +578,8 @@ class CausalGraph:
             try:
                 io.write("Applying reverse product rule to", str_rep)
 
-                result_1 = self.probability(head[:-1], [head[-1]] + body, new_queries, depth+1)
-                result_2 = self.probability([head[-1]], body, new_queries, depth+1)
+                result_1 = self.probability(head[:-1], [head[-1]] + body, depth+1)
+                result_2 = self.probability([head[-1]], body, depth+1)
                 result = result_1 * result_2
 
                 io.write(str_rep, "=", str(result), x_offset=depth)
@@ -656,10 +638,10 @@ class CausalGraph:
                 str_3 = self.p_str(child, new_body)
                 io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
 
-                result_1 = self.probability(child, head + new_body, new_queries, depth + 1)
-                result_2 = self.probability(head, new_body, new_queries, depth + 1)
-                result_3 = self.probability(child, new_body, new_queries, depth + 1)
-                if result_3 == 0:
+                result_1 = self.probability(child, head + new_body, depth+1)
+                result_2 = self.probability(head, new_body, depth+1)
+                result_3 = self.probability(child, new_body, depth+1)
+                if result_3 == 0:       # Avoid dividing by 0!
                     io.write(str_3, "= 0, therefore the result is 0.", x_offset=depth)
                     return 0
 
@@ -699,8 +681,8 @@ class CausalGraph:
 
                         io.write(self.p_str(head, [as_outcome] + body), "*", self.p_str([as_outcome], body), x_offset=depth)
 
-                        result_1 = self.probability(head, [as_outcome] + body, new_queries, depth=depth + 1)
-                        result_2 = self.probability([as_outcome], body, new_queries, depth=depth+1)
+                        result_1 = self.probability(head, [as_outcome] + body, depth+1)
+                        result_2 = self.probability([as_outcome], body, depth+1)
                         outcome_result = result_1 * result_2
 
                         total += outcome_result
@@ -734,7 +716,7 @@ class CausalGraph:
             if can_drop:
                 try:
                     io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
-                    result = self.probability(head, list(set(body) - set(can_drop)), new_queries, depth+1)
+                    result = self.probability(head, list(set(body) - set(can_drop)), depth+1)
                     io.write(str_rep, "=", str(result), x_offset=depth)
                     self.store_computation(str_rep, result)
                     return result
@@ -793,7 +775,7 @@ class CausalGraph:
         """
         return list(self.graph.parents(variable) - parent_subset)
 
-    def variable_sort(self, variables: list) -> list:
+    def topological_variable_sort(self, variables: list) -> list:
         """
         A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
         :param variables: A list of any number of Variable/Outcome/Intervention instances
@@ -807,7 +789,7 @@ class CausalGraph:
             sort_given.append(sort_map[s.name])
         return sort_given
 
-    def descendant_first_sort(self, variables: list) -> list:
+    def descendant_first_variable_sort(self, variables: list) -> list:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
@@ -815,7 +797,7 @@ class CausalGraph:
         :return: A sorted list, such that any instance has no ancestor earlier in the list
         """
         # We can already do top-down sorting, just reverse the answer
-        return self.variable_sort(variables)[::-1]
+        return self.topological_variable_sort(variables)[::-1]
 
     def contradictory_outcome_set(self, outcomes: list) -> bool:
         """
