@@ -13,6 +13,7 @@ import operator         # Used to assist in sorting a list of Variables
 
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from probability_structures.Graph import *
 from probability_structures.VariableStructures import *
 from utilities.IO_Logger import *
 from utilities.ProbabilityExceptions import *
@@ -154,6 +155,11 @@ class CausalGraph:
             for variable in self.variables:
                 io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, "Order:", self.variables[variable].topological_order, end="")
 
+        # Create the graph for queries
+        v = set([v for v in self.variables])
+        e = set().union(*[[(parent, child) for parent in self.variables[child].parents] for child in self.variables])
+        self.graph = Graph(v, e)
+
         # Create a Backdoor Controller
         self.backdoor_controller = BackdoorController(self.variables)
 
@@ -176,6 +182,9 @@ class CausalGraph:
                 # We modify the graph heavily in backdoor-controlling, so I want to copy the graph and
                 #   make such changes, so it's easiest to go make this its own "space".
                 [self.backdoor_controller.run, "Detect (and control) for \"back-door paths\"."],
+
+                # Pearl's Causality Text outlines 3 rules of do-calculus on pages 85-86
+                [self.test_do_calculus_rules, "Apply and test the 3 rules of do-calculus."],
 
                 # Generate a joint distribution table for the loaded graph
                 [self.generate_joint_distribution_table, "Generate a joint distribution table."],
@@ -842,3 +851,15 @@ class CausalGraph:
             if cross[0].name == cross[1].name and cross[0].outcome != cross[1].outcome:
                 return True
         return False
+
+    def test_do_calculus_rules(self):
+        """
+        Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do-calculus rules apply.
+        """
+
+        do_calculus_prompt = "To test the 3 rules of do-calculus, we will need 4 sets of variables: X, Y, Z, and " \
+                             "W.\nIn these rules, X and Z may be interventions. The rules are:\n" \
+                             "Rule 1: P(y | do(x), z, w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X)\n" \
+                             "Rule 2: P(y | do(x), do(z), w) = P(y | do(x), z, w) if (Y _||_ Z | X, W) in G(-X, Z_)\n" \
+                             "Rule 3: P(y | do(x), do(z), w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X, -Z(W))"
+

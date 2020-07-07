@@ -230,7 +230,7 @@ def access(param: str) -> any:
     if param not in loaded_settings:
         print("\nConfiguration Lookup Error;\nCouldn't find parameter: " + param + "\n" +
               "Re-generating configuration file...")
-        delete_configuration_file()
+        repair_configuration_file()
         initialize_configuration_file()
 
     # See if the configuration file has an invalid setting for this, and repair if so
