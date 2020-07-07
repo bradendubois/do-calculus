@@ -160,6 +160,13 @@ primary_config_file = [
             "default_value": True,
             "options": [True, False]
         }, {
+            "parameter_title": "Topological Sort Variables",
+            "description": "If enabled, to avoid Bayes rule as much as possible, the head and body of queries can be " +
+                           "topologically sorted.",
+            "parameter": "topological_sort_variables",
+            "default_value": True,
+            "options": [True, False]
+        }, {
             "parameter_title": "Default Regression Test Repetition",
             "description": "In *deterministic* regression tests (see: ``Regression Tests``), " +
                            "this value specifies how many times to repeat a test.",

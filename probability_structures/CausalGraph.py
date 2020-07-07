@@ -531,7 +531,9 @@ class CausalGraph:
         #   Begin with bookkeeping / error-checking   #
         ###############################################
 
-        # head, body = self.descendant_first_sort(head), self.descendant_first_sort(body)
+        # Sort the head and body if enabled
+        if access("topological_sort_variables"):
+            head, body = self.descendant_first_sort(head), self.descendant_first_sort(body)
 
         # Create a string representation of this query, and see if it's been done / in-progress / contradictory
         str_rep = self.p_str(head, body)
@@ -812,7 +814,13 @@ class CausalGraph:
         :param variables: A list of any number of Variable/Outcome/Intervention instances
         :return: A list, sorted (currently in the form of a topological sort)
         """
-        return sorted(variables, key=operator.attrgetter("topological_order"))
+        # No matter what type of item is in the list, take its name (all have one) and access the variables dict
+        sorted_variables = sorted([self.variables[f.name] for f in variables], key=operator.attrgetter("topological_order"))
+        sort_given = []
+        sort_map = {item.name: item for item in variables}
+        for s in sorted_variables:
+            sort_given.append(sort_map[s.name])
+        return sort_given
 
     def descendant_first_sort(self, variables: list) -> list:
         """
