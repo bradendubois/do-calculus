@@ -6,18 +6,16 @@
     "parents": [],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": [],
         "rows": [
           ["a", [], 0.4],
           ["~a", [], 0.6]
         ]
-      }]
+      }
     }
   },{
     "name": "B",
-    "outcomes": [],
-    "parents": [],
     "determination": {
       "type": "function",
       "function": [
@@ -27,7 +25,6 @@
     }
   },{
     "name": "C",
-    "outcomes": [],
     "parents": ["A", "B"],
     "determination": {
       "type": "function",

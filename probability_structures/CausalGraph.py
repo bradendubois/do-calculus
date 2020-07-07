@@ -54,6 +54,15 @@ class CausalGraph:
 
     def __init__(self, filename=None):
 
+        # Ensure the file exists
+        if not os.path.isfile(filename):
+            io.write("ERROR: Can't find:", filename)
+            raise Exception
+
+        # Load the file, then we parse it
+        with open(filename) as json_file:
+            loaded_file = json.load(json_file)
+
         self.variables = dict()       # Maps string name to the Variable object instantiated
         self.outcomes = dict()        # Maps string name *and* corresponding variable to a list of outcome values
 
@@ -65,108 +74,75 @@ class CausalGraph:
         # If enabled, stores a string representation of a query mapped to its result
         self.stored_computations = dict()
 
-        # Allow a specified file location
-        if filename is None:
-            filename = access("graph_file_folder") + "/" + "causal_graph.json"
+        for v in loaded_file["variables"]:
 
-        # Ensure the file exists
-        if not os.path.isfile(filename):
-            io.write("ERROR: Can't find:", filename)
-            exit(-1)
-
-        # Load the file, then we parse it
-        with open(filename) as json_file:
-            loaded_file = json.load(json_file)
-
-        for variable in loaded_file["variables"]:
-
-            name = variable["name"]
-            outcomes = []
-            if "outcomes" in variable:
-                outcomes = variable["outcomes"]
-            parents = variable["parents"]
+            # Load the relevant data to construct a Variable
+            name = v["name"]
+            outcomes = v["outcomes"] if "outcomes" in v else []
+            parents = v["parents"] if "parents" in v else []
 
             # Create a fancy Variable object
-            var = Variable(name, outcomes, parents)
+            variable = Variable(name, outcomes, parents)
 
             # Lookup the object by its name
-            self.variables[name] = var
+            self.variables[name] = variable
 
             # Store by both the Variable object as well as its name, for ease of access
             self.outcomes[name] = outcomes
-            self.outcomes[var] = outcomes
+            self.outcomes[variable] = outcomes
 
             # Is the variable determined by a function or direct tables?
-            determination = variable["determination"]
+            determination = v["determination"]
             determination_type = determination["type"]
 
             if determination["type"] == "table":
+
+                # Save that this variable is determined by a table
                 self.determination[name] = "table"
-                self.determination[var] = "table"
+                self.determination[variable] = "table"
 
-                # Load in all the tables
-                for table in determination["tables"]:
+                # Load in the table and construct a CPT
+                table = determination["table"]
+                cpt = ConditionalProbabilityTable(self.variables[name], table["given"], table["rows"])
 
-                    # Dictionary "tables" maps a variable/name to all the tables that show its probabilities
-                    if name not in self.tables:
-                        self.tables[name] = []
-                        self.tables[self.variables[name]] = []
-
-                    cpt = ConditionalProbabilityTable(self.variables[name], table["given"], table["rows"])
-
-                    self.tables[name].append(cpt)
-                    self.tables[self.variables[name]].append(cpt)
+                # Map the name/variable to the table
+                self.tables[name] = cpt
+                self.tables[self.variables[name]] = cpt
 
             elif determination_type == "function":
+
+                # Save that this variable is determined by a function
                 self.determination[name] = "function"
-                self.determination[var] = "function"
+                self.determination[variable] = "function"
+
+                # Map the name/variable to the function
                 self.functions[name] = determination["function"]
-                self.functions[var] = determination["function"]
+                self.functions[variable] = determination["function"]
+
             else:
                 print("ERROR; Variable", name, "determination cannot be found.")
                 exit(-1)
 
-        # Reach initialization through recursive parent reverse-reach
-        def reach_initialization(current: Variable, reachable_children: set):
-            """
-            Helper function to initialize the "reach" of each variable in the CG.
-            :param current: A Variable to add the given children to the set of "reachable"s
-            :param reachable_children: A set of string values of variables representing reachable children
-            """
-            current.reach.update(reachable_children)
-            for parent in current.parents:
-                reach_initialization(self.variables[parent], reachable_children.union({current.name}))
-
-        # Call recursive initializer *from* each variable
-        for variable in self.variables:
-            reach_initialization(self.variables[variable], set())
-
-        def set_topological_ordering(current: Variable, depth=0):
-            """
-            Helper function to initialize the ordering of the Variables in the graph
-            :param current: A Variable to set the ordering of, and then all its children
-            :param depth: How many "levels deep"/variables traversed to reach current
-            """
-            current.topological_order = max(current.topological_order, depth)
-            for child in [c for c in self.variables if current.name in self.variables[c].parents]:
-                set_topological_ordering(self.variables[child], depth+1)
-
-        # Begin the topological ordering, which is started from every "root" in the graph
-        for root_node in [r for r in self.variables if len(self.variables[r].parents) == 0]:
-            set_topological_ordering(self.variables[root_node])
-
-        # Print all the variables out with their reach
-        if access("print_cg_info_on_instantiation"):
-            for variable in self.variables:
-                io.write(str(self.variables[variable]), "; Reaches:", self.variables[variable].reach, "Order:", self.variables[variable].topological_order, end="")
+        # Create a Backdoor Controller
+        self.backdoor_controller = BackdoorController(self.variables)
 
         # Create the graph for queries
         v = set([v for v in self.variables])
         e = set().union(*[[(parent, child) for parent in self.variables[child].parents] for child in self.variables])
         self.graph = Graph(v, e)
 
-        # Create a Backdoor Controller
-        self.backdoor_controller = BackdoorController(self.variables)
+        # Update the topological ordering (as specified by the graph) for later sorting purposes
+        for variable in self.variables:
+            self.variables[variable].topological_order = self.graph.get_topology(variable)
+
+        # Print all the variables out with their reach
+        show = access("print_cg_info_on_instantiation")
+        for variable in self.variables:
+            v = self.variables[variable]
+            io.write(str(v), "; Reaches:", v.reach, "Order:", v.topological_order, end="", console_override=show)
+
+        # Aesthetic spacing
+        io.write(end="", console_override=show)
 
         # "Startup"
         self.running = True
@@ -360,7 +336,7 @@ class CausalGraph:
 
             io.write("Computing with Z Set:", str(z_set))
             result = single_z_set_run(z_set)  # Compute with a specific set
-            io.write(str(z_set), str(result), console_override=True)
+            io.write(str(z_set), str(result), end="", console_override=True)
 
             if only_result is None:  # Storing first result
                 only_result = result
@@ -391,29 +367,6 @@ class CausalGraph:
             io.write("Given variable not resolvable by a probabilistic function.", console_override=True)
         except AssertionError:
             io.write("Variable given not in the graph.", console_override=True)
-
-    def has_table(self, name: str, given: set) -> bool:
-        """
-        Determine if the CausalGraph has a table corresponding to the given var|given variables
-        :param name: The head/LHS of the query: "X" in P(X | Y)
-        :param given: A set of Outcomes of the body/RHS of the query
-        :return: True if there exists such a table, False otherwise
-        """
-        for table in self.tables[name]:
-            if set(table.given) == set([outcome.name for outcome in given]):
-                return True
-        return False
-
-    def get_table(self, name: str, given: set) -> ConditionalProbabilityTable or None:
-        """
-        Get a specific table given a variable, and a list of given data
-        :param name: The variable being queried
-        :param given: A list of string variables for which there is known values
-        :return: A ConditionalProbabilityTable matching the above data if one exists, None otherwise
-        """
-        for table in self.tables[name]:
-            if set(table.given) == set([outcome.name for outcome in given]):
-                return table
 
     def p_str(self, lhs: list, rhs: list) -> str:
         """
@@ -592,10 +545,10 @@ class CausalGraph:
         #            Attempt direct lookup            #
         ###############################################
 
-        if len(head) == 1 and self.has_table(head[0].name, set(body)):
+        if len(head) == 1 and set(self.tables[head[0].name].given) == set(v.name for v in body):
 
             io.write("Querying table for: ", self.p_str(head, body), x_offset=depth, end="")
-            table = self.get_table(head[0].name, set(body))         # Get table
+            table = self.tables[head[0].name]                       # Get table
             io.write(str(table), x_offset=depth, end="")            # Show table
             probability = table.probability_lookup(head, body)      # Get specific row
             io.write(self.p_str(head, body), "=", probability, x_offset=depth)

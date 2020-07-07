@@ -1,18 +1,18 @@
 {
-  "name": "Triangle Test / Pearl Figure 3.4",
+  "name": "Pearl: Figure 3.4",
   "variables": [{
     "name": "X1",
     "outcomes": ["x1", "~x1"],
     "parents": [],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": [],
         "rows": [
           ["x1", [], 0.4],
           ["~x1", [], 0.6]
         ]
-      }]
+      }
     }
   },{
     "name": "X2",
@@ -20,13 +20,13 @@
     "parents": [],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": [],
         "rows": [
           ["x2", [], 0.15],
           ["~x2", [], 0.85]
         ]
-      }]
+      }
     }
   },{
     "name": "X3",
@@ -34,7 +34,7 @@
     "parents": ["X1"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["X1"],
         "rows": [
           ["x3", ["x1"], 0.1],
@@ -42,7 +42,7 @@
           ["~x3", ["x1"], 0.9],
           ["~x3", ["~x1"], 0.7]
         ]
-      }]
+      }
     }
   }, {
     "name": "X4",
@@ -50,7 +50,7 @@
     "parents": ["X1", "X2"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["X1", "X2"],
         "rows": [
           ["x4", ["x1", "x2"], 0.7],
@@ -62,7 +62,7 @@
           ["~x4", ["~x1", "x2"], 0.45],
           ["~x4", ["~x1", "~x2"], 0.85]
         ]
-      }]
+      }
     }
   }, {
     "name": "X5",
@@ -70,7 +70,7 @@
     "parents": ["X2"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["X2"],
         "rows": [
           ["x5", ["x2"], 0.8],
@@ -78,7 +78,7 @@
           ["~x5", ["x2"], 0.2],
           ["~x5", ["~x2"], 0.75]
         ]
-      }]
+      }
     }
   }, {
     "name": "Xi",
@@ -86,7 +86,7 @@
     "parents": ["X3", "X4"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["X3", "X4"],
         "rows": [
           ["xi", ["x3", "x4"], 0.5],
@@ -98,7 +98,7 @@
           ["~xi", ["~x3", "x4"], 0.9],
           ["~xi", ["~x3", "~x4"], 0.75]
         ]
-      }]
+      }
     }
   }, {
     "name": "X6",
@@ -106,7 +106,7 @@
     "parents": ["Xi"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["Xi"],
         "rows": [
           ["x6", ["xi"], 0.9],
@@ -114,7 +114,7 @@
           ["~x6", ["xi"], 0.1],
           ["~x6", ["~xi"], 0.75]
         ]
-      }]
+      }
     }
   }, {
     "name": "Xj",
@@ -122,7 +122,7 @@
     "parents": ["X6", "X4", "X5"],
     "determination": {
       "type": "table",
-      "tables": [{
+      "table": {
         "given": ["X6", "X4", "X5"],
         "rows": [
           ["xj", ["x6", "x4", "x5"], 0.0],
@@ -142,7 +142,7 @@
           ["~xj", ["~x6", "~x4", "x5"], 0.05],
           ["~xj", ["~x6", "~x4", "~x5"], 0.95]
         ]
-      }]
+      }
     }
   }]
 }

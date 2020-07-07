@@ -56,7 +56,10 @@ def run_test_file(test_file: str) -> (bool, str):
         directory = loaded_test_file["file_directory"]
 
     # Load the Causal Graph of the given file
-    causal_graph = CausalGraph(directory + "/" + loaded_test_file["test_file"])
+    try:
+        causal_graph = CausalGraph(directory + "/" + loaded_test_file["test_file"])
+    except Exception:
+        return False, "Unexpected error in loading: " + loaded_test_file["test_file"]
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
