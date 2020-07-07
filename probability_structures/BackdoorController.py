@@ -7,6 +7,8 @@
 #                                                       #
 #########################################################
 
+import itertools
+
 from probability_structures.VariableStructures import Variable
 from utilities.IO_Logger import *
 from utilities.PowerSet import power_set
@@ -168,6 +170,21 @@ class BackdoorController:
             valid_z_subsets = self.minimal_sets(valid_z_subsets)
 
         return list(valid_z_subsets)
+
+    def any_backdoor_paths(self, x: set, y: set, z: set) -> bool:
+        """
+        Without seeing *which* paths are found, detect any backdoor paths between X and Y
+        :param x: A set X, to be independent from Y
+        :param y: A set Y, to be independent from X
+        :param z: A set Z, to block paths between X and Y
+        :return: True if there are any backdoor paths, False otherwise
+        """
+        for cross in itertools.product(x, y):
+            paths = self.get_backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], z, [], [])
+            filtered_paths = [path for path in paths if path[1].name not in self.children[path[0].name]]
+            if len(filtered_paths) > 0:
+                return True
+        return False
 
     def get_backdoor_paths(self, x: Variable, y: Variable, controlled_set: set, path: list, path_list: list, previous="up") -> list:
         """
