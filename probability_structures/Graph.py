@@ -44,13 +44,13 @@ class Graph:
 
         self.topology_map = {vertex: 0 for vertex in v}
 
-        def initialize_topology(v: CG_Types, depth=0):
+        def initialize_topology(vertex: CG_Types, depth=0):
             """
             Helper function to initialize the ordering of the Variables in the graph
-            :param v: A Variable to set the ordering of, and then all its children
+            :param vertex: A Variable to set the ordering of, and then all its children
             :param depth: How many "levels deep"/variables traversed to reach current
             """
-            label = to_label(v)
+            label = to_label(vertex)
             self.topology_map[label] = max(self.topology_map[label], depth)
             for child in [c for c in self.outgoing[label]]:
                 initialize_topology(child, depth+1)
@@ -150,6 +150,22 @@ class Graph:
         """
         return self.topology_map[to_label(v)]
 
+    def copy(self):
+        """
+        Public copy method; copies v, e, and the disabled sets
+        :return: A copied Graph
+        """
+        return self.__copy__()
+
+    def __copy__(self):
+        """
+        Copy builtin allowing the Graph to be copied
+        :return: A copied Graph
+        """
+        copied = Graph(self.v.copy(), self.e.copy())
+        copied.incoming_disabled = self.incoming_disabled.copy()
+        copied.outgoing_disabled = self.outgoing_disabled.copy()
+        return copied
 
 def to_label(item: str or Variable or Outcome or Intervention) -> str:
     """
