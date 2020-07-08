@@ -192,9 +192,8 @@ def validate_all_regression_tests() -> (bool, str):
     # Output a header on regression tests being run if toggled
     if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
-
     # Disable the IO/Logger to console if regression test results not set to output
-    if not access("output_regression_test_computation"):
+    else:
         io.disable_console()
 
     # Open a regression file to log to if enabled
@@ -224,10 +223,8 @@ def validate_all_regression_tests() -> (bool, str):
     if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
 
-    # Enable IO if it was disabled
+    # Enable IO if it was disabled; close any regression file being written to
     io.enable_console()
-
-    # Close the regression file being written to, if it's open
     io.close()
 
     # Add the "summary" value

@@ -136,7 +136,7 @@ class CausalGraph:
             self.variables[variable].topological_order = self.graph.get_topology(variable)
 
         # Print all the variables out with their reach
-        show = access("print_cg_info_on_instantiation")
+        show = access("print_cg_info_on_instantiation") and io.console_enabled
         for variable in self.variables:
             v = self.variables[variable]
             io.write(str(v), "; Reaches:", v.reach, "Order:", v.topological_order, end="", console_override=show)
@@ -663,8 +663,8 @@ class CausalGraph:
 
         if len(head) == 1 and not missing_parents and not descendants_in_rhs:
 
-            head_var = self.variables[head[0].name]
-            can_drop = [var for var in body if var.name not in head_var.parents]
+            head_variable = self.variables[head[0].name]
+            can_drop = [v for v in body if v.name not in self.graph.parents(head_variable)]
 
             if can_drop:
                 try:
@@ -713,11 +713,12 @@ class CausalGraph:
         """
         Generate and present a topological sorting of the graph
         """
-        maximum_depth = max(self.variables[v].topological_order for v in self.variables)
+        maximum_depth = max(self.graph.get_topology(v) for v in self.variables) + 1
         io.write("*** Topological Sort ***", end="", console_override=True)
         for depth in range(maximum_depth):
             this_depth = [self.variables[item].name for item in self.variables if self.variables[item].topological_order == depth]
             io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="", console_override=True)
+        io.write(console_override=True)
 
     def missing_parents(self, variable: CG_Types, parent_subset: set) -> list:
         """

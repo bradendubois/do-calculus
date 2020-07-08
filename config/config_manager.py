@@ -11,23 +11,19 @@ import json         # Settings data is stored in JSON
 import os           # Used to create a directory/config file if not found
 import argparse     # Allow command-line flag parsing
 
-# Output some superfluous information only if we are directly running this file
-directly_run = __name__ == "__main__"
-
-# A bit gross, but there are two different paths needed depending on how this file
-#   can be run, simply try to import both
 try:
-    # noinspection PyUnresolvedReferences
-    from primary_configuration import *
+    from config.primary_configuration import *
+    from utilities.IterableIndexSelection import *
+
 except ModuleNotFoundError:
-    try:
-        # noinspection PyUnresolvedReferences
-        from config.primary_configuration import *
-    except ModuleNotFoundError:
-        print("Couldn't import the primary configuration data.")
+    print("Uh-oh: Can't import some project modules. Try running this directly in PyCharm.")
+    exit(-1)
 
 # Root of the project; fix any relative naming conflicts
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Output some superfluous information only if we are directly running this file
+directly_run = __name__ == "__main__"
 
 # Default configuration file directory and name
 config_dir = root + "/" + "config"
@@ -262,15 +258,11 @@ if __name__ == "__main__":
     ]
 
     while True:
-        for i in range(len(options)):
-            print("  " + str(i+1) + "): " + options[i][1])
 
-        # Query until valid selection made
-        selection = input("Selection: ")
-        while not selection.isdigit() or not 1 <= int(selection) <= len(options):
-            selection = input("Selection: ")
+        # Get a selection from the above options
+        selection = user_index_selection("Select an option:", options)
 
         print()     # Aesthetic spacing
 
         # Run selected option
-        options[int(selection)-1][0]()
+        options[selection][0]()
