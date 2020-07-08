@@ -9,6 +9,7 @@
 
 import itertools
 
+from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import Variable
 from utilities.IO_Logger import *
 from utilities.PowerSet import power_set
@@ -45,30 +46,12 @@ class BackdoorController:
         "    Example: E, N\n" + \
         "  Input: "
 
-    def __init__(self, variables: dict):
+    def __init__(self, graph: Graph):
         """
         Initializer for a BackdoorController
-        :param variables: A dictionary of Variables (should be copied from the original CausalGraph, not a pointer to)
+        :param graph: A Graph class used for traversal of the Causal Graph loaded
         """
-        self.variables = variables
-
-        # Utilize a dictionary to determine which variables are being controlled for; affects the path traversal used
-        #   to identify backdoor paths
-        self.controlled = dict()
-        for variable in self.variables:
-            self.controlled[variable] = False
-
-        # Calculate all the children/outgoing of a variable. This representation shows the actual paths as in a causal
-        #   diagram, but probability calculations really store edges going the opposite direction, child -> parent.
-        self.children = dict()
-        for variable in self.variables:
-            if variable not in self.children:
-                self.children[variable] = set()
-
-            for parent in self.variables[variable].parents:
-                if parent not in self.children:
-                    self.children[parent] = set()
-                self.children[parent].update({variable})
+        self.graph = graph
 
     def run(self):
         """
@@ -82,7 +65,7 @@ class BackdoorController:
             assert len(x) > 0 and len(y) > 0, "Sets cannot be empty."
             assert len(x & y) == 0, "X and Y are not disjoint sets."
             for variable in x | y:
-                assert variable in self.variables, "Variable " + variable + " not in the graph."
+                assert variable in self.graph.v, "Variable " + variable + " not in the graph."
 
             # Calculate all the subsets possible
             valid_z_subsets = self.get_all_z_subsets(x, y)
@@ -121,7 +104,7 @@ class BackdoorController:
             all_straight_line_path_variables.update(path)
 
         # Get the power set of all remaining variables, and check which subsets yield causal independence
-        z_power_set = power_set(set(self.variables) - (x | y | all_straight_line_path_variables))
+        z_power_set = power_set(set(self.graph.v) - (x | y | all_straight_line_path_variables))
 
         # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
         # any set in here is one which yields no backdoor backs from X x Y.
@@ -137,7 +120,7 @@ class BackdoorController:
             for cross in cross_product:
 
                 # Get any/all backdoor paths between this (x, y) and Z combination
-                backdoor_paths = self.backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], set(z_subset))
+                backdoor_paths = self.backdoor_paths(cross[0], cross[1], set(z_subset))
 
                 # Debugging help
                 # for path in backdoor_paths:
@@ -150,9 +133,9 @@ class BackdoorController:
                     for path in backdoor_paths:
                         msg = "  "
                         for index in range(len(path) - 1):
-                            msg += path[index].name + " "
-                            msg += " <- " if path[index].name in self.children[path[index + 1].name] else " -> "
-                        msg += path[-1].name
+                            msg += path[index] + " "
+                            msg += " <- " if path[index] in self.graph.children(path[index+1]) else " -> "
+                        msg += path[-1]
                         io.write(msg)
 
                 else:
@@ -177,7 +160,7 @@ class BackdoorController:
         :return: True if there are any backdoor paths, False otherwise
         """
         for cross in itertools.product(x, y):
-            if len(self.backdoor_paths(self.variables[cross[0]], self.variables[cross[1]], z)) > 0:
+            if len(self.backdoor_paths(cross[0], cross[1], z)) > 0:
                 return True
         return False
 
@@ -201,12 +184,12 @@ class BackdoorController:
             :return: A list of lists, where each sublist is a backdoor path
             """
 
-            def has_controlled_descendant(variable: Variable) -> bool:
+            def has_controlled_descendant(variable) -> bool:
                 """
                 :param variable: A Variable defined in the Causal Graph
                 :return: True if Variable has at least one "controlled" descendant, which is in "controlled_set"
                 """
-                return any(var in controlled_set for var in variable.reach)
+                return any(var in controlled_set for var in self.graph.full_reach(variable))
 
             # Reached target
             if current == y:
@@ -218,26 +201,26 @@ class BackdoorController:
                 if previous == "down":
 
                     # We can ascend on a controlled collider, OR an ancestor of a controlled collider
-                    if current.name in controlled_set or has_controlled_descendant(current):
-                        for parent in current.parents:
-                            path_list = get_backdoor_paths(self.variables[parent], path + [current], path_list, "up")
+                    if current in controlled_set or has_controlled_descendant(current):
+                        for parent in self.graph.parents(current):
+                            path_list = get_backdoor_paths(parent, path + [current], path_list, "up")
 
                     # We can *continue* to descend on a non-controlled variable
-                    if current.name not in controlled_set:
-                        for child in self.children[current.name]:
-                            path_list = get_backdoor_paths(self.variables[child], path + [current], path_list, "down")
+                    if current not in controlled_set:
+                        for child in self.graph.children(current):
+                            path_list = get_backdoor_paths(child, path + [current], path_list, "down")
 
                 if previous == "up":
 
-                    if current.name not in controlled_set:
+                    if current not in controlled_set:
 
                         # We can ascend on a non-controlled variable
-                        for parent in current.parents:
-                            path_list = get_backdoor_paths(self.variables[parent], path + [current], path_list, "up")
+                        for parent in self.graph.parents(current):
+                            path_list = get_backdoor_paths(parent, path + [current], path_list, "up")
 
                         # We can descend on a non-controlled reverse-collider
-                        for child in self.children[current.name]:
-                            path_list = get_backdoor_paths(self.variables[child], path + [current], path_list, "down")
+                        for child in self.graph.children(current):
+                            path_list = get_backdoor_paths(child, path + [current], path_list, "down")
 
             return path_list
 
@@ -245,7 +228,7 @@ class BackdoorController:
         backdoor_paths = get_backdoor_paths(x, [], [])
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
-        filtered_paths = [path for path in backdoor_paths if path[1].name not in self.children[path[0].name]]
+        filtered_paths = [path for path in backdoor_paths if path[1] not in self.graph.children(path[0])]
         return filtered_paths
 
     def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
@@ -262,7 +245,7 @@ class BackdoorController:
         if source == target:
             return path_list + [path + [target]]
         if source not in path:
-            for child in self.children[source]:
+            for child in self.graph.children(source):
                 path_list = self.all_paths_cumulative(child, target, path + [source], path_list)
         return path_list
 

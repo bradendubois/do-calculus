@@ -123,9 +123,6 @@ class CausalGraph:
                 print("ERROR; Variable", name, "determination cannot be found.")
                 exit(-1)
 
-        # Create a Backdoor Controller
-        self.backdoor_controller = BackdoorController(self.variables)
-
         # Create the graph for queries
         v = set([v for v in self.variables])
         e = set().union(*[[(parent, child) for parent in self.variables[child].parents] for child in self.variables])
@@ -134,6 +131,9 @@ class CausalGraph:
         # Update the topological ordering (as specified by the graph) for later sorting purposes
         for variable in self.variables:
             self.variables[variable].topological_order = self.graph.get_topology(variable)
+
+        # Create a Backdoor Controller
+        self.backdoor_controller = BackdoorController(self.graph)
 
         # Print all the variables out with their reach
         show = access("print_cg_info_on_instantiation") and io.console_enabled
@@ -233,7 +233,7 @@ class CausalGraph:
             if any(isinstance(g, Intervention) for g in body):
                 x = set([x.name for x in head])
                 y = set([y.name for y in body if isinstance(y, Intervention)])
-                deconfounding_sets = BackdoorController(self.variables).get_all_z_subsets(y, x)
+                deconfounding_sets = self.backdoor_controller.get_all_z_subsets(y, x)
 
                 # Filter out our Z sets with observations in them and verify there are still sets Z
                 deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in body if not isinstance(g, Intervention))]
@@ -763,6 +763,8 @@ class CausalGraph:
             if cross[0].name == cross[1].name and cross[0].outcome != cross[1].outcome:
                 return True
         return False
+
+
 
     def test_do_calculus_rules(self):
         """

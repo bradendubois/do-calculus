@@ -69,7 +69,7 @@ class Graph:
         if label in self.incoming_disabled:
             return set()
 
-        return {p for p in self.incoming[label] if p not in self.outgoing_disabled}
+        return {p for p in self.incoming[label] if label not in self.outgoing_disabled}
 
     def children(self, v: CG_Types) -> set:
         """
@@ -81,7 +81,7 @@ class Graph:
         if label in self.outgoing_disabled:
             return set()
 
-        return {c for c in self.outgoing[label] if c not in self.incoming_disabled}
+        return {c for c in self.outgoing[label] if label not in self.incoming_disabled}
 
     def full_ancestors(self, v: CG_Types) -> set:
         """
@@ -141,7 +141,6 @@ class Graph:
         """
         self.outgoing_disabled.clear()
         self.incoming_disabled.clear()
-
 
     def get_topology(self, v: CG_Types) -> int:
         """
