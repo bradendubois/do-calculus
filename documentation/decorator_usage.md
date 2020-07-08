@@ -54,3 +54,5 @@ def bar():
 
 We can essentially "wrap" a function and its usage neatly around other, generalized, reusable code, allowing us to essentially "plug in" any function, without code copying.
 An example usage as I have done in the ``utilities/Decorators.py`` module is decorators that allow for **timing** a function, as well as **debugging**.
+
+This part of the software is a bit new and underdeveloped; it can generally be ignored.

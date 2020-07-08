@@ -21,6 +21,7 @@ After picking a file, you will be presented with a new set of options, dependant
 
 - Query a probability, such as P(Y = y | X = x).
 - Query the value of a continuous variable, such as f(X).
+- In-Progress: See the application of the 3 rules of do-calculus
 - Detect backdoor paths between two sets of variables, X and Y, and find deconfounding sets Z.
 - Generate a Joint Distribution Table
 - See the topological ordering of the loaded graph
@@ -41,7 +42,7 @@ These must be formatted as comma-separated lists of variables with their outcome
 
 - **Example**: For the query P(y | x), the head would be formatted as "Y=y", and the body would be formatted as "X=x".
 
-**Do-calculus** of Judea Pearl is supported; we can query P(Y | do(X)). To format these interventions, simply format such statements with the "do(", ")" text surrounding the outcomes.
+**Do-calculus interventions** of Judea Pearl is supported; we can query P(Y | do(X)). To format these interventions, simply format such statements with the "do(", ")" text surrounding the outcomes.
 
 - Any number of outcomes may be listed in one "do()"; "do(X=x), do(Y=y)" and "do(X=x, Y=y)" are equivalent.
 
