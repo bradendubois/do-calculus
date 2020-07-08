@@ -40,7 +40,7 @@ if os.path.isdir(access("graph_file_folder")):
     if len(files) == 1:
         graph_file = files[0]
         print("\nLoading:", graph_file)
-        CausalGraph(access("graph_file_folder") + "/" + graph_file).run()
+        CausalGraph(parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)).run()
 
     # Multiple files, list them and get a selection, allow switching
     else:
@@ -67,12 +67,8 @@ if os.path.isdir(access("graph_file_folder")):
             graph_file = files[int(selection)]
 
             print("\nLoading:", graph_file)
-            CausalGraph(access("graph_file_folder") + "/" + graph_file).run()
+            CausalGraph(parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)).run()
 
-# No directory, load whatever default is specified in the Causal Graph
+# Directory not found
 else:
-    # Specify a path to a graph file if desired
-    CG = CausalGraph()
-
-    # Start the software
-    CG.run()
+    io.write("Graph File Directory not found.")

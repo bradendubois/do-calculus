@@ -18,7 +18,9 @@ from probability_structures.VariableStructures import *
 
 from utilities.IO_Logger import *
 from utilities.IterableIndexSelection import *
+from utilities.ProbabilityString import *
 from utilities.ProbabilityExceptions import *
+from utilities.Result_Cache import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
@@ -52,76 +54,22 @@ class CausalGraph:
         " - Some outcome may not be possible for some variable\n" + \
         " - Some variable may not be defined"
 
-    def __init__(self, filename=None):
+    def __init__(self, parsed_graph_contents: dict):
 
-        # Ensure the file exists
-        if not os.path.isfile(filename):
-            io.write("ERROR: Can't find:", filename)
-            raise Exception
+        # Maps string name to the Variable object instantiated
+        self.variables = parsed_graph_contents["variables"]
 
-        # Load the file, then we parse it
-        with open(filename) as json_file:
-            loaded_file = json.load(json_file)
-
-        self.variables = dict()       # Maps string name to the Variable object instantiated
-        self.outcomes = dict()        # Maps string name *and* corresponding variable to a list of outcome values
+        # Maps string name *and* corresponding variable to a list of outcome values
+        self.outcomes = parsed_graph_contents["outcomes"]
 
         # All map a Variable object and its name to its respective value, if one exists
-        self.determination = dict()   # Maps to "table" or "function", indicating how it is calculated
-        self.tables = dict()          # Maps to corresponding tables
-        self.functions = dict()       # Maps to corresponding functions
+        self.determination = parsed_graph_contents["determination"]
 
-        # If enabled, stores a string representation of a query mapped to its result
-        self.stored_computations = dict()
+        # Maps to corresponding tables
+        self.tables = parsed_graph_contents["tables"]
 
-        for v in loaded_file["variables"]:
-
-            # Load the relevant data to construct a Variable
-            name = v["name"]
-            outcomes = v["outcomes"] if "outcomes" in v else []
-            parents = v["parents"] if "parents" in v else []
-
-            # Create a fancy Variable object
-            variable = Variable(name, outcomes, parents)
-
-            # Lookup the object by its name
-            self.variables[name] = variable
-
-            # Store by both the Variable object as well as its name, for ease of access
-            self.outcomes[name] = outcomes
-            self.outcomes[variable] = outcomes
-
-            # Is the variable determined by a function or direct tables?
-            determination = v["determination"]
-            determination_type = determination["type"]
-
-            if determination["type"] == "table":
-
-                # Save that this variable is determined by a table
-                self.determination[name] = "table"
-                self.determination[variable] = "table"
-
-                # Load in the table and construct a CPT
-                table = determination["table"]
-                cpt = ConditionalProbabilityTable(self.variables[name], table["given"], table["rows"])
-
-                # Map the name/variable to the table
-                self.tables[name] = cpt
-                self.tables[self.variables[name]] = cpt
-
-            elif determination_type == "function":
-
-                # Save that this variable is determined by a function
-                self.determination[name] = "function"
-                self.determination[variable] = "function"
-
-                # Map the name/variable to the function
-                self.functions[name] = determination["function"]
-                self.functions[variable] = determination["function"]
-
-            else:
-                print("ERROR; Variable", name, "determination cannot be found.")
-                exit(-1)
+        # Maps to corresponding functions
+        self.functions = parsed_graph_contents["functions"]
 
         # Create the graph for queries
         v = set([v for v in self.variables])

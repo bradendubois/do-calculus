@@ -13,6 +13,7 @@ from datetime import datetime
 
 from config.config_manager import *
 from probability_structures.CausalGraph import *
+from probability_structures.Graph_Loader import parse_graph_file_data
 from probability_structures.VariableStructures import *
 
 
@@ -55,9 +56,11 @@ def run_test_file(test_file: str) -> (bool, str):
     if "file_directory" in loaded_test_file:
         directory = loaded_test_file["file_directory"]
 
+    parsed = parse_graph_file_data(directory + "/" + loaded_test_file["test_file"])
+
     # Load the Causal Graph of the given file
     try:
-        causal_graph = CausalGraph(directory + "/" + loaded_test_file["test_file"])
+        causal_graph = CausalGraph(parsed)
     except Exception:
         return False, "Unexpected error in loading: " + loaded_test_file["test_file"]
 
@@ -131,7 +134,7 @@ def run_test_file(test_file: str) -> (bool, str):
                 #   is likely to change between CGs, which could lead to said inconsistencies
                 for i in range(access("default_regression_repetition")):
 
-                    determinism_cg = CausalGraph(directory + "/" + loaded_test_file["test_file"])
+                    determinism_cg = CausalGraph(parse_graph_file_data(directory + "/" + loaded_test_file["test_file"]))
                     result = determinism_cg.probability(head, body)
 
                     if only_result is None:     # Storing the first result calculated
