@@ -9,8 +9,9 @@
 #                                                       #
 #########################################################
 
-from utilities.RegressionTesting import *
 from config.config_manager import *
+from probability_structures.REPL_Driver import REPLDriver
+from utilities.RegressionTesting import *
 
 # If set, run any tests before starting up
 if access("run_regression_tests_on_launch"):
@@ -40,7 +41,8 @@ if os.path.isdir(access("graph_file_folder")):
     if len(files) == 1:
         graph_file = files[0]
         print("\nLoading:", graph_file)
-        CausalGraph(parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)).run()
+        parsed_contents = parse_graph_file_data(graph_file)
+        REPLDriver(parsed_contents).run()
 
     # Multiple files, list them and get a selection, allow switching
     else:
@@ -67,7 +69,8 @@ if os.path.isdir(access("graph_file_folder")):
             graph_file = files[int(selection)]
 
             print("\nLoading:", graph_file)
-            CausalGraph(parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)).run()
+            parsed_contents = parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)
+            REPLDriver(parsed_contents).run()
 
 # Directory not found
 else:

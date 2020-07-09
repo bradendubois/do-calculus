@@ -12,7 +12,7 @@ import itertools
 from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import Variable
 from utilities.IO_Logger import *
-from utilities.PowerSet import power_set
+from utilities.helpers.PowerSet import power_set
 
 
 class BackdoorController:

@@ -69,7 +69,7 @@ class Graph:
         if label in self.incoming_disabled:
             return set()
 
-        return {p for p in self.incoming[label] if label not in self.outgoing_disabled}
+        return {p for p in self.incoming[label] if p not in self.outgoing_disabled}
 
     def children(self, v: CG_Types) -> set:
         """
@@ -81,7 +81,7 @@ class Graph:
         if label in self.outgoing_disabled:
             return set()
 
-        return {c for c in self.outgoing[label] if label not in self.incoming_disabled}
+        return {c for c in self.outgoing[label] if c not in self.incoming_disabled}
 
     def full_ancestors(self, v: CG_Types) -> set:
         """
@@ -166,6 +166,30 @@ class Graph:
         copied.incoming_disabled = self.incoming_disabled.copy()
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied
+
+    def topological_variable_sort(self, variables: list) -> list:
+        """
+        A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
+        :param variables: A list of any number of Variable/Outcome/Intervention instances
+        :return: A list, sorted (currently in the form of a topological sort)
+        """
+        if len(variables) == 0:
+            return []
+
+        largest_topology = max(self.get_topology(v) for v in variables)
+        sorted_variables = [[v for v in variables if self.get_topology(v) == i] for i in range(largest_topology+1)]
+        return [item for topology_sublist in sorted_variables for item in topology_sublist]
+
+    def descendant_first_sort(self, variables: list) -> list:
+        """
+        A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
+        "parent"/"ancestor" to its left
+        :param variables: A list of any number of Variable/Outcome/Intervention instances
+        :return: A sorted list, such that any instance has no ancestor earlier in the list
+        """
+        # We can already do top-down sorting, just reverse the answer
+        return self.topological_variable_sort(variables)[::-1]
+
 
 def to_label(item: str or Variable or Outcome or Intervention) -> str:
     """
