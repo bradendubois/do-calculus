@@ -22,11 +22,18 @@ class IOLogger:
     # Used as a way of disabling or suppressing IO/Writing during testing
     console_enabled = True
 
+    # Lock where stuff is logged if we are in regression tests; all text should also go to one file
+    lock_stream_switch = False
+
     def open(self, filename):
         """
         Open a specified file in the default logging location
         :param filename: The name of the file to open
         """
+
+        # Don't switch files if we are in a regression mode
+        if self.lock_stream_switch:
+            return
 
         # Close any open file
         if self.file:
@@ -47,6 +54,9 @@ class IOLogger:
         """
         Close the currently opened file, if any.
         """
+        if self.lock_stream_switch:
+            return
+
         if self.file:
             self.file.write("\n\n" + 50 * "*" + "\n\n")
             self.file.close()
@@ -62,7 +72,7 @@ class IOLogger:
         :param console_override: An optional flag that ensures info is printed to the console
         """
         # Slight check; if there is nothing to actually be written anywhere, just exit early
-        if not self.console_enabled and not access("output_computation_steps") and not console_override:
+        if not (self.console_enabled or access("output_computation_steps") or console_override or self.file):
             return
 
         # We can put this indent in front of each line of the message passed; this allows us to detect the recursive

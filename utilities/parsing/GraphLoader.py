@@ -12,6 +12,7 @@
 import os
 
 from probability_structures.ConditionalProbabilityTable import *
+from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import *
 from utilities.IO_Logger import *
 
@@ -32,13 +33,20 @@ def parse_graph_file_data(filename: str) -> dict:
     with open(filename) as json_file:
         loaded_file = json.load(json_file)
 
-    variables = dict()  # Maps string name to the Variable object instantiated
-    outcomes = dict()   # Maps string name *and* corresponding variable to a list of outcome values
+    # Maps string name to the Variable object instantiated
+    variables = dict()
 
-    # All map a Variable object and its name to its respective value, if one exists
-    variable_determination = dict()  # Maps to "table" or "function", indicating how it is calculated
-    tables = dict()  # Maps to corresponding tables
-    functions = dict()  # Maps to corresponding functions
+    # Maps string name *and* corresponding variable to a list of outcome values
+    outcomes = dict()
+
+    # Maps to "table" or "function", indicating how it is calculated
+    variable_determination = dict()
+
+    # Maps to corresponding tables
+    tables = dict()
+
+    # Maps to corresponding functions
+    functions = dict()
 
     for v in loaded_file["variables"]:
 
@@ -89,13 +97,20 @@ def parse_graph_file_data(filename: str) -> dict:
             print("ERROR; Variable", name, "determination cannot be found.")
             exit(-1)
 
+    v = set([v for v in variables])
+    e = set().union(*[[(parent, child) for parent in variables[child].parents] for child in variables])
+    graph = Graph(v, e)
+
     # Store all the different dictionaries of data as one large dictionary
     parsed = {
         "variables": variables,
         "outcomes": outcomes,
         "determination": variable_determination,
         "tables": tables,
-        "functions": functions
+        "functions": functions,
+        "v": v,
+        "e": e,
+        "graph": graph
     }
 
     return parsed

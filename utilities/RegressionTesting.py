@@ -7,13 +7,10 @@
 #                                                       #
 #########################################################
 
-import os
-import time
 from datetime import datetime
 
-from config.config_manager import *
 from probability_structures.CausalGraph import *
-from probability_structures.Graph_Loader import parse_graph_file_data
+from utilities.parsing.GraphLoader import parse_graph_file_data
 from probability_structures.VariableStructures import *
 
 
@@ -60,9 +57,9 @@ def run_test_file(test_file: str) -> (bool, str):
 
     # Load the Causal Graph of the given file
     try:
-        causal_graph = CausalGraph(parsed)
-    except Exception:
-        return False, "Unexpected error in loading: " + loaded_test_file["test_file"]
+        causal_graph = CausalGraph(**parsed)
+    except Exception as e:
+        return False, "Unexpected error in loading: " + loaded_test_file["test_file"] + ": " + str(e.args)
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
     for variable in causal_graph.variables:
@@ -74,7 +71,7 @@ def run_test_file(test_file: str) -> (bool, str):
         try:
             total = 0.0
             for outcome in causal_graph.variables[variable].outcomes:
-                result = causal_graph.probability([Outcome(variable, outcome)], [])
+                result = causal_graph.probability_query([Outcome(variable, outcome)], [])
                 total += result
 
             assert within_precision(total, 1.0), variable + " does not sum to 1.0 across its outcomes."
@@ -105,7 +102,7 @@ def run_test_file(test_file: str) -> (bool, str):
                 # Construct a list of "Outcomes" from the given args
                 head, body = create_head_and_body(args)
 
-                result = causal_graph.probability(head, body)
+                result = causal_graph.probability_query(head, body)
                 expected = test["expected_result"]
 
                 assert within_precision(result, expected), str(result) + " did not match expected: " + str(expected)
@@ -117,7 +114,7 @@ def run_test_file(test_file: str) -> (bool, str):
                 for arg_set in args:
                     # Construct a list of "Outcomes" from the given args
                     head, body = create_head_and_body(arg_set)
-                    result = causal_graph.probability(head, body)
+                    result = causal_graph.probability_query(head, body)
                     total += result
 
                 expected = test["expected_result"]
@@ -134,8 +131,9 @@ def run_test_file(test_file: str) -> (bool, str):
                 #   is likely to change between CGs, which could lead to said inconsistencies
                 for i in range(access("default_regression_repetition")):
 
-                    determinism_cg = CausalGraph(parse_graph_file_data(directory + "/" + loaded_test_file["test_file"]))
-                    result = determinism_cg.probability(head, body)
+                    parsed = parse_graph_file_data(directory + "/" + loaded_test_file["test_file"])
+                    determinism_cg = CausalGraph(**parsed)
+                    result = determinism_cg.probability_query(head, body)
 
                     if only_result is None:     # Storing the first result calculated
                         only_result = result
@@ -149,7 +147,7 @@ def run_test_file(test_file: str) -> (bool, str):
 
                 try:
                     # This should raise a FunctionFeedbackLoop exception
-                    causal_graph.probabilistic_function_resolve(*causal_graph.functions[args])
+                    causal_graph.probability_function_query(*causal_graph.functions[args])
                     raise ExceptionNotFired("A feedback loop in " + args + " was not detected.")
 
                 # Awesome if we get this
@@ -210,6 +208,7 @@ def validate_all_regression_tests() -> (bool, str):
 
         log_file = log_dir + "/" + "r" + datetime.now().strftime("%Y%m%d_%H-%M-%S")
         io.open(log_file)
+        io.lock_stream_switch = True    # Ensure the inference engine doesn't switch file streams
 
     # Store all results from each file, so that we could have an error in one file but still test subsequent ones
     all_regression_results = []
@@ -228,6 +227,7 @@ def validate_all_regression_tests() -> (bool, str):
 
     # Enable IO if it was disabled; close any regression file being written to
     io.enable_console()
+    io.lock_stream_switch = False
     io.close()
 
     # Add the "summary" value
