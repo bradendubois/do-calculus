@@ -275,3 +275,13 @@ class BackdoorController:
             if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):
                 minimal_subsets.append(s)
         return minimal_subsets
+
+    def independent(self, x: set, y: set, z: set):
+        """
+        Helper function that makes some do_calculus logic more readable
+        :param x: A set X, to be independent from Y
+        :param y: A set Y, to be independent from X
+        :param z: A set Z, to block paths between X and Y
+        :return: True if there are no backdoor paths, False otherwise
+        """
+        return not self.any_backdoor_paths(x, y, z)

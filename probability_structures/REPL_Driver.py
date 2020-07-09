@@ -7,15 +7,18 @@
 #                                                       #
 #########################################################
 
+from do_calculus.DoCalculus import do_calculus
+
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.CausalGraph import CausalGraph
-from utilities.parsing.GetHeadAndBody import get_valid_head_and_body
 from probability_structures.Graph import *
 from probability_structures.VariableStructures import *
 
 from utilities.IO_Logger import *
-from utilities.parsing.UserIndexSelection import *
 from utilities.ResultCache import *
+
+from utilities.parsing.GetHeadAndBody import get_valid_head_and_body
+from utilities.parsing.UserIndexSelection import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
@@ -98,10 +101,9 @@ class REPLDriver:
         self.running = True
         while self.running:
 
-            # [self.test_do_calculus_rules, "Apply and test the 3 rules of do-calculus."],
-
-            # Start with base options of backdoor controlling and exiting
+            # Start with base options
             menu_options = [
+                [self.test_do_calculus_rules, "Apply and test the 3 rules of do_calculus."],
                 [self.run_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
                 [self.run_joint_distribution_table, "Generate a joint distribution table."],
                 [self.run_topological_sort, "See a topological sorting of the graph."],
@@ -191,20 +193,18 @@ class REPLDriver:
         self.cg.joint_distribution_table()
 
     # See a topological sort of the graph
+
     def run_topological_sort(self):
         """
         Create and show a topological sorting of the graph
         """
         self.cg.topological_sort()
 
-    def test_do_calculus_rules(self):
-        """
-        Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do-calculus rules apply.
-        """
+    # See the 3 rules of Do-Calculus applied to some sets
 
-        do_calculus_prompt = "To test the 3 rules of do-calculus, we will need 4 sets of variables: X, Y, Z, and " \
-                             "W.\nIn these rules, X and Z may be interventions. The rules are:\n" \
-                             "Rule 1: P(y | do(x), z, w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X)\n" \
-                             "Rule 2: P(y | do(x), do(z), w) = P(y | do(x), z, w) if (Y _||_ Z | X, W) in G(-X, Z_)\n" \
-                             "Rule 3: P(y | do(x), do(z), w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X, -Z(W))"
+    def run_do_calculus(self):
+        """
+        Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do_calculus rules apply.
+        """
+        do_calculus()
 
