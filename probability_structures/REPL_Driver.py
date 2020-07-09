@@ -103,7 +103,7 @@ class REPLDriver:
 
             # Start with base options
             menu_options = [
-                [self.test_do_calculus_rules, "Apply and test the 3 rules of do_calculus."],
+                [self.run_do_calculus, "Apply and test the 3 rules of do_calculus."],
                 [self.run_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
                 [self.run_joint_distribution_table, "Generate a joint distribution table."],
                 [self.run_topological_sort, "See a topological sorting of the graph."],
@@ -206,5 +206,4 @@ class REPLDriver:
         """
         Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do_calculus rules apply.
         """
-        do_calculus()
-
+        do_calculus(self.graph.copy())
