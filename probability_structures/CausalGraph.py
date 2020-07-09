@@ -328,17 +328,3 @@ class CausalGraph:
                 this_depth.append(sorted_by_depth.pop(0))
             io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="", console_override=True)
         io.write(console_override=True)
-
-    # Do Calculus - TODO
-
-    def test_do_calculus_rules(self):
-        """
-        Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do-calculus rules apply.
-        """
-
-        do_calculus_prompt = "To test the 3 rules of do-calculus, we will need 4 sets of variables: X, Y, Z, and " \
-                             "W.\nIn these rules, X and Z may be interventions. The rules are:\n" \
-                             "Rule 1: P(y | do(x), z, w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X)\n" \
-                             "Rule 2: P(y | do(x), do(z), w) = P(y | do(x), z, w) if (Y _||_ Z | X, W) in G(-X, Z_)\n" \
-                             "Rule 3: P(y | do(x), do(z), w) = P(y | do(x), w) if (Y _||_ Z | X, W) in G(-X, -Z(W))"
-
