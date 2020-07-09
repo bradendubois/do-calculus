@@ -104,7 +104,7 @@ class CausalGraph:
             self.graph.reset_disabled()
 
         # End logging and return
-        result = str_rep+" = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision"))
+        result = str_rep+" = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")+1)
         io.write(result, console_override=io.console_enabled)
         io.close()
         return probability

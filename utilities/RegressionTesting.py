@@ -10,6 +10,7 @@
 from datetime import datetime
 
 from probability_structures.CausalGraph import *
+from utilities.ProbabilityExceptions import *
 from utilities.parsing.GraphLoader import parse_graph_file_data
 from probability_structures.VariableStructures import *
 
