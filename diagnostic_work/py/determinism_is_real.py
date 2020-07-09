@@ -37,7 +37,7 @@ for _ in range(100):
         deconfounders = BackdoorController(cg.variables).get_all_z_subsets(y, x)
         deconfounders = [s for s in deconfounders if not any(g.name in s for g in body1 if not isinstance(g, Intervention))]
 
-        cg.handle_intervention_computation(head, body1, deconfounders)
+        cg.probability_query_with_interventions(head, body1, deconfounders)
 
 
 for _ in range(100):
@@ -53,4 +53,4 @@ for _ in range(100):
         deconfounders = BackdoorController(cg.variables).get_all_z_subsets(y, x)
         deconfounders = [s for s in deconfounders if not any(g.name in s for g in body2 if not isinstance(g, Intervention))]
 
-        cg.handle_intervention_computation(head, body2, deconfounders)
+        cg.probability_query_with_interventions(head, body2, deconfounders)
