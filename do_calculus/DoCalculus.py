@@ -9,7 +9,8 @@
 
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
-from do_calculus.application.DoCalculusOptions import do_calculus_options
+from do_calculus.application.DoCalculusOptions import do_calculus_options, query_str
+from do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.Graph import Graph
 
@@ -74,8 +75,15 @@ def do_calculus(graph: Graph):
 
                 break
 
+        # Present all options to the user
+        current_query = query_str(y, x, w)
+        io.write("Our query is currently: " + current_query, console_override=True)
+
         # Generate all our possible options
         options = do_calculus_options(graph.copy(), y, x, w)
+
+        # Add a handle to let the IDS Solver take over
+        options.append([CallableItemWrapper(), "Let the IDS Solver attempt to find a solution."])
 
         # Throw an "exit/return" into the options in the REPL and get a selection
         options.append([CallableItemWrapper(), "Exit / Return"])
@@ -84,6 +92,18 @@ def do_calculus(graph: Graph):
         # Exit option
         if selection == len(options)-1:
             return
+        
+        # AI Takeover
+        elif selection == len(options)-2:
+            
+            solver = IDSSolver(graph, y, x, w)
+            result = solver.solve()
+            if result.success:
+                io.write("The AI Solver was able to find a solution.", console_override=True)
+                y, x, w = result.data
+            else:
+                io.write("The AI Solver was not able to find a solution.", console_override=True)
 
         # We've gotten our selection, update our sets accordingly and go again
-        y, x, w = options[selection][0].data
+        else:
+            y, x, w = options[selection][0].data

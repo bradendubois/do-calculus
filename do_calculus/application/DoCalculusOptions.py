@@ -36,7 +36,6 @@ def do_calculus_options(graph: Graph, y, x, w):
 
     # Present all options to the user
     current_query = query_str(y, x, w)
-    io.write("Our query is currently: " + current_query, console_override=True)
 
     # Present all options to the user (generating our menu as we go) and then get a selection
     do_options = []

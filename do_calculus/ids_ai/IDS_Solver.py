@@ -20,7 +20,7 @@ class Solution:
 
     def __init__(self, success: bool, result):
         self.success = success
-        self.result = result
+        self.data = result
 
 
 class IDSSolver:
@@ -73,6 +73,8 @@ class IDSSolver:
                     for option in all_options:
                         new_y, new_x, new_w = option[0].data
                         self.stack.push((current_graph.copy(), new_y, new_x, new_w, item_depth+1))
+
+            current_max_depth += 1
 
         return Solution(False, None)
 
