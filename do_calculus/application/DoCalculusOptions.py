@@ -86,8 +86,8 @@ def do_calculus_options(graph: Graph, y, x, w):
 
             # Apply the rule and get the rules
             result = rule_application["function"](graph, y, x, z, w)
-            result_str = query_str(*result)
             y_result, x_result, w_result = result
+            result_str = query_str(y_result, x_result, w_result)
 
             # Verify that the rule still applies to "revert"; it always should.
             error_skeleton = "Rule {} not found to be reversible! {} <-!-> {}, " \
