@@ -10,7 +10,7 @@
 import itertools        # Used for power set / product creation
 
 
-def power_set(variable_list, allow_empty_set=False):
+def power_set(variable_list, allow_empty_set=True):
     """
     Quick helper that creates a chain of tuples, which will be the power set of the given list
     :param variable_list: A list of string variables

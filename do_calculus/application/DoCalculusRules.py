@@ -86,7 +86,7 @@ def rule_3_applicable(graph: Graph, y: set, x: set, z: set, w: set):
     # Disable X incoming edges, all edges incoming to any non-ancestor of any W node in G ^X
     graph.reset_disabled()
     graph.disable_incoming(*x-z)
-    all_w_ancestors = set().union(*[graph.full_ancestors(v) for v in w])
+    all_w_ancestors = set().union(*[graph.ancestors(v) for v in w])
     zw = z - all_w_ancestors
     graph.disable_incoming(*zw)
 

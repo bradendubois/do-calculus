@@ -83,7 +83,7 @@ class Graph:
 
         return {c for c in self.outgoing[label] if c not in self.incoming_disabled}
 
-    def full_ancestors(self, v: CG_Types) -> set:
+    def ancestors(self, v: CG_Types) -> set:
         """
         Get the ancestors of v, accounting for disabled vertices
         :param v: The vertex to find all ancestors of
@@ -101,7 +101,7 @@ class Graph:
 
         return ancestors
 
-    def full_reach(self, v: CG_Types) -> set:
+    def reach(self, v: CG_Types) -> set:
         """
         Get the reach of v, accounting for disabled vertices
         :param v: The vertex to find all descendants of

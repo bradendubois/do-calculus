@@ -189,7 +189,7 @@ class BackdoorController:
                 :param variable: A Variable defined in the Causal Graph
                 :return: True if Variable has at least one "controlled" descendant, which is in "controlled_set"
                 """
-                return any(var in controlled_set for var in self.graph.full_reach(variable))
+                return any(var in controlled_set for var in self.graph.reach(variable))
 
             # Reached target
             if current == y:
