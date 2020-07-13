@@ -54,7 +54,11 @@ def run_test_file(test_file: str) -> (bool, str):
     if "file_directory" in loaded_test_file:
         directory = loaded_test_file["file_directory"]
 
-    parsed = parse_graph_file_data(directory + "/" + loaded_test_file["test_file"])
+    # Ensure the file exists
+    file_path = directory + "/" + loaded_test_file["test_file"]
+    if not os.path.isfile(file_path):
+        return False, "Unexpected: Graph file " + loaded_test_file["test_file"] + " not found."
+    parsed = parse_graph_file_data(file_path)
 
     # Load the Causal Graph of the given file
     try:
