@@ -54,26 +54,12 @@ class REPLDriver:
 
     def __init__(self, parsed_graph_contents: dict):
 
-        # Maps string name to the Variable object instantiated
-        self.variables = parsed_graph_contents["variables"]
-
-        # Maps string name *and* corresponding variable to a list of outcome values
-        self.outcomes = parsed_graph_contents["outcomes"]
-
-        # Maps to corresponding tables
-        self.tables = parsed_graph_contents["tables"]
-
-        # Maps to corresponding functions
-        self.functions = parsed_graph_contents["functions"]
-
-        # Create the graph for queries
-        v = parsed_graph_contents["v"]
-        e = parsed_graph_contents["e"]
-        self.graph = Graph(v, e)
-
-        # Update the topological ordering (as specified by the graph) for later sorting purposes
-        for variable in self.variables:
-            self.variables[variable].topological_order = self.graph.get_topology(variable)
+        # Store the contents of the parsed graph fle
+        self.variables = parsed_graph_contents["variables"]     # Maps string name to the Variable object instantiated
+        self.outcomes = parsed_graph_contents["outcomes"]       # Maps name/variable to a list of outcome values
+        self.tables = parsed_graph_contents["tables"]           # Maps name/variable to corresponding table
+        self.functions = parsed_graph_contents["functions"]     # Maps name/variable to corresponding functions
+        self.graph = parsed_graph_contents["graph"]             # Graph representing the association structure.
 
         # Print all the variables out with their reach
         show = access("print_cg_info_on_instantiation") and io.console_enabled
