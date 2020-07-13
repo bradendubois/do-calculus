@@ -12,6 +12,7 @@ import itertools
 from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import Variable
 from utilities.IO_Logger import *
+from utilities.helpers.MinimizeSets import minimal_sets
 from utilities.helpers.PowerSet import power_set
 
 
@@ -147,7 +148,7 @@ class BackdoorController:
 
         # Minimize the sets, if enabled
         if access("minimize_backdoor_sets"):
-            valid_z_subsets = self.minimal_sets(valid_z_subsets)
+            valid_z_subsets = minimal_sets(valid_z_subsets)
 
         return list(valid_z_subsets)
 
@@ -262,19 +263,6 @@ class BackdoorController:
             input_set = set()
 
         return input_set
-
-    def minimal_sets(self, set_of_sets: set) -> list:
-        """
-        Take a set of sets, and return only the minimal sets
-        :param set_of_sets: A set of sets, each set containing strin
-        :return: A list of minimal sets
-        """
-        sorted_sets = sorted(map(set, set_of_sets), key=len)
-        minimal_subsets = []
-        for s in sorted_sets:
-            if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):
-                minimal_subsets.append(s)
-        return minimal_subsets
 
     def independent(self, x: set, y: set, z: set):
         """
