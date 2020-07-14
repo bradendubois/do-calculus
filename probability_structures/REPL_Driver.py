@@ -65,7 +65,7 @@ class REPLDriver:
         show = access("print_cg_info_on_instantiation") and io.console_enabled
         for variable in self.variables:
             v = self.variables[variable]
-            io.write(str(v), "; Reaches:", v.reach, "Order:", v.topological_order, end="", console_override=show)
+            io.write(str(v), "; Reaches:", v.reach, "Order:", self.graph.get_topology(v), end="", console_override=show)
 
         # Aesthetic spacing
         io.write(end="", console_override=show)
