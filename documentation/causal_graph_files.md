@@ -41,15 +41,12 @@ Depending on the ``type``, Variables must conform to one of the two following ex
   "parents": ["PARENT_1", "PARENT_2", "..."],
   "determination": {
     "type": "table",
-    "table": {
-      "given": ["PARENT_1", "PARENT_2", "..."],
-      "rows": [
-        ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_1", "..."], 0.0],
-        ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_2", "..."], 0.0],
-        ["OUTCOME_1", ["PARENT_1_OUTCOME_2", "PARENT_2_OUTCOME_1", "..."], 0.0],
-        ["..."]
-      ]
-    }
+    "table": [
+      ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_1", "..."], 0.0],
+      ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_2", "..."], 0.0],
+      ["OUTCOME_1", ["PARENT_1_OUTCOME_2", "PARENT_2_OUTCOME_1", "..."], 0.0],
+      ["..."]
+     ]
   }
 }
 ```
@@ -58,13 +55,11 @@ If the ``type`` is "table", the following attribute is necessary:
 
 - **"outcomes"**: A list of strings, representing all possible outcomes for the given variable. Cannot have the same outcome twice in one variable, but two separate variables could have the same outcome.
 - **"parents"**: A list of strings, representing the "parents" of the given variable. Leave empty to represent zero parents.
-- **"table"**: A table determining the given variable, consisting of the following:
-    - **"given"**: A list of "given" variables, such as the parents of the variable.
-    - **"rows"**: A list of lists, each list representing one "row" in the table, with each sublist formatted as follows:
-        - \["outcome", \["parent_1_outcome_1", "parent_2_outcome_1"\], probability\]
-        - "outcome" is a specific outcome of the given variable.
-        - The inner list is a specific combination of given outcomes, and they must be given in the same order as specified in "given", and a probability as a float.
-        - The table must be complete.
+- **"table"**: A list of lists, each list representing one "row" in the table, with each sublist formatted as follows:
+    - \["outcome", \["parent_1_outcome_1", "parent_2_outcome_1"\], probability\]
+    - "outcome" is a specific outcome of the given variable.
+    - The inner list is a specific combination of given outcomes, and they must be given in the same order as specified in "given", and a probability as a float.
+    - The table must be complete.
 
 - **Note**: "parents" is not necessary for variables such as "roots" without parents, and can be omitted. It will be assumed to be empty.
 
