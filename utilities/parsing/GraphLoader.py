@@ -77,7 +77,7 @@ def parse_graph_file_data(filename: str) -> dict:
 
             # Load in the table and construct a CPT
             table = determination["table"]
-            cpt = ConditionalProbabilityTable(variable, table["given"], table["rows"])
+            cpt = ConditionalProbabilityTable(variable, variable_parents, table)
 
             # Map the name/variable to the table
             tables[name] = cpt
