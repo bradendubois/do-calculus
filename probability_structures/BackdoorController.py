@@ -273,4 +273,6 @@ class BackdoorController:
         :param z: A set Z, to block paths between X and Y
         :return: True if there are no backdoor paths, False otherwise
         """
-        return not self.any_backdoor_paths(x, y, z)
+        return not self.any_backdoor_paths(x, y, z) and \
+               len(self.all_paths_cumulative(list(x)[0], list(y)[0], [], [])) == 0 and \
+               len(self.all_paths_cumulative(list(y)[0], list(x)[0], [], [])) == 0
