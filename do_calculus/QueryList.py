@@ -12,8 +12,10 @@
 from probability_structures.Graph import Graph
 from probability_structures.Probability_Engine import ProbabilityEngine
 
+
 def rename(s: set):
     return {item + "'" for item in s}
+
 
 def clean(s: set):
     return {item.strip("'") for item in s}
@@ -23,6 +25,9 @@ class Sigma:
 
     def __init__(self, over: set):
         self.over = over
+
+    def __str__(self):
+        return "Sigma_" + ",".join(self.over)
 
     def __copy__(self):
         return Sigma(self.over)
@@ -37,13 +42,21 @@ class VariableSet:
         self.interventions = interventions
         self.observations = observations
 
+    def __str__(self):
+        msg = ""
+        if len(self.interventions) > 0:
+            msg += "do(" + ",".join(self.interventions) + ")"
+        if len(self.interventions) > 0 and len(self.observations) > 0:
+            msg += ", "
+        if len(self.observations) > 0:
+            msg += ",".join(self.observations)
+        return msg
+
     def __copy__(self):
         return VariableSet(self.interventions.copy(), self.observations.copy())
 
     def copy(self):
         return self.__copy__()
-
-
 
 
 class Query:
@@ -52,15 +65,56 @@ class Query:
         self.head = head
         self.body = body
 
+    def __str__(self):
+        msg = "P(" + ",".join(self.head)
+        if len(self.body.interventions | self.body.observations) > 0:
+            msg += "|" + str(self.body)
+        return msg + ")"
 
-class ComplexQuery:
+    def __copy__(self):
+        return Query(self.head.copy(), self.body.copy())
 
-    def __init__(self, ):
+    def copy(self):
+        return self.__copy__()
 
-
+    def resolved(self):
+        return len(self.body.interventions) == 0
 
 
 class QueryList:
+
+    def __init__(self, queries: list):
+        # self.variables = variables
+        # self.graph = graph
+        self.queries = queries
+
+    def __str__(self):
+        return " ".join(str(item) for item in self.queries)
+
+    def __copy__(self):
+        return QueryList([query.copy() for query in self.queries])
+        # return QueryList(self.variables, self.graph, self.queries)
+
+    def copy(self):
+        return self.__copy__()
+
+    def fully_resolved(self):
+        for item in self.queries:
+            if isinstance(item, Query) and not item.resolved():
+                return False
+        return True
+
+
+
+
+
+
+
+
+
+
+
+class QueryList2:
 
     def __init__(self, variables: dict, engine: ProbabilityEngine, regular_queries: list, nested_query_lists: list, depth: int, max_depth: int, sigma=None or str):
 
@@ -73,20 +127,6 @@ class QueryList:
         self.depth = depth
         self.max_depth = max_depth
 
-    def fully_resolve(self, rules_applied: set) -> bool:
-
-        # Don't need to break down / change everything
-        if self.is_fully_resolved():
-            return True
-
-        for option in self.options():
-
-
-
-        return False
-
-    def is_fully_resolved(self) -> bool:
-        for regular_query in self.regular_queries:
 
 
     def resolve(self) -> float:
@@ -100,9 +140,6 @@ class QueryList:
 
             for further_resolve_query in self.nested_query_lists:
                 p *= further_resolve_query.resolve()
-
-        # Summation, expand out
-        else:
 
 
         return 0.0

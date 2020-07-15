@@ -112,3 +112,28 @@ def apply_rule_3(graph: Graph, y: set, x: set, z: set, w: set):
     # Inserting Z into interventions X, summation
     else:
         return Sigma(z), Query(y, VariableSet(x | z, w)), Query(z, VariableSet(x, w))
+
+
+###################################################
+#   Rule 4 - Jeffrey's Rule Introduction of Z     #
+###################################################
+
+def secret_rule_4_applicable(graph: Graph, y: set, x: set, z: set, w: set):
+
+    # Reset graph, see if the introduction of Z blocks paths
+    graph.reset_disabled()
+
+    # Ensure that Z acts as a valid deconfounding set
+    d_separated = BackdoorController(graph).independent(y, x, z)
+
+    # Z will block paths and is not already in the query
+    return d_separated and len(z & w) == 0
+
+
+def apply_secret_rule_4(graph: Graph, y: set, x: set, z: set, w: set):
+
+    # Double check
+    assert secret_rule_4_applicable(graph, y, x, z, w), "Secret Rule 4 is not applicable!"
+
+    # Condition over Z
+    return Sigma(z), Query(y, VariableSet(x, z | w)), Query(z, VariableSet(x, w))
