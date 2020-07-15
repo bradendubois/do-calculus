@@ -230,6 +230,7 @@ class BackdoorController:
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
         filtered_paths = [path for path in backdoor_paths if path[1] not in self.graph.children(path[0])]
+        filtered_paths = [path for path in filtered_paths if path[-1] in self.graph.children(path[-2])]
         return filtered_paths
 
     def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
