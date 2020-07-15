@@ -4,64 +4,92 @@ from utilities.parsing.GraphLoader import parse_graph_file_data
 
 
 # Fix imports when running this by moving this to the root of the project
+def fully_resolved(*packed_query):
+    for q in packed_query:
+        if isinstance(q, Query) and len(q.body.interventions) > 0:
+            return False
+    return True
 
 
+def print_query(*packed_query):
+    for q in packed_query:
+        print(str(q) + " ", end="")
+    print()
+
+
+# Parse the file
 parsed = parse_graph_file_data("causal_graphs/causal_graph_6.json")
 g = parsed["graph"]
 
-# Task 1
 
-y, x, w = {"Z"}, {"X"}, set()
-z = {"X"}
+# Task 1 : z | do(x)
 
-result = rule_2_applicable(g, y, x, z, w)
-print("Rule 2 applied to task 1:", result)
-result = apply_rule_2(g, y, x, z, w)
-print("Result:", str(result))
+# Begin
+query = [Query({"Z"}, VariableSet({"X"}, set()))]
+print_query("Task 1:", *query)
 
-# solver = IDSSolver(g, y, x, w)
+# 3.34
+query = [apply_rule_2(g, query[0].head, query[0].body.interventions, {"X"}, query[0].body.observations)]
+print_query("3.34:", *query)
 
-#
-
-#
-
+# Done
+print("\n")
 
 # Task 2 : y | do(z)
 
-print("\n\n\n")
+# Begin
+query = [Query({"Y"}, VariableSet({"Z"}, set()))]
+print_query("Task 2:", *query)
 
-# Insert x as observation
-y, x, w = {"Y"}, {"Z"}, set()
-z = {"X"}
+# 3.35
+query = [*apply_secret_rule_4(g, query[0].head, query[0].body.interventions, {"X"}, query[0].body.observations)]
+print_query("3.35:", *query)
 
-print("Jeffreys: Can Insert X:", secret_rule_4_applicable(g, y, x, z, w))
-result = apply_secret_rule_4(g, y, x, z, w)
-print("Result:", " ".join([str(i) for i in result]))
+# 3.36
+query[2] = apply_rule_3(g, query[2].head, query[2].body.interventions, {"Z"}, query[2].body.observations)
+print_query("3.36:", *query)
 
-print("Rule 3: Can Delete do(Z) from x | do(Z):", rule_3_applicable(g, y, x, z, w))
-mod = result[2]
-new_result = apply_rule_3(g, mod.head, mod.body.interventions, {"Z"}, mod.body.observations)
-print("Result:", str(result))
-print(str(result[0]), str(result[1]), str(new_result))
+# 3.37
+query[1] = apply_rule_2(g, query[1].head, query[1].body.interventions, {"Z"}, query[1].body.observations)
+print_query("3.37:", *query)
 
-delete_mod = result[1]
-y, x, w = delete_mod.head, delete_mod.body.interventions, delete_mod.body.observations
-z = {"Z"}
-print("Rule 2: Can drop do(Z) to Z from y | x, do(Z):", rule_2_applicable(g, y, x, z, w))
-newest_result = apply_rule_2(g, y, x, z, w)
-print("Result:", str(newest_result))
+# Done
+print("\n")
 
-print(str(result[0]), str(newest_result), str(new_result))
+# Task 3 : y | do(x)
 
-print("\n\n\n\n")
+# Begin
+query = [Query({"Y"}, VariableSet({"X"}, set()))]
+print_query("Task 3:", *query)
 
-# Task 3
+# 3.39
+query = [*apply_secret_rule_4(g, query[0].head, query[0].body.interventions, {"Z"}, query[0].body.observations)]
+print_query("3.39:", *query)
 
-y, x, w = {"Y"}, {"X"}, set()
+# 3.34
+query[2] = apply_rule_2(g, query[2].head, query[2].body.interventions, {"X"}, query[2].body.observations)
+print_query("3.34:", *query)
 
-solver = IDSSolver(parsed["graph"], y, x, w)
+# 3.40
+query[1] = apply_rule_2(g, query[1].head, query[1].body.interventions, {"Z'"}, query[1].body.observations)
+print_query("3.40:", *query)
 
-result = solver.solve()
+# 3.41
+result = apply_rule_3(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)
+query = [query[0]] + [result] + query[2:]
+print_query("3.41:", *query)
 
-if result.success:
-    print(" ".join(str(i) for i in result.data))
+# Re-compute Task 2
+result = [*apply_secret_rule_4(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)]
+query = [query[0]] + list(result) + query[2:]
+print_query("3.35:", *query)
+
+# 3.36
+result = apply_rule_3(g, query[3].head, query[3].body.interventions, {"Z'"}, query[3].body.observations)
+query = query[0:3] + [result] + query[4:]
+print_query("3.36:", *query)
+
+# Done: 3.42
+result = apply_rule_2(g, query[2].head, query[2].body.interventions, {"Z'"}, query[2].body.observations)
+query = query[0:2] + [result] + query[3:]
+print_query("3.42:", *query)

@@ -13,11 +13,43 @@ from probability_structures.Graph import Graph
 from probability_structures.Probability_Engine import ProbabilityEngine
 
 
+def union(s1: set, s2: set):
+    new_set = set()
+
+    # print("Dirty:", s1, s2)
+
+    for i in s1:
+        if clean(i) not in new_set:
+            new_set.add(i)
+    for i in s2:
+        if clean(i) not in new_set:
+            new_set.add(i)
+
+    # print("Union:", new_set)
+    return new_set
+
+
+def subtract(s1: set, s2: set):
+
+    # print("Dirty:", s1, s2)
+    new_set = set()
+    clean_s2 = clean(s2)
+
+    for i in s1:
+        if clean(i) not in clean_s2:
+            new_set.add(i)
+
+    # print("Subtract:", new_set)
+    return new_set
+
+
 def rename(s: set):
     return {item + "'" for item in s}
 
 
-def clean(s: set):
+def clean(s: set or str):
+    if isinstance(s, str):
+        return s.strip("'")
     return {item.strip("'") for item in s}
 
 
@@ -68,7 +100,7 @@ class Query:
     def __str__(self):
         msg = "P(" + ",".join(self.head)
         if len(self.body.interventions | self.body.observations) > 0:
-            msg += "|" + str(self.body)
+            msg += " | " + str(self.body)
         return msg + ")"
 
     def __copy__(self):

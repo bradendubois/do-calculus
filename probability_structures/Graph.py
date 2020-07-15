@@ -197,4 +197,4 @@ def to_label(item: str or Variable or Outcome or Intervention) -> str:
     :param item: The item to convert, either a string (done) or some Variable
     :return: A string name of the given item, if not already provided as a string
     """
-    return item if isinstance(item, str) else item.name
+    return item.strip("'") if isinstance(item, str) else item.name.strip("'")

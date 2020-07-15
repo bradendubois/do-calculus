@@ -22,10 +22,10 @@ def rule_1_applicable(graph: Graph, y: set, x: set, z: set, w: set) -> bool:
 
     # Disable the incoming X edges
     graph.reset_disabled()
-    graph.disable_incoming(*x)
+    graph.disable_incoming(*clean(x))
 
     # See if Y _||_ Z
-    independent = BackdoorController(graph).independent(y, z, x | (w-z))
+    independent = BackdoorController(graph).independent(clean(y), clean(z), clean(union(x, subtract(w, z))))
     graph.reset_disabled()
     # print(str(y), str(x), str(z), str(w), independent)
 
@@ -38,12 +38,12 @@ def apply_rule_1(graph: Graph, y: set, x: set, z: set, w: set):
     assert rule_1_applicable(graph, y, x, z, w), "Rule 1 not applicable!"
 
     # Deleting Z from W if it's already in W
-    if z.issubset(w):
-        return Query(y, VariableSet(x, w - z))
+    if clean(z).issubset(clean(w)):
+        return Query(y, VariableSet(x, subtract(w, z)))
 
     # Not in W - inserting Z
     else:
-        return Sigma(rename(z)), Query(y, VariableSet(x, w | rename(z))), Query(rename(z), VariableSet(x, w))
+        return Sigma(rename(z)), Query(y, VariableSet(x, union(w, rename(z)))), Query(rename(z), VariableSet(x, w))
 
 
 ###################################################
@@ -54,11 +54,11 @@ def rule_2_applicable(graph: Graph, y: set, x: set, z: set, w: set):
 
     # Disable incoming X edges, outgoing Z edges
     graph.reset_disabled()
-    graph.disable_incoming(*x-z)
-    graph.disable_outgoing(*z)
+    graph.disable_incoming(*clean(subtract(x, z)))
+    graph.disable_outgoing(*clean(z))
 
     # See if Y _||_ Z
-    independent = BackdoorController(graph).independent(y, z, x | w)
+    independent = BackdoorController(graph).independent(clean(y), clean(z), clean(x) | clean(w))
     graph.reset_disabled()
     # print(str(y), str(x), str(z), str(w), independent)
 
@@ -71,12 +71,13 @@ def apply_rule_2(graph: Graph, y: set, x: set, z: set, w: set):
     assert rule_2_applicable(graph, y, x, z, w), "Rule 2 is not applicable!"
 
     # Dropping z from Interventions X if that is where it currently is
-    if z.issubset(x):
-        return Query(y, VariableSet(x - z, w | z))
+    if clean(z).issubset(clean(x)):
+        return Query(y, VariableSet(subtract(x, z), union(w, z)))
 
     # Dropping it from our Observations
     else:
-        return Query(y, VariableSet(x | z, w - z))
+        # print(x, z, union(x, z))
+        return Query(y, VariableSet(union(x, z), subtract(w, z)))
 
 
 ###################################################
@@ -87,13 +88,13 @@ def rule_3_applicable(graph: Graph, y: set, x: set, z: set, w: set):
 
     # Disable X incoming edges, all edges incoming to any non-ancestor of any W node in G ^X
     graph.reset_disabled()
-    graph.disable_incoming(*x-z)
-    all_w_ancestors = set().union(*[graph.ancestors(v) for v in w])
-    zw = z - all_w_ancestors
+    graph.disable_incoming(*subtract(x, z))
+    all_w_ancestors = set().union(*[graph.ancestors(clean(v)) for v in w])
+    zw = subtract(z, all_w_ancestors)
     graph.disable_incoming(*zw)
 
     # See if Y _||_ Z
-    independent = BackdoorController(graph).independent(y, z, x | w)
+    independent = BackdoorController(graph).independent(clean(y), clean(z), union(x, w))
     graph.reset_disabled()
     # print(str(y), str(x), str(z), str(w), independent)
 
@@ -106,12 +107,12 @@ def apply_rule_3(graph: Graph, y: set, x: set, z: set, w: set):
     assert rule_3_applicable(graph, y, x, z, w), "Rule 3 is not applicable!"
 
     # Dropping Z from interventions X
-    if z.issubset(x):
-        return Query(y, VariableSet(x - z, w))
+    if clean(z).issubset(clean(x)):
+        return Query(y, VariableSet(subtract(x, z), w))
 
     # Inserting Z into interventions X, summation
     else:
-        return Sigma(z), Query(y, VariableSet(x | z, w)), Query(z, VariableSet(x, w))
+        return Sigma(z), Query(y, VariableSet(union(x, z), w)), Query(z, VariableSet(x, w))
 
 
 ###################################################
@@ -132,8 +133,8 @@ def secret_rule_4_applicable(graph: Graph, y: set, x: set, z: set, w: set):
 
 def apply_secret_rule_4(graph: Graph, y: set, x: set, z: set, w: set):
 
-    # Double check
-    assert secret_rule_4_applicable(graph, y, x, z, w), "Secret Rule 4 is not applicable!"
+    # Double check; do we need to? Not looking for independence, just Jeffrey's Rule-ing in.
+    # assert secret_rule_4_applicable(graph, y, x, z, w), "Secret Rule 4 is not applicable!"
 
     # Condition over Z
-    return Sigma(z), Query(y, VariableSet(x, z | w)), Query(z, VariableSet(x, w))
+    return Sigma(rename(z)), Query(y, VariableSet(x, union(rename(z), w))), Query(rename(z), VariableSet(x, w))
