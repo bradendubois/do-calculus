@@ -18,6 +18,9 @@ g = parsed["graph"]
 
 # Task 1 : z | do(x)
 
+# Do it by hand, a la Pearl
+print("Doing Task 1 manually.")
+
 # Begin
 query = [Query({"Z"}, VariableSet({"X"}, set()))]
 print_query("Task 1:", *query)
@@ -27,14 +30,18 @@ query = [apply_rule_2(g, query[0].head, query[0].body.interventions, {"X"}, quer
 print_query("3.34:", *query)
 
 # Repeat Task 1
+print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Z"}, {"X"}, set())
 result = start.solve()
-print("IDS Solved:", result.success, str(result.result))
+print(str(result))
 
 # Done
 print("\n")
 
 # Task 2 : y | do(z)
+
+# Do it by hand, a la Pearl
+print("Doing Task 2 manually.")
 
 # Begin
 query = [Query({"Y"}, VariableSet({"Z"}, set()))]
@@ -53,6 +60,7 @@ query[1] = apply_rule_2(g, query[1].head, query[1].body.interventions, {"Z"}, qu
 print_query("3.37:", *query)
 
 # Repeat Task 2
+print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Y"}, {"Z"}, set())
 result = start.solve()
 print(str(result))
@@ -61,6 +69,9 @@ print(str(result))
 print("\n")
 
 # Task 3 : y | do(x)
+
+# Do it by hand, a la Pearl
+print("Doing Task 3 manually.")
 
 # Begin
 query = [Query({"Y"}, VariableSet({"X"}, set()))]
@@ -98,7 +109,8 @@ result = apply_rule_2(g, query[2].head, query[2].body.interventions, {"Z'"}, que
 query = query[0:2] + [result] + query[3:]
 print_query("3.42:", *query)
 
-# Repeat Task 2
+# Repeat Task 3
+print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Y"}, {"X"}, set())
 result = start.solve()
 print(str(result))
