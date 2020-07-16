@@ -105,7 +105,9 @@ class BackdoorController:
             all_straight_line_path_variables.update(path)
 
         # Get the power set of all remaining variables, and check which subsets yield causal independence
-        z_power_set = power_set(set(self.graph.v) - (x | y | all_straight_line_path_variables))
+        descendants = set().union(*[self.graph.reach(s) for s in x | y])
+        disallowed_vertices = x | y | all_straight_line_path_variables | descendants
+        z_power_set = power_set(set(self.graph.v) - disallowed_vertices)
 
         # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
         # any set in here is one which yields no backdoor backs from X x Y.

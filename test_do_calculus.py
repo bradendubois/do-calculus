@@ -1,10 +1,12 @@
 from do_calculus.application.DoCalculusRules import *
+from do_calculus.application.QueryListParser import ql_probability
 from do_calculus.ids_ai.IDS_Solver import IDSSolver
 from utilities.parsing.GraphLoader import parse_graph_file_data
 
 # Testing the first 3 tasks page ~88 of Causality
 
 # Fix imports when running this by moving this to the root of the project
+
 
 def print_query(*packed_query):
     for q in packed_query:
@@ -15,7 +17,6 @@ def print_query(*packed_query):
 # Parse the file
 parsed = parse_graph_file_data("causal_graphs/causal_graph_6.json")
 g = parsed["graph"]
-
 
 # Task 1 : z | do(x)
 
@@ -37,7 +38,7 @@ result = start.solve()
 print(str(result))
 
 # Done
-print("\n")
+print("\n***************************\n")
 
 # Task 2 : y | do(z)
 
@@ -67,7 +68,7 @@ result = start.solve()
 print(str(result))
 
 # Done
-print("\n")
+print("\n***************************\n")
 
 # Task 3 : y | do(x)
 
@@ -115,3 +116,27 @@ print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Y"}, {"X"}, set())
 result = start.solve()
 print(str(result))
+
+
+print("\n\n\n********\n\n\n")
+
+# Evaluate each of P(Y|X)
+
+# Load the final query object
+parsed["ql"] = result.result
+
+# y | x
+parsed["known"] = {"Y": "y", "X": "x"}
+print(ql_probability(**parsed))
+
+# y | ~x
+parsed["known"] = {"Y": "y", "X": "~x"}
+print(ql_probability(**parsed))
+
+# ~y | x
+parsed["known"] = {"Y": "~y", "X": "x"}
+print(ql_probability(**parsed))
+
+# ~y | ~x
+parsed["known"] = {"Y": "~y", "X": "~x"}
+print(ql_probability(**parsed))
