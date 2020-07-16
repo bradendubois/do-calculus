@@ -24,11 +24,11 @@ def time(function):
     def time_function(*args, **kwargs):
 
         start_time = datetime.now()     # Take current time
-        function(*args, **kwargs)
+        result = function(*args, **kwargs)
         end_time = datetime.now()       # Take new current time
         taken = end_time - start_time   # Take the difference
-        # print(function.__name__ + " completed in: " + str(taken) + " seconds.")
-        return taken
+        print(function.__name__ + " completed in: " + str(taken) + " seconds.")
+        return result
 
     return time_function
 
