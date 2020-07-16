@@ -10,9 +10,9 @@
 from datetime import datetime
 
 from probability_structures.CausalGraph import *
+from probability_structures.VariableStructures import *
 from utilities.ProbabilityExceptions import *
 from utilities.parsing.GraphLoader import parse_graph_file_data
-from probability_structures.VariableStructures import *
 
 
 def create_head_and_body(head_and_body: list) -> tuple:
@@ -178,7 +178,7 @@ def run_test_file(test_file: str) -> (bool, str):
     return True, "All tests in " + test_file + " passed."
 
 
-def validate_all_regression_tests() -> (bool, str):
+def run_full_regression_suite() -> (bool, str):
     """
     Run all regression tests
     :return: A tuple (success boolean, return message) representing Failure+Error or Success+NoError

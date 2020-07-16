@@ -9,16 +9,30 @@
 #                                                       #
 #########################################################
 
-from config.config_manager import *
-from probability_structures.REPL_Driver import REPLDriver
-from utilities.RegressionTesting import *
+# Main libraries can always be loaded
+from os import path, listdir
+import json
+
+# Only import (from the software itself) the configuration module to see which modules are enabled
+from config.config_manager import access
+
+# Update / pull if enabled
+if access("github_pull_on_launch"):
+    import subprocess
+    subprocess.call(["./scripts/git_update.sh"])
+
+# Import the IO Logger *after* potentially updating
+from utilities.IO_Logger import io
 
 # If set, run any tests before starting up
 if access("run_regression_tests_on_launch"):
 
+    # Import the regression suite
+    from utilities.RegressionTesting import run_full_regression_suite
+
     # List of (success_boolean, message) tuples returned
     # Last item will be a summary "(false, "there were errors")" / "(true, "no errors")"
-    results = validate_all_regression_tests()
+    results = run_full_regression_suite()
 
     # Output results if config settings specify it
     if not results[-1][0] and access("output_regression_results") == "failure":
@@ -31,10 +45,14 @@ if access("run_regression_tests_on_launch"):
         exit(-1)
 
 # Does the directory of graphs exist?
-if os.path.isdir(access("graph_file_folder")):
+if path.isdir(access("graph_file_folder")):
+
+    # Import the REPL Driver and Graph Loader libraries
+    from probability_structures.REPL_Driver import REPLDriver, user_index_selection
+    from utilities.parsing.GraphLoader import parse_graph_file_data
 
     # Find all JSON files in that directory
-    files = sorted([file_name for file_name in os.listdir(access("graph_file_folder")) if file_name.endswith(".json")])
+    files = sorted([file_name for file_name in listdir(access("graph_file_folder")) if file_name.endswith(".json")])
     longest_file_length = max(len(file) for file in files)
 
     # Only one file, just select it and exit when done
