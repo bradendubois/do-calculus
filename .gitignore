@@ -6,3 +6,4 @@ logging/*
 *.pyc
 config/config.json
 probability-code-*
+Quick_Usage.md
