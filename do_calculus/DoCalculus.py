@@ -9,7 +9,7 @@
 
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
-from do_calculus.application.DoCalculusOptions import do_calculus_options, query_str
+from do_calculus.application.DoCalculusOptionsRevised import do_calculus_options, query_str
 from do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.Graph import Graph

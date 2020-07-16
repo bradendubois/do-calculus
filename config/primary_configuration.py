@@ -145,6 +145,13 @@ primary_config_file = [
             "parameter": "regression_log_subdirectory",
             "default_value": "regression",
             "options": "any valid path name"
+        }, {
+            "parameter_title": "Update from Github on Launch",
+            "description": "If enabled, the project will attempt to pull from Github, and effectively update itself, " +
+                           "on launch - it probably won't even need to be restarted if there is an update.",
+            "parameter": "github_pull_on_launch",
+            "default_value": False,
+            "options": [True, False]
         }]
     }, {
         "section": "Accuracy / Formatting / Precision Rules",
