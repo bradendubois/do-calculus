@@ -37,14 +37,23 @@ def do_calculus_options(query: QueryList, graph: Graph):
         # Take a copy of the current state of the query, applying each possible rule
         for option in specific_query_options:
 
+            # Unpack this specific option
+            message, result = option
+
             # Copy the current query
             new_query = query.copy()
 
+            # Handle how to unpack the option, since we return 1 item or a tuple of items
+            if isinstance(result, tuple):
+                unpacked = [*result]
+            else:
+                unpacked = [result]
+
             # Apply the option/rule
-            new_query.queries[item_index] = option
+            new_query.queries[item_index:item_index+1] = unpacked
 
             # Add this viable "path" to the list of options
-            all_results.append(new_query)
+            all_results.append((message, new_query))
 
     return all_results
 
@@ -58,7 +67,7 @@ def query_options(query: Query, graph: Graph):
     # The following sets are tentative; not each subset will actually allow the rule to be applied until validated
 
     # First, all possible Z that can be deleted from our observations
-    rule_1_tentative_z = set(power_set(w, False)) | set(power_set(graph.v - (y | w | x), False))
+    rule_1_tentative_z = set(power_set(w, False)) | set(power_set(subtract(graph.v, (y | w | x)), False))
     rule_1_valid_z = [set(s) for s in rule_1_tentative_z if rule_1_applicable(graph, y, x, set(s), w)]
 
     # Second, all possible Z that can switch between being observation/intervention
@@ -66,8 +75,12 @@ def query_options(query: Query, graph: Graph):
     rule_2_valid_z = [set(s) for s in rule_2_tentative_z if rule_2_applicable(graph, y, x, set(s), w)]
 
     # Third, all possible Z that are subsets of our interventions that can be deleted
-    rule_3_tentative_z = set(power_set(x, False)) | set(power_set(graph.v - set(y | w | x), False))
+    rule_3_tentative_z = set(power_set(x, False)) | set(power_set(subtract(graph.v, set(y | w | x)), False))
     rule_3_valid_z = [set(s) for s in rule_3_tentative_z if rule_3_applicable(graph, y, x, set(s), w)]
+
+    # Fourth, all possible Z that can be introduced by Jeffrey's Rule
+    rule_4_tentative_z = set(power_set(subtract(graph.v, set(y | w | x | {"U"})), False))
+    rule_4_valid_z = [set(s) for s in rule_4_tentative_z]
 
     # Present all options to the user
     current_query = query_str(y, x, w)
@@ -100,6 +113,11 @@ def query_options(query: Query, graph: Graph):
         "sets": rule_3_valid_z,
         "check_subset": x,
         "subset_options": ["Delete Intervention", "Insert Intervention"]
+    }, {
+        "rule": 4,
+        "function": apply_secret_rule_4,
+        "verifier": secret_rule_4_applicable,
+        "sets": rule_4_valid_z,
     }]
 
     # Go through each rule, apply the rule to each of its applicable sets, and present the option
@@ -107,21 +125,12 @@ def query_options(query: Query, graph: Graph):
 
         # Create a skeleton of the message to allow it to be formatted depending on the subset checking
         rule = str(rule_application["rule"])
-        query_message = "Rule " + rule + ": {} Z: {}, Making: {} -> {}."
+        query_message = "Rule " + rule + ": Making: {} -> {}."
 
         for z in rule_application["sets"]:
 
-            # Checking whether it's a subset of either x or w, depending on the rule
-            subset = z.issubset(rule_application["check_subset"])
-            options = rule_application["subset_options"]
-            action = options[0] if subset else options[1]
-
-            # String representation of the given set
-            z_str = ",".join(z)
-
-            # Apply the rule and get the rules
+            # Apply the rule and get the result
             result = rule_application["function"](graph, y, x, z, w)
-            # result_str = query_str(y_result, x_result, w_result)
 
             # Verify that the rule still applies to "revert"; it always should.
             # error_skeleton = "Rule {} not found to be reversible! {} <-!-> {}, " \
@@ -138,7 +147,12 @@ def query_options(query: Query, graph: Graph):
             # Generate the final "option" message and add it to the list of options
             # query = query_message.format(action, z_str, current_query, result_str)
             #do_options.append([CallableItemWrapper(y_result, x_result, w_result), query])
-            do_options.append(result)
+            if isinstance(result, tuple):
+                new_message = " ".join(str(i) for i in result)
+            else:
+                new_message = str(result)
+
+            do_options.append((query_message.format(current_query, new_message), result))
 
     return do_options
 

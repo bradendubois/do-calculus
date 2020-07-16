@@ -8,6 +8,7 @@
 #########################################################
 
 from do_calculus.DoCalculus import do_calculus
+from do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.CausalGraph import CausalGraph

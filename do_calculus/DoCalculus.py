@@ -100,10 +100,10 @@ def do_calculus(graph: Graph):
             result = solver.solve()
             if result.success:
                 io.write("The AI Solver was able to find a solution.", console_override=True)
-                y, x, w = result.data
+                y, x, w = result.result
             else:
                 io.write("The AI Solver was not able to find a solution.", console_override=True)
 
         # We've gotten our selection, update our sets accordingly and go again
         else:
-            y, x, w = options[selection][0].data
+            y, x, w = options[selection][0].result

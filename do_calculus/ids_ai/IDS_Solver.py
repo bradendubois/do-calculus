@@ -10,7 +10,8 @@
 # Basic IDS-approach solver taking an initial query and solving until there are no interventions left
 #   Thanks, Professor Horsch, for CMPT 317!
 
-from do_calculus.application.DoCalculusOptions import do_calculus_options
+from do_calculus.QueryList import QueryList, Query, VariableSet
+from do_calculus.application.DoCalculusOptionsRevised import do_calculus_options
 from do_calculus.ids_ai.Stack import Stack
 from probability_structures.Graph import Graph
 
@@ -18,9 +19,19 @@ from probability_structures.Graph import Graph
 class Solution:
     """Wrapper to represent the results of the IDS Searcher"""
 
-    def __init__(self, success: bool, result):
+    def __init__(self, success: bool, history, result):
         self.success = success
-        self.data = result
+        self.history = history
+        self.result = result
+
+    def __str__(self):
+        msg = ""
+        msg += str(self.success) + "\n"
+        if self.success:
+            for item in self.history:
+                msg += ".....".join(str(i) for i in item) + "\n"
+            msg += str(self.result)
+        return msg
 
 
 class IDSSolver:
@@ -28,7 +39,7 @@ class IDSSolver:
     A basic iterative-deepening-search approach to do-calculus, reducing some query y | do(x) see(w) to only observation
     """
 
-    def __init__(self, graph: Graph, y, x, w):
+    def __init__(self, graph: Graph, y: set, x: set, w: set):
         """
         Create an iterative-deepening-search solver to manipulate the given sets until there are no interventions left.
         :param graph: A Graph object representing the graph space
@@ -54,29 +65,31 @@ class IDSSolver:
 
         while current_max_depth <= maximum_depth:
 
+            # Watch the exponential growth explode in real time.
+            # print(current_max_depth)
+
+            # Clear the stack and push our "starter" data
             self.stack.clear()
-            self.stack.push((self.graph.copy(), self.y.copy(), self.x.copy(), self.w.copy(), 1))
+            self.stack.push((QueryList([Query(self.y.copy(), VariableSet(self.x.copy(), self.w.copy()))]), 1, []))
 
             while not self.stack.empty():
 
                 # Pop the current item in the IDS stack and see if it's our goal
-                current = self.stack.pop()
+                current, item_depth, history = self.stack.pop()
                 if self.goal(current):
-                    return Solution(True, current)
+                    return Solution(True, history, current)
 
                 # Unpack the item and see if we can push all its resulting options
-                current_graph, current_y, current_x, current_w, item_depth = current
                 if item_depth < current_max_depth:
 
                     # Generate all new options
-                    all_options = do_calculus_options(current_graph.copy(), current_y, current_x, current_w)
+                    all_options = do_calculus_options(current, self.graph)
                     for option in all_options:
-                        new_y, new_x, new_w = option[0].data
-                        self.stack.push((current_graph.copy(), new_y, new_x, new_w, item_depth+1))
+                        self.stack.push((option[1], item_depth+1, history + [(option[0], current)]))
 
             current_max_depth += 1
 
         return Solution(False, None)
 
-    def goal(self, x: tuple):
-        return len(x) == 0
+    def goal(self, x: QueryList):
+        return x.fully_resolved()

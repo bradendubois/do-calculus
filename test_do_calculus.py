@@ -32,6 +32,11 @@ print_query("Task 1:", *query)
 query = [apply_rule_2(g, query[0].head, query[0].body.interventions, {"X"}, query[0].body.observations)]
 print_query("3.34:", *query)
 
+# Repeat Task 1
+start = IDSSolver(g, {"Z"}, {"X"}, set())
+result = start.solve()
+print("IDS Solved:", result.success, str(result.result))
+
 # Done
 print("\n")
 
@@ -52,6 +57,11 @@ print_query("3.36:", *query)
 # 3.37
 query[1] = apply_rule_2(g, query[1].head, query[1].body.interventions, {"Z"}, query[1].body.observations)
 print_query("3.37:", *query)
+
+# Repeat Task 2
+start = IDSSolver(g, {"Y"}, {"Z"}, set())
+result = start.solve()
+print(str(result))
 
 # Done
 print("\n")
@@ -78,10 +88,10 @@ print_query("3.40:", *query)
 result = apply_rule_3(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)
 query = [query[0]] + [result] + query[2:]
 print_query("3.41:", *query)
-
+# HERE
 # Re-compute Task 2
 result = [*apply_secret_rule_4(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)]
-query = [query[0]] + list(result) + query[2:]
+query = [*query[0:1]] + [*result] + [*query[2:]]
 print_query("3.35:", *query)
 
 # 3.36
@@ -93,3 +103,8 @@ print_query("3.36:", *query)
 result = apply_rule_2(g, query[2].head, query[2].body.interventions, {"Z'"}, query[2].body.observations)
 query = query[0:2] + [result] + query[3:]
 print_query("3.42:", *query)
+
+# Repeat Task 2
+start = IDSSolver(g, {"Y"}, {"X"}, set())
+result = start.solve()
+print(str(result))
