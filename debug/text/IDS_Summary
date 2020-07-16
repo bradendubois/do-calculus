@@ -1,0 +1,97 @@
+Task 1
+
+Doing Task 1 manually.
+Task 1: P(Z | do(X))
+3.34: P(Z | X)
+
+Can the IDS Solver do it?
+True
+Rule 2: Making: P(Z | do(X)) -> P(Z | X).
+P(Z | X)
+
+***********************************************
+
+Task 2
+
+Doing Task 2 manually.
+Task 2: P(Y | do(Z))
+3.35: Sigma_X' P(Y | do(Z), X') P(X' | do(Z))
+3.36: Sigma_X' P(Y | do(Z), X') P(X')
+3.37: Sigma_X' P(Y | Z,X') P(X')
+
+Can the IDS Solver do it?
+True
+Rule 4: Making: P(Y | do(Z)) -> Sigma_X' P(Y | do(Z), X') P(X' | do(Z)).
+Rule 3: Making: P(X' | do(Z)) -> P(X').
+Rule 2: Making: P(Y | do(Z), X') -> P(Y | Z,X').
+Sigma_X' P(Y | Z,X') P(X')
+
+***********************************************
+
+Task 3
+
+Doing Task 3 manually.
+Task 3: P(Y | do(X))
+3.39: Sigma_Z' P(Y | do(X), Z') P(Z' | do(X))
+3.34: Sigma_Z' P(Y | do(X), Z') P(Z' | X)
+3.40: Sigma_Z' P(Y | do(Z',X)) P(Z' | X)
+3.41: Sigma_Z' P(Y | do(Z')) P(Z' | X)
+3.35: Sigma_Z' Sigma_X' P(Y | do(Z'), X') P(X' | do(Z')) P(Z' | X)
+3.36: Sigma_Z' Sigma_X' P(Y | do(Z'), X') P(X') P(Z' | X)
+3.42: Sigma_Z' Sigma_X' P(Y | Z',X') P(X') P(Z' | X)
+
+# This is the correct process
+
+Can the IDS Solver do it?
+True
+Rule 4: Making: P(Y | do(X)) -> Sigma_Z' P(Y | do(X), Z') P(Z' | do(X)).
+Rule 2: Making: P(Z' | do(X)) -> P(Z' | X).
+Rule 2: Making: P(Y | do(X), Z') -> P(Y | do(Z',X)).
+Rule 3: Making: P(Y | do(Z',X)) -> P(Y | do(Z')).
+Rule 4: Making: P(Y | do(Z')) -> Sigma_X' P(Y | do(Z'), X') P(X' | do(Z')).
+Rule 3: Making: P(X' | do(Z')) -> P(X').
+Rule 2: Making: P(Y | do(Z'), X') -> P(Y | Z',X').
+Sigma_Z' Sigma_X' P(Y | Z',X') P(X') P(Z' | X)
+
+# This is the incorrect result - it just deletes do(X, z), but why? Can it?
+
+Can the IDS Solver do it?
+True
+Rule 4: Making: P(Y | do(X)) -> Sigma_Z' P(Y | do(X), Z') P(Z' | do(X)).
+Rule 2: Making: P(Z' | do(X)) -> P(Z' | X).
+Rule 2: Making: P(Y | do(X), Z') -> P(Y | do(X,Z')).
+Rule 3: Making: P(Y | do(X,Z')) -> P(Y).
+Sigma_Z' P(Y) P(Z' | X)
+
+Let's evaluate these out anyway
+
+It's worth noting, I know we can't technically use U as a deconfounding set, but it should still be valid to do all
+these calculations with it; I assigned some random values consistent with the graph Pearl is using. Perhaps it'd be
+worth it in the future to add that capability; some way of detecting/signalling "we can't use U." in the rule
+applications.
+
+Correct: Sigma_Z' Sigma_X' P(Y | Z',X') P(X') P(Z' | X)
+Incorrect: Sigma_Z' P(Y) P(Z' | X)
+Hat-Evaluated = Regular calculation with deconfounding set U
+
+Y = y, X = x
+Correct Equation = 0.62
+Incorrect Equation = 0.5156
+Hat-Evaluated (y | do(x)) = 0.62
+
+Y = y, X = ~x
+Correct Equation = 0.50
+Incorrect Equation = 0.5156
+Hat-Evaluated (y | do(~x)) = 0.50
+
+Y = ~y, X = x
+Correct Equation = 0.38
+Incorrect Equation = 0.4844
+Hat-Evaluated (~y | do(x)) = 0.38
+
+Y = ~y, X = ~x
+Correct Equation = 0.50
+Incorrect Equation = 0.4844
+Hat-Evaluated (~y | do(~x)) = 0.50
+
+So the one Pearl derives does work out for everything! But the shortcut works out for nothing.
