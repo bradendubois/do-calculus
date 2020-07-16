@@ -105,7 +105,7 @@ primary_config_file = [
                            "this directory will be automatically run if regression tests are enabled. For information " +
                            "on regression test files, see ``Regression Tests``.",
             "parameter": "regression_directory",
-            "default_value": "regression_tests/test_files",
+            "default_value": "tests/test_files",
             "options": "any valid path in the project"
         }]
     }, {

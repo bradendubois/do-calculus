@@ -1,5 +1,5 @@
 {
-  "file_directory": "regression_tests/test_graphs",
+  "file_directory": "tests/test_graphs",
   "test_file": "error_filled_graph.json",
   "tests": [
     {
