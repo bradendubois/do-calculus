@@ -1,7 +1,8 @@
-from do_calculus.application.DoCalculusRulesRevised import *
+from do_calculus.application.DoCalculusRules import *
 from do_calculus.ids_ai.IDS_Solver import IDSSolver
 from utilities.parsing.GraphLoader import parse_graph_file_data
 
+# Testing the first 3 tasks page ~88 of Causality
 
 # Fix imports when running this by moving this to the root of the project
 
@@ -22,7 +23,7 @@ g = parsed["graph"]
 print("Doing Task 1 manually.")
 
 # Begin
-query = [Query({"Z"}, VariableSet({"X"}, set()))]
+query = [Query({"Z"}, QueryBody({"X"}, set()))]
 print_query("Task 1:", *query)
 
 # 3.34
@@ -44,7 +45,7 @@ print("\n")
 print("Doing Task 2 manually.")
 
 # Begin
-query = [Query({"Y"}, VariableSet({"Z"}, set()))]
+query = [Query({"Y"}, QueryBody({"Z"}, set()))]
 print_query("Task 2:", *query)
 
 # 3.35
@@ -74,7 +75,7 @@ print("\n")
 print("Doing Task 3 manually.")
 
 # Begin
-query = [Query({"Y"}, VariableSet({"X"}, set()))]
+query = [Query({"Y"}, QueryBody({"X"}, set()))]
 print_query("Task 3:", *query)
 
 # 3.39
@@ -93,7 +94,7 @@ print_query("3.40:", *query)
 result = apply_rule_3(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)
 query = [query[0]] + [result] + query[2:]
 print_query("3.41:", *query)
-# HERE
+
 # Re-compute Task 2
 result = [*apply_secret_rule_4(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)]
 query = [*query[0:1]] + [*result] + [*query[2:]]

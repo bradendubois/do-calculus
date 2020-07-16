@@ -1,24 +1,29 @@
 #########################################################
 #                                                       #
-#   Do Calculus Options                                 #
+#   Do-Calculus Query Options                           #
 #                                                       #
 #   Author: Braden Dubois (braden.dubois@usask.ca)      #
 #   Written for: Dr. Eric Neufeld                       #
 #                                                       #
 #########################################################
 
-# Isolated for re-usability; let's take our graph, and our sets, and return a list of
+# Isolated for re-usability; let's take our graph, and our query, and return a list of
 #   all possible applications of the do-calculus
 
-from do_calculus.QueryList import QueryList, Sigma, Query
-from do_calculus.application.DoCalculusRulesRevised import *
+from do_calculus.application.DoCalculusRules import *
+from do_calculus.application.CustomSetFunctions import subtract, union
 from probability_structures.Graph import Graph
-from utilities.helpers.CallableItemWrapper import CallableItemWrapper
 from utilities.helpers.PowerSet import power_set
-from utilities.IO_Logger import io
 
 
-def do_calculus_options(query: QueryList, graph: Graph):
+def do_calculus_options(query: QueryList, graph: Graph) -> list:
+    """
+    Take a QueryList and its Graph and see every valid rule that can be applied.
+    :param query: The original QueryList
+    :param graph: A graph to examine for paths, variables, etc.
+    :return: A list of all possible actions to be done on the QueryList, where each item is a tuple
+        (change message, resulting QueryList)
+    """
 
     # Store a list of every possible "new" query resulting from a rule applied to this query
     all_results = []
@@ -58,7 +63,14 @@ def do_calculus_options(query: QueryList, graph: Graph):
     return all_results
 
 
-def query_options(query: Query, graph: Graph):
+def query_options(query: Query, graph: Graph) -> list:
+    """
+    Take Query, and our Graph, and get a list of all valid options/results from Do-Calculus rule applications
+    :param query: A Query instance
+    :param graph: A graph consistent with the Query
+    :return: A list of all possible actions to be done on the QueryList, where each item is a tuple
+        (change message, resulting QueryList)
+    """
 
     # Unpack the Variables of the given Query
     y, x, w = query.head, query.body.interventions, query.body.observations
@@ -67,15 +79,15 @@ def query_options(query: Query, graph: Graph):
     # The following sets are tentative; not each subset will actually allow the rule to be applied until validated
 
     # First, all possible Z that can be deleted from our observations
-    rule_1_tentative_z = set(power_set(w, False)) | set(power_set(subtract(graph.v, (y | w | x)), False))
+    rule_1_tentative_z = union(set(power_set(w, False)), set(power_set(subtract(graph.v, (y | w | x)), False)))
     rule_1_valid_z = [set(s) for s in rule_1_tentative_z if rule_1_applicable(graph, y, x, set(s), w)]
 
     # Second, all possible Z that can switch between being observation/intervention
-    rule_2_tentative_z = set(power_set(w, False)) | set(power_set(x, False))
+    rule_2_tentative_z = union(set(power_set(w, False)), set(power_set(x, False)))
     rule_2_valid_z = [set(s) for s in rule_2_tentative_z if rule_2_applicable(graph, y, x, set(s), w)]
 
     # Third, all possible Z that are subsets of our interventions that can be deleted
-    rule_3_tentative_z = set(power_set(x, False)) | set(power_set(subtract(graph.v, set(y | w | x)), False))
+    rule_3_tentative_z = union(set(power_set(x, False)), set(power_set(subtract(graph.v, set(y | w | x)), False)))
     rule_3_valid_z = [set(s) for s in rule_3_tentative_z if rule_3_applicable(graph, y, x, set(s), w)]
 
     # Fourth, all possible Z that can be introduced by Jeffrey's Rule
