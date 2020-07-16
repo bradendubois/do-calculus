@@ -2,7 +2,7 @@
 !.gitignore
 */__pycache__/*
 config/__pycache__/
-logging/*
+logs/*
 *.pyc
 config/config.json
 probability-code-*

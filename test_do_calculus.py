@@ -4,12 +4,6 @@ from utilities.parsing.GraphLoader import parse_graph_file_data
 
 
 # Fix imports when running this by moving this to the root of the project
-def fully_resolved(*packed_query):
-    for q in packed_query:
-        if isinstance(q, Query) and len(q.body.interventions) > 0:
-            return False
-    return True
-
 
 def print_query(*packed_query):
     for q in packed_query:

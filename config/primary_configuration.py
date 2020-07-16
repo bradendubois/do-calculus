@@ -136,7 +136,7 @@ primary_config_file = [
             "parameter_title": "Logging Directory",
             "description": "The directory in which queries or regression tests will be logged, if they are enabled.",
             "parameter": "logging_directory",
-            "default_value": "logging",
+            "default_value": "logs",
             "options": "any valid path in the project"
         }, {
             "parameter_title": "Regression Log Subdirectory",

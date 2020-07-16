@@ -19,17 +19,26 @@ from probability_structures.Graph import Graph
 class Solution:
     """Wrapper to represent the results of the IDS Searcher"""
 
-    def __init__(self, success: bool, history, result):
+    def __init__(self, success: bool, history=None, result=None):
+        """
+        A basic "Solution" object initializer
+        :param success: A True/False representing success in finding a solution
+        :param history: A list, the history/steps taken to reach the final result
+        :param result: The item/data result itself, should be a proper QueryList reduced to no interventions
+        """
         self.success = success
         self.history = history
         self.result = result
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Basic string builtin for the Solution
+        :return: A String representation of the Solution,
+        """
         msg = ""
         msg += str(self.success) + "\n"
         if self.success:
-            for item in self.history:
-                msg += ".....".join(str(i) for i in item) + "\n"
+            msg += "\n".join(str(i) for i in self.history) + "\n"
             msg += str(self.result)
         return msg
 
@@ -60,6 +69,7 @@ class IDSSolver:
         :return:
         """
 
+        # We will go to a depth maximum 10, starting with 1, and increasing until we find it.
         maximum_depth = 10
         current_max_depth = 1
 
@@ -84,12 +94,24 @@ class IDSSolver:
 
                     # Generate all new options
                     all_options = do_calculus_options(current, self.graph)
-                    for option in all_options:
-                        self.stack.push((option[1], item_depth+1, history + [(option[0], current)]))
 
+                    # Push each option
+                    for option in all_options:
+
+                        # As unpacked above, this is a tuple (query state, depth, history)
+                        self.stack.push((option[1], item_depth+1, history + [option[0]]))
+
+            # Increase the depth and run again
             current_max_depth += 1
 
-        return Solution(False, None)
+        # No Solution found
+        return Solution(False)
 
-    def goal(self, x: QueryList):
+    def goal(self, x: QueryList) -> bool:
+        """
+        Determine whether or not a given QueryList is a "goal"; it would simply be that the QueryList
+        is fully resolved, and no longer contains any "do" operators.
+        :param x: A QueryList to check
+        :return: True if this QueryList is a valid Goal, False otherwise
+        """
         return x.fully_resolved()

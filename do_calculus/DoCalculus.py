@@ -9,7 +9,7 @@
 
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
-from do_calculus.application.DoCalculusOptionsRevised import do_calculus_options, query_str
+from do_calculus.application.DoCalculusOptionsRevised import do_calculus_options
 from do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.Graph import Graph
@@ -76,8 +76,8 @@ def do_calculus(graph: Graph):
                 break
 
         # Present all options to the user
-        current_query = query_str(y, x, w)
-        io.write("Our query is currently: " + current_query, console_override=True)
+        # current_query = query_str(y, x, w)
+        # io.write("Our query is currently: " + current_query, console_override=True)
 
         # Generate all our possible options
         options = do_calculus_options(graph.copy(), y, x, w)

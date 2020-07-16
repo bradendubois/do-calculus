@@ -82,9 +82,6 @@ def query_options(query: Query, graph: Graph):
     rule_4_tentative_z = set(power_set(subtract(graph.v, set(y | w | x | {"U"})), False))
     rule_4_valid_z = [set(s) for s in rule_4_tentative_z]
 
-    # Present all options to the user
-    current_query = query_str(y, x, w)
-
     # Present all options to the user (generating our menu as we go) and then get a selection
     do_options = []
 
@@ -152,35 +149,6 @@ def query_options(query: Query, graph: Graph):
             else:
                 new_message = str(result)
 
-            do_options.append((query_message.format(current_query, new_message), result))
+            do_options.append((query_message.format(str(query), new_message), result))
 
     return do_options
-
-
-##############
-#   Helper   #
-##############
-
-def query_str(y, interventions, observations, z=None, z_is_intervention=False):
-
-    # TODO - Reformat as the RHS being a list of each set-string, joined by commas
-
-    lhs = ",".join(y)
-    rhs = ""
-    if len(interventions) > 0:
-        rhs += "do(" + ",".join(interventions) + ")"
-    if len(interventions) > 0 and (z or len(observations) > 0):
-        rhs += ", "
-    if z:
-        if z_is_intervention:
-            rhs += "do("
-        rhs += ",".join(z)
-        if z_is_intervention:
-            rhs += ")"
-    if z and len(observations) > 0:
-        rhs += ","
-    if len(observations) > 0:
-        rhs += ",".join(observations)
-    return "P(" + lhs + " | " + rhs + ")"
-
-

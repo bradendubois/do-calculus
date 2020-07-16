@@ -132,7 +132,7 @@ The directory in which queries or regression tests will be logged, if they are e
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| ``logging_directory`` | any valid path in the project | logging |
+| ``logging_directory`` | any valid path in the project | logs |
 
 #### Regression Log Subdirectory
 
@@ -141,6 +141,14 @@ The subdirectory of ``logging_directory`` in which regression tests will be logg
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
 | ``regression_log_subdirectory`` | any valid path name | regression |
+
+#### Update from Github on Launch
+
+If enabled, the project will attempt to pull from Github, and effectively update itself, on launch - it probably won't even need to be restarted if there is an update.
+
+| Setting Name | Options | Default Value |
+|:-:|:-:|:-:|
+| ``github_pull_on_launch`` | [True, False] | False |
 
 ## Accuracy / Formatting / Precision Rules
 
@@ -153,6 +161,14 @@ If enabled, any time a specific query is computed, its results will be cached; i
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
 | ``cache_computation_results`` | [True, False] | True |
+
+#### Topological Sort Variables
+
+If enabled, to avoid Bayes rule as much as possible, the head and body of queries can be topologically sorted.
+
+| Setting Name | Options | Default Value |
+|:-:|:-:|:-:|
+| ``topological_sort_variables`` | [True, False] | True |
 
 #### Default Regression Test Repetition
 
