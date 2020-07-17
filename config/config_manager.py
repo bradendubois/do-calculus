@@ -13,7 +13,7 @@ import argparse     # Allow command-line flag parsing
 
 try:
     from config.primary_configuration import *
-    from utilities.parsing.UserIndexSelection import *
+    from util.parsers.UserIndexSelection import *
 
 except ModuleNotFoundError:
     print("Uh-oh: Can't import some project modules. Try running this directly in PyCharm.")
