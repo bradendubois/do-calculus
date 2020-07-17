@@ -60,7 +60,7 @@ primary_config_file = [
             "options": [True, False]
         }, {
             "parameter_title": "Print Causal Graph Info on Instantiation",
-            "description": "If enabled, when a Causal Graph is loaded from a file, information on each variable in" +
+            "description": "If enabled, when a Causal Graph is loaded from a file, information on each variable in " +
                            "the Causal Graph will be output.",
             "parameter": "print_cg_info_on_instantiation",
             "default_value": True,
@@ -150,7 +150,7 @@ primary_config_file = [
             "description": "If enabled, the project will attempt to pull from Github, and effectively update itself, " +
                            "on launch - it probably won't even need to be restarted if there is an update.",
             "parameter": "github_pull_on_launch",
-            "default_value": False,
+            "default_value": True,
             "options": [True, False]
         }]
     }, {

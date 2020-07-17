@@ -54,7 +54,7 @@ If enabled, shows all steps involved in regression tests; similar to the above, 
 
 #### Print Causal Graph Info on Instantiation
 
-If enabled, when a Causal Graph is loaded from a file, information on each variable inthe Causal Graph will be output.
+If enabled, when a Causal Graph is loaded from a file, information on each variable in the Causal Graph will be output.
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
@@ -102,7 +102,7 @@ A specific directory in which each regression test file can be placed; all test 
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| ``regression_directory`` | any valid path in the project | regression_tests/test_files |
+| ``regression_directory`` | any valid path in the project | tests/test_files |
 
 ## Logging Rules / Directories
 
@@ -148,7 +148,7 @@ If enabled, the project will attempt to pull from Github, and effectively update
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| ``github_pull_on_launch`` | [True, False] | False |
+| ``github_pull_on_launch`` | [True, False] | True |
 
 ## Accuracy / Formatting / Precision Rules
 
