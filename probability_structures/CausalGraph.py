@@ -50,6 +50,10 @@ class CausalGraph:
 
     def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, functions: dict, **kwargs):
 
+        # Clear the cached computations, since a different Causal Graph may have defined and cached computations with
+        #   the same Variable names
+        stored_computations.clear()
+
         # Save all the initializer attributes given
         self.graph = graph          # This graph shouldn't be modified once given
         self.variables = variables  # Maps string name to the Variable object instantiated
