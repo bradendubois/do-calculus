@@ -257,14 +257,13 @@ class BackdoorController:
         """
         Take a prompt to serve to the user and get a set of variables from the comma-separated response
         :param prompt:
-        :return:
+        :return: A set processed from a comma-separated string of values, handling an empty string
         """
         input_set = set([item.strip() for item in input(prompt).split(",")])
 
         # Empty it if "enter" was the only thing given
         if input_set == {""}:
             input_set = set()
-
         return input_set
 
     def independent(self, x: set, y: set, z: set):
@@ -273,19 +272,18 @@ class BackdoorController:
         :param x: A set X, to be independent from Y
         :param y: A set Y, to be independent from X
         :param z: A set Z, to block paths between X and Y
-        :return: True if there are no backdoor paths, False otherwise
+        :return: True if there are no backdoor paths and no straight-line paths, False otherwise
         """
+        # Not independent if there are any unblocked backdoor paths
         if self.any_backdoor_paths(x, y, z):
             return False
 
+        # Ensure no straight-line variables from any X -> Y or Y -> X
         for cross in itertools.product(x, y):
             if len(self.all_paths_cumulative(cross[0], cross[1], [], [])) != 0:
-                return False
+                return False        # x -> y
             if len(self.all_paths_cumulative(cross[1], cross[0], [], [])) != 0:
-                return False
+                return False        # y -> x
+
+        # No paths, must be independent
         return True
-
-
-        # return not self.any_backdoor_paths(x, y, z) and \
-        #       len(self.all_paths_cumulative(list(x)[0], list(y)[0], [], [])) == 0 and \
-        #       len(self.all_paths_cumulative(list(y)[0], list(x)[0], [], [])) == 0
