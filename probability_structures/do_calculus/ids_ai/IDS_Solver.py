@@ -10,9 +10,9 @@
 # Basic IDS-approach solver taking an initial query and solving until there are no interventions left
 #   Thanks, Professor Horsch, for CMPT 317!
 
-from do_calculus.application.QueryStructures import QueryList, Query, QueryBody
-from do_calculus.application.DoCalculusQueryOptions import do_calculus_options
-from do_calculus.ids_ai.Stack import Stack
+from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
+from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
+from probability_structures.do_calculus.ids_ai.Stack import Stack
 from probability_structures.Graph import Graph
 
 
@@ -61,6 +61,8 @@ class IDSSolver:
         self.x = x
         self.w = w
 
+        self.initial_query_list = QueryList([Query(self.y.copy(), QueryBody(self.x.copy(), self.w.copy()))])
+
         self.stack = Stack()
 
     def solve(self) -> Solution:
@@ -80,7 +82,7 @@ class IDSSolver:
 
             # Clear the stack and push our "starter" data
             self.stack.clear()
-            self.stack.push((QueryList([Query(self.y.copy(), QueryBody(self.x.copy(), self.w.copy()))]), 1, []))
+            self.stack.push((self.initial_query_list.copy(), 1, []))
 
             while not self.stack.empty():
 

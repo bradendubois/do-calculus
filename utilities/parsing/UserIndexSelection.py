@@ -37,7 +37,7 @@ def user_index_selection(header: str, items: list) -> int:
         if isinstance(options[i], list):
             final_representation = options[i][0]
             if len(options[i]) > 1:
-                final_representation += " "*(largest_first - len(options[i][0])) + " - " + options[i][1]
+                final_representation += " "*(largest_first - len(options[i][0])) + " - " + str(options[i][1])
         else:
             final_representation = options[i]
 

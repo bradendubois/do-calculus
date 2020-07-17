@@ -11,8 +11,8 @@
 
 import itertools
 
-from do_calculus.application.CustomSetFunctions import clean
-from do_calculus.application.QueryStructures import QueryList, Sigma, Query
+from probability_structures.do_calculus.application.CustomSetFunctions import clean
+from probability_structures.do_calculus.application.QueryStructures import QueryList, Sigma, Query
 from probability_structures.Graph import Graph, Outcome, Intervention
 from probability_structures.Probability_Engine import ProbabilityEngine
 

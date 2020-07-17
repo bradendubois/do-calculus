@@ -9,8 +9,9 @@
 
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
-from do_calculus.application.DoCalculusQueryOptions import do_calculus_options
-from do_calculus.ids_ai.IDS_Solver import IDSSolver
+from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
+from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
+from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.Graph import Graph
 
@@ -24,7 +25,7 @@ from utilities.parsing.UserIndexSelection import user_index_selection
 #   Do-Calculus REPL   #
 ########################
 
-def do_calculus(graph: Graph):
+def do_calculus_repl(graph: Graph):
     """
     Enter a main REPL area allowing the manipulation of do_calculus
     :param graph: An unmodified graph representing our graph space
@@ -43,44 +44,50 @@ def do_calculus(graph: Graph):
                          "\n\nPlease enter each, one at a time (when prompted), as a comma-separated list.\n" \
                          "Also, note that any of X, Z, or W may be left empty.\n"
 
-    # We will hold a set of all variables y, x, w and manipulate it through user input
-    y = None
-    x = None
-    w = None
+    # Y, X, and W will be manipulated through a QueryList object of Queries
+    current_query = None
 
     while True:
 
         # No variables yet
-        if y is None or x is None or w is None:
+        if current_query is None:
 
             # We need to validate our input, so just keep trying through Assertions
             while True:
+
                 try:
-                    all_sets = []
+                    # Relay the prompt to the user
                     io.write(do_calculus_prompt, console_override=True)
 
+                    # Outcomes
                     y = process_set(input("Please enter set Y, which will not be an intervention: "))
-                    all_sets.append(y)
 
+                    # Interventions
                     x = process_set(input("Please enter all interventions: "))
-                    all_sets.append(x)
                     assert disjoint(x, y), "Sets are not disjoint!"
 
+                    # Observations
                     w = process_set(input("Please enter all observations: "))
-                    all_sets.append(w)
                     assert disjoint(w, x, y), "Sets are not disjoint!"
 
-                except AssertionError:
+                    # All variables must be defined in the graph
+                    assert all(v in graph.v for v in y | x | w), "Not all variables defined in the graph."
+
+                    # Construct a QueryList object (of 1 query, initially)
+                    current_query = QueryList([Query(y, QueryBody(x, w))])
+
+                except AssertionError as e:
+                    io.write(",".join(str(arg) for arg in e.args))
                     continue
 
                 break
 
         # Present all options to the user
-        # current_query = query_str(y, x, w)
-        # io.write("Our query is currently: " + current_query, console_override=True)
+        io.write("Our query is currently: " + str(current_query), console_override=True)
 
         # Generate all our possible options
-        options = do_calculus_options(graph.copy(), y, x, w)
+        query_options = do_calculus_options(current_query, graph)
+        options = [item[0] for item in query_options]
 
         # Add a handle to let the IDS Solver take over
         options.append([CallableItemWrapper(), "Let the IDS Solver attempt to find a solution."])
@@ -92,18 +99,24 @@ def do_calculus(graph: Graph):
         # Exit option
         if selection == len(options)-1:
             return
-        
+
         # AI Takeover
         elif selection == len(options)-2:
-            
-            solver = IDSSolver(graph, y, x, w)
+
+            # Create the solver; create one and insert our current query rather than initialize the solver with
+            #   our initial sets
+            solver = IDSSolver(graph, set(), set(), set())
+            solver.initial_query_list = current_query.copy()
+
+            # Try solving
             result = solver.solve()
             if result.success:
                 io.write("The AI Solver was able to find a solution.", console_override=True)
-                y, x, w = result.result
+                io.write(str(result.result))
+                current_query = result.result
             else:
                 io.write("The AI Solver was not able to find a solution.", console_override=True)
 
         # We've gotten our selection, update our sets accordingly and go again
         else:
-            y, x, w = options[selection][0].result
+            current_query = query_options[selection][1]

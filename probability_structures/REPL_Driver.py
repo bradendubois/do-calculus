@@ -7,12 +7,10 @@
 #                                                       #
 #########################################################
 
-from do_calculus.DoCalculus import do_calculus
-from do_calculus.ids_ai.IDS_Solver import IDSSolver
+from probability_structures.do_calculus.DoCalculus import do_calculus_repl
 
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.CausalGraph import CausalGraph
-from probability_structures.Graph import *
 from probability_structures.VariableStructures import *
 
 from utilities.IO_Logger import *
@@ -90,7 +88,7 @@ class REPLDriver:
 
             # Start with base options
             menu_options = [
-                [self.run_do_calculus, "Apply and test the 3 rules of do_calculus."],
+                [self.run_do_calculus_repl, "Apply and test the 3 rules of do-calculus."],
                 [self.run_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
                 [self.run_joint_distribution_table, "Generate a joint distribution table."],
                 [self.run_topological_sort, "See a topological sorting of the graph."],
@@ -189,8 +187,8 @@ class REPLDriver:
 
     # See the 3 rules of Do-Calculus applied to some sets
 
-    def run_do_calculus(self):
+    def run_do_calculus_repl(self):
         """
         Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do_calculus rules apply.
         """
-        do_calculus(self.graph.copy())
+        do_calculus_repl(self.graph.copy())

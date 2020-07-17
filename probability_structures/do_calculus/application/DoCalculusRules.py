@@ -9,8 +9,8 @@
 
 # The actual rules of do-calculus; so short, so succinct!
 
-from do_calculus.application.QueryStructures import *
-from do_calculus.application.CustomSetFunctions import clean, rename, subtract, union
+from probability_structures.do_calculus.application.QueryStructures import *
+from probability_structures.do_calculus.application.CustomSetFunctions import clean, rename, subtract, union
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.Graph import Graph
 

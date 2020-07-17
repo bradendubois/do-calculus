@@ -10,8 +10,8 @@
 # Isolated for re-usability; let's take our graph, and our query, and return a list of
 #   all possible applications of the do-calculus
 
-from do_calculus.application.DoCalculusRules import *
-from do_calculus.application.CustomSetFunctions import subtract, union
+from probability_structures.do_calculus.application.DoCalculusRules import *
+from probability_structures.do_calculus.application.CustomSetFunctions import subtract, union
 from probability_structures.Graph import Graph
 from utilities.helpers.PowerSet import power_set
 
