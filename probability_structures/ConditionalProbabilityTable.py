@@ -10,9 +10,9 @@ import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
 from config.config_manager import *
-from utilities.IO_Logger import io
+from util.IO_Logger import io
 from probability_structures.VariableStructures import *
-from utilities.ProbabilityExceptions import *
+from util.ProbabilityExceptions import *
 
 
 class ConditionalProbabilityTable:

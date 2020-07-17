@@ -16,10 +16,10 @@ from probability_structures.Graph import *
 from probability_structures.Probability_Engine import ProbabilityEngine
 from probability_structures.VariableStructures import *
 
-from utilities.IO_Logger import *
-from utilities.parsing.UserIndexSelection import *
-from utilities.parsing.ProbabilityString import *
-from utilities.ResultCache import *
+from util.IO_Logger import *
+from util.parsers.UserIndexSelection import *
+from util.parsers.ProbabilityString import *
+from util.ResultCache import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention

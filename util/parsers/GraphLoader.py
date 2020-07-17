@@ -14,7 +14,7 @@ import os
 from probability_structures.ConditionalProbabilityTable import *
 from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import *
-from utilities.IO_Logger import *
+from util.IO_Logger import *
 
 
 def parse_graph_file_data(filename: str) -> dict:

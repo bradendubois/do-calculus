@@ -15,10 +15,10 @@ from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 
 from probability_structures.Graph import Graph
 
-from utilities.IO_Logger import io
-from utilities.helpers.CallableItemWrapper import CallableItemWrapper
-from utilities.helpers.DisjointSets import disjoint
-from utilities.parsing.UserIndexSelection import user_index_selection
+from util.IO_Logger import io
+from util.helpers.CallableItemWrapper import CallableItemWrapper
+from util.helpers.DisjointSets import disjoint
+from util.parsers.UserIndexSelection import user_index_selection
 
 
 ########################

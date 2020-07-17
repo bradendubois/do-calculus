@@ -10,7 +10,7 @@
 
 from probability_structures.VariableStructures import *
 
-from utilities.IO_Logger import io
+from util.IO_Logger import io
 
 error_msg_formatting = \
         "The given data is incorrect:\n" + \

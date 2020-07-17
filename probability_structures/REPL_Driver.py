@@ -13,11 +13,11 @@ from probability_structures.BackdoorController import BackdoorController
 from probability_structures.CausalGraph import CausalGraph
 from probability_structures.VariableStructures import *
 
-from utilities.IO_Logger import *
-from utilities.ResultCache import *
+from util.IO_Logger import *
+from util.ResultCache import *
 
-from utilities.parsing.GetHeadAndBody import get_valid_head_and_body
-from utilities.parsing.UserIndexSelection import *
+from util.parsers.GetHeadAndBody import get_valid_head_and_body
+from util.parsers.UserIndexSelection import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention

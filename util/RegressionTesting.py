@@ -11,8 +11,8 @@ from datetime import datetime
 
 from probability_structures.CausalGraph import *
 from probability_structures.VariableStructures import *
-from utilities.ProbabilityExceptions import *
-from utilities.parsing.GraphLoader import parse_graph_file_data
+from util.ProbabilityExceptions import *
+from util.parsers.GraphLoader import parse_graph_file_data
 
 
 def create_head_and_body(head_and_body: list) -> tuple:

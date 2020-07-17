@@ -14,10 +14,10 @@ import itertools
 from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import *
 
-from utilities.IO_Logger import io
-from utilities.parsing.ProbabilityString import p_str
-from utilities.ResultCache import *
-from utilities.ProbabilityExceptions import *
+from util.IO_Logger import io
+from util.parsers.ProbabilityString import p_str
+from util.ResultCache import *
+from util.ProbabilityExceptions import *
 
 
 class ProbabilityEngine:

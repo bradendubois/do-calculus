@@ -13,7 +13,7 @@
 from probability_structures.do_calculus.application.DoCalculusRules import *
 from probability_structures.do_calculus.application.CustomSetFunctions import subtract, union
 from probability_structures.Graph import Graph
-from utilities.helpers.PowerSet import power_set
+from util.helpers.PowerSet import power_set
 
 
 def do_calculus_options(query: QueryList, graph: Graph) -> list:
@@ -155,9 +155,13 @@ def query_options(query: Query, graph: Graph) -> list:
 
             # Generate the final "option" message and add it to the list of options
             # query = query_message.format(action, z_str, current_query, result_str)
-            #do_options.append([CallableItemWrapper(y_result, x_result, w_result), query])
+            # do_options.append([CallableItemWrapper(y_result, x_result, w_result), query])
+
+            # Introduced a Sigma Query Query tuple
             if isinstance(result, tuple):
                 new_message = " ".join(str(i) for i in result)
+
+            # Single Query
             else:
                 new_message = str(result)
 

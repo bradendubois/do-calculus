@@ -1,7 +1,7 @@
 from probability_structures.do_calculus.application.DoCalculusRules import *
 from probability_structures.do_calculus.application.QueryListParser import ql_probability
 from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
-from utilities.parsing.GraphLoader import parse_graph_file_data
+from util.parsers.GraphLoader import parse_graph_file_data
 
 # Testing the first 3 tasks page ~88 of Causality
 

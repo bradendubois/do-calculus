@@ -74,4 +74,3 @@ def clean(s: set or str) -> set or str:
     if isinstance(s, str):
         return s.strip("'")
     return {item.strip("'") for item in s}
-

@@ -22,13 +22,13 @@ if access("github_pull_on_launch"):
     subprocess.call(["./scripts/git_update.sh"])
 
 # Import the IO Logger *after* potentially updating
-from utilities.IO_Logger import io
+from util.IO_Logger import io
 
 # If set, run any tests before starting up
 if access("run_regression_tests_on_launch"):
 
     # Import the regression suite
-    from utilities.RegressionTesting import run_full_regression_suite
+    from util.RegressionTesting import run_full_regression_suite
 
     # List of (success_boolean, message) tuples returned
     # Last item will be a summary "(false, "there were errors")" / "(true, "no errors")"
@@ -49,7 +49,7 @@ if path.isdir(access("graph_file_folder")):
 
     # Import the REPL Driver and Graph Loader libraries
     from probability_structures.REPL_Driver import REPLDriver, user_index_selection
-    from utilities.parsing.GraphLoader import parse_graph_file_data
+    from util.parsers.GraphLoader import parse_graph_file_data
 
     # Find all JSON files in that directory
     files = sorted([file_name for file_name in listdir(access("graph_file_folder")) if file_name.endswith(".json")])
