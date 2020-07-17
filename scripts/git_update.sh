@@ -21,6 +21,10 @@
 
 git config --global credential.helper store
 
+# Set this so that it attempts to fast forward if there are updates
+
+git config pull.ff only
+
 # Pull from the repository and update the project.
 
 git pull
