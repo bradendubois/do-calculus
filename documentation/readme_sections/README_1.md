@@ -48,8 +48,6 @@ There is a private repository on Github, hosting the most up-to-date version of 
 
 Link: [https://github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
 
-If you are white-listed to view this, contact me (braden.dubois@usask.ca) to discuss being added.
-
 If you *can* view the project, simply clone the project, and change your working directory to its root.
 
 ```shell script
@@ -57,4 +55,4 @@ git clone https://github.com/bradendubois/probability-code
 cd probability-code
 ```
 
-As it is private, you will likely be prompted to login and verify your whitelisted status.
+As it is private, you will likely be prompted to login and verify your collaborator status.

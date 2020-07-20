@@ -1,6 +1,6 @@
 # Causal Graph Files
 
-This document outlines  the structure of how to create a causal graph file.
+This document outlines the structure of how to create a causal graph file.
 
 - The graph file must be a valid ``JSON`` file.
 - By default, there is a folder labelled ``causal_graphs``, and any file in this directory with a ``.json`` file
@@ -51,7 +51,7 @@ Depending on the ``type``, Variables must conform to one of the two following ex
 }
 ```
 
-If the ``type`` is "table", the following attribute is necessary:
+If the ``type`` is "table", the following attributes are necessary:
 
 - **"outcomes"**: A list of strings, representing all possible outcomes for the given variable. Cannot have the same outcome twice in one variable, but two separate variables could have the same outcome.
 - **"parents"**: A list of strings, representing the "parents" of the given variable. Leave empty to represent zero parents.
@@ -106,3 +106,4 @@ Functions are **case-sensitive** and **spacing-sensitive**, and can involve the 
 
 - **Notes**:
   - "outcomes" and "parents" are not a required part of the probabilistic function variables; they can be omitted.
+  - This is not completely accurate. It works for typical linear functions, but does not do any multi-variable calculus or anything similar; it simply applies the noise to one value, and returns the max and min, to each "level" or nested function.

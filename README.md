@@ -11,7 +11,6 @@ Written for Dr. Eric Neufeld, written by Braden Dubois (braden.dubois@usask.ca).
 - [Running](#requirements)
 - [Usage](#usage)
 - [Further Documentation](#further-documentation)
-- [Acknowledgements](#acknowledgements)
 
 ## Requirements
 
@@ -27,6 +26,9 @@ Multiple libraries are needed to run the project, almost all of which *should* b
 - re (used in probabilistic function evaluation / parsing text into respective Outcomes and Interventions)
 - numpy (used in formatting conditional probability tables to strings)
 - math (used in formatting conditional probability tables to strings)
+- operator (used in getting a class attribute, used in topological sorting)
+- datetime (used in getting the exact current date/time for regression test file names and decorators)
+- functools (used in function wrapping for decorators)
 
 ## Installation
 
@@ -46,8 +48,6 @@ There is a private repository on Github, hosting the most up-to-date version of 
 
 Link: [https://github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
 
-If you are white-listed to view this, contact me (braden.dubois@usask.ca) to discuss being added.
-
 If you *can* view the project, simply clone the project, and change your working directory to its root.
 
 ```shell script
@@ -55,10 +55,10 @@ git clone https://github.com/bradendubois/probability-code
 cd probability-code
 ```
 
-As it is private, you will likely be prompted to login and verify your whitelisted status.
+As it is private, you will likely be prompted to login and verify your collaborator status.
 ## Running
 
-To run the project, simply run the file ``main.py``:
+To run the project, simply run the file ``main.py``, located in the root of the project:
 
 ```shell script
 ./main.py
@@ -79,10 +79,15 @@ After picking a file, you will be presented with a new set of options, dependant
 
 - Query a probability, such as P(Y = y | X = x).
 - Query the value of a continuous variable, such as f(X).
+- In-Progress: See the application of the 3 rules of do-calculus
 - Detect backdoor paths between two sets of variables, X and Y, and find deconfounding sets Z.
+- Generate a Joint Distribution Table
+- See the topological ordering of the loaded graph
 - Switch Graph Files
 
-If there are no variables with probability tables, or no continuous variables, such options will not be present.
+If there are no variables with probability tables, or no continuous variables, the respective, unavailable options will not be listed.
+
+**Warning**: If you wish to see a Joint Distribution Table for a large graph, ensure that computation-caching is enabled in your configuration file.
 
 ### Querying Probabilities
 
@@ -93,16 +98,18 @@ To format a probability query:
 
 These must be formatted as comma-separated lists of variables with their outcomes, such as "X=x, Y=y, Z=z". Whitespace is arbitrary, but these must be comma-separated.
 
-**Do-calculus** of Judea Pearl is supported; we can query P(Y | do(X)). To format these interventions, simply format such statements with the "do(", ")" text surrounding the outcomes.
+- **Example**: For the query P(y | x), the head would be formatted as "Y=y", and the body would be formatted as "X=x".
+
+**Do-calculus interventions** of Judea Pearl is supported; we can query P(Y | do(X)). To format these interventions, simply format such statements with the "do(", ")" text surrounding the outcomes.
 
 - Any number of outcomes may be listed in one "do()"; "do(X=x), do(Y=y)" and "do(X=x, Y=y)" are equivalent.
 
 Here are a few examples, where the first on each line is the "head", and the second is the "body":
 
-- "X=x, Y=y", "Z=z"
+- "X = x, Y=y", "Z=z"
 - "X=x", "do(Y=y, Z=z)"
-- "X=~x", "do(Y=y), Z=z"
-- "X=~x"
+- "X = ~x", "do(Y = y), Z=z"
+- "X = ~x"
 
 When an intervention (do(X)) is given, we must identify a possible deconfounding set Z. These are automatically calculated.
 
@@ -114,7 +121,19 @@ If a variable is determined by a function, such as f(C) = f(A) * 2, then we simp
 
 - "C"
 
-Noise is supported and documented in ``Causal Graph Files``.
+Noise is supported, and creating functions is documented in ``Causal Graph Files``.
+
+### Apply the Rules of *do*-calculus
+
+Selecting this option will let us take a query, such as P(y | do(x)), and allow the user to step-by-step, apply the
+rules of *do*-calculus, where the goal is to derive an equivalent expression without any *do*'s still in the query.
+
+The user can see every option to apply to the query, as well as allow an *iterative-deepening search* to take place,
+attempting to derive a *do*-less query itself.
+
+This will ask for 3 sets of variables: our *outcomes*, *interventions*, and *observations*, in this order.
+
+- For example, these three sets would match P(y | do(x), observe(w)), where y, x, and w match the respective sets.
 
 ### Backdoor Path Detection
 
@@ -128,6 +147,16 @@ X should lead into Y with straight-line paths.
 All sets Z are computed that are sufficient to "block" any backdoor paths from X to Y.
 
 Depending on configuration file settings, the list presented may be reduced to **minimal sets**.
+
+### Generate Joint Distribution Table
+
+Selecting this option will try every combination of outcomes possible in the loaded graph, construct a table, and present it.
+
+- On larger graphs, this may take some time, *especially so if result-caching is disabled*.
+
+### Topological Graph Sort
+
+See a topological sort of the graph.
 ## Further Documentation
 
 The directory ``documentation`` contains more expansive documentation on various components of using / adding to / modifying the software.
@@ -149,6 +178,12 @@ For information on configuration settings, their usage and options, see ``Config
 A regression test suite is implemented in the software, and by default, is run at launch. Any number of test files can be created, and by default are located in ``regression_tests/test_files``. They allow for various kinds of tests, including simply checking that probability calculated matches an expected, whether some set of tests sum to some value, and a couple more.
 
 For information on creating test files, see ``Regression Tests``.
+
+### Decorator Usage
+
+Decorators are an advanced Python concept relying on its functional programming; it is not heavily used yet in this software.
+
+For information on decorators, see ``Decorator Usage``.
 
 ### Source Code Design / Architecture
 

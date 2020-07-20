@@ -1,5 +1,21 @@
 # Regression Tests
 
+A breakdown of the Regression Suite of the software.
+
+When run, all the test files in the default test file location are read, and one-by-one, run. Each file is run, and its results are stored; this allows the regression suite to list the outcome of every file, and return a summary "all tests passed" or "some errors found" type of response.
+
+Each test file is run as follows:
+
+- First, a Causal Graph is created from the file.
+- Second, every variable with probability tables is evaluated; P(X) must equal 1.0, where this is calculated by Sigma_X P(X); where the probability of each outcome of X is calculated.
+- Third, the actual tests listed in the file are finally run.
+
+If any test in a file fails, this returns a failure signal and error message, moving onto the next file.
+
+The code driving the regression suite is located in ``utilities/RegressionTesting``.
+
+## Regression Tests
+
 A breakdown of how to create regression tests.
 
 Regression tests are automatically run at launch. A regression test must be a valid ``JSON`` file, and can be placed in ``regression_tests/test_files``. Any name can be assigned, as long as it has the ``.json`` extension.

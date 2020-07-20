@@ -43,7 +43,7 @@ def foo(function):
 
     def foo_wrapper(*args, **kwargs):
         print("Foo!")
-        function()
+        function(*args, **kwargs)
 
     return foo_wrapper
 

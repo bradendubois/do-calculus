@@ -65,11 +65,17 @@ If a variable is determined by a function, such as f(C) = f(A) * 2, then we simp
 
 Noise is supported, and creating functions is documented in ``Causal Graph Files``.
 
-### Generate Joint Distribution Table
+### Apply the Rules of *do*-calculus
 
-Selecting this option will try every combination of outcomes possible in the loaded graph, construct a table, and present it.
+Selecting this option will let us take a query, such as P(y | do(x)), and allow the user to step-by-step, apply the
+rules of *do*-calculus, where the goal is to derive an equivalent expression without any *do*'s still in the query.
 
-- On larger graphs, this may take some time, *especially so if result-caching is disabled*.
+The user can see every option to apply to the query, as well as allow an *iterative-deepening search* to take place,
+attempting to derive a *do*-less query itself.
+
+This will ask for 3 sets of variables: our *outcomes*, *interventions*, and *observations*, in this order.
+
+- For example, these three sets would match P(y | do(x), observe(w)), where y, x, and w match the respective sets.
 
 ### Backdoor Path Detection
 
@@ -83,3 +89,13 @@ X should lead into Y with straight-line paths.
 All sets Z are computed that are sufficient to "block" any backdoor paths from X to Y.
 
 Depending on configuration file settings, the list presented may be reduced to **minimal sets**.
+
+### Generate Joint Distribution Table
+
+Selecting this option will try every combination of outcomes possible in the loaded graph, construct a table, and present it.
+
+- On larger graphs, this may take some time, *especially so if result-caching is disabled*.
+
+### Topological Graph Sort
+
+See a topological sort of the graph.
