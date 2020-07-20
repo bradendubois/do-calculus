@@ -64,14 +64,18 @@ def do_calculus_repl(graph: Graph):
 
                     # Interventions
                     x = process_set(input("Please enter all interventions: "))
-                    assert disjoint(x, y), "Sets are not disjoint!"
+                    assert disjoint(y, x), "Sets are not disjoint!"
 
                     # Observations
                     w = process_set(input("Please enter all observations: "))
-                    assert disjoint(w, x, y), "Sets are not disjoint!"
+                    assert disjoint(y, x, w), "Sets are not disjoint!"
+
+                    # Un-observables
+                    u = process_set(input("Please enter all unobservable variables: "))
+                    assert disjoint(y, x, w, u), "Sets are not disjoint!"
 
                     # All variables must be defined in the graph
-                    assert all(v in graph.v for v in y | x | w), "Not all variables defined in the graph."
+                    assert all(v in graph.v for v in y | x | w | u), "Not all variables defined in the graph."
 
                     # Construct a QueryList object (of 1 query, initially)
                     current_query = QueryList([Query(y, QueryBody(x, w))])
@@ -107,6 +111,7 @@ def do_calculus_repl(graph: Graph):
             #   our initial sets
             solver = IDSSolver(graph, set(), set(), set())
             solver.initial_query_list = current_query.copy()
+            solver.unobservable = u
 
             # Try solving
             result = solver.solve()
