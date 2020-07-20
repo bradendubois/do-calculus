@@ -79,8 +79,8 @@ class IDSSolver:
         # Used to prevent wasteful / unfruitful paths to go down; especially useful with depth increase
         seen = set()
 
-        # We will go to a depth maximum 10, starting with 1, and increasing until we find it.
-        maximum_depth = 10
+        # We will go to a depth maximum 100, starting with 1, and increasing until we find it.
+        maximum_depth = 100
         current_max_depth = 1
 
         # Test to see how many queries are actually caught by the "seen" set
