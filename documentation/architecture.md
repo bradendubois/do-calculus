@@ -62,83 +62,50 @@ This subdirectory is the default location for computations / regression tests to
 
 ## Probability Structures
 
+This is the "main" section of the software. Main functionality is broken up amongst the REPL Driver, the Causal Graph, the BackdoorController, and the Probability Engine; this is to reduce the dependence of "god classes", keep every relatively modular, etc. Functionality regarding traversal of the actual graph file is unified through all these through the use of the Graph class.
 
-########################################################################################################################
+- ``BackdoorController.py``: This has its own mini-REPL system that, when run, will ask the user for two sets of variables and find any sufficient de-confounding sets Z. It is also used through the *do*-calculus of Pearl with various modified path-finding algorithms implemented.
+- ``Causal_Graph.py``: Handles most work other than the *do*-calculus itself. It can take in input for probability queries and find sufficient Z sets using the BackdoorController, modifying the given query accordingly. Also responsible for generating the joint distribution tables and seeing topological orderings of the graphs.
+- ``ConditionalProbabilityTable.py``: Each table is used to hold the data for each respective variable; it stores the variable it is "for", and rows of each combination of outcome and parent-outcomes, with a respective probability.
+- ``Graph.py``: A (relatively) standard graph, with modifications to support the graph manipulation of *do*-calculus. Supports easy methods for ancestors/reach, as well "disabling" incoming/outgoing edges, which aligns with the graph manipulation of *do*-calculus.
+- ``Probability_Engine.py``: The isolated code that takes a given query, such as P(Y=y | X=x) in the form of Outcomes/Interventions, and can actually apply all the standard inference rules to compute it, relying on the Graph for traversal/relations, as well as the Conditional Probability Tables for actual values.
+- ``REPL_Driver.py``: This will take a parsed graph file, unpack and store its contents, and will begin to drive the main IO of the software until the user chooses to exit / switch files. It handles a bit of data input / pre-processing when possible, but usually simply calls a relevant method from a Causal Graph instance.
+- ``VariableStructures.py``: Holds 3 different structures regarding Variables, as well as a parser than breaks a string of values into respective Outcomes and Interventions.
+  - ``Variable``: A "variable" in the Causal Graph, which has a unique name, some list of discrete outcomes, a list of parent Variables.
+  - ``Outcome``: Represents a specific instance of a Variable, where some specific outcome from the set of possible outcomes is given.
+  - ``Intervention``: Identical to the Outcome, but differentiated for purposes of *do*-calculus in being a treatment rather than observed outcome.
 
+The subdirectory ``do_calculus`` relies on pieces of the above, but is rather isolated and serves the purpose of taking some initial query from the user involving *do*'s/treatments, and applying the 3 rules of *do*-calculus along with standard inference rules to arrive at a *do*-less/"hat"-less equivalent query.
 
+The subdirectory ``ids_ai`` implements a basic IDS AI solver which can take some initial data and attempt to apply all the rules of *do*-calculus and standard inference to derive a hat-less equivalent expression.
 
-This is a small class that represents a Variable. It requires a unique *name*, and some list of possible *outcomes*. For example, a variable X may have outcomes x, ~x.
+### do_calculus
 
-Located in ``probability_structures/VariableStructures``.
+- ``DoCalculus.py``: A REPL system that will take in all the initial variables, specify unobservable variables, etc. and allow the user to either apply the rules on their own, step-by-step, or allow an IDS AI to attempt to find a solution.
 
-### Outcomes
+The subdirectory ``application`` more specifically handles the actual rules, derivations of Queries, etc.
 
-This is a class representing a specific outcome of a variable. For example, one outcome of X may be x, and we can create an Outcome object to represent that the Variable is X, and the *outcome* is x.
+#### application
 
-Located in ``probability_structures/VariableStructures``.
+- ``CustomSetFunctions.py``: Since variable are re-named/differentiated in the query manipulating, such as X vs. X', standard set functions do not work. Custom subtraction, union, renaming, un-renaming methods are provided.
+- ``DoCalculusQueryOptions``: Takes some QueryList object and the corresponding graph, and will derive all possible steps that can be applied to the Query.
+- ``QueryListParser.py``: Takes some QueryList and set of "known" data for the initial/non-renamed variables and compute a probability.
+- ``QueryStructures.py``: Contains a few classes that neatly abstract the process of query manipulation and rule application.
+  - ``Sigma``: A basic Sigma symbol, taking some set of variables that the subsequent section of the QueryList should be summed over.
+  - ``QueryBody``: Two sets of variables, the *interventions*/treatments, and observations.
+  - ``Query``: An actual query representing P(y | do(x), observe(w)).
+  - ``QueryList``: Some query that takes an arbitrary number of Sigma's and Query's (which would be considered "sub-queries").
 
-### Interventions
+A subdirectory ``rules`` is included, and stores the *do*-calculus rules as well as a couple standard inference rules.
 
-This is a class representing an "intervention" / do(X). It is functionally equivalent to the Outcome class, except for purposes of do-calculus, we want to identify that this is a *special kind of outcome*.
+- ``DoCalculusRules.py``: Stores rules 1-3 of the *do*-calculus, where each rule has 2 functions; one that verifies the rule applies given some data, and another that returns the resulting Sigma/Query objects.
+- ``StandardInferenceRules.py``: Stores two functions that can apply the product rule and condition over some variable.
 
-Located in ``probability_structures/VariableStructures``.
+### ids_ai
 
-### Conditional Probability Tables
-
-This represents a specific table for a variable and its parents.
-
-The ``__str__`` method is fairly dense, but the idea is to pack all the information into a numpy table for easier formatting (easily accessing columns, etc.), and then we can do things like padding by measuring the widest item in a column, and adding appropriate spacing to all the other boxes in this column, etc.
-
-The ``probability_lookup`` is the most important; we want to go through, row by row on the table, and if this specific row's set of outcomes matches our given set, we can return this row's probability.
-
-### Backdoor Controller
-
-For the Backdoor Controller, most of it is fairly straightforward; the key to the backdoor detection algorithm is understanding the meaning of a backdoor path, and especially so on "blocking" these paths. You find that a variable might be necessarily in Z, but in putting it in Z (as in the case of a collider) can still *open* a path; the path-finding must be nuanced enough to understand that something in Z or not in Z changes whether we can go "up" (child to parent), "down" (parent to child), or both.
-
-Generally, however, we want to find all sufficient sets Z. We begin by taking all variables in G, and removing any that could not possibly be in Z. This is easy enough; we cannot have a variable in X or Y in Z. We can not have a variable along a straight-forward path from X to Y in Z either; the use of an incredibly helpful path algorithm provided by Dr. Neufeld is employed here. We take the remaining variables (after removing X, Y, and all variables along X->Y) and take the power set; any possible set in this may be a sufficient Z if it blocks all back-door paths.
-
-The backdoor detection algorithm for backdoor paths from X -> Y, with a de-confounder Z take the cross product of X and Y, and sees if a backdoor path exists along any of these. The actual path-finding is as a follows (starting from x, searching for y):
-
-```pseudo
-backdoor(x, y, Z, current path, paths, previous movement)
-    
-    if x == y
-        we complete a backdoor path
-        return all paths so far, plus this path
-
-    if x is not in the path
-
-        if previous movement was down
-
-            if x is in Z, or a descendant of x is in Z
-                for every parent of x
-                    paths = backdoor(parent, y, current path + x, paths, up)
-
-
-            if x is not in Z
-                for every child of x
-                    paths = backdoor(child, y, current path + x, paths, down)
-
-        if previous movement was up
-            if x is not in Z
-                
-                for every parent of x
-                    paths = backdoor(parent, y, current path + x, paths, up)
-                for every child of x
-                    paths = backdoor(child, y, current path + x, paths, up)
-
-    return paths 
-```
-
-The idea is that we can always move "up" or "down" through non-controlled variables if we are heading in the same direction. This is consistent with Pearl's definitions, where a path can be blocked along i -> j -> k, if j is in Z. We can also move up, then down, if the variable is not in Z, just as i <- j -> k, where j is *not* in Z. We can also move down, then up, if this variable is in Z, or a child of Z is; i -> j <- k, where j is in Z.
-
-### Causal Graphs
-
-TODO - The Causal Graph is the undoubtedly the largest part of the software, driving standard probability computations (relying on the Backdoor Controller when do-calculus is deployed).
-
-
-
-########################################################################################################################
+- ``IDS_Solver.py``: A pretty standard iterative-deepening searcher looking for a result/answer.
+- ``Solution.py``: Holds a basic ``Solution`` class to return the data / steps taken from a search.
+- ``Stack.py``: A completely standard Stack used in the IDS Solver.
 
 ## Scripts
 

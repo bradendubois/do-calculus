@@ -65,6 +65,8 @@ If the ``type`` is "table", the following attributes are necessary:
 
 #### Probabilistic-Function-Based
 
+**Note**: This is not a completed implementation, and will be revisited when implementing continuous variables.
+
 ```json
 {
   "name": "VARIABLE_NAME",

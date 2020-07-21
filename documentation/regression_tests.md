@@ -81,6 +81,8 @@ Calculate multiple probabilities and ensure the results sum to some given value.
 
 **Note**: Sigma_X P(X) = 1.0; that is, the summation of probabilities for each possible outcome of a variable must equal 1.0. Writing such tests are not necessary, as this identity is automatically run as part of the regression suite, for all variables in a given graph file. This failing will indicate an error in the software, or inconsistency in the given causal graph. 
 
+- To take advantage of this automatic identity, you must at least provide the shell of a test file for the given graph file in the default test location; ``tests`` can be empty, but as long as a file exists and specifies the graph, this identity is verified.
+
 ``args`` should consist of any number of nested lists, each of which contain one/two strings (the head and optional body).
 
 ```json
@@ -125,6 +127,23 @@ A basic test to ensure that a given variable, resolvable by a function (see: ``C
   "type": "feedback_detection",
   "args": [
     "C"
+  ]
+}
+```
+
+### Equivalence
+
+A basic test to ensure that an arbitrary number of queries all yield the exact same answer (whatever that answer is).
+
+``args`` should consist of any number of nested lists, each of which contain one/two strings (the head and optional body).
+
+```json
+{
+  "name": "Verifying that P(xj | x1) === P(xj | do(x1))",
+  "type": "equivalence",
+  "args":  [
+    ["Xj=xj", "X1=x1"],
+    ["Xj=xj", "do(X1=x1)"]
   ]
 }
 ```
