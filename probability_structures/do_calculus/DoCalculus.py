@@ -111,7 +111,7 @@ def do_calculus_repl(graph: Graph):
             #   our initial sets
             solver = IDSSolver(graph, set(), set(), set())
             solver.initial_query_list = current_query.copy()
-            solver.unobservable = u
+            solver.u = u
 
             # Try solving
             result = solver.solve()

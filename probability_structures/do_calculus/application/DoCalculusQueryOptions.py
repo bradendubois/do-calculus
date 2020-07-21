@@ -31,12 +31,18 @@ def do_calculus_options(query: QueryList, graph: Graph) -> list:
     # Iterate through the entire query, seeing if any particular item can/needs to be simplified
     for item_index in range(len(query.queries)):
 
+        current_item: Sigma or Query
+        current_item = query.queries[item_index]
+
         # Can't do anything on Sigma
-        if isinstance(query.queries[item_index], Sigma):
+        if isinstance(current_item, Sigma):
+            continue
+
+        # Don't need to do anything on a resolved subquery
+        if current_item.resolved():
             continue
 
         # Find all possible options that can be applied to this specific query
-        current_item = query.queries[item_index]
         specific_query_options = query_options(current_item, graph)
 
         # Take a copy of the current state of the query, applying each possible rule

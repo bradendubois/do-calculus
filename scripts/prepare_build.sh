@@ -14,7 +14,7 @@ mkdir $build_dir
 cp main.py $build_dir
 
 # All directories to copy
-directories=("causal_graphs" "config" "probability_structures" "tests" "utilities")
+directories=("causal_graphs" "config" "probability_structures" "tests" "util")
 
 # Copy all the directories (documentation is handled separately)
 for directory in "${directories[@]}"
