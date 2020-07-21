@@ -111,14 +111,21 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
         if selection == 0:
 
             try:
-                # Ask for a specific outcome for every variable necessary
+
+                # Get every variable currently used in the query
+                all_variables = set().union(*[q.head | q.body.interventions | q.body.observations for q in current_query.queries if isinstance(q, Query)])
+
+                # Filter only the ones we actually need, not simply all we started with
+                need_to_know = (y | x | w) & all_variables
+
+                # Ask for an outcome for each variable
                 known = dict()
-                for variable in y | x | w:
+                for variable in need_to_know:
                     result = input("Please enter a valid outcome for " + variable + ": ")
                     assert result in outcomes[variable], "Not a valid outcome for " + variable
                     known[variable] = result
 
-                # Collect all our data needed to compute this
+                # Collect all our data needed to compute this query
                 data = {
                     "known": known,
                     "graph": graph,
