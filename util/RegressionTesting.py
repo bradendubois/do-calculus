@@ -159,6 +159,24 @@ def run_test_file(test_file: str) -> (bool, str):
                 except FunctionFeedbackLoop:
                     pass
 
+            # Ensure that every result from the list of queries is the same
+            if test["type"] == "equivalence":
+
+                # Start with some sentinel value
+                only_result = None
+
+                # Compute with every nested query
+                for arg_set in args:
+
+                    # Compute
+                    head, body = create_head_and_body(arg_set)
+                    result = causal_graph.probability_query(head, body)
+
+                    # Store and/or compare
+                    if only_result is None:
+                        only_result = result
+                    assert within_precision(only_result, result), "Not all queries yielded the same value."
+
         # Indicates an invalid table, missing some row, etc.
         except MissingTableRow as e:
             return False, "[ERROR: " + test["name"] + "]: Invalid table for the graph." + str(e)

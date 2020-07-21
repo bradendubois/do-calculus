@@ -1,4 +1,5 @@
 from probability_structures.do_calculus.application.rules.DoCalculusRules import *
+from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
 from probability_structures.do_calculus.application.QueryListParser import ql_probability
 from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 from util.parsers.GraphLoader import parse_graph_file_data
@@ -15,7 +16,7 @@ def print_query(*packed_query):
 
 
 # Parse the file
-parsed = parse_graph_file_data("../causal_graphs/causal_graph_6.json")
+parsed = parse_graph_file_data("causal_graphs/causal_graph_6.json")
 g = parsed["graph"]
 
 # Task 1 : z | do(x)
@@ -50,7 +51,7 @@ query = [Query({"Y"}, QueryBody({"Z"}, set()))]
 print_query("Task 2:", *query)
 
 # 3.35
-query = [*apply_secret_rule_4(g, query[0].head, query[0].body.interventions, {"X"}, query[0].body.observations)]
+query = [*condition(g, query[0].head, query[0].body.interventions, {"X"}, query[0].body.observations)]
 print_query("3.35:", *query)
 
 # 3.36
@@ -80,7 +81,7 @@ query = [Query({"Y"}, QueryBody({"X"}, set()))]
 print_query("Task 3:", *query)
 
 # 3.39
-query = [*apply_secret_rule_4(g, query[0].head, query[0].body.interventions, {"Z"}, query[0].body.observations)]
+query = [*condition(g, query[0].head, query[0].body.interventions, {"Z"}, query[0].body.observations)]
 print_query("3.39:", *query)
 
 # 3.34
@@ -97,7 +98,7 @@ query = [query[0]] + [result] + query[2:]
 print_query("3.41:", *query)
 
 # Re-compute Task 2
-result = [*apply_secret_rule_4(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)]
+result = [*condition(g, query[1].head, query[1].body.interventions, {"X"}, query[1].body.observations)]
 query = [*query[0:1]] + [*result] + [*query[2:]]
 print_query("3.35:", *query)
 
@@ -112,10 +113,30 @@ query = query[0:2] + [result] + query[3:]
 print_query("3.42:", *query)
 
 # Repeat Task 3
-print("\nCan the IDS Solver do it?")
+print("\nTask 3: Can the IDS Solver do it?")
 start = IDSSolver(g, {"Y"}, {"X"}, set())
+start.u = {"U"}
 result = start.solve()
 print(str(result))
+
+
+# Task 4
+print("\nTask 4: Can the IDS Solver do it?")
+start = IDSSolver(g, {"Y", "Z"}, {"X"}, set())
+start.u = {"U"}
+result = start.solve()
+print(str(result))
+
+
+# Task 5
+print("\nTask 5: Can the IDS Solver do it?")
+start = IDSSolver(g, {"X", "Y"}, {"Z"}, set())
+start.u = {"U"}
+result = start.solve()
+print(str(result))
+
+
+
 
 
 print("\n\n\n********\n\n\n")
@@ -123,20 +144,21 @@ print("\n\n\n********\n\n\n")
 # Evaluate each of P(Y|X)
 
 # Load the final query object
-parsed["ql"] = result.result
+# parsed["ql"] = result.result
 
 # y | x
-parsed["known"] = {"Y": "y", "X": "x"}
-print(ql_probability(**parsed))
+# parsed["known"] = {"Y": "y", "X": "x"}
+# print(ql_probability(**parsed))
 
 # y | ~x
-parsed["known"] = {"Y": "y", "X": "~x"}
-print(ql_probability(**parsed))
+# parsed["known"] = {"Y": "y", "X": "~x"}
+# print(ql_probability(**parsed))
 
 # ~y | x
-parsed["known"] = {"Y": "~y", "X": "x"}
-print(ql_probability(**parsed))
+# parsed["known"] = {"Y": "~y", "X": "x"}
+# print(ql_probability(**parsed))
 
 # ~y | ~x
-parsed["known"] = {"Y": "~y", "X": "~x"}
-print(ql_probability(**parsed))
+# parsed["known"] = {"Y": "~y", "X": "~x"}
+# print(ql_probability(**parsed))
+

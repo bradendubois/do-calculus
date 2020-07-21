@@ -1,5 +1,11 @@
 {
   "test_file": "causal_graph_5.json",
-  "tests": [
-  ]
+  "tests": [{
+    "name": "Verifying that P(xj | x1) === P(xj | do(x1))",
+    "type": "equivalence",
+    "args":  [
+      ["Xj=xj", "X1=x1"],
+      ["Xj=xj", "do(X1=x1)"]
+    ]
+  }]
 }
