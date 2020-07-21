@@ -26,9 +26,7 @@ CG_Types = str or Variable or Outcome or Intervention
 
 
 class CausalGraph:
-    """
-    A "main" class driving most of the I/O
-    """
+    """Handles probability queries / joint distributions on the given Causal Graph"""
 
     get_specific_outcome_prompt =  \
         "\nQuery a specific variable and its outcome." + \

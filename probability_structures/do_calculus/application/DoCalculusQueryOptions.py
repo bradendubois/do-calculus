@@ -8,7 +8,7 @@
 #########################################################
 
 # Isolated for re-usability; let's take our graph, and our query, and return a list of
-#   all possible applications of the do-calculus
+#   all possible applications of the do-calculus or standard inference rules
 
 from probability_structures.do_calculus.application.rules.DoCalculusRules import *
 from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
@@ -106,31 +106,19 @@ def query_options(query: Query, graph: Graph) -> list:
     # Present all options to the user (generating our menu as we go) and then get a selection
     do_options = []
 
-    # All the steps of applying all 3 rules are the same (in terms of their arguments, creating strings to represent
-    #   the results, etc. so this lets us take the addresses of each function rather than (pretty much) have 3 copied
-    #   versions of the same code
-
+    # Each rule, the function that should be called, and the sets that will serve as our "Z".
     application = [{
         "rule": 1,
         "function": apply_rule_1,
-        "verifier": rule_1_applicable,
         "sets": rule_1_valid_z,
-        "check_subset": w,
-        "subset_options": ["Delete Observation", "Insert Observation"]
     }, {
         "rule": 2,
         "function": apply_rule_2,
-        "verifier": rule_2_applicable,
         "sets": rule_2_valid_z,
-        "check_subset": x,
-        "subset_options": ["Change to Observation", "Change to Intervention"]
     }, {
         "rule": 3,
         "function": apply_rule_3,
-        "verifier": rule_3_applicable,
         "sets": rule_3_valid_z,
-        "check_subset": x,
-        "subset_options": ["Delete Intervention", "Insert Intervention"]
     }, {
         "rule": 4,
         "function": condition,
@@ -153,30 +141,14 @@ def query_options(query: Query, graph: Graph) -> list:
             # Apply the rule and get the result
             result = rule_application["function"](graph, y, x, z, w)
 
-            # Verify that the rule still applies to "revert"; it always should.
-            # error_skeleton = "Rule {} not found to be reversible! {} <-!-> {}, " \
-            #                 "Y: {}, X: {}, Z: {}, W: {}, " \
-            #                 "Y': {}, X': {}, Z': {}, W': {}, "
-            # error_message = error_skeleton.format(rule, current_query, result_str,
-            #                                      y, x, z, w,
-            #                                      y_result, x_result, z, w_result)
-            # try:
-            #     assert rule_application["verifier"](graph, y_result, x_result, z, w_result), error_message
-            # except AssertionError as e:
-            #     print(e.args)
-
-            # Generate the final "option" message and add it to the list of options
-            # query = query_message.format(action, z_str, current_query, result_str)
-            # do_options.append([CallableItemWrapper(y_result, x_result, w_result), query])
-
             # Introduced a Sigma Query Query tuple
             if isinstance(result, tuple):
                 new_message = " ".join(str(i) for i in result)
-
             # Single Query
             else:
                 new_message = str(result)
 
+            # Push the option to the list
             do_options.append((query_message.format(str(query), new_message), result))
 
     return do_options

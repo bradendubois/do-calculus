@@ -16,6 +16,7 @@ from probability_structures.do_calculus.application.DoCalculusQueryOptions impor
 from probability_structures.do_calculus.ids_ai.Stack import Stack
 from probability_structures.do_calculus.ids_ai.Solution import Solution
 from probability_structures.Graph import Graph
+from util.Decorators import time
 from util.IO_Logger import io
 
 
@@ -84,6 +85,10 @@ class IDSSolver:
                     # Add the string to ensure we don't compute all this again for an equivalent query
                     seen.add(str_rep)
 
+                    # Don't generate any new options if there is an unobservable variable introduced
+                    if self.contains_unobservable(current):
+                        continue
+
                     # Generate all new options
                     all_options = do_calculus_options(current, self.graph)
 
@@ -101,6 +106,13 @@ class IDSSolver:
 
         # No Solution found
         return Solution(False)
+
+    def contains_unobservable(self, x: QueryList) -> bool:
+        for item in x.queries:
+            if isinstance(item, Query):
+                if len((item.head | item.body.interventions | item.body.observations) & self.u) != 0:
+                    return True
+        return False
 
     def goal(self, x: QueryList) -> bool:
         """
