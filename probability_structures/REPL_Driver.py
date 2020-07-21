@@ -191,4 +191,4 @@ class REPLDriver:
         """
         Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do_calculus rules apply.
         """
-        do_calculus_repl(self.graph.copy())
+        do_calculus_repl(self.graph.copy(), self.outcomes, self.tables)

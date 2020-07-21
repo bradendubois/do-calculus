@@ -71,6 +71,8 @@ class ProbabilityEngine:
         for out in head + body:
             assert out.name in self.graph.v and out.outcome in self.outcomes[out.name], self.error_msg_formatting
 
+        # Double check that all our edges are properly disabled where they should be
+        self.graph.disable_incoming(*{s for s in head + body if isinstance(s, Intervention)})
         return self._compute(head, body)
 
     def _compute(self, head: list, body: list, depth=0) -> float:

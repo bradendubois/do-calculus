@@ -10,6 +10,7 @@
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
 from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
+from probability_structures.do_calculus.application.QueryListParser import ql_probability
 from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
 from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 
@@ -25,10 +26,12 @@ from util.parsers.UserIndexSelection import user_index_selection
 #   Do-Calculus REPL   #
 ########################
 
-def do_calculus_repl(graph: Graph):
+def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
     """
     Enter a main REPL area allowing the manipulation of do_calculus
     :param graph: An unmodified graph representing our graph space
+    :param outcomes: A dictionary mapping a variable to its list of outcomes
+    :param tables: A dictionary mapping a variable to its respective conditional probability table
     """
 
     def process_set(string: str) -> set:
@@ -46,6 +49,7 @@ def do_calculus_repl(graph: Graph):
 
     # Y, X, and W will be manipulated through a QueryList object of Queries
     current_query = None
+    y, x, w, u = set(), set(), set(), set()
 
     while True:
 
@@ -93,6 +97,9 @@ def do_calculus_repl(graph: Graph):
         query_options = do_calculus_options(current_query, graph)
         options = [item[0] for item in query_options]
 
+        # Allow the first option to be to input some variable data and see the probability
+        options.insert(0, "Compute a probability on the current query.")
+
         # Add a handle to let the IDS Solver take over
         options.append([CallableItemWrapper(), "Let the IDS Solver attempt to find a solution."])
 
@@ -100,8 +107,34 @@ def do_calculus_repl(graph: Graph):
         options.append([CallableItemWrapper(), "Exit / Return"])
         selection = user_index_selection("All Possible Do-Calculus Applications: ", options)
 
+        # Wants to see a specific query executed
+        if selection == 0:
+
+            try:
+                # Ask for a specific outcome for every variable necessary
+                known = dict()
+                for variable in y | x | w:
+                    result = input("Please enter a valid outcome for " + variable + ": ")
+                    assert result in outcomes[variable], "Not a valid outcome for " + variable
+                    known[variable] = result
+
+                # Collect all our data needed to compute this
+                data = {
+                    "known": known,
+                    "graph": graph,
+                    "outcomes": outcomes,
+                    "tables": tables,
+                    "ql": current_query
+                }
+
+                # Execute the query
+                io.write(str(current_query), "=", ql_probability(**data), console_override=True)
+
+            except AssertionError as e:
+                io.write(",".join(str(",".join(str(j)) for j in i) for i in e.args), console_override=True)
+
         # Exit option
-        if selection == len(options)-1:
+        elif selection == len(options)-1:
             return
 
         # AI Takeover
