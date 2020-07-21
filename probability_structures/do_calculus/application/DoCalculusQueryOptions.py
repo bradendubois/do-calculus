@@ -17,11 +17,12 @@ from probability_structures.Graph import Graph
 from util.helpers.PowerSet import power_set
 
 
-def do_calculus_options(query: QueryList, graph: Graph) -> list:
+def do_calculus_options(query: QueryList, graph: Graph, u: set) -> list:
     """
     Take a QueryList and its Graph and see every valid rule that can be applied.
     :param query: The original QueryList
     :param graph: A graph to examine for paths, variables, etc.
+    :param u: A set of unobservable variables
     :return: A list of all possible actions to be done on the QueryList, where each item is a tuple
         (change message, resulting QueryList)
     """
@@ -44,7 +45,7 @@ def do_calculus_options(query: QueryList, graph: Graph) -> list:
             continue
 
         # Find all possible options that can be applied to this specific query
-        specific_query_options = query_options(current_item, graph)
+        specific_query_options = query_options(current_item, graph, u)
 
         # Take a copy of the current state of the query, applying each possible rule
         for option in specific_query_options:
@@ -70,11 +71,12 @@ def do_calculus_options(query: QueryList, graph: Graph) -> list:
     return all_results
 
 
-def query_options(query: Query, graph: Graph) -> list:
+def query_options(query: Query, graph: Graph, u: set) -> list:
     """
     Take Query, and our Graph, and get a list of all valid options/results from Do-Calculus rule applications
     :param query: A Query instance
     :param graph: A graph consistent with the Query
+    :param u: A set of unobservable variables
     :return: A list of all possible actions to be done on the QueryList, where each item is a tuple
         (change message, resulting QueryList)
     """
@@ -86,7 +88,7 @@ def query_options(query: Query, graph: Graph) -> list:
     # The following sets are tentative; not each subset will actually allow the rule to be applied until validated
 
     # First, all possible Z that can be deleted from our observations
-    rule_1_tentative_z = union(set(power_set(w, False)), set(power_set(subtract(graph.v, (y | w | x)), False)))
+    rule_1_tentative_z = union(set(power_set(w, False)), set(power_set(subtract(graph.v, (y | w | x | u)), False)))
     rule_1_valid_z = [set(s) for s in rule_1_tentative_z if rule_1_applicable(graph, y, x, set(s), w)]
 
     # Second, all possible Z that can switch between being observation/intervention
@@ -94,11 +96,11 @@ def query_options(query: Query, graph: Graph) -> list:
     rule_2_valid_z = [set(s) for s in rule_2_tentative_z if rule_2_applicable(graph, y, x, set(s), w)]
 
     # Third, all possible Z that are subsets of our interventions that can be deleted
-    rule_3_tentative_z = union(set(power_set(x, False)), set(power_set(subtract(graph.v, set(y | w | x)), False)))
+    rule_3_tentative_z = union(set(power_set(x, False)), set(power_set(subtract(graph.v, set(y | w | x | u)), False)))
     rule_3_valid_z = [set(s) for s in rule_3_tentative_z if rule_3_applicable(graph, y, x, set(s), w)]
 
     # Fourth, all possible Z that can be introduced by Jeffrey's Rule
-    condition_z = set(power_set(subtract(graph.v, set(y | w | x | {"U"})), False))
+    condition_z = set(power_set(subtract(graph.v, set(y | w | x | u)), False))
 
     # Fifth, any possible sets of Y that are greater than 1, and not the entire set
     product_rule_z = [set(s) for s in set(power_set(y, False)) if 1 <= len(s) < len(y)]

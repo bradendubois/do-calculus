@@ -44,6 +44,7 @@ class IDSSolver:
 
         self.stack = Stack()
 
+    @time
     def solve(self) -> Solution:
         """
         Solve The given problem
@@ -90,7 +91,7 @@ class IDSSolver:
                         continue
 
                     # Generate all new options
-                    all_options = do_calculus_options(current, self.graph)
+                    all_options = do_calculus_options(current, self.graph, self.u)
 
                     # Push each option
                     for option in all_options:

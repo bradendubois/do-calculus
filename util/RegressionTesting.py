@@ -81,6 +81,11 @@ def run_test_file(test_file: str) -> (bool, str):
 
             assert within_precision(total, 1.0), variable + " does not sum to 1.0 across its outcomes."
 
+        # Probability failed to compute entirely
+        except ProbabilityIndeterminableException as e:
+            return False, "[ERROR: " + test_file + "]: Probability indeterminable for the graph." + str(e) + \
+                   ", Variable " + variable
+
         # Indicates an invalid table, missing some row, etc.
         except MissingTableRow as e:
             return False, "[ERROR: " + test_file + "]: Invalid table for the graph." + str(e)
@@ -176,6 +181,10 @@ def run_test_file(test_file: str) -> (bool, str):
                     if only_result is None:
                         only_result = result
                     assert within_precision(only_result, result), "Not all queries yielded the same value."
+
+        # Probability failed to compute entirely
+        except ProbabilityIndeterminableException as e:
+            return False, "[ERROR: " + test["name"] + "]: Probability indeterminable for the graph." + str(e)
 
         # Indicates an invalid table, missing some row, etc.
         except MissingTableRow as e:

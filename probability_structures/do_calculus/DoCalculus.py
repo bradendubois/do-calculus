@@ -94,7 +94,7 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
         io.write("Our query is currently: " + str(current_query), console_override=True)
 
         # Generate all our possible options
-        query_options = do_calculus_options(current_query, graph)
+        query_options = do_calculus_options(current_query, graph, u)
         options = [item[0] for item in query_options]
 
         # Allow the first option to be to input some variable data and see the probability
