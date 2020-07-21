@@ -114,33 +114,3 @@ def apply_rule_3(graph: Graph, y: set, x: set, z: set, w: set):
     # Inserting Z into interventions X, summation
     else:
         return Sigma(z), Query(y, QueryBody(union(x, z), w)), Query(z, QueryBody(x, w))
-
-
-###################################################
-#   Rule 4 - Jeffrey's Rule Introduction of Z     #
-###################################################
-
-# Pearl outlines 3 rules of do-calculus, yet the actual derivation of a query involving "do" to a query no longer
-#   involving "do" usually must condition on certain variables, and so we do need this rule, even though it's not
-#   one of the big 3 rules.
-
-def secret_rule_4_applicable(graph: Graph, y: set, x: set, z: set, w: set):
-
-    # Reset graph, see if the introduction of Z blocks paths
-    graph.reset_disabled()
-
-    # Ensure that Z acts as a valid deconfounding set
-    d_separated = BackdoorController(graph).independent(y, x, z)
-
-    # Z will block paths and is not already in the query
-    return d_separated and len(z & w) == 0
-
-
-def apply_secret_rule_4(graph: Graph, y: set, x: set, z: set, w: set):
-
-    # Double check; do we need to? Not looking for independence, just Jeffrey's Rule-ing in.
-    # TODO - Improve / add rule 4 applicability
-    # assert secret_rule_4_applicable(graph, y, x, z, w), "Secret Rule 4 is not applicable!"
-
-    # Condition over Z
-    return Sigma(rename(z)), Query(y, QueryBody(x, union(rename(z), w))), Query(rename(z), QueryBody(x, w))

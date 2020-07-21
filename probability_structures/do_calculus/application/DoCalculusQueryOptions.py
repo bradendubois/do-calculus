@@ -10,7 +10,8 @@
 # Isolated for re-usability; let's take our graph, and our query, and return a list of
 #   all possible applications of the do-calculus
 
-from probability_structures.do_calculus.application.DoCalculusRules import *
+from probability_structures.do_calculus.application.rules.DoCalculusRules import *
+from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
 from probability_structures.do_calculus.application.CustomSetFunctions import subtract, union
 from probability_structures.Graph import Graph
 from util.helpers.PowerSet import power_set
@@ -97,8 +98,10 @@ def query_options(query: Query, graph: Graph) -> list:
     rule_3_valid_z = [set(s) for s in rule_3_tentative_z if rule_3_applicable(graph, y, x, set(s), w)]
 
     # Fourth, all possible Z that can be introduced by Jeffrey's Rule
-    rule_4_tentative_z = set(power_set(subtract(graph.v, set(y | w | x | {"U"})), False))
-    rule_4_valid_z = [set(s) for s in rule_4_tentative_z]
+    condition_z = set(power_set(subtract(graph.v, set(y | w | x | {"U"})), False))
+
+    # Fifth, any possible sets of Y that are greater than 1, and not the entire set
+    product_rule_z = [set(s) for s in set(power_set(y, False)) if 1 <= len(s) < len(y)]
 
     # Present all options to the user (generating our menu as we go) and then get a selection
     do_options = []
@@ -130,9 +133,12 @@ def query_options(query: Query, graph: Graph) -> list:
         "subset_options": ["Delete Intervention", "Insert Intervention"]
     }, {
         "rule": 4,
-        "function": apply_secret_rule_4,
-        "verifier": secret_rule_4_applicable,
-        "sets": rule_4_valid_z,
+        "function": condition,
+        "sets": condition_z,
+    }, {
+        "rule": 5,
+        "function": apply_product_rule,
+        "sets": product_rule_z
     }]
 
     # Go through each rule, apply the rule to each of its applicable sets, and present the option
