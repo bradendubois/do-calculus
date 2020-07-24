@@ -109,6 +109,12 @@ class IDSSolver:
         return Solution(False)
 
     def contains_unobservable(self, x: QueryList) -> bool:
+        """
+        Determine whether a given QueryList object contains any unobservable variables, which would be considered
+        unacceptable in a solution returned by the IDS search.
+        :param x: A QueryList object
+        :return: True if there are any unobservable
+        """
         for item in x.queries:
             if isinstance(item, Query):
                 if len((item.head | item.body.interventions | item.body.observations) & self.u) != 0:
@@ -122,13 +128,12 @@ class IDSSolver:
         :param x: A QueryList to check
         :return: True if this QueryList is a valid Goal, False otherwise
         """
-        # Ensure there are no more "do's"
-        if not x.no_interventions():
-            return False
-
         # Ensure that any unobservable variables are not used in the final solution
         for query in x.queries:                 # Check each query
             if isinstance(query, Query):        # Filter out Sigma's
+                if not query.resolved():
+                    return False
+
                 all_used = clean(query.head) | clean(query.body.interventions) | clean(query.body.observations)
                 if len(all_used & self.u) != 0:
                     return False

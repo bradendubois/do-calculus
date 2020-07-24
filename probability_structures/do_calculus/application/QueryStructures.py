@@ -61,11 +61,11 @@ class QueryBody:
         """
         msg = ""
         if len(self.interventions) > 0:
-            msg += "do(" + ",".join(self.interventions) + ")"
+            msg += "do(" + ", ".join(self.interventions) + ")"
         if len(self.interventions) > 0 and len(self.observations) > 0:
             msg += ", "
         if len(self.observations) > 0:
-            msg += ",".join(self.observations)
+            msg += ", ".join(self.observations)
         return msg
 
     def __copy__(self):
@@ -100,10 +100,17 @@ class Query:
         String builtin for the Query class
         :return: A string representation of the given Query instance
         """
-        msg = "P(" + ",".join(self.head)
+        msg = "P(" + ", ".join(self.head)
         if len(self.body.interventions | self.body.observations) > 0:
             msg += " | " + str(self.body)
         return msg + ")"
+
+    def __hash__(self) -> int:
+        """
+        Hash builtin for the Query class
+        :return: A hash representation of the given Query instance
+        """
+        return hash(",".join(list(self.head | self.body.interventions | self.body.observations)))
 
     def __copy__(self):
         """
