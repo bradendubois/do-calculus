@@ -100,9 +100,6 @@ def run_test_file(test_file: str) -> (bool, str):
         # Load any arguments necessary for the test
         args = test["args"]
 
-        # TODO - This limits the kinds of tests possible. Add a kind of flag indicating tests that
-        #   SHOULD crash. Raise a DidNotCrashWhenShould exception.
-
         # Checking "test_type" determines how to proceed
         try:
 
@@ -225,13 +222,11 @@ def run_full_regression_suite() -> (bool, str):
     # Output a header on regression tests being run if toggled
     if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Beginning " + "*" * 10 + "\n")
-    # Disable the IO/Logger to console if regression test results not set to output
-    else:
-        io.disable_console()
 
     # Open a regression file to log to if enabled
     if access("log_all_regression_computation"):
 
+        io.regression_mode = True
         log_dir = access("regression_log_subdirectory")
 
         # Create the logging directory if it doesn't exist
@@ -257,9 +252,9 @@ def run_full_regression_suite() -> (bool, str):
     if access("output_regression_test_computation"):
         io.write("\n" + "*" * 10 + " Regression Tests Completed " + "*" * 10 + "\n")
 
-    # Enable IO if it was disabled; close any regression file being written to
-    io.enable_console()
+    # Close any regression file being written to
     io.lock_stream_switch = False
+    io.regression_mode = False
     io.close()
 
     # Add the "summary" value

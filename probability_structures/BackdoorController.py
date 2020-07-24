@@ -72,11 +72,13 @@ class BackdoorController:
             valid_z_subsets = self.get_all_z_subsets(x, y)
 
             if len(valid_z_subsets) > 0:
-                io.write("\nPossible sets Z that yield causal independence.", end="", console_override=True)
+                msg = "\nPossible sets Z that yield causal independence."
                 for subset in valid_z_subsets:
-                    io.write("  -", "{" + ", ".join(item for item in subset) + "}" + (" - Empty Set" if len(subset) == 0 else ""), end="", console_override=True)
+                    msg += "\n  - " + "{" + ", ".join(item for item in subset) + "}"
+                    msg += (" - Empty Set" if len(subset) == 0 else "")
+                io.write(msg)
             else:
-                io.write("\nNo possible set Z can be constructed to create causal independence.", console_override=True)
+                io.write("\nNo possible set Z can be constructed to create causal independence.")
 
         except AssertionError as e:
             io.write(e.args, console_override=True)
@@ -131,7 +133,7 @@ class BackdoorController:
 
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
-                    io.write(z_subset, "yields backdoor paths between", cross, end="")
+                    io.write_log(z_subset, "yields backdoor paths between", cross, end="")
 
                     for path in backdoor_paths:
                         msg = "  "
@@ -139,10 +141,10 @@ class BackdoorController:
                             msg += path[index] + " "
                             msg += " <- " if path[index] in self.graph.children(path[index+1]) else " -> "
                         msg += path[-1]
-                        io.write(msg)
+                        io.write_log(msg)
 
                 else:
-                    io.write(z_subset, "yielded no backdoor paths for", cross, end="")
+                    io.write_log(z_subset, "yielded no backdoor paths for", cross, end="")
 
             # None found in any cross product -> Valid subset
             if not any_backdoor_paths:
@@ -176,14 +178,14 @@ class BackdoorController:
 
         def get_backdoor_paths(current: Variable, path: list, path_list: list, previous="up") -> list:
             """
-            Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
+            Return a list of lists of all paths from a source to a target, with conditional movement, child to parent.
             This is used in the detection of backdoor paths from Source to Target.
             This is a heavily modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
             :param current: The current variable we will move away from
             :param path: The current path
             :param path_list: A list of lists, each sublist being a path
-            :param previous: Whether moving from the previous variable to current we moved "up" (child to parent) or "down"
-                (from parent to child); this movement restriction is involved in backdoor path detection
+            :param previous: Whether moving from the previous variable to current we moved "up" (child to parent) or
+                "down" (from parent to child); this movement restriction is involved in backdoor path detection
             :return: A list of lists, where each sublist is a backdoor path
             """
 

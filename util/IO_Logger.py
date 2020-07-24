@@ -25,6 +25,9 @@ class IOLogger:
     # Lock where stuff is logged if we are in regression tests; all text should also go to one file
     lock_stream_switch = False
 
+    # A flag to toggle that we are in a regression testing mode, which can alter what is output
+    regression_mode = False
+
     def open(self, filename):
         """
         Open a specified file in the default logging location
@@ -62,17 +65,42 @@ class IOLogger:
             self.file.close()
         self.file = None
 
-    def write(self, *message: str, join=" ", end="\n", x_offset=0, console_override=False):
+    def write(self, *message: str, join=" ", end="\n", x_offset=0):
         """
-        Optional output of any number of strings unless output is suppressed
+        Optional output of any number of strings to the terminal
         :param message: Any number of strings to print
         :param join: A string used to join the messages
         :param end: The end symbol outputted at the end of the series of strings
         :param x_offset: The amount of space at the beginning of every line to indent by
-        :param console_override: An optional flag that ensures info is printed to the console
         """
-        # Slight check; if there is nothing to actually be written anywhere, just exit early
-        if not (self.console_enabled or access("output_computation_steps") or console_override or self.file):
+
+        # Save whatever file we might have open, and clear it from the logger
+        restore = self.file
+        self.file = None
+
+        # Write the message to the console, without it being written to the file
+        self.write_log(*message, join=join, end=end, x_offset=x_offset, override=True)
+
+        # Restore any file we might've had open
+        self.file = restore
+
+    def write_log(self, *message: str, join=" ", end="\n", x_offset=0, override=False):
+        """
+        Output of any number of strings to the terminal as well as an open log file
+        :param message: Any number of strings to print
+        :param join: A string used to join the messages
+        :param end: The end symbol outputted at the end of the series of strings
+        :param x_offset: The amount of space at the beginning of every line to indent by
+        :param override: Whether to output the message to console regardless of internal settings
+        """
+
+        # Flags that can be a valid reason to output to the terminal
+        regression_output = self.regression_mode and access("output_regression_test_computation")
+        computation_output = not self.regression_mode and access("output_computation_steps")
+        io_override = override and not self.regression_mode
+
+        # Check if we're in either mode to be logging data
+        if not regression_output and not computation_output and not io_override:
             return
 
         # We can put this indent in front of each line of the message passed; this allows us to detect the recursive
@@ -81,7 +109,7 @@ class IOLogger:
         indent = int(x_offset) * "  "
 
         # Give some spacing in the terminal between messages
-        if self.console_enabled and access("output_computation_steps") or console_override:
+        if regression_output or computation_output or io_override:
             print("\n" + indent, end="")
 
         # Same as above, but with whatever file could be open
@@ -93,30 +121,17 @@ class IOLogger:
 
             # 100 is the arbitrary limit I've placed on how many newlines can get replaced, since if it's absent, it
             #   only replaces the first occurrence, but there'd never be 100+ in one message.
-
-            if self.console_enabled and access("output_computation_steps") or console_override:
+            if regression_output or computation_output or io_override:
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
             if self.file:
                 self.file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
-        if self.console_enabled and access("output_computation_steps") or console_override:
+        if regression_output or computation_output or io_override:
             print(end=end)
 
         if self.file:
             self.file.write(end)
-
-    def disable_console(self):
-        """
-        Disable the console-outputting of the IO Logger
-        """
-        self.console_enabled = False
-
-    def enable_console(self):
-        """
-        Enable the console-outputting of the IO Logger
-        """
-        self.console_enabled = True
 
 
 io = IOLogger()

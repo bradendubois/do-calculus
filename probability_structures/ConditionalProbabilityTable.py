@@ -114,5 +114,5 @@ class ConditionalProbabilityTable:
                 return row[2]       # We have our answer
 
         # Iterated over all the rows and didn't find the correct one
-        io.write("Couldn't find row:", str([str(item) for item in outcome]), "|", str([str(item) for item in given]))
+        io.write_log("Couldn't find row:", str([str(i) for i in outcome]), "|", str([str(i) for i in given]))
         raise MissingTableRow

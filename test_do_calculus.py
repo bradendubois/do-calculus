@@ -35,6 +35,7 @@ print_query("3.34:", *query)
 # Repeat Task 1
 print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Z"}, {"X"}, set())
+start.u = {"U"}
 result = start.solve()
 print(str(result))
 
@@ -65,6 +66,7 @@ print_query("3.37:", *query)
 # Repeat Task 2
 print("\nCan the IDS Solver do it?")
 start = IDSSolver(g, {"Y"}, {"Z"}, set())
+start.u = {"U"}
 result = start.solve()
 print(str(result))
 
@@ -111,6 +113,23 @@ print_query("3.36:", *query)
 result = apply_rule_2(g, query[2].head, query[2].body.interventions, {"Z'"}, query[2].body.observations)
 query = query[0:2] + [result] + query[3:]
 print_query("3.42:", *query)
+
+
+# Repeat Task 1
+print("\nTask 1: Can the IDS Solver do it?")
+start = IDSSolver(g, {"Z"}, {"X"}, set())
+start.u = {"U"}
+result = start.solve()
+print(str(result))
+
+
+# Repeat Task 2
+print("\nTask 2: Can the IDS Solver do it?")
+start = IDSSolver(g, {"Y"}, {"Z"}, set())
+start.u = {"U"}
+result = start.solve()
+print(str(result))
+
 
 # Repeat Task 3
 print("\nTask 3: Can the IDS Solver do it?")

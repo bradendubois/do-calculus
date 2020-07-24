@@ -46,6 +46,7 @@ class CausalGraph:
         "\n    Example: 'X'" + \
         "\n  Query: "
 
+    # **kwargs allows a parsed graph file dictionary to be **unpacked into the initializer for a CausalGraph
     def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, functions: dict, **kwargs):
 
         # Clear the cached computations, since a different Causal Graph may have defined and cached computations with
@@ -73,7 +74,7 @@ class CausalGraph:
         str_rep = p_str(head, body)
 
         # Begin logging
-        io.write("Query:", str_rep, console_override=io.console_enabled)
+        io.write("Query:", str_rep)
         io.open(str_rep)
 
         # If there is no Intervention related work, we can compute a pretty standard query and exit early
@@ -95,9 +96,9 @@ class CausalGraph:
             deconfounding_sets = backdoor_controller.get_all_z_subsets(y, x)
 
             # Filter out our Z sets with observations in them and verify there are still sets Z
-            deconfounding_sets = [s for s in deconfounding_sets if not any(g.name in s for g in body if not isinstance(g, Intervention))]
+            deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
             if len(deconfounding_sets) == 0:
-                io.write("No deconfounding set Z can exist for the given data.", console_override=True)
+                io.write_log("No deconfounding set Z can exist for the given data.")
                 return
 
             # Disable the incoming edges into our do's, and compute
@@ -107,7 +108,7 @@ class CausalGraph:
 
         # End logging and return
         result = str_rep+" = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")+1)
-        io.write(result, console_override=io.console_enabled)
+        io.write(result)
         io.close()
         return probability
 
@@ -122,12 +123,13 @@ class CausalGraph:
 
         # Create our engine with a modified graph
         graph = self.graph.copy()
+        graph.reset_disabled()
         graph.disable_incoming(*[i for i in given if isinstance(i, Intervention)])
         engine = ProbabilityEngine(graph, self.outcomes, self.tables)
 
         def single_z_set_run(given_set) -> float:
             """
-            Compute a probability from the given x and y, with the given z as a deconfounder
+            Compute a probability from the given x and y, with the given z as a de-confounder
             :param given_set: A specific set Z
             :return: A probability P, between 0.0 and 1.0
             """
@@ -143,12 +145,12 @@ class CausalGraph:
                 z_outcomes = [Outcome(x, cross[i]) for i, x in enumerate(given_set)]
 
                 # First, we do our P(Y | do(X), Z)
-                io.write("Computing sub-query: ", p_str(outcome, given + z_outcomes))
+                io.write_log("Computing sub-query: ", p_str(outcome, given + z_outcomes))
                 p_y_x_z = engine.probability((outcome, given + z_outcomes))
                 # print(p_str(outcome, given + z_outcomes), "=", p_y_x_z)
 
                 # Second, we do our P(Z)
-                io.write("Computing sub-query: ", p_str(z_outcomes, given))
+                io.write_log("Computing sub-query: ", p_str(z_outcomes, given))
                 p_z = engine.probability((z_outcomes, []))
                 # print(p_str(z_outcomes, []), "=", p_z)
 
@@ -175,7 +177,7 @@ class CausalGraph:
         else:
             raise Exception("Somehow the Z selection configuration is invalid.")
 
-        io.write(message, console_override=True)
+        io.write_log(message)
 
         # Handle the "all" case and individual case in one by iterating through the list of sets
         #   Just convert the single-set selections to a single-element list
@@ -184,9 +186,9 @@ class CausalGraph:
 
         only_result = None      # Sentinel value
         for z_set in selected:
-            io.write("Computing with Z Set:", str(z_set))
+            io.write_log("Computing with Z Set:", str(z_set))
             result = single_z_set_run(z_set)  # Compute with a specific set
-            io.write(str(z_set), "=", str(result), end="", console_override=True)
+            io.write_log(str(z_set), "=", str(result), end="")
 
             if only_result is None:  # Storing first result
                 only_result = result
@@ -214,7 +216,7 @@ class CausalGraph:
 
         # Check if we cached the result already
         if str_rep in stored_computations:
-            io.write(str_rep, "already computed.", x_offset=depth)
+            io.write_log(str_rep, "already computed.", x_offset=depth)
             return stored_computations[str_rep]
 
         # Evaluate each var(foo) value, getting a min and max, and store these; when we evaluate this function, we will
@@ -230,7 +232,7 @@ class CausalGraph:
             if "val(" in elements[element_idx]:
                 # The actual variable to be calculated
                 trimmed = elements[element_idx].strip("val()")
-                io.write("Evaluating value for:", trimmed, x_offset=depth)
+                io.write_log("Evaluating value for:", trimmed, x_offset=depth)
 
                 # Get the function/noise and calculate
                 function_data = self.functions[trimmed]
@@ -260,7 +262,7 @@ class CausalGraph:
 
                 # Calculate the probability, substitute it into the original function
                 result = ProbabilityEngine(self.graph, self.outcomes, self.tables).probability((head, body))
-                io.write(p_str(head, body), "=", str(result), x_offset=depth)
+                io.write_log(p_str(head, body), "=", str(result), x_offset=depth)
                 elements[element_idx] = str(result)
 
         # All possible results, we will return the min and max to represent the range
@@ -283,7 +285,7 @@ class CausalGraph:
             all_results.extend((result - noise, result + noise))
 
         result = min(all_results), max(all_results)
-        io.write(function, "evaluates to", str(result), x_offset=depth)
+        io.write_log(function, "evaluates to", str(result), x_offset=depth)
         store_computation(str_rep, result)
 
         return result
@@ -313,7 +315,7 @@ class CausalGraph:
 
         # Create the table, then print it (with some aesthetic offsetting)
         cpt = ConditionalProbabilityTable(Variable(",".join(sort_keys), [], []), [], results)
-        io.write("Joint Distribution Table for: " + ",".join(sort_keys), "\n", str(cpt), console_override=True)
+        io.write("Joint Distribution Table for: " + ",".join(sort_keys), "\n", str(cpt))
 
     # Topological Sort
 
@@ -323,10 +325,10 @@ class CausalGraph:
         """
         maximum_depth = max(self.graph.get_topology(v) for v in self.variables) + 1
         sorted_by_depth = self.graph.topological_variable_sort(list(self.variables.keys()))
-        io.write("*** Topological Sort ***", end="", console_override=True)
+        io.write("*** Topological Sort ***", end="")
         for depth in range(maximum_depth):
             this_depth = []
             while len(sorted_by_depth) > 0 and self.graph.get_topology(sorted_by_depth[0]) == depth:
                 this_depth.append(sorted_by_depth.pop(0))
-            io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="", console_override=True)
-        io.write(console_override=True)
+            io.write("Depth", str(depth) + ":", ", ".join(sorted(this_depth)), end="")
+        io.write()

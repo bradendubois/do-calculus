@@ -96,17 +96,17 @@ class ProbabilityEngine:
         str_rep = p_str(head, body)
 
         # Print the actual query being made on each recursive call to help follow
-        io.write("Querying:", str_rep, x_offset=depth)
+        io.write_log("Querying:", str_rep, x_offset=depth)
 
         # If the calculation has been done and cached, just return it from storage
         if str_rep in stored_computations:
             result = stored_computations[str_rep]
-            io.write("Computation already calculated:", str_rep, "=", result, x_offset=depth)
+            io.write_log("Computation already calculated:", str_rep, "=", result, x_offset=depth)
             return result
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
         if self.contradictory_outcome_set(head + body):
-            io.write("Two separate outcomes for one variable: 0.0")
+            io.write_log("Two separate outcomes for one variable: 0.0")
             return 0.0
 
         ###############################################
@@ -116,17 +116,17 @@ class ProbabilityEngine:
 
         if len(head) > 1:
             try:
-                io.write("Applying reverse product rule to", str_rep)
+                io.write_log("Applying reverse product rule to", str_rep, x_offset=depth)
 
                 result_1 = self._compute(head[:-1], [head[-1]] + body, depth+1)
                 result_2 = self._compute([head[-1]], body, depth+1)
                 result = result_1 * result_2
 
-                io.write(str_rep, "=", str(result), x_offset=depth)
+                io.write_log(str_rep, "=", str(result), x_offset=depth)
                 store_computation(str_rep, result)
                 return result
             except ProbabilityException:
-                io.write("Failed to resolve by reverse product rule.", x_offset=depth)
+                io.write_log("Failed to resolve by reverse product rule.", x_offset=depth)
 
         ###############################################
         #            Attempt direct lookup            #
@@ -134,24 +134,24 @@ class ProbabilityEngine:
 
         if len(head) == 1 and set(self.tables[head[0].name].given) == set(v.name for v in body):
 
-            io.write("Querying table for: ", p_str(head, body), x_offset=depth, end="")
+            io.write_log("Querying table for: ", p_str(head, body), x_offset=depth, end="")
             table = self.tables[head[0].name]                       # Get table
-            io.write(str(table), x_offset=depth, end="")            # Show table
+            io.write_log(str(table), x_offset=depth, end="")            # Show table
             probability = table.probability_lookup(head, body)      # Get specific row
-            io.write(p_str(head, body), "=", probability, x_offset=depth)
+            io.write_log(p_str(head, body), "=", probability, x_offset=depth)
 
             return probability
         else:
-            io.write("No direct table found.", x_offset=depth)
+            io.write_log("No direct table found.", x_offset=depth)
 
         ##################################################################
         #   Easy identity rule; P(X | X) = 1, so if LHS ⊆ RHS, P = 1.0   #
         ##################################################################
 
         if set(head).issubset(set(body)):
-            io.write("Identity rule:", p_str(head, head), " = 1.0", x_offset=depth)
+            io.write_log("Identity rule:", p_str(head, head), " = 1.0", x_offset=depth)
             if len(head) > len(body):
-                io.write("Therefore,", p_str(head, body), "= 1.0", x_offset=depth)
+                io.write_log("Therefore,", p_str(head, body), "= 1.0", x_offset=depth)
             return 1.0
 
         #################################################
@@ -164,8 +164,8 @@ class ProbabilityEngine:
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:
-            io.write("Children of the LHS in the RHS:", ",".join(descendants_in_rhs), x_offset=depth, end="")
-            io.write("Applying Bayes' rule.", x_offset=depth)
+            io.write_log("Children of the LHS in the RHS:", ",".join(descendants_in_rhs), x_offset=depth, end="")
+            io.write_log("Applying Bayes' rule.", x_offset=depth)
 
             try:
                 # Not elegant, but simply take one of the children from the body out and recurse
@@ -176,23 +176,23 @@ class ProbabilityEngine:
                 str_1 = p_str(child, head + new_body)
                 str_2 = p_str(head, new_body)
                 str_3 = p_str(child, new_body)
-                io.write(str_1, "*", str_2, "/", str_3, x_offset=depth)
+                io.write_log(str_1, "*", str_2, "/", str_3, x_offset=depth)
 
                 result_1 = self._compute(child, head + new_body, depth+1)
                 result_2 = self._compute(head, new_body, depth+1)
                 result_3 = self._compute(child, new_body, depth+1)
                 if result_3 == 0:       # Avoid dividing by 0!
-                    io.write(str_3, "= 0, therefore the result is 0.", x_offset=depth)
+                    io.write_log(str_3, "= 0, therefore the result is 0.", x_offset=depth)
                     return 0
 
                 # flip flop flippy flop
                 result = result_1 * result_2 / result_3
-                io.write(str_rep, "=", str(result), x_offset=depth)
+                io.write_log(str_rep, "=", str(result), x_offset=depth)
                 store_computation(str_rep, result)
                 return result
 
             except ProbabilityException:
-                io.write("Failed to resolve by Bayes", x_offset=depth)
+                io.write_log("Failed to resolve by Bayes", x_offset=depth)
 
         #######################################################################################################
         #                                  Jeffrey's Rule / Distributive Rule                                 #
@@ -204,7 +204,7 @@ class ProbabilityEngine:
             missing_parents.update(self.graph.parents(outcome) - set([parent.name for parent in head + body]))
 
         if missing_parents:
-            io.write("Attempting application of Jeffrey's Rule", x_offset=depth)
+            io.write_log("Attempting application of Jeffrey's Rule", x_offset=depth)
 
             # Try an approach beginning with each missing parent
             for missing_parent in missing_parents:
@@ -219,7 +219,7 @@ class ProbabilityEngine:
 
                         as_outcome = Outcome(missing_parent, parent_outcome)
 
-                        io.write(p_str(head, [as_outcome] + body), "*", p_str([as_outcome], body), x_offset=depth)
+                        io.write_log(p_str(head, [as_outcome] + body), "*", p_str([as_outcome], body), x_offset=depth)
 
                         result_1 = self._compute(head, [as_outcome] + body, depth+1)
                         result_2 = self._compute([as_outcome], body, depth+1)
@@ -227,12 +227,12 @@ class ProbabilityEngine:
 
                         total += outcome_result
 
-                    io.write(str_rep, "=", str(total), x_offset=depth)
+                    io.write_log(str_rep, "=", str(total), x_offset=depth)
                     store_computation(str_rep, total)
                     return total
 
                 except ProbabilityException:
-                    io.write("Failed to resolve by Jeffrey's Rule", x_offset=depth)
+                    io.write_log("Failed to resolve by Jeffrey's Rule", x_offset=depth)
 
         ###############################################
         #            Interventions / do(X)            #
@@ -240,7 +240,7 @@ class ProbabilityEngine:
 
         # Interventions imply that we have fixed X=x
         if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
-            io.write("Intervention without RHS Children:", str_rep, "= 1.0", x_offset=depth)
+            io.write_log("Intervention without RHS Children:", str_rep, "= 1.0", x_offset=depth)
             return 1.0
 
         ###############################################
@@ -255,9 +255,9 @@ class ProbabilityEngine:
 
             if can_drop:
                 try:
-                    io.write("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
+                    io.write_log("Can drop:", str([str(item) for item in can_drop]), x_offset=depth)
                     result = self._compute(head, list(set(body) - set(can_drop)), depth+1)
-                    io.write(str_rep, "=", str(result), x_offset=depth)
+                    io.write_log(str_rep, "=", str(result), x_offset=depth)
                     store_computation(str_rep, result)
                     return result
 

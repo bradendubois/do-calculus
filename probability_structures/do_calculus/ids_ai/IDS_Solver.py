@@ -100,7 +100,7 @@ class IDSSolver:
                         self.stack.push((option[1], item_depth+1, history + [option[0]]))
 
             # Couldn't find an answer at this depth
-            io.write("Couldn't find a solution at depth:", current_max_depth, "Looked at:", len(seen), "queries.")
+            io.write_log("Couldn't find a solution at depth:", current_max_depth, "Looked at:", len(seen), "queries.")
 
             # Increase the depth and run again
             current_max_depth += 1

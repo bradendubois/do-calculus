@@ -61,7 +61,7 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
 
                 try:
                     # Relay the prompt to the user
-                    io.write(do_calculus_prompt, console_override=True)
+                    io.write(do_calculus_prompt)
 
                     # Outcomes
                     y = process_set(input("Please enter set Y, which will not be an intervention: "))
@@ -91,7 +91,7 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
                 break
 
         # Present all options to the user
-        io.write("Our query is currently: " + str(current_query), console_override=True)
+        io.write("Our query is currently: " + str(current_query))
 
         # Generate all our possible options
         query_options = do_calculus_options(current_query, graph, u)
@@ -135,10 +135,10 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
                 }
 
                 # Execute the query
-                io.write(str(current_query), "=", ql_probability(**data), console_override=True)
+                io.write(str(current_query), "=", ql_probability(**data))
 
             except AssertionError as e:
-                io.write(",".join(str(",".join(str(j)) for j in i) for i in e.args), console_override=True)
+                io.write(",".join(str(",".join(str(j)) for j in i) for i in e.args))
 
         # Exit option
         elif selection == len(options)-1:
@@ -156,11 +156,11 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
             # Try solving
             result = solver.solve()
             if result.success:
-                io.write("The AI Solver was able to find a solution.", console_override=True)
+                io.write("The AI Solver was able to find a solution.")
                 io.write(str(result.result))
                 current_query = result.result
             else:
-                io.write("The AI Solver was not able to find a solution.", console_override=True)
+                io.write("The AI Solver was not able to find a solution.")
 
         # We've gotten our selection, update our sets accordingly and go again
         else:

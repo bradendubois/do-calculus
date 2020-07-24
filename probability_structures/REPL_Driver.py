@@ -61,13 +61,12 @@ class REPLDriver:
         self.graph = parsed_graph_contents["graph"]             # Graph representing the association structure.
 
         # Print all the variables out with their reach
-        show = access("print_cg_info_on_instantiation") and io.console_enabled
-        for variable in self.variables:
-            v = self.variables[variable]
-            io.write(str(v), "; Reaches:", v.reach, "Order:", self.graph.get_topology(v), end="", console_override=show)
-
-        # Aesthetic spacing
-        io.write(end="", console_override=show)
+        if access("print_cg_info_on_instantiation"):
+            msg = ""
+            for variable in self.variables:
+                v = self.variables[variable]
+                msg += "{}; Reaches: {}, Order: {}".format(v, self.graph.reach(v), self.graph.get_topology(v)) + "\n"
+            io.write(msg)
 
         # Construct our Causal Graph; we must make a new one if modifying graph
         self.cg = CausalGraph(self.graph.copy(), self.variables, self.outcomes, self.tables, self.functions)
@@ -123,15 +122,18 @@ class REPLDriver:
         modify the graph as necessary to compute the question, and exit
         """
         try:
-            head, body = get_valid_head_and_body(self.get_specific_outcome_prompt, self.get_given_data_prompt, list(self.variables.keys()), self.outcomes)
+            head, body = get_valid_head_and_body(self.get_specific_outcome_prompt,
+                                                 self.get_given_data_prompt,
+                                                 list(self.variables.keys()),
+                                                 self.outcomes)
 
         except AssertionError as e:
-            io.write("Error: " + str(e.args), console_override=True)
+            io.write("Error: " + str(e.args))
             return
 
         # Happens if just given "X", not "X=x", making the Outcome() crash
         except IndexError:
-            io.write("Improperly entered data.", console_override=True)
+            io.write("Improperly entered data.")
             return
 
         # Issue the query to the Causal Graph, allowing it to make any modifications necessary to compute the query
@@ -153,13 +155,13 @@ class REPLDriver:
             function_data = self.functions[variable]
             result = self.cg.probability_function_query(*function_data, apply_noise=access("apply_any_noise"))
             store_computation(str(variable), result)
-            io.write(variable, "= min: {}, max: {}".format(*result), console_override=True)
+            io.write_log(variable, "= min: {}, max: {}".format(*result))
             io.close()
 
         except KeyError:
-            io.write("Given variable not resolvable by a probabilistic function.", console_override=True)
+            io.write_log("Given variable not resolvable by a probabilistic function.")
         except AssertionError:
-            io.write("Variable given not in the graph.", console_override=True)
+            io.write_log("Variable given not in the graph.")
 
     # Backdoor Controller
 
