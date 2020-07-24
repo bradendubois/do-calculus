@@ -122,11 +122,11 @@ def query_options(query: Query, graph: Graph, u: set) -> list:
         "function": apply_rule_3,
         "sets": rule_3_valid_z,
     }, {
-        "rule": 4,
+        "rule": "Conditioning",
         "function": condition,
         "sets": condition_z,
     }, {
-        "rule": 5,
+        "rule": "Product Rule",
         "function": apply_product_rule,
         "sets": product_rule_z
     }]
