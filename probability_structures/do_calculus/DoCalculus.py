@@ -97,18 +97,19 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
         query_options = do_calculus_options(current_query, graph, u)
         options = [item[0] for item in query_options]
 
-        # Allow the first option to be to input some variable data and see the probability
-        options.insert(0, "Compute a probability on the current query.")
+        # Allow the first option to be to input some variable data and see the probability, if any real data is provided
+        if len(outcomes) > 0 and len(tables) > 0:
+            options.insert(0, "Compute a probability on the current query.")
 
         # Add a handle to let the IDS Solver take over
-        options.append([CallableItemWrapper(), "Let the IDS Solver attempt to find a solution."])
+        options.append("Let the IDS Solver attempt to find a solution.")
 
         # Throw an "exit/return" into the options in the REPL and get a selection
-        options.append([CallableItemWrapper(), "Exit / Return"])
+        options.append("Exit / Return")
         selection = user_index_selection("All Possible Do-Calculus Applications: ", options)
 
         # Wants to see a specific query executed
-        if selection == 0:
+        if options[selection] == "Compute a probability on the current query.":
 
             try:
 
@@ -141,11 +142,11 @@ def do_calculus_repl(graph: Graph, outcomes: dict, tables: dict):
                 io.write(",".join(str(",".join(str(j)) for j in i) for i in e.args))
 
         # Exit option
-        elif selection == len(options)-1:
+        elif options[selection] == "Exit / Return":
             return
 
         # AI Takeover
-        elif selection == len(options)-2:
+        elif options[selection] == "Let the IDS Solver attempt to find a solution.":
 
             # Create the solver; create one and insert our current query rather than initialize the solver with
             #   our initial sets

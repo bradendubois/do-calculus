@@ -22,29 +22,16 @@ class BackdoorController:
     in Causality / Book of Why / etc.
     """
 
-    get_functionality_selection_prompt = \
-        "\n\nSelect an option:\n" + \
-        "    1) Find backdoor paths\n" + \
-        "    2) Exit Backdoor Controller\n" + \
-        "  Selection: "
-
     get_x_set_prompt = \
         "\nEnter a comma-separated list of variables, representing X.\n" + \
-        "  These must be in the causal graph, and will be independent from Y.\n" + \
+        "  This represents one set of variables X, disjoint from Y.\n" + \
         "    Example: A, C, M\n" + \
         "  Input: "
 
     get_y_set_prompt = \
         "\nEnter a comma-separated list of variables, representing Y.\n" + \
-        "  These must be in the causal graph, and will be independent from X.\n" + \
+        "  This represents one set of variables Y, disjoint from X.\n" + \
         "    Example: J, P\n" + \
-        "  Input: "
-
-    get_z_set_prompt = \
-        "\nEnter a comma-separated list of variables, representing Z.\n" + \
-        "  These must be in the causal graph, and will be independent from X and Y.\n" + \
-        "  These represent a set of controlled variables to ensure causal independence between X and Y." + \
-        "    Example: E, N\n" + \
         "  Input: "
 
     def __init__(self, graph: Graph):
@@ -81,7 +68,7 @@ class BackdoorController:
                 io.write("\nNo possible set Z can be constructed to create causal independence.")
 
         except AssertionError as e:
-            io.write(e.args, console_override=True)
+            io.write(e.args)
 
     def get_all_z_subsets(self, x: set, y: set) -> list:
         """
@@ -94,21 +81,9 @@ class BackdoorController:
         # The cross product of X and Y
         cross_product = list(itertools.product(x, y))
 
-        # Get every straight-line-path between the cross-product of X and Y; those used cannot be
-        #   part of Z; they would introduce a confounding bias.
-        all_straight_line_paths = []
-        for cross in cross_product:
-            all_straight_line_paths.extend(self.all_paths_cumulative(cross[0], cross[1], [], []))
-            all_straight_line_paths.extend(self.all_paths_cumulative(cross[1], cross[0], [], []))
-
-        # Make a set of all variables used in paths from X to Y, and exclude them from possible Z sets
-        all_straight_line_path_variables = set()
-        for path in all_straight_line_paths:
-            all_straight_line_path_variables.update(path)
-
         # Get the power set of all remaining variables, and check which subsets yield causal independence
-        descendants = set().union(*[self.graph.reach(s) for s in x | y])
-        disallowed_vertices = x | y | all_straight_line_path_variables | descendants
+        descendants_of_x = set().union(*[self.graph.reach(s) for s in x])
+        disallowed_vertices = x | y | descendants_of_x
         z_power_set = power_set(set(self.graph.v) - disallowed_vertices)
 
         # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
@@ -233,8 +208,8 @@ class BackdoorController:
         backdoor_paths = get_backdoor_paths(x, [], [])
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
-        filtered_paths = [path for path in backdoor_paths if path[1] not in self.graph.children(path[0])]
-        filtered_paths = [path for path in filtered_paths if path[-1] in self.graph.children(path[-2])]
+        filtered_paths = [path for path in backdoor_paths if path[0] in self.graph.children(path[1])]
+        # filtered_paths = [path for path in filtered_paths if path[-1] in self.graph.children(path[-2])]
         return filtered_paths
 
     def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
