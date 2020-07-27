@@ -97,7 +97,7 @@ primary_config_file = [
                            "launch, allowing the user to choose which one to load. For information on graph files, " +
                            "see ``Causal Graph Files``.",
             "parameter": "graph_file_folder",
-            "default_value": "causal_graphs",
+            "default_value": "graphs/full",
             "options": "any valid path in the project"
         }, {
             "parameter_title": "Regression Test Directory",

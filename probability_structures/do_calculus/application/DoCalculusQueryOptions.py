@@ -16,6 +16,9 @@ from probability_structures.do_calculus.application.CustomSetFunctions import su
 from probability_structures.Graph import Graph
 from util.helpers.PowerSet import power_set
 
+# A dictionary cache to store already-computed Query results rather than constantly recompute them from scratch
+query_cache = dict()
+
 
 def do_calculus_options(query: QueryList, graph: Graph, u: set) -> list:
     """
@@ -44,8 +47,14 @@ def do_calculus_options(query: QueryList, graph: Graph, u: set) -> list:
         if current_item.resolved():
             continue
 
+        # Already computed this before, results are cached
+        if str(current_item) in query_cache:
+            specific_query_options = query_cache[str(current_item)]
+
         # Find all possible options that can be applied to this specific query
-        specific_query_options = query_options(current_item, graph, u)
+        else:
+            specific_query_options = query_options(current_item, graph, u)
+            query_cache[str(current_item)] = specific_query_options
 
         # Take a copy of the current state of the query, applying each possible rule
         for option in specific_query_options:

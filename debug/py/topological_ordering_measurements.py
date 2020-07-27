@@ -10,7 +10,7 @@ loaded_settings["cache_computation_results"] = True
 loaded_settings["topological_sort_variables"] = True
 
 for _ in range(20):
-    cg = CausalGraph("../causal_graphs/causal_graph_5.json")
+    cg = CausalGraph("../full/causal_graph_5.json")
 
     start = datetime.now()
     cg.probability([Outcome("Xj", "xj")], [])
@@ -23,7 +23,7 @@ no_cache_times = []
 loaded_settings["topological_sort_variables"] = False
 
 for _ in range(20):
-    cg = CausalGraph("../causal_graphs/causal_graph_5.json")
+    cg = CausalGraph("../full/causal_graph_5.json")
 
     start = datetime.now()
     cg.probability([Outcome("Xj", "xj")], [])

@@ -28,7 +28,7 @@ for _ in range(100):
 
     for s in power_set(body1):
         print("instantiating new CG")
-        cg = CausalGraph("causal_graphs/causal_graph_5.json")
+        cg = CausalGraph("full/causal_graph_5.json")
 
         x = {"Xj"}
         y = set([i.name for i in body1])
@@ -44,7 +44,7 @@ for _ in range(100):
 
     for s in power_set(body2):
         print("instantiating new CG")
-        cg = CausalGraph("causal_graphs/causal_graph_5.json")
+        cg = CausalGraph("full/causal_graph_5.json")
 
         x = {"Xj"}
         y = set([i.name for i in body2])

@@ -239,8 +239,8 @@ def access(param: str) -> any:
     value = loaded_settings[param]
 
     # A CLI flag has been provided to override the config file
-    if param in cli_flag_overrides:
-        value = parsed_args.param
+    # if param in cli_flag_overrides:
+    #     value = parsed_args.param
 
     return value
 

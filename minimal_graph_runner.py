@@ -30,6 +30,7 @@ with open(filename) as f:
             e.add((s[i], s[i+1]))
 
 g = Graph(v, e)
+print(str(g))
 
 while True:
 

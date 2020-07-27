@@ -16,7 +16,7 @@ def print_query(*packed_query):
 
 
 # Parse the file
-parsed = parse_graph_file_data("causal_graphs/causal_graph_6.json")
+parsed = parse_graph_file_data("graphs/full/causal_graph_6.json")
 g = parsed["graph"]
 
 # Task 1 : z | do(x)

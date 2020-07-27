@@ -59,6 +59,15 @@ class Graph:
         for r in [root_node for root_node in v if len(self.incoming[root_node]) == 0]:
             initialize_topology(r)
 
+    def __str__(self) -> str:
+        """
+        String builtin for the Graph class
+        :return: A string representation of the given Graph instance
+        """
+        msg = "Vertices: " + ", ".join(sorted(i for i in self.v)) + "\n"
+        msg += "Edges:\n" + "\n".join(" -> ".join(i for i in edge) for edge in self.e)
+        return msg
+
     def parents(self, v: CG_Types) -> set:
         """
         Get the parents of v, which may actually be currently controlled

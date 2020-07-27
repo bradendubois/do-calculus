@@ -25,7 +25,7 @@ class Sigma:
         String builtin for the Sigma class
         :return: String representation of a Sigma instance
         """
-        return "Sigma_" + ",".join(self.over)
+        return "Sigma_" + ",".join(sorted(i for i in self.over))
 
     def __copy__(self):
         """
@@ -61,11 +61,11 @@ class QueryBody:
         """
         msg = ""
         if len(self.interventions) > 0:
-            msg += "do(" + ", ".join(self.interventions) + ")"
+            msg += "do(" + ", ".join(sorted(i for i in self.interventions)) + ")"
         if len(self.interventions) > 0 and len(self.observations) > 0:
             msg += ", "
         if len(self.observations) > 0:
-            msg += ", ".join(self.observations)
+            msg += ", ".join(sorted(i for i in self.observations))
         return msg
 
     def __copy__(self):
@@ -100,7 +100,7 @@ class Query:
         String builtin for the Query class
         :return: A string representation of the given Query instance
         """
-        msg = "P(" + ", ".join(self.head)
+        msg = "P(" + ", ".join(sorted(i for i in self.head))
         if len(self.body.interventions | self.body.observations) > 0:
             msg += " | " + str(self.body)
         return msg + ")"

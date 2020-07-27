@@ -12,7 +12,7 @@
 
 from probability_structures.do_calculus.application.CustomSetFunctions import clean
 from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
-from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
+from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options, query_cache
 from probability_structures.do_calculus.ids_ai.Stack import Stack
 from probability_structures.do_calculus.ids_ai.Solution import Solution
 from probability_structures.Graph import Graph
@@ -54,6 +54,13 @@ class IDSSolver:
         # Used to prevent wasteful / unfruitful paths to go down; especially useful with depth increase
         seen = set()
 
+        # When a specific query of some sort is seen, cache all the options available to it rather than re-generate
+        #   them all from scratch; this cache will be the total QueryList object, not each respective query
+        cached = dict()
+
+        # Reset the cache when beginning a search in case we've switched files
+        query_cache.clear()
+
         # We will go to a depth maximum 100, starting with 1, and increasing until we find it.
         maximum_depth = 100
         current_max_depth = 1
@@ -90,8 +97,15 @@ class IDSSolver:
                     if self.contains_unobservable(current):
                         continue
 
+                    # Already generated these results
+                    if str_rep in cached:
+                        all_options = cached[str_rep]
+
                     # Generate all new options
-                    all_options = do_calculus_options(current, self.graph, self.u)
+                    else:
+                        all_options = do_calculus_options(current, self.graph, self.u)
+                        if item_depth < 5:
+                            cached[str_rep] = all_options
 
                     # Push each option
                     for option in all_options:

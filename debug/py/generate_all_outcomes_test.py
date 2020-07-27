@@ -8,7 +8,7 @@ outcomes = itertools.product(*vars)
 
 tests = []
 
-cg = CausalGraph("causal_graphs/simulation.json")
+cg = CausalGraph("full/simulation.json")
 
 for outcome in outcomes:
     arg = "A = " + outcome[0] + ", B = " + outcome[1] + ", C = " + outcome[2]
