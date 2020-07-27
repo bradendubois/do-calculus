@@ -11,6 +11,7 @@
 
 # Main libraries can always be loaded
 from os import path, listdir
+from platform import system
 import json
 
 # Only import (from the software itself) the configuration module to see which modules are enabled
@@ -18,8 +19,13 @@ from config.config_manager import access
 
 # Update / pull if enabled
 if access("github_pull_on_launch"):
-    import subprocess
-    subprocess.call(["./scripts/git_update.sh"])
+
+    # Windows has problems with the subprocess calls
+    if system() == "Windows":
+        print("Sorry, the self-updating module is currently only supported for Mac/Linux.")
+    else:
+        import subprocess
+        subprocess.call(["./scripts/git_update.sh"])
 
 # Import the IO Logger *after* potentially updating
 from util.IO_Logger import io

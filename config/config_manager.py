@@ -212,7 +212,7 @@ def cli_arg_parser() -> argparse.Namespace:
 initialize_configuration_file()
 
 # Create parser for CLI flags to override config settings
-parsed_args = cli_arg_parser()
+# parsed_args = cli_arg_parser()
 
 
 def access(param: str) -> any:
