@@ -40,9 +40,9 @@ CHECKER_2 = (0.3, 0.3, 0.3, 1)
 
 class CustomLabel(Label):
 
-    def __init__(self, c_col, **kwargs):
+    def __init__(self, c_col=None, **kwargs):
         super().__init__(**kwargs)
-        self.c_col = c_col
+        self.c_col = c_col if c_col else (0, 0, 0, 1)
 
     def on_pos(self, *args):
         self.canvas.before.clear()
@@ -149,5 +149,5 @@ class VariablePage(GridLayout):
 
     def lose_focus(self):
         self.table_panel.clear_widgets()
-        self.active_button.background_color = DEFAULT_INACTIVE_BUTTON_COLOR
-
+        if self.active_button is not None:
+            self.active_button.background_color = DEFAULT_INACTIVE_BUTTON_COLOR

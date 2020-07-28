@@ -19,7 +19,7 @@ from kivy.graphics import Color, Rectangle
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 
-
+from gui.ProbabilityPage import ProbabilityPage
 from gui.VariablePage import VariablePage
 from util.parsers.GraphLoader import parse_graph_file_data, ConditionalProbabilityTable
 
@@ -34,16 +34,6 @@ Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '800')
 Config.set('graphics', 'minimum_width', '800')
 Config.set('graphics', 'minimum_height', '600')
-
-class ProbabilityPage(BoxLayout):
-
-    def __init__(self, graph_data, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="Probability"))
-        # graph_data = kwargs["graph_data"]
-
-    def lose_focus(self):
-        pass
 
 
 class DoCalculusPage(BoxLayout):
