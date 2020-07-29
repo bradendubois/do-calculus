@@ -77,6 +77,8 @@ class IDSSolver:
             # Clear the "seen" for this depth
             seen.clear()
 
+            unexplored = True
+
             while not self.stack.empty():
 
                 # Pop the current item in the IDS stack and see if it's our goal
@@ -113,8 +115,16 @@ class IDSSolver:
                         # As unpacked above, this is a tuple (query state, depth, history)
                         self.stack.push((option[1], item_depth+1, history + [option[0]]))
 
+                elif item_depth >= current_max_depth:
+                    unexplored = True
+
             # Couldn't find an answer at this depth
             io.write_log("Couldn't find a solution at depth:", current_max_depth, "Looked at:", len(seen), "queries.")
+
+            # The stack was fully exhausted, but never through a depth-limit; we have no more options to explore
+            if not unexplored:
+                io.write_log("There are no more branches to explore; the solver cannot find an answer.")
+                break
 
             # Increase the depth and run again
             current_max_depth += 1
