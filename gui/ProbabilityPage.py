@@ -41,6 +41,35 @@ CHECKER_1 = (0.4, 0.4, 0.4, 1)
 CHECKER_2 = (0.3, 0.3, 0.3, 1)
 
 
+class PDropDown(Button):
+
+    def __init__(self, v: str, out: list, t: str, callback, **kwargs):
+        super().__init__(**kwargs)
+        self.v = v
+        self.t = t
+        self.callback = callback
+        self.size = (100, 50)
+        self.size_hint = (None, None)
+
+        self.dropdown = DropDown()
+        self.update_dropdown(out)
+
+    def on_press(self):
+        self.dropdown.open(self)
+
+    def update_dropdown(self, out: list):
+        self.dropdown.clear_widgets()
+        if len(out) == 0:
+            self.t = "---"
+            return
+
+        self.text = self.t
+        for outcome in sorted(out):
+            b = Button(text="{} = {}".format(self.v,  outcome))
+            b.bind(on_press=partial(self.callback, self.v, outcome, self.t))
+            self.dropdown.add_widget(b)
+            print("here")
+
 class PHeader(BoxLayout):
 
     def __init__(self, **kwargs):
@@ -146,65 +175,122 @@ class ProbabilityPage(StackLayout):
         self.observations_drop = DropDown()
         self.observations_drop_down_button.bind(on_release=self.observations_drop.open)
 
-        self.add_widget(self.o_box)
-        self.add_widget(self.i_box)
-        self.add_widget(self.ob_box)
+        # self.add_widget(self.o_box)
+        # self.add_widget(self.i_box)
+        # self.add_widget(self.ob_box)
 
         # Update what can appear in each respective drop-down box
+        # self.update_drop_downs()
+
+        self.p_buttons = GridLayout(cols=4, rows=len(self.variables))
+
+        for v in sorted(self.variables):
+
+            reset = Button(text="reset", halign="center", valign="center", size=(90, 40), size_hint=(None, None))
+            reset.bind(on_press=partial(self.reset_variable, v))
+
+            self.p_buttons.add_widget(reset)
+            self.p_buttons.add_widget(PDropDown(v, self.variables[v].outcomes, "outcome", self.add_variable))
+            self.p_buttons.add_widget(PDropDown(v, self.variables[v].outcomes, "observation", self.add_variable))
+            self.p_buttons.add_widget(PDropDown(v, self.variables[v].outcomes, "intervention", self.add_variable))
+
+        self.update_drop_downs()
+        self.add_widget(self.p_buttons)
+
+    def add_variable(self, *args):
+        pass
+
+    def reset_variable(self, button: Button, v: str):
+        self.head_vars -= {v}
+        self.inter_vars -= {v}
+        self.observ_vars -= {v}
         self.update_drop_downs()
 
     def update_drop_downs(self):
 
         errors = []
         b_args = {
-            "height": 40,
+            "height": 25,
             "size_hint_y": None
         }
 
-        # Empty all
-        for s in [self.outcome_drop, self.intervention_drop, self.observations_drop]:
-            s.clear_widgets()
+        # Update every child in the grid
+        for child in self.p_buttons.children:
 
-        for v in self.g.v - (self.head_vars | self.inter_vars | self.observ_vars):
+            # Ignore the reset buttons
+            if not isinstance(child, PDropDown):
+                continue
 
-            # Outcomes
-            h_subsets = self.bc.get_all_z_subsets(self.inter_vars, self.head_vars | {v})
-            if len(h_subsets) > 0:
-                for outcome in self.variables[v].outcomes:
-                    button = Button(text="{} = {}".format(v, outcome), **b_args)
-                    button.bind(on_release=lambda btn: self.add_var(btn, "outcome"))
-                    self.outcome_drop.add_widget(button)
+            # Clear and repopulate
+            dropdown = child.dropdown
+            dropdown.clear_widgets()
+            v = child.v
+
+            # Already chosen, don't update
+            if v in self.head_vars | self.inter_vars | self.observ_vars:
+                child.update_dropdown([])
+                continue
+
+            # Covariance subsets that use Z as an outcome or treatment
+            if v not in self.inter_vars:
+                h_subsets = self.bc.get_all_z_subsets(self.inter_vars, self.head_vars | {v})
             else:
-                errors.append("Cannot insert Y as an outcome given out current 'do's.")
+                h_subsets = set()
 
-            # Intervention
-            t_subsets = self.bc.get_all_z_subsets(self.inter_vars | {v}, self.head_vars)
-
-            if len(t_subsets) > 0:
-                if v == "X4":
-                    for s in t_subsets:
-                        print(str(self.inter_vars), str({v}), str(self.inter_vars | {v}), str(s), not (self.inter_vars | {v}).issubset(s))
-                for outcome in self.variables[v].outcomes:
-                    button = Button(text="{} = {}".format(v, outcome), **b_args)
-                    button.bind(on_release=lambda btn: self.add_var(btn, "intervention"))
-                    self.intervention_drop.add_widget(button)
+            if v not in self.head_vars:
+                t_subsets = self.bc.get_all_z_subsets(self.inter_vars | {v}, self.head_vars)
             else:
-                errors.append("Cannot insert Y as an intervention given out current 'do's.")
+                t_subsets = set()
 
-            # Observation
-            if any(v not in subset for subset in h_subsets):
-                for outcome in self.variables[v].outcomes:
-                    button = Button(text="{} = {}".format(v, outcome), **b_args)
-                    button.bind(on_release=lambda btn: self.add_var(btn, "observation"))
-                    self.observations_drop.add_widget(button)
+            # Outcome; Y
+            if child.t == "outcome":
+
+                # Can add as an outcome if there are valid covariance sets
+                if len(h_subsets) > 0:
+                    # child.update_dropdown(self.variables[v].outcomes)
+                    for outcome in self.variables[v].outcomes:
+                        button = Button(text="{} = {}".format(v, outcome), **b_args)
+                        button.bind(on_release=partial(self.add_var, button, "outcome"))
+                        dropdown.add_widget(button)
+                else:
+                    errors.append("Cannot insert Y as an outcome given our current 'do's.")
+
+            # Intervention / Treatment; X
+            elif child.t == "intervention":
+
+                # Can add as an intervention / treatment if still valid covariance sets
+                if len(t_subsets) > 0:
+                    # child.update_dropdown(self.variables[v].outcomes)
+                    for outcome in self.variables[v].outcomes:
+                        button = Button(text="{} = {}".format(v, outcome), **b_args)
+                        button.bind(on_release=partial(self.add_var, button, "intervention"))
+                        dropdown.add_widget(button)
+                else:
+                    errors.append("Cannot insert Y as an intervention given our current 'do's.")
+
+            # Observation; W
+            elif child.t == "observation":
+
+                # Can add as an observation if there are covariance sets that do not use this node
+                if any(v not in subset for subset in t_subsets):
+
+                    child.update_dropdown(self.variables[v].outcomes)
+                    for outcome in self.variables[v].outcomes:
+                        button = Button(text="{} = {}".format(v, outcome), **b_args)
+                        button.bind(on_release=partial(self.add_var, button, "observation"))
+                        dropdown.add_widget(button)
+
+                else:
+                    errors.append("Cannot insert Y as an observation given our current 'do's.")
+
+            # Error catch
             else:
-                errors.append("Cannot insert Y as an observation given out current 'do's.")
+                print("Uh-oh, unknown type of dropdown button: " + child.t)
 
-        print("Done")
-
-    def add_var(self, button: Button, s: str):
+    def add_var(self, button: Button, s: str, *args):
 
         name, value = (s.strip() for s in button.text.split("="))
+        print(name)
 
         if s == "outcome":
             self.head_vars.add(name)
