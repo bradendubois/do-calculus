@@ -1,27 +1,20 @@
 import kivy
 
-from kivy.app import App
-from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem, TabbedPanelHeader
-from kivy.lang import Builder
-from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from functools import partial
 import os
 from kivy.config import Config
-from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.app import App
 from kivy.graphics import Color, Rectangle
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 
-from gui.ProbabilityPage import ProbabilityPage
-from gui.VariablePage import VariablePage
-from util.parsers.GraphLoader import parse_graph_file_data, ConditionalProbabilityTable
+from gui.old.ProbabilityPage import ProbabilityPage
+from gui.old.VariablePage import VariablePage
+from util.parsers.GraphLoader import parse_graph_file_data
 
 kivy.require('1.11.1')
 
@@ -47,13 +40,17 @@ class DoCalculusPage(BoxLayout):
         pass
 
 
-class MainWindow(GridLayout):
+class MainWindow(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.cols = 2
-        self.side_menu = ScrollView(width=100, size_hint=(None, 1), do_scroll_x=False)
+        # self.cols = 2
+        # self.size_hint = (1, 1)
+        self.side_menu = ScrollView(width=100, size_hint=(None, None), do_scroll_x=False)
+        self.size = (Window.width, Window.height)
+
+        self.orientation = "horizontal"
 
         self.active_button = None
 
@@ -74,7 +71,8 @@ class MainWindow(GridLayout):
                 # "background_normal": ""
             }
 
-            buttons = GridLayout(cols=1, spacing=5, padding=10)
+            buttons = GridLayout(cols=1, spacing=5, size_hint_y=None, padding=10)
+            buttons.bind(minimum_height=layout.setter("height"))
 
             variable_button = Button(text="Variables", **button_properties)
             variable_button.bind(on_press=partial(
@@ -98,17 +96,21 @@ class MainWindow(GridLayout):
                 DoCalculusPage(graph_data=graph_data)))
             buttons.add_widget(do_calculus_button)
 
+            for _ in range(20):
+                buttons.add_widget(Button(text=str(_), **button_properties))
+
+
             self.side_menu.add_widget(buttons)
             self.add_widget(self.side_menu)
 
-            main_scroll = ScrollView()
+            main_scroll = ScrollView(size_hint=(1, None))
             self.active_area = BoxLayout()
             main_scroll.add_widget(self.active_area)
             self.add_widget(main_scroll)
 
         layout = GridLayout(cols=1, spacing=5, padding=20)
         scroll = ScrollView(size_hint=(0.5, 1.0), pos_hint={"x": 0.25, "y": 0.10})
-        files = sorted(os.listdir("graphs/full"))
+        files = sorted(os.listdir("../../graphs/full"))
         for file in files:
             button = Button(text=file, size_hint_max_y="30")
             button.bind(on_press=load_file)

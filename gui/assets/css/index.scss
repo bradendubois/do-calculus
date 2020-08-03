@@ -1,0 +1,19 @@
+body {
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: row;
+
+  main {
+
+    div {
+      visibility: hidden;
+    }
+
+    .shown {
+      visibility: visible;
+    }
+  }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="../assets/css/index.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/section.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css" type="text/css">
+
+
+    <link rel="import" href="sections/markov-data.html">
+    <link rel="import" href="sections/compute-probability.html">
+    <link rel="import" href="sections/do-calculus.html">
+
+
+    <style>
+        #response-container {
+            display: none;
+            padding: 3rem;
+            margin: 3rem 5rem;
+            font-size: 120%;
+            border: 5px dashed #ccc;
+        }
+
+        label {
+            margin-left: 0.3rem;
+            margin-right: 0.3rem;
+        }
+
+        button {
+            font-size: 100%;
+            padding: 0.5rem;
+            margin: 0.3rem;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+
+        <header class="nav-header">
+            <h1 class="nav-title">Probability Code</h1>
+        </header>
+
+        <div id="tabs" class="nav-category">
+            <button id="markov-model">View Data on Loaded Markov Graph</button>
+            <button id="probability">Compute a Probability</button>
+            <button id="do-calculus">See the <i>do</i>-calculus</button>
+
+            <button id="settings">Settings</button>
+        </div>
+    </nav>
+
+    <main id="main">
+
+        <div id="default-page" class="page">
+            <h1>JS API Example</h1>
+            <p id='pywebview-status'><i>pywebview</i> is not ready</p>
+
+            <button onClick="initialize()">Hello Python</button><br/>
+            <button id="heavy-stuff-btn" onClick="doHeavyStuff()">Perform a heavy operation</button><br/>
+            <button onClick="getRandomNumber()">Get a random number</button><br/>
+            <label for="name_input">Say hello to:</label><input id="name_input" placeholder="put a name here">
+            <button onClick="greet()">Greet</button><br/>
+            <button onClick="catchException()">Catch Exception</button><br/>
+            <button onClick="test()" id="tester">BIG TEST HUGE</button>
+            <div id="response-container"></div>
+        </div>
+
+        <div id="markov-model-page" class="page">
+            MARKOV
+        </div>
+
+        <div id="probability-page" class="page">
+            PROBABILITY
+        </div>
+
+        <div id="do-calculus-page" class="page">
+            DO-CALCULUS
+        </div>
+
+    </main>
+</body>
+
+<!-- <script src="../assets/js/imports.js"></script> -->
+<script src="../assets/js/navigation.js"></script>
+
+<script>
+
+    window.addEventListener('pywebviewready', function() {
+        var container = document.getElementById('pywebview-status')
+        container.innerHTML = '<i>pywebview</i> is ready'
+    })
+
+    function showResponse(response) {
+        var container = document.getElementById('response-container')
+
+        container.innerText = response.message
+        container.style.display = 'block'
+    }
+
+    function initialize() {
+        pywebview.api.init().then(showResponse)
+    }
+
+    function doHeavyStuff() {
+        var btn = document.getElementById('heavy-stuff-btn')
+
+        pywebview.api.doHeavyStuff().then(function(response) {
+            showResponse(response)
+            btn.onclick = doHeavyStuff
+            btn.innerText = 'Perform a heavy operation'
+        })
+
+        showResponse({message: 'Working...'})
+        btn.innerText = 'Cancel the heavy operation'
+        btn.onclick = cancelHeavyStuff
+    }
+
+    function cancelHeavyStuff() {
+        pywebview.api.cancelHeavyStuff()
+    }
+
+    function getRandomNumber() {
+        pywebview.api.getRandomNumber().then(showResponse)
+    }
+
+    function greet() {
+        var name_input = document.getElementById('name_input').value;
+        pywebview.api.sayHelloTo(name_input).then(showResponse)
+    }
+
+    function catchException() {
+        pywebview.api.error().catch(showResponse)
+    }
+
+    function test() {
+        var button = document.getElementById("tester")
+
+        pywebview.api.test().then(total => {
+            button.innerText = total
+        })
+
+        button.innerText = "Loading"
+    }
+
+</script>
+
+</html>

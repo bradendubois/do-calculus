@@ -1,0 +1,17 @@
+nav #tabs {
+  width: 100px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+nav #tabs button {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid black;
+  color: black;
+  font-size: 10pt;
+  text-transform: none;
+}
+
+/*# sourceMappingURL=sidebar.css.map */

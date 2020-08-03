@@ -13,7 +13,7 @@ from datetime import datetime
 import functools
 
 
-def time(function):
+def print_time(function):
     """
     Helper function to time a function (used for debug purposes)
     :param function: The function to time
@@ -48,3 +48,22 @@ def debug(function):
         return result
 
     return wrapper_debug
+
+
+def time(function):
+    """
+    Helper function to time a function, and return the original results as well as the time taken
+    :param function: A function to time
+    :return: A tuple (results, time); the function's return value and time taken
+    """
+
+    @functools.wraps(function)
+    def time_function(*args, **kwargs):
+
+        start_time = datetime.now()
+        result = function(*args, **kwargs)
+        end_time = datetime.now()
+        taken = end_time - start_time
+        return result, taken
+
+    return time_function

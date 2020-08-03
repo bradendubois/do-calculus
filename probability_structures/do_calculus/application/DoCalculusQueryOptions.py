@@ -98,6 +98,7 @@ def query_options(query: Query, graph: Graph, u: set) -> list:
 
     # First, all possible Z that can be deleted from our observations
     rule_1_tentative_z = union(set(power_set(w, False)), set(power_set(subtract(graph.v, (y | w | x | u)), False)))
+    # rule_1_tentative_z = union(set(power_set(w, False)), set(power_set(subtract(graph.v, (y | w | x)), False)))
     rule_1_valid_z = [set(s) for s in rule_1_tentative_z if rule_1_applicable(graph, y, x, set(s), w)]
 
     # Second, all possible Z that can switch between being observation/intervention
@@ -106,13 +107,22 @@ def query_options(query: Query, graph: Graph, u: set) -> list:
 
     # Third, all possible Z that are subsets of our interventions that can be deleted
     rule_3_tentative_z = union(set(power_set(x, False)), set(power_set(subtract(graph.v, set(y | w | x | u)), False)))
+    # rule_3_tentative_z = union(set(power_set(x, False)), set(power_set(subtract(graph.v, set(y | w | x)), False)))
     rule_3_valid_z = [set(s) for s in rule_3_tentative_z if rule_3_applicable(graph, y, x, set(s), w)]
 
     # Fourth, all possible Z that can be introduced by Jeffrey's Rule
     condition_z = set(power_set(subtract(graph.v, set(y | w | x | u)), False))
+    # condition_z = set(power_set(subtract(graph.v, set(y | w | x)), False))
 
     # Fifth, any possible sets of Y that are greater than 1, and not the entire set
     product_rule_z = [set(s) for s in set(power_set(y, False)) if 1 <= len(s) < len(y)]
+
+    # Test - filter to only move one variable at a time
+    # rule_1_valid_z = [s for s in rule_1_valid_z if len(s) == 1]
+    # rule_2_valid_z = [s for s in rule_2_valid_z if len(s) == 1]
+    # rule_3_valid_z = [s for s in rule_3_valid_z if len(s) == 1]
+    # condition_z = [s for s in condition_z if len(s) == 1]
+    # product_rule_z = [s for s in product_rule_z if len(s) == 1]
 
     # Present all options to the user (generating our menu as we go) and then get a selection
     do_options = []

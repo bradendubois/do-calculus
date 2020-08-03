@@ -1,0 +1,14 @@
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+body main div {
+  visibility: hidden;
+}
+body main .shown {
+  visibility: visible;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -44,7 +44,8 @@ def apply_rule_1(graph: Graph, y: set, x: set, z: set, w: set):
 
     # Not in W - inserting Z
     else:
-        return Sigma(rename(z)), Query(y, QueryBody(x, union(w, rename(z)))), Query(rename(z), QueryBody(x, w))
+        return Query(y, QueryBody(x, union(w, z)))
+        # return Sigma(rename(z)), Query(y, QueryBody(x, union(w, rename(z)))), Query(rename(z), QueryBody(x, w))
 
 
 ###################################################
@@ -113,4 +114,5 @@ def apply_rule_3(graph: Graph, y: set, x: set, z: set, w: set):
 
     # Inserting Z into interventions X, summation
     else:
-        return Sigma(z), Query(y, QueryBody(union(x, z), w)), Query(z, QueryBody(x, w))
+        return Query(y, QueryBody(union(x, z), w))
+        # return Sigma(z), Query(y, QueryBody(union(x, z), w)), Query(z, QueryBody(x, w))

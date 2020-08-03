@@ -16,7 +16,7 @@ from probability_structures.do_calculus.application.DoCalculusQueryOptions impor
 from probability_structures.do_calculus.ids_ai.Stack import Stack
 from probability_structures.do_calculus.ids_ai.Solution import Solution
 from probability_structures.Graph import Graph
-from util.Decorators import time
+from util.Decorators import print_time
 from util.IO_Logger import io
 
 
@@ -44,7 +44,7 @@ class IDSSolver:
 
         self.stack = Stack()
 
-    @time
+    @print_time
     def solve(self) -> Solution:
         """
         Solve The given problem
