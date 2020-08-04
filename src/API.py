@@ -39,6 +39,6 @@ class API:
         return sorted([f for f in os.listdir(PREFIX + self.access("graph_file_folder")) if f.endswith(".json")])
 
     def load_file(self, graph_file):
-        self.parsed = parse_graph_file_data(graph_file)
+        self.parsed = parse_graph_file_data(PREFIX + self.access("graph_file_folder") + "/" + graph_file)
         print(graph_file, "loaded.")
         return True

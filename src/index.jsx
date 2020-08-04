@@ -8,23 +8,35 @@ import FileSelector from "./components/FileSelector/FileSelector";
 import './index.scss'
 
 
-const App = function() {
 
-    function load(graph) {
-        console.log(graph)
-        // window.pywebview.api.load_file(graph)
+class App extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            selected: false
+        }
+
+        this.load = this.load.bind(this);
     }
 
-    return (
-    <>
-      <Header/>
-      <Editor/>
-      <FileSelector callback={load}/>
-    </>
-  )
+    load(graph) {
+        window.pywebview.api.load_file(graph)
+        this.setState({selected: true})
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.selected && <><Header/><Editor/></>}
+                {!this.state.selected && <FileSelector callback={this.load}/>}
+            </div>
+        )
+    }
 }
 
-const view = App('pywebview')
+
+const view = <App props={"pywebview"}/>
 
 const element = document.getElementById('app')
 ReactDOM.render(view, element)

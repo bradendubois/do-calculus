@@ -8,3 +8,4 @@ src/python/config/config.json
 probability-code-*
 Quick_Usage.md
 node_modules
+gui/src*
