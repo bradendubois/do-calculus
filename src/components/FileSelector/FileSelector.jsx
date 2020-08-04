@@ -2,7 +2,6 @@ import * as React from 'react'
 
 import './FileSelector.scss'
 
-
 export default function FileSelector({callback}) {
 
     const [content, saveContent] = React.useState(<div>Content Will Be Here</div>)
