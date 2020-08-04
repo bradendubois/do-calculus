@@ -12,8 +12,8 @@ import os           # Used to create a directory/config file if not found
 import argparse     # Allow command-line flag parsing
 
 try:
-    from config.primary_configuration import *
-    from util.parsers.UserIndexSelection import *
+    from python.config.primary_configuration import *
+    from python.util.parsers.UserIndexSelection import *
 
 except ModuleNotFoundError:
     print("Uh-oh: Can't import some project modules. Try running this directly in PyCharm.")

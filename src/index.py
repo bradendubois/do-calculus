@@ -50,5 +50,6 @@ def update_ticker():
 
 
 if __name__ == '__main__':
-    window = webview.create_window('pywebview-react boilerplate', entry, js_api=API())
-    webview.start(update_ticker, debug=True)
+    api = API()
+    window = webview.create_window('pywebview-react boilerplate', entry, js_api=api)
+    webview.start(debug=True)

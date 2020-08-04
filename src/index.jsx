@@ -3,17 +3,23 @@ import ReactDOM from 'react-dom'
 
 import Header from './components/Header/Header'
 import Editor from './components/Editor/Editor'
-import Ticker from './components/Ticker/Ticker'
+import FileSelector from "./components/FileSelector/FileSelector";
 
 import './index.scss'
 
+
 const App = function() {
-  return (
+
+    function load(graph) {
+        console.log(graph)
+        // window.pywebview.api.load_file(graph)
+    }
+
+    return (
     <>
       <Header/>
-      <Ticker/>
       <Editor/>
-      <div>Here</div>
+      <FileSelector callback={load}/>
     </>
   )
 }
