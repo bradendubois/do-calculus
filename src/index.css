@@ -1,0 +1,43 @@
+/* open-sans-regular - latin_cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans Regular"), local("OpenSans-Regular"), url("./assets/open-sans-v17-latin_cyrillic-regular.woff") format("woff");
+}
+/* open-sans-italic - latin_cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Open Sans Italic"), local("OpenSans-Italic"), url("./assets/open-sans-v17-latin_cyrillic-italic.woff") format("woff");
+}
+/* roboto-condensed-regular - latin_cyrillic */
+@font-face {
+  font-family: "Roboto Condensed";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto Condensed"), local("RobotoCondensed-Regular"), url("./assets/roboto-condensed-v18-latin_cyrillic-regular.woff") format("woff");
+}
+/* roboto-condensed-700 - latin_cyrillic */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14pt;
+  line-height: 130%;
+  color: #2c3e50;
+  background-color: white;
+}
+
+textarea {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14pt;
+  padding: 0.6rem;
+}
+
+h1, h2, h3 {
+  font-family: "Roboto Condensed", "Helvetica Neue", sans-serif;
+}
+
+/*# sourceMappingURL=index.css.map */
