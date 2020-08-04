@@ -217,7 +217,9 @@ def run_full_regression_suite() -> (bool, str):
 
     # Running tests but no files?
     if len(files) == 0 and access("run_regression_tests_on_launch"):
-        io.write("ERROR: Regression tests enabled, but no test files found.")
+        error = "ERROR: Regression tests enabled, but no test files found."
+        io.write(error)
+        return [(False, error)]
 
     # Output a header on regression tests being run if toggled
     if access("output_regression_test_computation"):

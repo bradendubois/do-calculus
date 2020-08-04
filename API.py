@@ -28,7 +28,7 @@ class API:
         return response
 
     def test(self):
-        return len(parse_graph_file_data("graphs/full/causal_graph_5.json")["variables"])
+        return len(parse_graph_file_data("src/python/graphs/full/causal_graph_5.json")["variables"])
 
     def load_graph_file(self, full_path: str):
         assert os.path.isfile(full_path), "File not found."

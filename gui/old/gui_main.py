@@ -110,7 +110,7 @@ class MainWindow(BoxLayout):
 
         layout = GridLayout(cols=1, spacing=5, padding=20)
         scroll = ScrollView(size_hint=(0.5, 1.0), pos_hint={"x": 0.25, "y": 0.10})
-        files = sorted(os.listdir("../../graphs/full"))
+        files = sorted(os.listdir("../../src/python/graphs/full"))
         for file in files:
             button = Button(text=file, size_hint_max_y="30")
             button.bind(on_press=load_file)

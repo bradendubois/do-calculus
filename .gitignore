@@ -1,10 +1,10 @@
 .*
 !.gitignore
 */__pycache__/*
-config/__pycache__/
+src/python/config/__pycache__/
 logs/*
 *.pyc
-config/config.json
+src/python/config/config.json
 probability-code-*
 Quick_Usage.md
 node_modules

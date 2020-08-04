@@ -1,5 +1,3 @@
-
-import itertools
 from probability_structures.CausalGraph import *
 
 vars = [["a", "~a"], ["b", "~b"], ["c", "~c"]]

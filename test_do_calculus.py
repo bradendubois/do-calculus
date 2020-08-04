@@ -1,6 +1,5 @@
 from probability_structures.do_calculus.application.rules.DoCalculusRules import *
 from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
-from probability_structures.do_calculus.application.QueryListParser import ql_probability
 from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 from util.parsers.GraphLoader import parse_graph_file_data
 
@@ -16,7 +15,7 @@ def print_query(*packed_query):
 
 
 # Parse the file
-parsed = parse_graph_file_data("graphs/full/causal_graph_6.json")
+parsed = parse_graph_file_data("src/python/graphs/full/causal_graph_6.json")
 g = parsed["graph"]
 
 # Task 1 : z | do(x)

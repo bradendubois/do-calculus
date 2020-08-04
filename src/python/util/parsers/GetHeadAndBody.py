@@ -10,8 +10,6 @@
 
 from probability_structures.VariableStructures import *
 
-from util.IO_Logger import io
-
 error_msg_formatting = \
         "The given data is incorrect:\n" + \
         " - Some outcome may not be possible for some variable\n" + \

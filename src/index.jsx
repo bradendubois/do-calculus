@@ -13,6 +13,7 @@ const App = function() {
       <Header/>
       <Ticker/>
       <Editor/>
+      <div>Here</div>
     </>
   )
 }

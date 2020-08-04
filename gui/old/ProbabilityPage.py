@@ -1,33 +1,16 @@
-import kivy
-
-from kivy.app import App
-from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem, TabbedPanelHeader
-from kivy.lang import Builder
-from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from functools import partial
-import os
-from kivy.config import Config
-from kivy.clock import Clock
-from kivy.core.window import Window
 
 from kivy.config import Config
-from kivy.clock import Clock
-from kivy.core.window import Window
-from kivy.app import App
-from kivy.graphics import Color, Rectangle
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.dropdown import DropDown
 
 from probability_structures.BackdoorController import BackdoorController
 from probability_structures.VariableStructures import Outcome
-from util.parsers.GraphLoader import parse_graph_file_data, ConditionalProbabilityTable, Intervention
+from util.parsers.GraphLoader import Intervention
 
 Config.set('graphics', 'resizable', True)
 

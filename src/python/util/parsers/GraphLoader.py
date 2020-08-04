@@ -9,8 +9,6 @@
 
 # Here, we can simply take a graph file and load it, isolating this code and reducing the Causal Graph filesize
 
-import os
-
 from probability_structures.ConditionalProbabilityTable import *
 from probability_structures.Graph import Graph
 from probability_structures.VariableStructures import *
