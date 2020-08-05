@@ -1,10 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Header from './components/Header/Header'
 import Editor from './components/Editor/Editor'
 import FileSelector from "./components/FileSelector/FileSelector";
-
 import Sidebar from "./components/Sidebar/Sidebar"
 import Main from "./components/Main/Main"
 

@@ -1,3 +1,6 @@
-
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
 
 /*# sourceMappingURL=Sidebar.css.map */

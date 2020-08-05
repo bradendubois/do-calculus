@@ -43,7 +43,7 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={"sidebar"}>
                 <h1>Sidebar</h1>
                 {this.state.buttons}
             </div>

@@ -38,7 +38,15 @@ class API:
     def get_graph_names(self):
         return sorted([f for f in os.listdir(PREFIX + self.access("graph_file_folder")) if f.endswith(".json")])
 
+    def all_variable_data(self):
+        variables = self.parsed["variables"]
+        return [[i, variables[i].outcomes, variables[i].parents] for i in sorted(variables)]
+
+    def variable_table(self, variable: str):
+        t = self.parsed["tables"][variable]
+        return [[variable, t.given, "P"], *[[row[0].outcome, [x.outcome for x in row[1]], row[2]] for row in t.table_rows]]
+
     def load_file(self, graph_file):
         self.parsed = parse_graph_file_data(PREFIX + self.access("graph_file_folder") + "/" + graph_file)
-        print(graph_file, "loaded.")
+        # print(graph_file, "loaded.")
         return True

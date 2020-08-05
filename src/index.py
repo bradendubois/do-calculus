@@ -51,5 +51,5 @@ def update_ticker():
 
 if __name__ == '__main__':
     api = API()
-    window = webview.create_window('pywebview-react boilerplate', entry, js_api=api)
+    window = webview.create_window("Probability Code", entry, js_api=api)
     webview.start(debug=True)
