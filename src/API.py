@@ -50,3 +50,13 @@ class API:
         self.parsed = parse_graph_file_data(PREFIX + self.access("graph_file_folder") + "/" + graph_file)
         # print(graph_file, "loaded.")
         return True
+
+    def variables(self):
+        return sorted([k for k in self.parsed["variables"]])
+
+    def outcomes(self, variable):
+        return self.parsed["variables"][variable].outcomes
+
+    def outcome_dict(self):
+        return {k: self.outcomes(k) for k in self.parsed["variables"]}
+
