@@ -9,7 +9,7 @@
 
 # Store a result, mapped to by some string representation of its query
 
-from config.config_manager import access
+from python.config.config_manager import access
 
 # Just use some dictionary to map
 stored_computations = dict()

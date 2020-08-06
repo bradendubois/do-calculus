@@ -11,13 +11,13 @@
 
 import itertools
 
-from probability_structures.Graph import Graph
-from probability_structures.VariableStructures import *
+from python.probability_structures.Graph import Graph
+from python.probability_structures.VariableStructures import *
 
-from util.IO_Logger import io
-from util.parsers.ProbabilityString import p_str
-from util.ResultCache import *
-from util.ProbabilityExceptions import *
+from python.util.IO_Logger import io
+from python.util.parsers.ProbabilityString import p_str
+from python.util.ResultCache import *
+from python.util.ProbabilityExceptions import *
 
 
 class ProbabilityEngine:

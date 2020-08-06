@@ -1,8 +1,9 @@
 import webview
 import os
 
+from python.probability_structures.CausalGraph import CausalGraph
 from python.config.config_manager import access
-from python.util.parsers.GraphLoader import parse_graph_file_data
+from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
 
 # Maybe this has to change for a build? How to get the path in dev, as well as a build?
 PREFIX = "src/python/"
@@ -20,6 +21,7 @@ class API:
         self._outcomes = None
         self._tables = None
         self._graph = None
+        self._cg = None
 
     def fullscreen(self):
         webview.windows[0].toggle_fullscreen()
@@ -54,6 +56,7 @@ class API:
         self._outcomes = self.parsed["outcomes"]
         self._tables = self.parsed["tables"]
         self._graph = self.parsed["graph"]
+        self._cg = CausalGraph(**self.parsed)
 
         return True
 
@@ -66,3 +69,7 @@ class API:
     def outcome_dict(self):
         return {k: self._outcomes[k] for k in self._variables}
 
+    def execute_query(self, query: str):
+        s = query.split("|")
+        head, body = parse_outcomes_and_interventions(s[0]), parse_outcomes_and_interventions(s[1])
+        return self._cg.probability_query(head, body)
