@@ -155,7 +155,7 @@ class CausalGraph:
 
                 # Second, we do our P(Z)
                 io.write_log("Computing sub-query: ", p_str(z_outcomes, given))
-                p_z = engine.probability((z_outcomes, []))
+                p_z = engine.probability((z_outcomes, given))
                 # print(p_str(z_outcomes, []), "=", p_z)
 
                 p += p_y_x_z * p_z      # Add to our total
