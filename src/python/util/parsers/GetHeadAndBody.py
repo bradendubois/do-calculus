@@ -8,7 +8,7 @@
 #########################################################
 
 
-from probability_structures.VariableStructures import *
+from python.probability_structures.VariableStructures import *
 
 error_msg_formatting = \
         "The given data is incorrect:\n" + \

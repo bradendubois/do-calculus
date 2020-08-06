@@ -9,7 +9,7 @@
 
 # A basic Solution class / abstraction for the IDS Solver
 
-from probability_structures.do_calculus.application.QueryStructures import QueryList, Sigma, Query
+from python.probability_structures.do_calculus.application.QueryStructures import QueryList, Sigma, Query
 
 
 class Solution:

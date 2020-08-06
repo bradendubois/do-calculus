@@ -9,10 +9,10 @@
 
 from datetime import datetime
 
-from probability_structures.CausalGraph import *
-from probability_structures.VariableStructures import *
-from util.ProbabilityExceptions import *
-from util.parsers.GraphLoader import parse_graph_file_data
+from python.probability_structures.CausalGraph import *
+from python.probability_structures.VariableStructures import *
+from python.util.ProbabilityExceptions import *
+from python.util.parsers.GraphLoader import parse_graph_file_data
 
 
 def create_head_and_body(head_and_body: list) -> tuple:
@@ -52,7 +52,7 @@ def run_test_file(test_file: str) -> (bool, str):
     # Default location assumed unless specified
     directory = root + "/" + access("graph_file_folder")
     if "file_directory" in loaded_test_file:
-        directory = loaded_test_file["file_directory"]
+        directory = "python/" + loaded_test_file["file_directory"]
 
     # Ensure the file exists
     file_path = directory + "/" + loaded_test_file["test_file"]
@@ -209,11 +209,11 @@ def run_full_regression_suite() -> (bool, str):
     """
 
     # Fail / Exit if there is no directory found
-    if not os.path.isdir(access("regression_directory")):
+    if not os.path.isdir("python/" + access("regression_directory")):
         return False, "Cannot locate any regression tests."
 
     # Find all JSON files in that directory
-    files = sorted([file_name for file_name in os.listdir(root + "/" + access("regression_directory")) if file_name.endswith(".json")])
+    files = sorted([file_name for file_name in os.listdir("python/" + access("regression_directory")) if file_name.endswith(".json")])
 
     # Running tests but no files?
     if len(files) == 0 and access("run_regression_tests_on_launch"):

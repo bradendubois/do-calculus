@@ -108,9 +108,8 @@ class ProbabilityQuery extends React.Component {
             })
         }
 
-        this.infoBoxRef.current.receive_error("Reset " + variable)
+        this.infoBoxRef.current.receive_message("Reset " + variable)
         this.update_query_string()
-
     }
 
     cycle(variable, variable_type) {
@@ -201,7 +200,6 @@ class ProbabilityQuery extends React.Component {
             document.getElementById("queryResult").innerText = response
         })
     }
-
 
     render() {
         return (

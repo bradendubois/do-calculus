@@ -9,17 +9,17 @@
 
 # A main REPL area allowing the user to give their sets and apply the rules of do-calculus
 
-from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
-from probability_structures.do_calculus.application.QueryListParser import ql_probability
-from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
-from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
+from python.probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options
+from python.probability_structures.do_calculus.application.QueryListParser import ql_probability
+from python.probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
+from python.probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
 
-from probability_structures.Graph import Graph
+from python.probability_structures.Graph import Graph
 
-from util.IO_Logger import io
-from util.helpers.CallableItemWrapper import CallableItemWrapper
-from util.helpers.DisjointSets import disjoint
-from util.parsers.UserIndexSelection import user_index_selection
+from python.util.IO_Logger import io
+from python.util.helpers.CallableItemWrapper import CallableItemWrapper
+from python.util.helpers.DisjointSets import disjoint
+from python.util.parsers.UserIndexSelection import user_index_selection
 
 
 ########################

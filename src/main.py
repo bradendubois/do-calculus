@@ -15,7 +15,7 @@ from platform import system
 import json
 
 # Only import (from the software itself) the configuration module to see which modules are enabled
-from config.config_manager import access
+from python.config.config_manager import access
 
 # Update / pull if enabled
 if access("github_pull_on_launch"):
@@ -25,16 +25,16 @@ if access("github_pull_on_launch"):
         print("Sorry, the self-updating module is currently only supported for Mac/Linux.")
     else:
         import subprocess
-        subprocess.call(["./scripts/git_update.sh"])
+        subprocess.call(["./python/scripts/git_update.sh"])
 
 # Import the IO Logger *after* potentially updating
-from util.IO_Logger import io
+from python.util.IO_Logger import io
 
 # If set, run any tests before starting up
 if access("run_regression_tests_on_launch"):
 
     # Import the regression suite
-    from util.RegressionTesting import run_full_regression_suite
+    from python.util.RegressionTesting import run_full_regression_suite
 
     # List of (success_boolean, message) tuples returned
     # Last item will be a summary "(false, "there were errors")" / "(true, "no errors")"
@@ -51,14 +51,14 @@ if access("run_regression_tests_on_launch"):
         exit(-1)
 
 # Does the directory of graphs exist?
-if path.isdir(access("graph_file_folder")):
+if path.isdir("python/" + access("graph_file_folder")):
 
     # Import the REPL Driver and Graph Loader libraries
-    from probability_structures.REPL_Driver import REPLDriver, user_index_selection
-    from util.parsers.GraphLoader import parse_graph_file_data
+    from python.probability_structures.REPL_Driver import REPLDriver, user_index_selection
+    from python.util.parsers.GraphLoader import parse_graph_file_data
 
     # Find all JSON files in that directory
-    files = sorted([file_name for file_name in listdir(access("graph_file_folder")) if file_name.endswith(".json")])
+    files = sorted([file_name for file_name in listdir("python/" + access("graph_file_folder")) if file_name.endswith(".json")])
     longest_file_length = max(len(file) for file in files)
 
     # Only one file, just select it and exit when done
@@ -75,7 +75,7 @@ if path.isdir(access("graph_file_folder")):
             # Generate the menu options list to present and query
             files_options = []
             for file in files:
-                with open(access("graph_file_folder") + "/" + file) as f:
+                with open("python/" + access("graph_file_folder") + "/" + file) as f:
                     single_file = [file]
                     loaded = json.load(f)
                     if "name" in loaded:
@@ -93,7 +93,7 @@ if path.isdir(access("graph_file_folder")):
             graph_file = files[int(selection)]
 
             print("\nLoading:", graph_file)
-            parsed_contents = parse_graph_file_data(access("graph_file_folder") + "/" + graph_file)
+            parsed_contents = parse_graph_file_data("python/" + access("graph_file_folder") + "/" + graph_file)
             REPLDriver(parsed_contents).run()
 
 # Directory not found

@@ -95,11 +95,14 @@ class IOLogger:
 
         # Flags that can be a valid reason to output to the terminal
         regression_output = self.regression_mode and access("output_regression_test_computation")
+
         computation_output = not self.regression_mode and access("output_computation_steps")
+        computation_log = not self.regression_mode and access("log_computation")
+
         io_override = override and not self.regression_mode
 
         # Check if we're in either mode to be logging data
-        if not regression_output and not computation_output and not io_override:
+        if not regression_output and not computation_output and not computation_log and not io_override:
             return
 
         # We can put this indent in front of each line of the message passed; this allows us to detect the recursive
@@ -123,7 +126,7 @@ class IOLogger:
             if regression_output or computation_output or io_override:
                 print(str(component).replace("\n", "\n" + indent, 100), end=join)
 
-            if self.file:
+            if self.file and computation_log:
                 self.file.write(str(component).replace("\n",  "\n" + indent, 100) + join)
 
         if regression_output or computation_output or io_override:

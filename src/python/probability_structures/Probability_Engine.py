@@ -72,6 +72,7 @@ class ProbabilityEngine:
             assert out.name in self.graph.v and out.outcome in self.outcomes[out.name], self.error_msg_formatting
 
         # Double check that all our edges are properly disabled where they should be
+        self.graph.reset_disabled()
         self.graph.disable_incoming(*{s for s in head + body if isinstance(s, Intervention)})
         return self._compute(head, body)
 

@@ -96,12 +96,16 @@ class CausalGraph:
             deconfounding_sets = backdoor_controller.get_all_z_subsets(y, x)
 
             # Filter out our Z sets with observations in them and verify there are still sets Z
-            deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
+            # deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
+            # print("Pre:", deconfounding_sets, self.graph.incoming_disabled, self.graph.outgoing_disabled)
+            # TODO - Xj | do(Xi) X1, or Xj | do(Xi) X2 seems to not like having X3 / X5, respectively
+            deconfounding_sets = [s for s in deconfounding_sets if all(g.name not in s for g in body)]
             if len(deconfounding_sets) == 0:
-                io.write_log("No deconfounding set Z can exist for the given data.")
+                io.write("No deconfounding set Z can exist for the given data.")
                 return
 
             # Disable the incoming edges into our do's, and compute
+            self.graph.reset_disabled()
             self.graph.disable_incoming(*[var for var in body if isinstance(var, Intervention)])
             probability = self.probability_query_with_interventions(head, body, deconfounding_sets)
             self.graph.reset_disabled()
@@ -186,9 +190,9 @@ class CausalGraph:
 
         only_result = None      # Sentinel value
         for z_set in selected:
-            io.write_log("Computing with Z Set:", str(z_set))
+            io.write("Computing with Z Set:", str(z_set))
             result = single_z_set_run(z_set)  # Compute with a specific set
-            io.write_log(str(z_set), "=", str(result), end="")
+            io.write(str(z_set), "=", str(result), end="")
 
             if only_result is None:  # Storing first result
                 only_result = result

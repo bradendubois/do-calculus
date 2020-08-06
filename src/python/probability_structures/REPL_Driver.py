@@ -7,17 +7,16 @@
 #                                                       #
 #########################################################
 
-from probability_structures.do_calculus.DoCalculus import do_calculus_repl
+from python.probability_structures.do_calculus.DoCalculus import do_calculus_repl
+from python.probability_structures.BackdoorController import BackdoorController
+from python.probability_structures.CausalGraph import CausalGraph
+from python.probability_structures.VariableStructures import *
 
-from probability_structures.BackdoorController import BackdoorController
-from probability_structures.CausalGraph import CausalGraph
-from probability_structures.VariableStructures import *
+from python.util.IO_Logger import *
+from python.util.ResultCache import *
 
-from util.IO_Logger import *
-from util.ResultCache import *
-
-from util.parsers.GetHeadAndBody import get_valid_head_and_body
-from util.parsers.UserIndexSelection import *
+from python.util.parsers.GetHeadAndBody import get_valid_head_and_body
+from python.util.parsers.UserIndexSelection import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention

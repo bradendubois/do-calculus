@@ -10,11 +10,11 @@
 # Isolated for re-usability; let's take our graph, and our query, and return a list of
 #   all possible applications of the do-calculus or standard inference rules
 
-from probability_structures.do_calculus.application.rules.DoCalculusRules import *
-from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
-from probability_structures.do_calculus.application.CustomSetFunctions import subtract, union
-from probability_structures.Graph import Graph
-from util.helpers.PowerSet import power_set
+from python.probability_structures.do_calculus.application.rules.DoCalculusRules import *
+from python.probability_structures.do_calculus.application.rules.StandardInferenceRules import *
+from python.probability_structures.do_calculus.application.CustomSetFunctions import subtract, union
+from python.probability_structures.Graph import Graph
+from python.util.helpers.PowerSet import power_set
 
 # A dictionary cache to store already-computed Query results rather than constantly recompute them from scratch
 query_cache = dict()

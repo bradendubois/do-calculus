@@ -10,14 +10,14 @@
 # Basic IDS-approach solver taking an initial query and solving until there are no interventions left
 #   Thanks, Professor Horsch, for CMPT 317!
 
-from probability_structures.do_calculus.application.CustomSetFunctions import clean
-from probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
-from probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options, query_cache
-from probability_structures.do_calculus.ids_ai.Stack import Stack
-from probability_structures.do_calculus.ids_ai.Solution import Solution
-from probability_structures.Graph import Graph
-from util.Decorators import print_time
-from util.IO_Logger import io
+from python.probability_structures.do_calculus.application.CustomSetFunctions import clean
+from python.probability_structures.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
+from python.probability_structures.do_calculus.application.DoCalculusQueryOptions import do_calculus_options, query_cache
+from python.probability_structures.do_calculus.ids_ai.Stack import Stack
+from python.probability_structures.do_calculus.ids_ai.Solution import Solution
+from python.probability_structures.Graph import Graph
+from python.util.Decorators import print_time
+from python.util.IO_Logger import io
 
 
 class IDSSolver:

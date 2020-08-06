@@ -11,10 +11,10 @@
 
 import itertools
 
-from probability_structures.do_calculus.application.CustomSetFunctions import clean
-from probability_structures.do_calculus.application.QueryStructures import QueryList, Sigma, Query
-from probability_structures.Graph import Graph, Outcome, Intervention
-from probability_structures.Probability_Engine import ProbabilityEngine
+from python.probability_structures.do_calculus.application.CustomSetFunctions import clean
+from python.probability_structures.do_calculus.application.QueryStructures import QueryList, Sigma, Query
+from python.probability_structures.Graph import Graph, Outcome, Intervention
+from python.probability_structures.Probability_Engine import ProbabilityEngine
 
 
 def ql_probability(known: dict, graph: Graph, outcomes: dict, tables: dict, ql: QueryList, **kwargs):
