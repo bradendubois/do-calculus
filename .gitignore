@@ -9,3 +9,4 @@ probability-code-*
 Quick_Usage.md
 node_modules
 gui/src*
+src/python/logs/

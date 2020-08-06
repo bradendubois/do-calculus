@@ -168,23 +168,35 @@ class ProbabilityQuery extends React.Component {
             }
         }
 
+        // Whether the button should be enabled or not
+        if (outcomes.length > 0) {
+            this.enable_button()
+        } else {
+            this.disable_button()
+        }
+
         // Build new Query String
-
         let query_string = outcomes.join(", ") + " | "
-
         if (interventions.length > 0) {
             query_string += " do(" + interventions.join(", ") + ") "
-
             if (observations.length > 0) query_string += ", "
         } query_string += observations.join(", ")
 
         this.setState({currentQuery: query_string})
     }
 
-    executeQuery() {
-        // TODO - Detection here of an invalid query, or do this in the "updating" section and disable/enable button
-        //  accordingly
+    enable_button() {
+        let button = document.getElementById("queryButton")
+        button.classList.remove("disabled")
+    }
 
+    disable_button() {
+        let button = document.getElementById("queryButton")
+        button.classList.add("disabled")
+    }
+
+    executeQuery() {
+        if (document.getElementById("queryButton").classList.contains("disabled")) return
         window.pywebview.api.execute_query(this.state.currentQuery).then(response => {
             document.getElementById("queryResult").innerText = response
         })
@@ -204,7 +216,7 @@ class ProbabilityQuery extends React.Component {
                         <div><p>{this.state.currentQuery}</p></div>
                     </label>
                     <div>
-                        <button onClick={() => this.executeQuery()}>Compute Query</button>
+                        <button id={"queryButton"} onClick={() => this.executeQuery()}>Compute Query</button>
                         <p id={"queryResult"} placeholder={"Results here..."} />
                     </div>
                 </div>

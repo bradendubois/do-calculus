@@ -2,5 +2,8 @@
   display: flex;
   flex-direction: row;
 }
+.probabilityQueryContainer .probabilityButtons #queryButton.disabled {
+  background-color: grey;
+}
 
 /*# sourceMappingURL=ProbabilityQuery.css.map */
