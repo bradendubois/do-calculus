@@ -9,18 +9,22 @@ class ProbabilityQuery extends React.Component {
     constructor(props) {
         super(props);
 
-
+        // Function binding
         this.reset_row = this.reset_row.bind(this)
         this.cycle = this.cycle.bind(this)
+        this.update_query_string = this.update_query_string.bind(this)
 
+        // Ref to link to the infoBox
         this.infoBoxRef = React.createRef()
 
+        // Initialize state before the API calls to put some temporary data in the state
         this.state = {
             queryTable: <p>Loading...</p>,
             infoBox: <InfoBox ref={this.infoBoxRef}/>,
             outcomes: {},
             outcome_index: {},
-            variable_type: {}
+            variable_type: {},
+            currentQuery: ""
         }
 
         let full_outcomes = {}
@@ -51,7 +55,6 @@ class ProbabilityQuery extends React.Component {
                 <tbody>
                 {Object.keys(full_outcomes).map(row => {
 
-                    console.log("Row", row)
                     return (
                         <tr>
                             <td>
@@ -105,7 +108,9 @@ class ProbabilityQuery extends React.Component {
             })
         }
 
-        this.infoBoxRef.current.receive_error("RESET")
+        this.infoBoxRef.current.receive_error("Reset " + variable)
+        this.update_query_string()
+
     }
 
     cycle(variable, variable_type) {
@@ -136,7 +141,55 @@ class ProbabilityQuery extends React.Component {
 
         // Update text
         button_pressed.innerText = new_text
+
+        this.update_query_string()
     }
+
+    update_query_string() {
+
+        let outcomes = []
+        let interventions = []
+        let observations = []
+
+        for (let key of Object.keys(this.state.variable_type)) {
+            if (this.state.variable_type[key] === "") continue
+
+            let outcome = this.state.outcomes[key][this.state.outcome_index[key]]
+            let rep = key + " = " + outcome
+            switch (this.state.variable_type[key]) {
+                case "outcome":
+                    outcomes.push(rep)
+                    break
+                case "intervention":
+                    interventions.push(rep)
+                    break
+                case "observation":
+                    observations.push(rep)
+            }
+        }
+
+        // Build new Query String
+
+        let query_string = outcomes.join(", ") + " | "
+
+        if (interventions.length > 0) {
+            query_string += " do(" + interventions.join(", ") + ") "
+
+            if (observations.length > 0) query_string += ", "
+        } query_string += observations.join(", ")
+
+        this.setState({currentQuery: query_string})
+    }
+
+    executeQuery() {
+        // TODO - Detection here of an invalid query, or do this in the "updating" section and disable/enable button
+        //  accordingly
+
+        window.pywebview.api.execute_query(this.state.currentQuery).then(response => {
+            document.getElementById("queryResult").innerText = response
+        })
+    }
+
 
     render() {
         return (
@@ -145,6 +198,15 @@ class ProbabilityQuery extends React.Component {
                 <div className={"mainContent"}>
                     {this.state.queryTable}
                     {this.state.infoBox}
+                </div>
+                <div className={"probabilityButtons"}>
+                    <label>Query:
+                        <div><p>{this.state.currentQuery}</p></div>
+                    </label>
+                    <div>
+                        <button onClick={() => this.executeQuery()}>Compute Query</button>
+                        <p id={"queryResult"} placeholder={"Results here..."} />
+                    </div>
                 </div>
             </div>
         )
