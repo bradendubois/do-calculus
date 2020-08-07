@@ -1,6 +1,14 @@
+.probabilityQueryContainer {
+  display: flex;
+  flex-direction: column;
+}
 .probabilityQueryContainer .mainContent {
   display: flex;
   flex-direction: row;
+  height: 60vh;
+}
+.probabilityQueryContainer .mainContent div {
+  overflow-y: auto;
 }
 .probabilityQueryContainer .probabilityButtons #queryButton.disabled {
   background-color: grey;

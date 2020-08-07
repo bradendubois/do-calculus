@@ -41,7 +41,7 @@ class InfoBox extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={"infoBoxContainer"}>
                 <h3>Warnings</h3>
                 <ul>
                     {this.state.warnings.length > 0 ?

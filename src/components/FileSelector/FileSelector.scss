@@ -1,4 +1,46 @@
-.editor-container {
+.fileSelectorContainer {
+
+  max-width: 500px;
+  width: 60%;
+  margin: 20px auto auto auto;
+
+  h1 {
+
+  }
+
+  hr {
+
+  }
+
+  .fileButtonContainer {
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+    width: 100%;
+
+    a {
+      width: 80%;
+      transition: 0.2s;
+      margin: 0 auto;
+
+      button {
+
+        width: 100%;
+
+      }
+
+      &:hover {
+        width: 85%;
+      }
+
+      &:active {
+        width: 90%;
+      }
+    }
+  }
+
   padding: 0 3rem;
   text-align: center;
 

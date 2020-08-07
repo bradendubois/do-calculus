@@ -6,21 +6,20 @@ class Sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            text: "not pow",
-            buttons: [
-                <button onClick={() => this.setActive("Graph Data")}>Graph Data</button>,
-                <button onClick={() => this.setActive("Probability Query")}>Probability Query</button>,
-                <button onClick={() => this.setActive("Do-Calculus")}>Do-Calculus</button>,
-                <button onClick={() => this.setActive("Backdoor Paths")}>Backdoor Paths</button>
-            ]
-        }
+        this.state = {}
 
         this.mainRef = this.props.mainRef
 
+        this.button_ids = [
+            "graphDataPageButton",
+            "probabilityQueryPageButton",
+            "doCalculusPageButton",
+            "backdoorPathsPageButton"
+        ]
+
         this.setActive = this.setActive.bind(this)
-        // this.revealButton = this.revealButton.bind(this)
-        //setTimeout(this.revealButton, 1000, 0)
+        this.revealButton = this.revealButton.bind(this)
+        setTimeout(this.revealButton, 1000, 0)
     }
 
     setActive(page) {
@@ -28,15 +27,8 @@ class Sidebar extends React.Component {
     }
 
     revealButton(button_index) {
-
-        let copied = this.state.buttons;
-        let button = this.buttons[button_index]
-        // console.log(button);
-        // button.setAttribute("className", "shown");// = "shown"
-        copied.push(this.buttons[button_index])
-        this.setState({buttons: copied})
-
-        if (button_index < this.state.buttons.length - 1) {
+        document.getElementById(this.button_ids[button_index]).classList.add("revealed")
+        if (button_index < this.button_ids.length - 1) {
             setTimeout(this.revealButton, 1000, button_index + 1)
         }
     }
@@ -44,8 +36,10 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className={"sidebar"}>
-                <h1>Sidebar</h1>
-                {this.state.buttons}
+                <button id={"graphDataPageButton"} onClick={() => this.setActive("Graph Data")}>Graph Data</button>
+                <button id={"probabilityQueryPageButton"} onClick={() => this.setActive("Probability Query")}>Probability Query</button>
+                <button id={"doCalculusPageButton"} onClick={() => this.setActive("Do-Calculus")}>Do-Calculus</button>
+                <button id={"backdoorPathsPageButton"} onClick={() => this.setActive("Backdoor Paths")}>Backdoor Paths</button>
             </div>
 
         )

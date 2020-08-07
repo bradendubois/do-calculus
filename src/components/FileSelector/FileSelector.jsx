@@ -13,17 +13,19 @@ export default function FileSelector({callback}) {
             window.pywebview.api.get_graph_names().then(graphs => {
                 let buttons = []
                 for (let graph of graphs) {
-                    buttons.push(<button onClick={() => callback(graph)}>{graph}</button>)
-                }
-
-                saveContent(buttons)
+                    buttons.push(<a onClick={() => callback(graph)}><button>{graph}</button></a>)
+                } saveContent(buttons)
             })
         })
     }, [])
 
     return (
-        <div className='editor-container'>
-            {content}
+        <div id={"fileSelectorContainer"} className='fileSelectorContainer'>
+            <h1>Select a File</h1>
+            <hr />
+            <div className={"fileButtonContainer"}>
+                {content}
+            </div>
         </div>
     )
 }

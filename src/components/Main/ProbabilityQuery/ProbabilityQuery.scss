@@ -1,10 +1,18 @@
 .probabilityQueryContainer {
 
+  display: flex;
+  flex-direction: column;
+
   .mainContent {
 
     display: flex;
     flex-direction: row;
 
+    height: 60vh;
+
+    div {
+      overflow-y: auto;
+    }
   }
 
   .probabilityButtons {

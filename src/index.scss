@@ -1,5 +1,13 @@
 @import './styles/fonts.scss';
 
+#id {
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -26,4 +34,38 @@ div .full {
   display: flex;
   flex-direction: row;
 
+}
+
+#content {
+
+  display: flex;
+  flex-direction: row;
+
+}
+
+@keyframes slideAway {
+
+  0% {
+    transform: translateX(0vw);
+  }
+
+  10% {
+    transform: translateX(-10vw);
+  }
+
+
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes slideIn {
+
+  0% {
+    transform: translateX(-100vw);
+  }
+
+  100% {
+    transform: translateX(0vw);
+  }
 }
