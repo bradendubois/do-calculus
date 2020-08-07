@@ -6,7 +6,9 @@ class Sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            active: ""
+        }
 
         this.mainRef = this.props.mainRef
 
@@ -22,8 +24,14 @@ class Sidebar extends React.Component {
         setTimeout(this.revealButton, 1000, 0)
     }
 
-    setActive(page) {
+    setActive(page, buttonID) {
+        if (this.state.active !== "") {
+            document.getElementById(this.state.active).classList.remove("active")
+        }
+
         this.mainRef.current.setActive(page)
+        this.setState({active: buttonID})
+        document.getElementById(buttonID).classList.add("active")
     }
 
     revealButton(button_index) {
@@ -36,10 +44,22 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className={"sidebar"}>
-                <button id={"graphDataPageButton"} onClick={() => this.setActive("Graph Data")}>Graph Data</button>
-                <button id={"probabilityQueryPageButton"} onClick={() => this.setActive("Probability Query")}>Probability Query</button>
-                <button id={"doCalculusPageButton"} onClick={() => this.setActive("Do-Calculus")}>Do-Calculus</button>
-                <button id={"backdoorPathsPageButton"} onClick={() => this.setActive("Backdoor Paths")}>Backdoor Paths</button>
+                <button
+                    id={"graphDataPageButton"}
+                    onClick={() => this.setActive("Graph Data", "graphDataPageButton")}
+                >Graph Data</button>
+                <button
+                    id={"probabilityQueryPageButton"}
+                    onClick={() => this.setActive("Probability Query", "probabilityQueryPageButton")}
+                >Probability Query</button>
+                <button
+                    id={"doCalculusPageButton"}
+                    onClick={() => this.setActive("Do-Calculus", "doCalculusPageButton")}
+                ><i>do</i>-Calculus</button>
+                <button
+                    id={"backdoorPathsPageButton"}
+                    onClick={() => this.setActive("Backdoor Paths", "backdoorPathsPageButton")}
+                >Backdoor Paths</button>
             </div>
 
         )
