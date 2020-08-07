@@ -1,10 +1,21 @@
 .graphDataContainer {
 
-  .mainContent {
+  max-height: 100vh;
+
+  .mainGraphContent {
 
     display: flex;
     flex-direction: row;
 
+    div {
+      overflow-y: auto;
+    }
 
+    tbody {
+
+      a {
+        color: #1950f3
+      }
+    }
   }
 }

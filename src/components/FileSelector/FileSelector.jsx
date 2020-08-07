@@ -13,7 +13,8 @@ export default function FileSelector({callback}) {
             window.pywebview.api.get_graph_names().then(graphs => {
                 let buttons = []
                 for (let graph of graphs) {
-                    buttons.push(<a onClick={() => callback(graph)}><button>{graph}</button></a>)
+                    buttons.push(<a
+                        onClick={() => callback(graph)}><button className={"niceButton"}>{graph}</button></a>)
                 } saveContent(buttons)
             })
         })

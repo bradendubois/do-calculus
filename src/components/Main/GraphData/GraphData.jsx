@@ -21,7 +21,10 @@ class GraphData extends React.Component {
                 </tr>
                 {data.map(row =>
                     <tr>
-                        <td><button onClick={() => this.load_table(row[0])}>{row[0]}</button></td>
+                        <td><button
+                            className={"niceButton"}
+                            onClick={() => this.load_table(row[0])}
+                        >{row[0]}</button></td>
                         <td>{row[1].map(o => <>{o}</>)}</td>
                         <td>{row[2].map(p => <a onClick={() => this.load_table(p)}>{p}</a>)}</td>
                     </tr>
@@ -60,9 +63,13 @@ class GraphData extends React.Component {
         return (
             <div className={"graphDataContainer"}>
                 <h1>Variable Data</h1>
-                <div className={"mainContent"}>
-                    {this.state.tbody}
-                    {this.state.table}
+                <div className={"mainGraphContent"}>
+                    <div>
+                        {this.state.tbody}
+                    </div>
+                    <div>
+                        {this.state.table}
+                    </div>
                 </div>
             </div>
         )

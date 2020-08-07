@@ -29,6 +29,7 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14pt;
   line-height: 130%;

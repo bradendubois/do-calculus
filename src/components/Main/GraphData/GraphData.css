@@ -1,6 +1,15 @@
-.graphDataContainer .mainContent {
+.graphDataContainer {
+  max-height: 100vh;
+}
+.graphDataContainer .mainGraphContent {
   display: flex;
   flex-direction: row;
+}
+.graphDataContainer .mainGraphContent div {
+  overflow-y: auto;
+}
+.graphDataContainer .mainGraphContent tbody a {
+  color: #1950f3;
 }
 
 /*# sourceMappingURL=GraphData.css.map */
