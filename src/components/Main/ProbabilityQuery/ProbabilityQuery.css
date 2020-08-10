@@ -23,6 +23,14 @@
 .probabilityQueryContainer .mainContent #probabilityButtonTable button.selected {
   background-color: #4a96ee;
 }
+.probabilityQueryContainer .probabilityButtons label {
+  display: inline;
+}
+.probabilityQueryContainer .probabilityButtons p {
+  margin: 0;
+  width: fit-content;
+  margin-block: 0;
+}
 .probabilityQueryContainer .probabilityButtons #queryButton.disabled {
   background-color: grey;
 }

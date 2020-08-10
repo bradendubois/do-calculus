@@ -198,7 +198,7 @@ class ProbabilityQuery extends React.Component {
             if (observations.length > 0) query_string += ", "
         } query_string += observations.join(", ")
 
-        this.setState({currentQuery: query_string})
+        this.setState({currentQuery: query_string, queryResults: ""})
     }
 
     enable_button() {
@@ -227,15 +227,17 @@ class ProbabilityQuery extends React.Component {
                     {this.state.infoBox}
                 </div>
                 <div className={"probabilityButtons"}>
-                    <label>Query:
-                        <p>{this.state.currentQuery}</p>
-                    </label>
-                    <label>Result:
-                        <p>{this.state.queryResults}</p>
-                    </label>
+                    <p>Query: {this.state.currentQuery}</p>
+                    <p>Result: {this.state.queryResults}</p>
                     <div>
-                        <button id={"queryButton"} onClick={() => this.executeQuery()}>Compute Query</button>
-                        <button id={"queryButton"} onClick={() => this.executeQuery()}>Clear Results</button>
+                        <button
+                            id={"queryButton"}
+                            onClick={() => this.executeQuery()}
+                        >Compute Query</button>
+                        <button
+                            id={"queryButton"}
+                            onClick={() => this.setState({queryResults: ""})}
+                        >Clear Results</button>
                     </div>
                 </div>
             </div>
