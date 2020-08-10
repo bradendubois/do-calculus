@@ -4,7 +4,7 @@ import './FileSelector.scss'
 
 export default function FileSelector({callback}) {
 
-    const [content, saveContent] = React.useState(<div>Content Will Be Here</div>)
+    const [content, saveContent] = React.useState(<div>Loading...</div>)
 
     // Use the event
     React.useEffect(() => {

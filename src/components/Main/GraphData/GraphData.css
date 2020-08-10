@@ -7,9 +7,18 @@
 }
 .graphDataContainer .mainGraphContent div {
   overflow-y: auto;
+  flex-grow: 1;
+}
+.graphDataContainer .mainGraphContent tbody {
+  margin: 0 auto;
+}
+.graphDataContainer .mainGraphContent tbody th, .graphDataContainer .mainGraphContent tbody td {
+  margin: 3px auto;
+  padding: 3px;
 }
 .graphDataContainer .mainGraphContent tbody a {
   color: #1950f3;
+  margin: auto 3px;
 }
 
 /*# sourceMappingURL=GraphData.css.map */

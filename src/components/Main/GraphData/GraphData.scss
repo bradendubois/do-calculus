@@ -9,12 +9,21 @@
 
     div {
       overflow-y: auto;
+      flex-grow: 1;
     }
 
     tbody {
 
+      margin: 0 auto;
+
+      th, td {
+        margin: 3px auto;
+        padding: 3px;
+      }
+
       a {
-        color: #1950f3
+        color: #1950f3;
+        margin: auto 3px;
       }
     }
   }

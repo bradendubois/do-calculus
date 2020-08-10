@@ -25,7 +25,7 @@ class GraphData extends React.Component {
                             className={"niceButton"}
                             onClick={() => this.load_table(row[0])}
                         >{row[0]}</button></td>
-                        <td>{row[1].map(o => <>{o}</>)}</td>
+                        <td>{row[1].map(o => <a onClick={() => this.load_table(o)}>{o}</a>)}</td>
                         <td>{row[2].map(p => <a onClick={() => this.load_table(p)}>{p}</a>)}</td>
                     </tr>
                 )}
