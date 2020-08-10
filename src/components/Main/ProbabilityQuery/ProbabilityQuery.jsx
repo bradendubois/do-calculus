@@ -24,7 +24,8 @@ class ProbabilityQuery extends React.Component {
             outcomes: {},
             outcome_index: {},
             variable_type: {},
-            currentQuery: ""
+            currentQuery: "",
+            queryResults: ""
         }
 
         let full_outcomes = {}
@@ -60,7 +61,7 @@ class ProbabilityQuery extends React.Component {
                             <td>
                                 <button onClick={() => this.reset_row(row)}>Reset</button>
                             </td>
-                            <td>{row}</td>
+                            <td className={"variable_name"}>{row}</td>
                             <td>
                                 <button
                                     onClick={() => this.cycle(row, "outcome")}
@@ -116,8 +117,9 @@ class ProbabilityQuery extends React.Component {
 
     cycle(variable, variable_type) {
 
-        if (this.state.variable_type[variable] !== "" && this.state.variable_type[variable] !== variable_type)
-            return
+        if (this.state.variable_type[variable] !== "" && this.state.variable_type[variable] !== variable_type) {
+            this.reset_row(variable)
+        }
 
         // This is the button clicked from; ID = for example, "Xj-intervention"
         let button_pressed = document.getElementById(variable + "-" + variable_type)
@@ -212,7 +214,7 @@ class ProbabilityQuery extends React.Component {
     executeQuery() {
         if (document.getElementById("queryButton").classList.contains("disabled")) return
         window.pywebview.api.execute_query(this.state.currentQuery).then(response => {
-            document.getElementById("queryResult").innerText = response
+            this.setState({queryResults: response})
         })
     }
 
@@ -226,11 +228,14 @@ class ProbabilityQuery extends React.Component {
                 </div>
                 <div className={"probabilityButtons"}>
                     <label>Query:
-                        <div><p>{this.state.currentQuery}</p></div>
+                        <p>{this.state.currentQuery}</p>
+                    </label>
+                    <label>Result:
+                        <p>{this.state.queryResults}</p>
                     </label>
                     <div>
                         <button id={"queryButton"} onClick={() => this.executeQuery()}>Compute Query</button>
-                        <p id={"queryResult"} placeholder={"Results here..."} />
+                        <button id={"queryButton"} onClick={() => this.executeQuery()}>Clear Results</button>
                     </div>
                 </div>
             </div>

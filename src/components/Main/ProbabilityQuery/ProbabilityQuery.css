@@ -10,6 +10,9 @@
 .probabilityQueryContainer .mainContent div {
   overflow-y: auto;
 }
+.probabilityQueryContainer .mainContent tbody .variable_name {
+  text-align: center;
+}
 .probabilityQueryContainer .mainContent #probabilityButtonTable button {
   width: 100%;
   margin: auto;
