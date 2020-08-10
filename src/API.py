@@ -70,6 +70,11 @@ class API:
         return {k: self._outcomes[k] for k in self._variables}
 
     def execute_query(self, query: str):
-        s = query.split("|")
-        head, body = parse_outcomes_and_interventions(s[0]), parse_outcomes_and_interventions(s[1])
+
+        if "|" in query:
+            s = query.split("|")
+            head, body = parse_outcomes_and_interventions(s[0]), parse_outcomes_and_interventions(s[1])
+        else:
+            head, body = parse_outcomes_and_interventions(query), []
+
         return self._cg.probability_query(head, body)
