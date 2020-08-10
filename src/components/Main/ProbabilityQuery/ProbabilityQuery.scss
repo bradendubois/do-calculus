@@ -13,6 +13,25 @@
     div {
       overflow-y: auto;
     }
+
+    #probabilityButtonTable {
+
+      button {
+        width: 100%;
+        margin: auto;
+      }
+
+      button.disabled {
+
+          background-color: grey;
+
+      }
+
+      button.selected {
+
+        background-color: #4a96ee;
+      }
+    }
   }
 
   .probabilityButtons {

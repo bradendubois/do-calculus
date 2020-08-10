@@ -52,7 +52,7 @@ class ProbabilityQuery extends React.Component {
                     <th>Intervention</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id={"probabilityButtonTable"}>
                 {Object.keys(full_outcomes).map(row => {
 
                     return (
@@ -106,6 +106,8 @@ class ProbabilityQuery extends React.Component {
                 outcome_index: indexes,
                 variable_type: variable_types
             })
+
+            button.classList.remove("disabled", "selected")
         }
 
         this.infoBoxRef.current.receive_message("Reset " + variable)
@@ -138,8 +140,18 @@ class ProbabilityQuery extends React.Component {
             variable_type: variable_types
         })
 
-        // Update text
+        // Update text and class
         button_pressed.innerText = new_text
+        button_pressed.classList.add("selected")
+
+        // Disable other two buttons
+        for (let v_type of ["outcome", "observation", "intervention"]) {
+            if (variable_type === v_type) {
+                continue
+            }
+
+            document.getElementById(variable + "-" + v_type).classList.add("disabled")
+        }
 
         this.update_query_string()
     }
@@ -175,7 +187,10 @@ class ProbabilityQuery extends React.Component {
         }
 
         // Build new Query String
-        let query_string = outcomes.join(", ") + " | "
+        let query_string = outcomes.join(", ")
+        if (interventions.length + observations.length > 0) {
+            query_string += " | "
+        }
         if (interventions.length > 0) {
             query_string += " do(" + interventions.join(", ") + ") "
             if (observations.length > 0) query_string += ", "
