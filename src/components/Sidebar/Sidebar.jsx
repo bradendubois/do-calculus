@@ -10,13 +10,11 @@ class Sidebar extends React.Component {
             active: ""
         }
 
-        this.mainRef = this.props.mainRef
-
-        this.button_ids = [
-            "graphDataPageButton",
-            "probabilityQueryPageButton",
-            "doCalculusPageButton",
-            "backdoorPathsPageButton"
+        this.content = [
+            ["graphData", <>Graph Data</>],
+            ["probabilityQuery", <>Probability Query</>],
+            ["doCalculus", <><i>do</i>-Calculus</>],
+            ["backdoorPath", <>Backdoor Paths</>]
         ]
 
         this.setActive = this.setActive.bind(this)
@@ -24,42 +22,42 @@ class Sidebar extends React.Component {
         setTimeout(this.revealButton, 1000, 0)
     }
 
-    setActive(page, buttonID) {
+    setActive(section) {
+
         if (this.state.active !== "") {
-            document.getElementById(this.state.active).classList.remove("active")
+            document.getElementById(this.state.active + "-button").classList.remove("active")
+            document.getElementById(this.state.active + "Container").classList.remove("currentContent")
         }
 
-        this.mainRef.current.setActive(page)
-        this.setState({active: buttonID})
+        this.setState({active: section})
+
+        let pageElement = document.getElementById(section + "Container")
+        if (pageElement) {
+            pageElement.classList.add("currentContent")
+        }
+
+        let buttonID = section + "-button"
         document.getElementById(buttonID).classList.add("active")
     }
 
     revealButton(button_index) {
-        document.getElementById(this.button_ids[button_index]).classList.add("revealed")
-        if (button_index < this.button_ids.length - 1) {
+        document.getElementById(this.content[button_index][0] + "-button").classList.add("revealed")
+        if (button_index < this.content.length - 1) {
             setTimeout(this.revealButton, 1000, button_index + 1)
         }
     }
 
     render() {
+
         return (
             <div className={"sidebar"}>
+                {this.content.map(entry =>
+                    <button id={entry[0] + "-button"} onClick={() => this.setActive(entry[0])}>{entry[1]}</button>)
+                }
                 <button
-                    id={"graphDataPageButton"}
-                    onClick={() => this.setActive("Graph Data", "graphDataPageButton")}
-                >Graph Data</button>
-                <button
-                    id={"probabilityQueryPageButton"}
-                    onClick={() => this.setActive("Probability Query", "probabilityQueryPageButton")}
-                >Probability Query</button>
-                <button
-                    id={"doCalculusPageButton"}
-                    onClick={() => this.setActive("Do-Calculus", "doCalculusPageButton")}
-                ><i>do</i>-Calculus</button>
-                <button
-                    id={"backdoorPathsPageButton"}
-                    onClick={() => this.setActive("Backdoor Paths", "backdoorPathsPageButton")}
-                >Backdoor Paths</button>
+                    id={"unloadButton"}
+                    onClick={() => this.props.callback()}
+                >Unload Graph</button>
             </div>
 
         )

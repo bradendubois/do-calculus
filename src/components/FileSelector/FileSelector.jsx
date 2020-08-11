@@ -9,7 +9,6 @@ export default function FileSelector({callback}) {
     // Use the event
     React.useEffect(() => {
         window.addEventListener('pywebviewready', () => {
-
             window.pywebview.api.get_graph_names().then(graphs => {
                 let buttons = []
                 for (let graph of graphs) {

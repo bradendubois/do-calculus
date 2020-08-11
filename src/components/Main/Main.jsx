@@ -4,7 +4,7 @@ import "./Main.scss"
 
 import GraphData from "./GraphData/GraphData";
 import ProbabilityQuery from "./ProbabilityQuery/ProbabilityQuery";
-
+import BackdoorPaths from "./BackdoorPaths/BackdoorPaths";
 
 class Main extends React.Component {
 
@@ -29,6 +29,9 @@ class Main extends React.Component {
             case "Probability Query":
                 this.setState({active: this.probabilityQuery})
                 break
+            case "Backdoor Paths":
+                this.setState({active: this.probabilityQuery})
+                break
             default:
                 break
         }
@@ -38,7 +41,9 @@ class Main extends React.Component {
 
         return (
             <div className={"mainContent"}>
-                {this.state.active}
+                <GraphData />
+                <ProbabilityQuery />
+                <BackdoorPaths />
             </div>
         )
     }

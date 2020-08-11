@@ -61,7 +61,7 @@ class GraphData extends React.Component {
 
     render() {
         return (
-            <div className={"graphDataContainer"}>
+            <div className={"contentSection"} id={"graphDataContainer"}>
                 <h1>Variable Data</h1>
                 <div className={"mainGraphContent"}>
                     <div>

@@ -1,37 +1,37 @@
-.probabilityQueryContainer {
+#probabilityQueryContainer {
   display: flex;
   flex-direction: column;
 }
-.probabilityQueryContainer .mainContent {
+#probabilityQueryContainer .mainContent {
   display: flex;
   flex-direction: row;
   height: 60vh;
 }
-.probabilityQueryContainer .mainContent div {
+#probabilityQueryContainer .mainContent div {
   overflow-y: auto;
 }
-.probabilityQueryContainer .mainContent tbody .variable_name {
+#probabilityQueryContainer .mainContent tbody .variable_name {
   text-align: center;
 }
-.probabilityQueryContainer .mainContent #probabilityButtonTable button {
+#probabilityQueryContainer .mainContent #probabilityButtonTable button {
   width: 100%;
   margin: auto;
 }
-.probabilityQueryContainer .mainContent #probabilityButtonTable button.disabled {
+#probabilityQueryContainer .mainContent #probabilityButtonTable button.disabled {
   background-color: grey;
 }
-.probabilityQueryContainer .mainContent #probabilityButtonTable button.selected {
+#probabilityQueryContainer .mainContent #probabilityButtonTable button.selected {
   background-color: #4a96ee;
 }
-.probabilityQueryContainer .probabilityButtons label {
+#probabilityQueryContainer .probabilityButtons label {
   display: inline;
 }
-.probabilityQueryContainer .probabilityButtons p {
+#probabilityQueryContainer .probabilityButtons p {
   margin: 0;
   width: fit-content;
   margin-block: 0;
 }
-.probabilityQueryContainer .probabilityButtons #queryButton.disabled {
+#probabilityQueryContainer .probabilityButtons #queryButton.disabled {
   background-color: grey;
 }
 

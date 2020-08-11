@@ -220,7 +220,7 @@ class ProbabilityQuery extends React.Component {
 
     render() {
         return (
-            <div className={"probabilityQueryContainer"}>
+            <div className={"contentSection"} id={"probabilityQueryContainer"}>
                 <h1>ProbabilityQueryPage</h1>
                 <div className={"mainContent"}>
                     {this.state.queryTable}
