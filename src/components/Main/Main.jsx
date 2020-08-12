@@ -48,7 +48,6 @@ class Main extends React.Component {
         return (
             <div className={"mainContent"}>
                 {this.state.active}
-                <h1>HELLO</h1>
             </div>
         )
     }
