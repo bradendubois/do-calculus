@@ -49,7 +49,14 @@ def update_ticker():
         webview.windows[0].evaluate_js('window.pywebview.state.setTicker("%d")' % time())
 
 
+config = {
+    "min_size": (800, 600),
+    "width": 1000,
+    "height": 800,
+    "easy_drag": True,
+}
+
 if __name__ == '__main__':
     api = API()
-    window = webview.create_window("Probability Code", entry, js_api=api)
+    window = webview.create_window("Probability Code", entry, js_api=api, **config)
     webview.start(debug=True)

@@ -6,7 +6,7 @@ from python.config.config_manager import access
 from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
 
 # Maybe this has to change for a build? How to get the path in dev, as well as a build?
-PREFIX = "src/python/"
+PREFIX = os.path.dirname(os.path.abspath(__file__)) + "/python/"
 
 
 class API:
@@ -16,7 +16,7 @@ class API:
 
     def __init__(self):
 
-        self.parsed = None
+        self._parsed = None
         self._variables = None
         self._outcomes = None
         self._tables = None
@@ -49,14 +49,14 @@ class API:
 
     def load_file(self, graph_file):
 
-        self.parsed = parse_graph_file_data(PREFIX + self.access("graph_file_folder") + "/" + graph_file)
+        self._parsed = parse_graph_file_data(PREFIX + self.access("graph_file_folder") + "/" + graph_file)
 
         # Unpack the main contents of the parsed file for easier access
-        self._variables = self.parsed["variables"]
-        self._outcomes = self.parsed["outcomes"]
-        self._tables = self.parsed["tables"]
-        self._graph = self.parsed["graph"]
-        self._cg = CausalGraph(**self.parsed)
+        self._variables = self._parsed["variables"]
+        self._outcomes = self._parsed["outcomes"]
+        self._tables = self._parsed["tables"]
+        self._graph = self._parsed["graph"]
+        self._cg = CausalGraph(**self._parsed)
 
         return True
 
