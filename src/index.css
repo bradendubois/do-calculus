@@ -52,16 +52,6 @@ div .full {
   flex-direction: row;
 }
 
-.contentSection {
-  visibility: hidden;
-  display: none;
-}
-
-.currentContent {
-  display: unset;
-  visibility: visible;
-}
-
 #content {
   display: flex;
   flex-direction: row;

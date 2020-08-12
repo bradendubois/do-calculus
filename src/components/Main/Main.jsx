@@ -16,21 +16,27 @@ class Main extends React.Component {
 
         this.graphData = <GraphData />
         this.probabilityQuery = <ProbabilityQuery />
+        this.backdoorPath = <BackdoorPaths />
 
         this.setActive = this.setActive.bind(this)
     }
 
     setActive(page) {
 
+        console.log(page)
+
         switch (page) {
-            case "Graph Data":
+            case "graphData":
+                console.log("Graph Data Loaded")
                 this.setState({active: this.graphData})
                 break
-            case "Probability Query":
+            case "probabilityQuery":
+                console.log("Probability Data Loaded")
                 this.setState({active: this.probabilityQuery})
                 break
-            case "Backdoor Paths":
-                this.setState({active: this.probabilityQuery})
+            case "backdoorPaths":
+                console.log("Backdoor Paths Loaded")
+                this.setState({active: this.backdoorPath})
                 break
             default:
                 break
@@ -41,9 +47,8 @@ class Main extends React.Component {
 
         return (
             <div className={"mainContent"}>
-                <GraphData />
-                <ProbabilityQuery />
-                <BackdoorPaths />
+                {this.state.active}
+                <h1>HELLO</h1>
             </div>
         )
     }
