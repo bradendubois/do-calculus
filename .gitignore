@@ -1,16 +1,30 @@
+# Ignore .files except the gitignore itself
 .*
 !.gitignore
+
+# No pycache
 */__pycache__/*
-src/python/config/__pycache__/
-logs/*
+/__pycache__/*
 *.pyc
-src/python/config/config.json
-probability-code-*
-Quick_Usage.md
-node_modules
-gui/src*
+
+# Log files from operating software
+logs/*
 src/python/logs/
 
+# Config file is "personal" and generated on run
+src/python/config/config.json
+
+# Isolated CLI-only builds
+probability-code-*
+
+# Generated documentation
+Quick_Usage.md
+
+# Web modules from the GUI components
+node_modules/*
+
+# Virtual environment / generated code from build process / parcel / pyinstaller / py2app
+venv/*
 build/*
 dist/*
 gui/*

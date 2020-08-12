@@ -6,18 +6,13 @@ export default function FileSelector({callback}) {
 
     const [content, saveContent] = React.useState(<div>Loading...</div>)
 
-    // Use the event
-    React.useEffect(() => {
-        window.addEventListener('pywebviewready', () => {
-            window.pywebview.api.get_graph_names().then(graphs => {
-                let buttons = []
-                for (let graph of graphs) {
-                    buttons.push(<a
-                        onClick={() => callback(graph)}><button className={"niceButton"}>{graph}</button></a>)
-                } saveContent(buttons)
-            })
-        })
-    }, [])
+    window.pywebview.api.get_graph_names().then(graphs => {
+        let buttons = []
+        for (let graph of graphs) {
+            buttons.push(<a
+                onClick={() => callback(graph)}><button className={"niceButton"}>{graph}</button></a>)
+        } saveContent(buttons)
+    })
 
     return (
         <div id={"fileSelectorContainer"} className='fileSelectorContainer'>
