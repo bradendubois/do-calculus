@@ -24,18 +24,18 @@ class Sidebar extends React.Component {
 
     setActive(section) {
 
+        // First time clicking, this will be ""
         if (this.state.active !== "") {
             document.getElementById(this.state.active + "-button").classList.remove("active")
             // document.getElementById(this.state.active + "Container").classList.remove("currentContent")
         }
 
         this.setState({active: section})
-
         this.props.mainRef.current.setActive(section)
 
         let pageElement = document.getElementById(section + "Container")
         if (pageElement) {
-            // pageElement.classList.add("currentContent")
+            pageElement.classList.add("currentContent")
         }
 
         let buttonID = section + "-button"

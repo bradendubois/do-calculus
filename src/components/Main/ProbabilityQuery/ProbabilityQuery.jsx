@@ -55,7 +55,6 @@ class ProbabilityQuery extends React.Component {
                 </thead>
                 <tbody id={"probabilityButtonTable"}>
                 {Object.keys(full_outcomes).map(row => {
-
                     return (
                         <tr>
                             <td>
@@ -82,6 +81,12 @@ class ProbabilityQuery extends React.Component {
                             </td>
                         </tr>
                     )})}
+                    <tr>
+                        <td />
+                        <td />
+                        {["Outcome", "Observation", "Intervention"].map(t =>
+                            <td><button onClick={() => this.reset_column(t.toLowerCase())}>Clear {t}s</button></td>)}
+                    </tr>
                 </tbody>
 
             </table>
@@ -113,6 +118,17 @@ class ProbabilityQuery extends React.Component {
 
         this.infoBoxRef.current.receive_message("Reset " + variable)
         this.update_query_string()
+    }
+
+    reset_column(type) {
+        console.log("Start")
+        for (let variable of Object.keys(this.state.outcomes)) {
+            console.log("Variable")
+            if (this.state.variable_type[variable] === type) {
+                this.reset_row(variable)
+            }
+        }
+        console.log("Finish")
     }
 
     cycle(variable, variable_type) {
@@ -220,8 +236,8 @@ class ProbabilityQuery extends React.Component {
 
     render() {
         return (
-            <div id={"probabilityQueryContainer"}>
-                <h1>ProbabilityQueryPage</h1>
+            <div className={"contentSection"} id={"probabilityQueryContainer"}>
+                <h1>Probability Distribution Queries</h1>
                 <div className={"mainContent"}>
                     {this.state.queryTable}
                     {this.state.infoBox}

@@ -9,7 +9,6 @@ import './index.scss'
 
 const App = () => {
 
-    const sidebarRef = React.createRef()
     const mainRef = React.createRef()
 
     const [webviewReady, setReady] = React.useState(false)
@@ -20,13 +19,14 @@ const App = () => {
         setReady(true)
     })
 
-    // TODO - Unused
-    const graph = (graph) => {
+    const load = (graph) => {
 
         // Load the graph given
         if (!contentSelected) {
             window.pywebview.api.load_file(graph).then(() => {
-                let selector = document.getElementById("fileSelectorContainer");
+
+                // TODO - Incorporate style changes / animation
+                /* let selector = document.getElementById("fileSelectorContainer");
                 selector.style.animationName = "slideAway"
                 selector.style.animationDuration = "2.0s";
 
@@ -36,6 +36,7 @@ const App = () => {
                     content.style.animationName = "slideIn"
                     content.style.animationDuration = "1.0s"
                 }, 2000)
+                 */
             })
         }
 
@@ -51,7 +52,7 @@ const App = () => {
                         <Sidebar mainRef={mainRef} callback={setSelected}/>
                         <Main ref={mainRef}/>
                     </> :
-                        <FileSelector callback={graph}/>
+                        <FileSelector callback={load}/>
                     }
                 </div> :
                 <div>
