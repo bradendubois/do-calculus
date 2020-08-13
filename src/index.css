@@ -1,4 +1,6 @@
 /* open-sans-regular - latin_cyrillic */
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@515&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@515&family=Montserrat&display=swap");
 @font-face {
   font-family: "Open Sans";
   font-style: normal;
@@ -32,8 +34,10 @@
   border: none;
   outline: none;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
+  margin: 5px;
   color: white;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -60,6 +64,12 @@ h1, h2, h3 {
 div .full {
   display: flex;
   flex-direction: row;
+}
+
+.contentSection {
+  max-height: 100vh;
+  height: 100vh;
+  min-height: 100vh;
 }
 
 .debug {

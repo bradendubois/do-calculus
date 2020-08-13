@@ -43,7 +43,10 @@
 .sidebar button:active {
   background-color: #2459ee;
 }
-.sidebar .active {
+.sidebar button:last-of-type {
+  margin-top: auto;
+}
+.sidebar button .active {
   background-color: #3369ff;
 }
 

@@ -1,19 +1,40 @@
 #backdoorPathContainer {
 
-  height: 100vh;
+  margin: 0;
 
-  display: grid;
-  grid-template-areas:
-    "backdoorButtons backdoorGraph backdoorGraph"
-    "z_sets z_sets backdoorOutput";
+  display: flex;
+  flex-direction: column;
 
-  grid-template-columns: 40% 20% 40%;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  .topContainer {
 
-  .backdoorButtons { grid-area: backdoorButtons; }
-  .backdoorGraph { grid-area: backdoorGraph; }
-  .z_sets { grid-area: z_sets; }
-  .backdoorOutput { grid-area: backdoorOutput; }
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+
+    .backdoorButtons {
+      flex-grow: 2;
+    }
+
+    .backdoorGraph {
+      flex-grow: 3;
+    }
+  }
+
+  .bottomContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+
+    .z_sets {
+      flex-grow: 3;
+    }
+
+    .backdoorOutput {
+      flex-grow: 2;
+    }
+  }
+
+
+
 
 }

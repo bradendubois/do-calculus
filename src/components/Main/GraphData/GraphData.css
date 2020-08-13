@@ -1,5 +1,6 @@
 #graphDataContainer {
   max-height: 100vh;
+  padding: 10px;
 }
 #graphDataContainer .mainGraphContent {
   display: flex;

@@ -59,9 +59,13 @@
       background-color: #2459ee;
     }
 
+    &:last-of-type {
+      margin-top: auto;
+    }
+
+    .active {
+      background-color: #3369ff;
+    }
   }
 
-  .active {
-    background-color: #3369ff;
-  }
 }

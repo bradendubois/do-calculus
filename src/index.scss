@@ -1,5 +1,8 @@
 @import './styles/fonts.scss';
 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@515&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@515&family=Montserrat&display=swap');
+
 #id {
 
   width: 100vw;
@@ -17,9 +20,11 @@
   outline: none;
   border-radius: 5px;
 
-  padding: 5px;
+  padding: 10px;
+  margin: 5px;
 
   color: white;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -37,6 +42,7 @@ body {
 
 textarea {
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+
   font-size: 14pt;
   padding: 0.6rem;
 }
@@ -54,7 +60,9 @@ div .full {
 }
 
 .contentSection {
-  // visibility: hidden;
+  max-height: 100vh;
+  height: 100vh;
+  min-height: 100vh;
 }
 
 .currentContent {

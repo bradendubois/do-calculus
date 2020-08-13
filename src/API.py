@@ -27,6 +27,9 @@ class API:
         self._cg = None
         self._bc = None
 
+    def loaded(self):
+        return True
+
     def fullscreen(self):
         webview.windows[0].toggle_fullscreen()
 

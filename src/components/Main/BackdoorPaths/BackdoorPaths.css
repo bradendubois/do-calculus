@@ -1,22 +1,29 @@
 #backdoorPathContainer {
-  height: 100vh;
-  display: grid;
-  grid-template-areas: "backdoorButtons backdoorGraph backdoorGraph" "z_sets z_sets backdoorOutput";
-  grid-template-columns: 40% 20% 40%;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
-#backdoorPathContainer .backdoorButtons {
-  grid-area: backdoorButtons;
+#backdoorPathContainer .topContainer {
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
 }
-#backdoorPathContainer .backdoorGraph {
-  grid-area: backdoorGraph;
+#backdoorPathContainer .topContainer .backdoorButtons {
+  flex-grow: 2;
 }
-#backdoorPathContainer .z_sets {
-  grid-area: z_sets;
+#backdoorPathContainer .topContainer .backdoorGraph {
+  flex-grow: 3;
 }
-#backdoorPathContainer .backdoorOutput {
-  grid-area: backdoorOutput;
+#backdoorPathContainer .bottomContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+#backdoorPathContainer .bottomContainer .z_sets {
+  flex-grow: 3;
+}
+#backdoorPathContainer .bottomContainer .backdoorOutput {
+  flex-grow: 2;
 }
 
 /*# sourceMappingURL=BackdoorPaths.css.map */

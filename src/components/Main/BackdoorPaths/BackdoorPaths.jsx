@@ -95,25 +95,27 @@ class BackdoorPaths extends React.Component {
         return (
             <div className={"contentSection"} id={"backdoorPathContainer"}>
 
-                <BackdoorButtons
-                    z_callback={this.find_all_z}
-                    path_callback={this.compute_backdoor_paths}
-                    clear={this.clear}
-                    x={this.state.x}
-                    y={this.state.y}
-                    z={this.state.z}
-                />
+                <div className={"topContainer"}>
+                    <BackdoorButtons
+                        z_callback={this.find_all_z}
+                        path_callback={this.compute_backdoor_paths}
+                        clear={this.clear}
+                        x={this.state.x}
+                        y={this.state.y}
+                        z={this.state.z}
+                    />
+                    <BackdoorGraph
+                        add_v={this.add_v}
+                        x={this.state.x}
+                        y={this.state.y}
+                        z={this.state.z}
+                    />
+                </div>
 
-                <BackdoorGraph
-                    add_v={this.add_v}
-                    x={this.state.x}
-                    y={this.state.y}
-                    z={this.state.z}
-                />
-
-                <Z_Sets content={this.state.backdoor_results}/>
-
-                <BackdoorOutput />
+                <div className={"bottomContainer"}>
+                    <Z_Sets content={this.state.backdoor_results}/>
+                    <BackdoorOutput />
+                </div>
             </div>
         )
     }
