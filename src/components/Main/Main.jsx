@@ -27,15 +27,12 @@ class Main extends React.Component {
 
         switch (page) {
             case "graphData":
-                console.log("Graph Data Loaded")
                 this.setState({active: this.graphData})
                 break
             case "probabilityQuery":
-                console.log("Probability Data Loaded")
                 this.setState({active: this.probabilityQuery})
                 break
-            case "backdoorPaths":
-                console.log("Backdoor Paths Loaded")
+            case "backdoorPath":
                 this.setState({active: this.backdoorPath})
                 break
             default:

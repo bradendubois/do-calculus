@@ -78,3 +78,9 @@ class API:
             head, body = parse_outcomes_and_interventions(query), []
 
         return self._cg.probability_query(head, body)
+
+    def v_to_parents_and_children(self):
+        s = []
+        for v in sorted(self._variables):
+            s.append([v, self._graph.parents(v), self._graph.children(v)])
+        return s

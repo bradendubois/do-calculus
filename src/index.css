@@ -52,6 +52,10 @@ div .full {
   flex-direction: row;
 }
 
+.debug {
+  outline: 1px solid black;
+}
+
 #content {
   display: flex;
   flex-direction: row;

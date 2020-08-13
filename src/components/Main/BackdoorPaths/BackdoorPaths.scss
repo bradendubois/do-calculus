@@ -1,5 +1,19 @@
 #backdoorPathContainer {
 
+  height: 100vh;
 
+  display: grid;
+  grid-template-areas:
+    "backdoorButtons backdoorGraph backdoorGraph"
+    "z_sets z_sets backdoorOutput";
+
+  grid-template-columns: 40% 20% 40%;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+
+  .backdoorButtons { grid-area: backdoorButtons; }
+  .backdoorGraph { grid-area: backdoorGraph; }
+  .z_sets { grid-area: z_sets; }
+  .backdoorOutput { grid-area: backdoorOutput; }
 
 }

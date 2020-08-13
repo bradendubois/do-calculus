@@ -1,8 +1,8 @@
 import React from "react"
 
-import "./BackdoorGraph.scss"
+import "./Z_Sets.scss"
 
-class BackdoorGraph extends React.Component {
+class Z_Sets extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,13 +10,11 @@ class BackdoorGraph extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className={"debug backdoorOutput"}>
-                    BackdoorOutput
-                </div>
+            <div className={"debug z_sets"}>
+                Z_sets
             </div>
         )
     }
 }
 
-export default BackdoorGraphA
+export default Z_Sets
