@@ -16,7 +16,10 @@ class BackdoorButtons extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.x.length !== this.props.x.length || prevProps.y.length !== this.props.y.length || prevProps.z.length !== this.props.z.length) {
+        if (prevProps.x.length !== this.props.x.length ||
+            prevProps.y.length !== this.props.y.length ||
+            prevProps.z.length !== this.props.z.length)
+        {
             this.setState({
                 x: this.props.x,
                 y: this.props.y,
@@ -30,14 +33,19 @@ class BackdoorButtons extends React.Component {
             <div className={"debug backdoorButtons"}>
                 <div className={"buttonHeader"}>
 
-                    <div>{this.state.x.map(x => <p>{x}</p>)}</div>
-                    <button onClick={() => this.props.clear("X")}>Clear X</button>
-
-                    <div>{this.state.y.map(y => <p>{y}</p>)}</div>
-                    <button onClick={() => this.props.clear("Y")}>Clear Y</button>
-
-                    <div>{this.state.z.map(z => <p>{z}</p>)}</div>
-                    <button onClick={() => this.props.clear("Z")}>Clear Z</button>
+                    {[
+                        [this.state.x, "X",  "interventions"],
+                        [this.state.y, "Y", "outcomes"],
+                        [this.state.z, "Z", "covariates/deconfounders"]
+                    ].map(s =>
+                        <div className={"setContainer"}>
+                            <div className={"setItems"} title={"This is a set " + s[1] + ", our " + s[2] + "."}>
+                                {s[0].map(i => <p>{i}</p>)}
+                            </div>
+                            <button title={"Clear all " + s[2]} onClick={() => this.props.clear(s[1])}
+                            >Clear {s[1]}</button>
+                        </div>
+                    )}
 
                 </div>
                 <div className={"backdoorMainButtons"}>

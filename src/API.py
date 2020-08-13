@@ -95,5 +95,13 @@ class API:
 
         paths = []
         for cross in list(itertools.product(x, y)):
-            paths.extend(self._bc.backdoor_paths(*cross, z))
+            backdoor_paths = self._bc.backdoor_paths(*cross, z)
+
+            for path in backdoor_paths:
+                msg = "  "
+                for index in range(len(path) - 1):
+                    msg += path[index] + " "
+                    msg += " <- " if path[index] in self._graph.children(path[index + 1]) else " -> "
+                paths.append(msg + path[-1])
+
         return paths

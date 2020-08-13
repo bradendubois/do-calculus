@@ -26,6 +26,7 @@ class BackdoorGraph extends React.Component {
                 <tr>
                     <th />
                     <th />
+                    <th />
                     <th>Variable</th>
                     <th>Parents</th>
                     <th>Children</th>

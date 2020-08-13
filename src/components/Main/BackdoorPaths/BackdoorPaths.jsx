@@ -16,7 +16,8 @@ class BackdoorPaths extends React.Component {
         this.state = {
             x: [],
             y: [],
-            z: []
+            z: [],
+            backdoor_results: []
         }
 
         this.compute_backdoor_paths = this.compute_backdoor_paths.bind(this)
@@ -26,8 +27,33 @@ class BackdoorPaths extends React.Component {
     }
 
     compute_backdoor_paths() {
-        window.pywebview.api.backdoor_paths(this.state.x, this.state.y, this.state.z).then(response => {
-            console.log(response)
+
+        let x = this.state.x
+        let y = this.state.y
+        let z = this.state.z
+
+        window.pywebview.api.backdoor_paths(x, y, z).then(response => {
+
+            x.sort()
+            y.sort()
+            z.sort()
+
+            // TODO - Import a font such that ⫫ can be properly rendered
+            let message = x.join(", ") + " _||_ " + y.join(", ") + " | " + z.join(", ")
+
+            let cur = this.state.backdoor_results
+            if (response.length > 0) {
+                cur.push(
+                    <details>
+                        <summary>{message}</summary>
+                        {response.map(path => <li>{path}</li>)}
+                    </details>
+                )
+            } else {
+                cur.push(<li>{message}</li>)
+            }
+
+            this.setState({backdoor_results: cur})
         })
     }
 
@@ -68,6 +94,7 @@ class BackdoorPaths extends React.Component {
     render() {
         return (
             <div className={"contentSection"} id={"backdoorPathContainer"}>
+
                 <BackdoorButtons
                     z_callback={this.find_all_z}
                     path_callback={this.compute_backdoor_paths}
@@ -84,7 +111,8 @@ class BackdoorPaths extends React.Component {
                     z={this.state.z}
                 />
 
-                <Z_Sets />
+                <Z_Sets content={this.state.backdoor_results}/>
+
                 <BackdoorOutput />
             </div>
         )

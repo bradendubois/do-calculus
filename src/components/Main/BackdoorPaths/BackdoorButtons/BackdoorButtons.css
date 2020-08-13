@@ -1,3 +1,29 @@
-
+.backdoorButtons .buttonHeader {
+  display: flex;
+  flex-direction: column;
+}
+.backdoorButtons .buttonHeader .setContainer {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  outline: 1px solid black;
+  margin: 4px;
+  padding: 3px;
+}
+.backdoorButtons .buttonHeader .setContainer .setItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-grow: 1;
+}
+.backdoorButtons .buttonHeader .setContainer .setItems p {
+  width: max-content;
+  margin: 3px;
+  padding: 3px;
+  outline: 1px solid black;
+}
+.backdoorButtons .buttonHeader .setContainer button {
+  flex-grow: 0;
+}
 
 /*# sourceMappingURL=BackdoorButtons.css.map */

@@ -6,12 +6,24 @@ class Z_Sets extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            xyz: []
+        }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+
 
     render() {
         return (
             <div className={"debug z_sets"}>
-                Z_sets
+                <ul>
+                    {this.props.content}
+                </ul>
             </div>
         )
     }
