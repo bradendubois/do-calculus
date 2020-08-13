@@ -19,16 +19,14 @@ class BackdoorGraph extends React.Component {
                     <th>Variable</th>
                     <th>Parents</th>
                     <th>Children</th>
-                    <th />
                 </tr>
                 {response.map(row =>
                     <tr>
-                        <td>Add to X</td>
-                        <td>Add to Y</td>
+                        <td><button onClick={() => this.props.add_v("X", row[0])}>Add to X</button></td>
+                        <td><button onClick={() => this.props.add_v("Y", row[0])}>Add to Y</button></td>
                         <td>{row[0]}</td>
                         <td>{row[1]}</td>
                         <td>{row[2]}</td>
-                        <td>Reset</td>
                     </tr>)}
             </table>
 

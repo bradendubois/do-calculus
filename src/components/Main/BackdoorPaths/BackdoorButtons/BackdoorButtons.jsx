@@ -9,8 +9,17 @@ class BackdoorButtons extends React.Component {
 
         this.state = {
             getInput: true,
-            x: [],
-            y: []
+            x: this.props.x,
+            y: this.props.y
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.x.length !== this.props.x.length || prevProps.y.length !== this.props.y.length) {
+            this.setState({
+                x: this.props.x,
+                y: this.props.y
+            })
         }
     }
 
