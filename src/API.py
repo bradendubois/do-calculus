@@ -1,6 +1,9 @@
+import itertools
+
 import webview
 import os
 
+from python.probability_structures.BackdoorController import BackdoorController
 from python.probability_structures.CausalGraph import CausalGraph
 from python.config.config_manager import access
 from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
@@ -22,6 +25,7 @@ class API:
         self._tables = None
         self._graph = None
         self._cg = None
+        self._bc = None
 
     def fullscreen(self):
         webview.windows[0].toggle_fullscreen()
@@ -57,6 +61,7 @@ class API:
         self._tables = self._parsed["tables"]
         self._graph = self._parsed["graph"]
         self._cg = CausalGraph(**self._parsed)
+        self._bc = BackdoorController(self._graph)
 
         return True
 
@@ -84,3 +89,11 @@ class API:
         for v in sorted(self._variables):
             s.append([v, sorted(list(self._graph.parents(v))), sorted(list(self._graph.children(v)))])
         return s
+
+    def backdoor_paths(self, x, y, z):
+        self._bc: BackdoorController
+
+        paths = []
+        for cross in list(itertools.product(x, y)):
+            paths.extend(self._bc.backdoor_paths(*cross, z))
+        return paths

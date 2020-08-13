@@ -8,8 +8,18 @@ class BackdoorGraph extends React.Component {
         super(props);
 
         this.state = {
-            table: <p>Loading...</p>
+            table: <p>Loading...</p>,
+            x: this.props.x,
+            y: this.props.y
         }
+
+        this.construct_table = this.construct_table.bind(this)
+        this.construct_table(this.props.x, this.props.y)
+    }
+
+    construct_table(x, y) {
+        let taken = x.concat(y)
+        console.log(taken)
 
         window.pywebview.api.v_to_parents_and_children().then(response => {
             let table = <table>
@@ -22,8 +32,12 @@ class BackdoorGraph extends React.Component {
                 </tr>
                 {response.map(row =>
                     <tr>
-                        <td><button onClick={() => this.props.add_v("X", row[0])}>Add to X</button></td>
-                        <td><button onClick={() => this.props.add_v("Y", row[0])}>Add to Y</button></td>
+                        {taken.indexOf(row[0]) > -1 ?
+                            <><td /><td/></> :
+                            <>
+                            <td><button onClick={() => this.props.add_v("X", row[0])}>Add to X</button></td>
+                            <td><button onClick={() => this.props.add_v("Y", row[0])}>Add to Y</button></td>
+                            </>}
                         <td>{row[0]}</td>
                         <td>{row[1]}</td>
                         <td>{row[2]}</td>
@@ -32,6 +46,18 @@ class BackdoorGraph extends React.Component {
 
             this.setState({table: table})
         })
+    }
+
+    // TODO - Why is this not firing...
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.x.length !== this.props.x.length || prevProps.y.length !== this.props.y.length) {
+            this.setState({
+                x: this.props.x,
+                y: this.props.y
+            })
+
+            this.construct_table(this.props.x, this.props.y)
+        }
     }
 
     render() {
