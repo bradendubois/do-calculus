@@ -33,10 +33,11 @@ class BackdoorGraph extends React.Component {
                 {response.map(row =>
                     <tr>
                         {taken.indexOf(row[0]) > -1 ?
-                            <><td /><td/></> :
+                            <><td/><td/><td/></> :
                             <>
                             <td><button onClick={() => this.props.add_v("X", row[0])}>Add to X</button></td>
                             <td><button onClick={() => this.props.add_v("Y", row[0])}>Add to Y</button></td>
+                            <td><button onClick={() => this.props.add_v("Z", row[0])}>Add to Z</button></td>
                             </>}
                         <td>{row[0]}</td>
                         <td>{row[1]}</td>
