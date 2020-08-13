@@ -10,7 +10,7 @@ class BackdoorOutput extends React.Component {
 
     render() {
         return (
-            <div className={"debug backdoorOutput"}>
+            <div className={"tile backdoorOutput"}>
                 BackdoorOutput
             </div>
         )

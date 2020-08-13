@@ -30,7 +30,7 @@ class BackdoorButtons extends React.Component {
 
     render() {
         return (
-            <div className={"debug backdoorButtons"}>
+            <div className={"tile backdoorButtons"}>
                 <div className={"buttonHeader"}>
 
                     {[

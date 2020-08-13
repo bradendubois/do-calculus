@@ -20,7 +20,7 @@ class Z_Sets extends React.Component {
 
     render() {
         return (
-            <div className={"debug z_sets"}>
+            <div className={"tile z_sets"}>
                 <ul>
                     {this.props.content}
                 </ul>

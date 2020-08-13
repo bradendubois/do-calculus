@@ -43,7 +43,7 @@ class ProbabilityQuery extends React.Component {
                 variable_type[key] = ""
             }
 
-            let table = <table>
+            let table = <table className={"tile"} >
                 <thead>
                 <tr>
                     <th />
@@ -242,7 +242,7 @@ class ProbabilityQuery extends React.Component {
                     {this.state.queryTable}
                     {this.state.infoBox}
                 </div>
-                <div className={"probabilityButtons"}>
+                <div className={"tile probabilityButtons"}>
                     <p>Query: {this.state.currentQuery}</p>
                     <p>Result: {this.state.queryResults}</p>
                     <div>

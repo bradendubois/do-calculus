@@ -64,7 +64,7 @@ class BackdoorGraph extends React.Component {
 
     render() {
         return (
-            <div className={"debug backdoorGraph"}>
+            <div className={"tile backdoorGraph"}>
                 {this.state.table}
             </div>
         )

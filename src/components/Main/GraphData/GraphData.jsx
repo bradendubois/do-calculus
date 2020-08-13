@@ -15,7 +15,7 @@ class GraphData extends React.Component {
         window.pywebview.api.all_variable_data().then(data => {
 
             let tbody = (
-                <tbody>
+                <tbody className={"tile"} >
                 <tr>
                     <th>Variable</th><th>Outcomes</th><th>Parents</th>
                 </tr>
@@ -39,7 +39,7 @@ class GraphData extends React.Component {
     load_table(variable) {
         window.pywebview.api.variable_table(variable).then(response => {
             let table = (
-                <tbody>
+                <tbody className={"tile"} >
                 <tr>
                     {<th>{response[0][0]}</th>}
                     {response[0][1].map(o => <th>{o}</th>)}
