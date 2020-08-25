@@ -17,7 +17,8 @@ class BackdoorPaths extends React.Component {
             x: [],
             y: [],
             z: [],
-            backdoor_results: []
+            backdoor_results: [],
+            messages: []
         }
 
         this.compute_backdoor_paths = this.compute_backdoor_paths.bind(this)
@@ -32,15 +33,40 @@ class BackdoorPaths extends React.Component {
         let y = this.state.y
         let z = this.state.z
 
+        if (x.length === 0) {
+            let messages = this.state.messages
+            let message = "Error: Measurable variables X cannot be empty."
+            messages.splice(0, 0, message);
+            this.setState({messages: messages})
+            return
+        }
+
+        if (y.length === 0) {
+            let messages = this.state.messages
+            let message = "Error: Measurable variables Y cannot be empty."
+            messages.splice(0, 0, message);
+            this.setState({messages: messages})
+            return
+        }
+
+        // TODO - Import a font such that ⫫ can be properly rendered
+        let message = x.join(", ") + " _||_ " + y.join(", ");
+        if (z.length > 0)
+            message += " | " + z.join(", ")
+
+        if (this.state.messages.includes(message)) {
+            let cur = this.state.messages;
+            cur.push("Already computed: " + message)
+            this.setState({messages: message})
+            return
+        }
+
         window.pywebview.api.backdoor_paths(x, y, z).then(response => {
 
             x.sort()
             y.sort()
             z.sort()
-
-            // TODO - Import a font such that ⫫ can be properly rendered
-            let message = x.join(", ") + " _||_ " + y.join(", ") + " | " + z.join(", ")
-
+            
             let cur = this.state.backdoor_results
             if (response.length > 0) {
                 cur.push(
@@ -53,7 +79,9 @@ class BackdoorPaths extends React.Component {
                 cur.push(<li>{message}</li>)
             }
 
-            this.setState({backdoor_results: cur})
+            let messages = this.state.messages
+            messages.splice(0, 0, message)
+            this.setState({backdoor_results: cur, messages: messages})
         })
     }
 
@@ -62,15 +90,17 @@ class BackdoorPaths extends React.Component {
     }
 
     add_v(set, v) {
-        if (set === "X" && this.state.x.indexOf(v) === -1) {
+        let taken = this.state.x.concat(this.state.y).concat(this.state.z)
+        console.log("Parent", taken)
+        if (set === "X" && taken.indexOf(v) === -1) {
             let c = this.state.x
             c.push(v)
             this.setState({x: c})
-        } else if (set === "Y"  && this.state.y.indexOf(v) === -1) {
+        } else if (set === "Y"  && taken.indexOf(v) === -1) {
             let c = this.state.y
             c.push(v)
             this.setState({y: c})
-        } else if (set === "Z" && this.state.z.indexOf(v) === -1) {
+        } else if (set === "Z" && taken.indexOf(v) === -1) {
             let c = this.state.z
             c.push(v)
             this.setState({z: c})
@@ -114,7 +144,9 @@ class BackdoorPaths extends React.Component {
 
                 <div className={"bottomContainer"}>
                     <Z_Sets content={this.state.backdoor_results}/>
-                    <BackdoorOutput />
+                    <BackdoorOutput
+                        messages={this.state.messages}
+                    />
                 </div>
             </div>
         )

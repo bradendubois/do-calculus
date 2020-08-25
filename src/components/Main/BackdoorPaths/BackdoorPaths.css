@@ -9,10 +9,12 @@
   flex-direction: row;
 }
 #backdoorPathContainer .topContainer .backdoorButtons {
-  flex-grow: 2;
+  width: calc(40% - 10px);
+  box-sizing: border-box;
 }
 #backdoorPathContainer .topContainer .backdoorGraph {
-  flex-grow: 3;
+  width: calc(60% - 10px);
+  box-sizing: border-box;
 }
 #backdoorPathContainer .bottomContainer {
   flex-grow: 1;
@@ -20,10 +22,12 @@
   flex-direction: row;
 }
 #backdoorPathContainer .bottomContainer .z_sets {
-  flex-grow: 3;
+  width: calc(60% - 10px);
+  box-sizing: border-box;
 }
 #backdoorPathContainer .bottomContainer .backdoorOutput {
-  flex-grow: 2;
+  width: calc(40% - 10px);
+  box-sizing: border-box;
 }
 
 /*# sourceMappingURL=BackdoorPaths.css.map */

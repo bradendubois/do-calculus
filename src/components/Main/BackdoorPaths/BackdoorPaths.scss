@@ -12,11 +12,13 @@
     flex-direction: row;
 
     .backdoorButtons {
-      flex-grow: 2;
+      width: calc(40% - 10px);
+      box-sizing: border-box;
     }
 
     .backdoorGraph {
-      flex-grow: 3;
+      width: calc(60% - 10px);
+      box-sizing: border-box;
     }
   }
 
@@ -26,11 +28,13 @@
     flex-direction: row;
 
     .z_sets {
-      flex-grow: 3;
+      width: calc(60% - 10px);
+      box-sizing: border-box;
     }
 
     .backdoorOutput {
-      flex-grow: 2;
+      width: calc(40% - 10px);
+      box-sizing: border-box;
     }
   }
 
