@@ -240,7 +240,7 @@ class ProbabilityQuery extends React.Component {
                 <h1>Probability Distribution Queries</h1>
                 <div className={"mainContent"}>
                     {this.state.queryTable}
-                    {this.state.infoBox}
+                    {/* this.state.infoBox */}
                 </div>
                 <div className={"tile probabilityButtons"}>
                     <p>Query: {this.state.currentQuery}</p>

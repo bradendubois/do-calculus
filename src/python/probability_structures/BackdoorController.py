@@ -206,6 +206,7 @@ class BackdoorController:
             return path_list
 
         # Get all possible backdoor paths
+        self.graph.reset_disabled()
         backdoor_paths = get_backdoor_paths(x, [], [])
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path

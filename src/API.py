@@ -9,6 +9,8 @@ from python.config.config_manager import access
 from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
 
 # Maybe this has to change for a build? How to get the path in dev, as well as a build?
+from python.util.helpers.PowerSet import power_set
+
 PREFIX = os.path.dirname(os.path.abspath(__file__)) + "/python/"
 
 
@@ -108,3 +110,39 @@ class API:
                 paths.append(msg + path[-1])
 
         return paths
+
+    def all_z_results(self, x, y):
+
+        self._bc: BackdoorController
+
+        results = self._bc.get_all_z_subsets(set(x), set(y))
+        print(results)
+
+        return [list(s) for s in results]
+
+
+
+        responses = []
+        for s in power_set(self._graph.v - (set(x) | set(y))):
+
+            z = set([self._cg.variables[v] for v in s])
+
+            response = {
+                "sufficient": True,
+                "paths": [],
+                "z": sorted(s)
+            }
+
+            for cross in list(itertools.product(x, y)):
+                x_v, x_y = self._cg.variables[cross[0]], self._cg.variables[cross[1]]
+
+                paths = self._bc.backdoor_paths(x_v, x_y, z)
+                if len(paths) > 0:
+                    response["sufficient"] = False
+                else:
+                    print(paths)
+                response["paths"] = paths
+
+            responses.append(response)
+
+        return responses

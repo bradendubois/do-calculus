@@ -11,7 +11,7 @@ class BackdoorOutput extends React.Component {
     render() {
         return (
             <div className={"tile backdoorOutput"}>
-                BackdoorOutput
+                Output / Warnings
                 <ul>
                     {this.props.messages.map(message =>
                         <li>

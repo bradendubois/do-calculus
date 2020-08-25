@@ -8,6 +8,19 @@ import BackdoorOutput from "./BackdoorOutput/BackdoorOutput";
 
 import "./BackdoorPaths.scss"
 
+const stringify = (x, y, z) => {
+
+    x.sort()
+    y.sort()
+    z.sort()
+
+    // TODO - Import a font such that ⫫ can be properly rendered
+    let message = x.join(", ") + " _||_ " + y.join(", ");
+    if (z.length > 0)
+        message += " | " + z.join(", ")
+    return message
+}
+
 class BackdoorPaths extends React.Component {
 
     constructor(props) {
@@ -49,11 +62,7 @@ class BackdoorPaths extends React.Component {
             return
         }
 
-        // TODO - Import a font such that ⫫ can be properly rendered
-        let message = x.join(", ") + " _||_ " + y.join(", ");
-        if (z.length > 0)
-            message += " | " + z.join(", ")
-
+        let message = stringify(x, y, z)
         if (this.state.messages.includes(message)) {
             let cur = this.state.messages;
             cur.push("Already computed: " + message)
@@ -87,6 +96,29 @@ class BackdoorPaths extends React.Component {
 
     find_all_z() {
 
+        let x = this.state.x
+        let y = this.state.y
+
+        window.pywebview.api.all_z_results(x, y).then(response => {
+
+            /*
+            for (let z_response of response) {
+                if (z_response["sufficient"] === true) {
+                    results.push(<li>{stringify(x, y, z_response.z)}</li>)
+                } else {
+                    results.push(
+                        <details>
+                            <summary>{stringify(x, y, z_response["z"])}</summary>
+                            {z_response["paths"].map(path => <li>{path}</li>)}
+                        </details>
+                    )
+                }
+            }*/
+
+            console.log(response)
+
+            this.setState({backdoor_results: response})
+        })
     }
 
     add_v(set, v) {
