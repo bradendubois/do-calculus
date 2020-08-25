@@ -42,7 +42,8 @@
   "homepage": "https://github.com/r0x0r/pywebview-react-boilerplate#readme",
   "dependencies": {
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-mathjax": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.46",
