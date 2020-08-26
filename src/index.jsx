@@ -10,16 +10,21 @@ import './index.scss'
 
 const App = () => {
 
-    const [contentSelected, toggleSelected] = React.useState(false)
+    const [contentSelected, setSelected] = React.useState(false)
 
+    // Load a graph file from the list presented to the user
     const load = (graph) => {
 
         // Load the graph given
         if (!contentSelected) {
-            window.pywebview.api.load_file(graph)   //.then(() => {})
-        }
+            window.pywebview.api.load_file(graph).then(() => {
+                setSelected(true)
+            })
 
-        toggleSelected(!contentSelected)
+        // Unload
+        } else {
+            setSelected(false)
+        }
     }
 
     return (
@@ -27,7 +32,7 @@ const App = () => {
             <div id={"content"}>
                 {contentSelected ?
                     <>
-                        <Sidebar callback={toggleSelected}/>
+                        <Sidebar callback={setSelected}/>
                         <Main />
                     </> : <FileSelector callback={load}/>
                 }
@@ -36,14 +41,15 @@ const App = () => {
     )
 }
 
+/*
+ *  Wrapper class that separates the logic of the "app" itself and library specific bookkeeping of ensuring modules
+ * are only presented when the API is ready and setting up the Router system for navigation
+ */
 const AppWrapper = () => {
 
+    // Wait for a signal when the webview API is loaded, then we can show the App
     const [webviewReady, setReady] = React.useState(false)
-
-    // Show content once pywebview is ready
-    window.addEventListener('pywebviewready', () => {
-        setReady(true)
-    })
+    window.addEventListener('pywebviewready', () => setReady(true))
 
     return (
         <Router>

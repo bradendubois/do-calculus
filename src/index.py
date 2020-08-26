@@ -53,7 +53,7 @@ config = {
     "min_size": (800, 600),
     "width": 1000,
     "height": 800,
-    "easy_drag": True
+    "easy_drag": True,
 }
 
 if __name__ == '__main__':

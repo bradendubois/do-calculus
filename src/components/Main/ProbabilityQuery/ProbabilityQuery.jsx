@@ -1,4 +1,5 @@
 import React from 'react'
+import { StringifyProbabilityQuery } from "../../../util/Stringify"
 
 import InfoBox from "./InfoBox/InfoBox";
 
@@ -204,17 +205,8 @@ class ProbabilityQuery extends React.Component {
             this.disable_button()
         }
 
-        // Build new Query String
-        let query_string = outcomes.join(", ")
-        if (interventions.length + observations.length > 0) {
-            query_string += " | "
-        }
-        if (interventions.length > 0) {
-            query_string += " do(" + interventions.join(", ") + ") "
-            if (observations.length > 0) query_string += ", "
-        } query_string += observations.join(", ")
-
-        this.setState({currentQuery: query_string, queryResults: ""})
+        let queryString = StringifyProbabilityQuery(outcomes, interventions, observations)
+        this.setState({currentQuery: queryString, queryResults: ""})
     }
 
     enable_button() {
@@ -241,14 +233,18 @@ class ProbabilityQuery extends React.Component {
     render() {
         return (
             <div className={"contentSection"} id={"probabilityQueryContainer"}>
+
                 <h1>Probability Distribution Queries</h1>
+
                 <div className={"mainContent"}>
                     {this.state.queryTable}
                     {/* this.state.infoBox */}
                 </div>
+
                 <div className={"tile probabilityButtons"}>
                     <p>Query: {this.state.currentQuery}</p>
                     <p>Result: {this.state.queryResults}</p>
+
                     <div>
                         <button
                             id={"queryButton"}

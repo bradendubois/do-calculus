@@ -46,6 +46,10 @@ class BackdoorPaths extends React.Component {
         let y = this.state.y
         let z = this.state.z
 
+        x.sort()
+        y.sort()
+        z.sort()
+
         if (x.length === 0) {
             let messages = this.state.messages
             let message = "Error: Measurable variables X cannot be empty."
@@ -67,7 +71,7 @@ class BackdoorPaths extends React.Component {
         if (this.state.messages.includes(message)) {
             let cur = this.state.messages;
             cur.push("Already computed: " + message)
-            this.setState({messages: message})
+            this.setState({messages: cur})
             return
         }
 

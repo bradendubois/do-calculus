@@ -12,16 +12,18 @@ const content = [
     ["backdoorPaths", <>Backdoor Paths</>]
 ]
 
-const Sidebar = () =>
+const Sidebar = ({ callback }) =>
 
     <div className={"sidebar"}>
 
+        {/* Map each content section to its own link on the sidebar; left = path, right = display text */}
         {content.map(entry => <Link to={`/${entry[0]}`}>{entry[1]}</Link>)}
 
+        {/* Unload Button */}
         <Link
             id={"unloadButton"}
             to={"/"}
-            onClick={() => this.props.callback()}
+            onClick={() => callback()}
         >Unload Graph</Link>
 
     </div>
