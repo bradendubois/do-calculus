@@ -116,7 +116,7 @@ class ProbabilityQuery extends React.Component {
             button.classList.remove("disabled", "selected")
         }
 
-        this.infoBoxRef.current.receive_message("Reset " + variable)
+        // this.infoBoxRef.current.receive_message("Reset " + variable)
         this.update_query_string()
     }
 

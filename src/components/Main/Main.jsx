@@ -1,58 +1,46 @@
 import * as React from 'react'
+import loadable from "@loadable/component"
+import {
+    Switch,
+    Route,
+} from "react-router-dom";
 
 import "./Main.scss"
 
-import GraphData from "./GraphData/GraphData";
-import ProbabilityQuery from "./ProbabilityQuery/ProbabilityQuery";
-import BackdoorPaths from "./BackdoorPaths/BackdoorPaths";
-import DoCalculus from "./DoCalculus/DoCalculus";
+const Main = () => {
 
-class Main extends React.Component {
+    const GraphData = loadable(() => import("./GraphData/GraphData"))
+    const ProbabilityQuery = loadable(() => import("./ProbabilityQuery/ProbabilityQuery"))
+    const BackdoorPaths = loadable(() => import("./BackdoorPaths/BackdoorPaths"))
+    const DoCalculus = loadable(() => import("./DoCalculus/DoCalculus"))
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            active: <h1>Select an option from the sidebar on the left.</h1>
-        }
+    return (
 
-        this.graphData = <GraphData />
-        this.probabilityQuery = <ProbabilityQuery />
-        this.doCalculus = <DoCalculus />
-        this.backdoorPath = <BackdoorPaths />
+        <div className={"mainContent"}>
+            <Switch>
+                <Route path={"/graphData"}>
+                    <GraphData/>
+                </Route>
 
-        this.setActive = this.setActive.bind(this)
-    }
+                <Route path={"/probabilityQuery"}>
+                    <ProbabilityQuery/>
+                </Route>
 
-    setActive(page) {
+                <Route path={"/doCalculus"}>
+                    <BackdoorPaths/>
+                </Route>
 
-        console.log(page)
+                <Route path={"/backdoorPaths"}>
+                    <DoCalculus/>
+                </Route>
 
-        switch (page) {
-            case "graphData":
-                this.setState({active: this.graphData})
-                break
-            case "probabilityQuery":
-                this.setState({active: this.probabilityQuery})
-                break
-            case "doCalculus":
-                this.setState({active: this.doCalculus})
-                break
-            case "backdoorPath":
-                this.setState({active: this.backdoorPath})
-                break
-            default:
-                break
-        }
-    }
+                <Route path={"/"}>
+                    <h1>Select an option from the sidebar on the left.</h1>
+                </Route>
+            </Switch>
+        </div>
 
-    render() {
-
-        return (
-            <div className={"mainContent"}>
-                {this.state.active}
-            </div>
-        )
-    }
+    )
 }
 
 export default Main;

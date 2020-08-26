@@ -63,7 +63,7 @@ class Z_Sets extends React.Component {
             <div className={"tile z_sets"}>
                 <h3>Z (De-confounding) Sets</h3>
                 <ul>
-                    {this.state.content.map(x => <li>{x.join(", ")}</li>)}
+                    {this.state.content.map(x => <li>{x}</li>)}
                 </ul>
             </div>
         )

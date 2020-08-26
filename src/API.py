@@ -91,6 +91,7 @@ class API:
         result = self._cg.probability_query(head, body)
         if result is None:
             raise ProbabilityIndeterminableException
+        return result
 
     def v_to_parents_and_children(self):
         s = []
@@ -123,7 +124,7 @@ class API:
 
         return [list(s) for s in results]
 
-
+        # TODO - Would be nicer if the invalid Z sets also were returned with what paths appear
 
         responses = []
         for s in power_set(self._graph.v - (set(x) | set(y))):

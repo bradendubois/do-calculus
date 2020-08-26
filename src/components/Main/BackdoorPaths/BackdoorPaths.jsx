@@ -63,6 +63,7 @@ class BackdoorPaths extends React.Component {
         }
 
         let message = stringify(x, y, z)
+
         if (this.state.messages.includes(message)) {
             let cur = this.state.messages;
             cur.push("Already computed: " + message)
