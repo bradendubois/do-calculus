@@ -6,6 +6,7 @@ import os
 from python.probability_structures.BackdoorController import BackdoorController
 from python.probability_structures.CausalGraph import CausalGraph
 from python.config.config_manager import access
+from python.util.ProbabilityExceptions import ProbabilityIndeterminableException
 from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
 
 # Maybe this has to change for a build? How to get the path in dev, as well as a build?
@@ -87,7 +88,9 @@ class API:
         else:
             head, body = parse_outcomes_and_interventions(query), []
 
-        return self._cg.probability_query(head, body)
+        result = self._cg.probability_query(head, body)
+        if result is None:
+            raise ProbabilityIndeterminableException
 
     def v_to_parents_and_children(self):
         s = []
@@ -146,3 +149,6 @@ class API:
             responses.append(response)
 
         return responses
+
+    def give_exception(self):
+        raise Exception

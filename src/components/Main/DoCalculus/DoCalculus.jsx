@@ -21,7 +21,7 @@ class DoCalculus extends React.Component {
                     <div className={"rules"}>
                         <ul>
                             <li><Rule formula={"P(y | \\hat{x}, z, w) = P(y | \\hat{x}, w)"} /> if <Rule formula={"(Y \\perp \\!\\!\\! \\perp  Z | X, W)_{G_{\\bar{x}}}"} /></li>
-                            <li><Rule formula={"P(y | \\hat{x}, \\hat{z}, w) = P(y | \\hat{x}, z, w)"} /> if <Rule formula={"(Y \\perp \\!\\!\\! \\perp  Z | X, W)_{G_{\\bar{x}\\underbar{Z}}}"} /></li>
+                            <li><Rule formula={"P(y | \\hat{x}, \\hat{z}, w) = P(y | \\hat{x}, z, w)"} /> if <Rule formula={"(Y \\perp \\!\\!\\! \\perp  Z | X, W)_{G_{\\bar{x}\\underline{Z}}}"} /></li>
                             <li><Rule formula={"P(y | \\hat{x}, \\hat{z}, w) = P(y | \\hat{x}, w)"} /> if <Rule formula={"(Y \\perp \\!\\!\\! \\perp  Z | X, W)_{G_{\\bar{X}\\bar{Z(W)}}}"} /></li>
                         </ul>
                     </div>

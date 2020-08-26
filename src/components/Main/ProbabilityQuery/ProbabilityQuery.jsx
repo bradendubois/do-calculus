@@ -229,9 +229,13 @@ class ProbabilityQuery extends React.Component {
 
     executeQuery() {
         if (document.getElementById("queryButton").classList.contains("disabled")) return
-        window.pywebview.api.execute_query(this.state.currentQuery).then(response => {
-            this.setState({queryResults: response})
-        })
+        window.pywebview.api.execute_query(this.state.currentQuery)
+            .then(response => {
+                this.setState({queryResults: response})
+            })
+            .catch(error => {
+                this.setState({queryResults: <i>No de-confounding set can exist for this data.</i>})
+            })
     }
 
     render() {
