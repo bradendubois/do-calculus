@@ -2,26 +2,13 @@ import React from "react"
 
 import "./BackdoorOutput.scss"
 
-class BackdoorOutput extends React.Component {
+const BackdoorOutput = ({ messages }) =>
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className={"tile backdoorOutput"}>
-                Output / Warnings
-                <ul>
-                    {this.props.messages.map(message =>
-                        <li>
-                            {message}
-                        </li>
-                    )}
-                </ul>
-            </div>
-        )
-    }
-}
+    <div className={"tile backdoorOutput"}>
+        Output / Warnings
+        <ul>
+            {messages.map(message => <li>{message}</li>)}
+        </ul>
+    </div>
 
 export default BackdoorOutput

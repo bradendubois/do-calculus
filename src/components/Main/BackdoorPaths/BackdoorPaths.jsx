@@ -104,6 +104,13 @@ class BackdoorPaths extends React.Component {
         let x = this.state.x
         let y = this.state.y
 
+        if (x.length === 0 || y.length === 0) {
+            let messages = this.state.messages
+            messages.splice(0, 0, "Missing either Y or X.")
+            this.setState({messages: messages})
+            return
+        }
+
         window.pywebview.api.all_z_results(x, y).then(response => {
 
             /*
@@ -171,12 +178,12 @@ class BackdoorPaths extends React.Component {
                         y={this.state.y}
                         z={this.state.z}
                     />
-                    <BackdoorGraph
-                        add_v={this.add_v}
-                        x={this.state.x}
-                        y={this.state.y}
-                        z={this.state.z}
-                    />
+                    <BackdoorGraph data={{
+                        add_v: this.add_v,
+                        x: this.state.x,
+                        y: this.state.y,
+                        z: this.state.z
+                    }} />
                 </div>
 
                 <div className={"bottomContainer"}>
