@@ -84,31 +84,47 @@ class CausalGraph:
             engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
             probability = engine.probability((head, body))
 
-        # There are interventions; need to find some valid Z to compute
+        # There are interventions; may need to find some valid Z to compute
         else:
 
             # Create a Backdoor Controller
             backdoor_controller = BackdoorController(self.graph)
 
             # Then, we take set Z and take Sigma_Z P(Y | do(X)) * P(Z)
-            x = set([x.name for x in head])
-            y = set([y.name for y in body if isinstance(y, Intervention)])
-            deconfounding_sets = backdoor_controller.get_all_z_subsets(y, x)
+            y = set([y.name for y in head])
+            treatments = set([x.name for x in body if isinstance(x, Intervention)])
+            body_names = set([x.name for x in body])
 
-            # Filter out our Z sets with observations in them and verify there are still sets Z
-            # deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
-            # print("Pre:", deconfounding_sets, self.graph.incoming_disabled, self.graph.outgoing_disabled)
-            # TODO - Xj | do(Xi) X1, or Xj | do(Xi) X2 seems to not like having X3 / X5, respectively
-            deconfounding_sets = [s for s in deconfounding_sets if all(g.name not in s for g in body)]
-            if len(deconfounding_sets) == 0:
-                io.write("No deconfounding set Z can exist for the given data.")
-                return
+            # Ensure we have enough defined variables that any backdoor paths are blocked
+            if any(backdoor_controller.any_backdoor_paths({z}, y, set(body_names) - {z}) for z in treatments):
 
-            # Disable the incoming edges into our do's, and compute
-            self.graph.reset_disabled()
-            self.graph.disable_incoming(*[var for var in body if isinstance(var, Intervention)])
-            probability = self.probability_query_with_interventions(head, body, deconfounding_sets)
-            self.graph.reset_disabled()
+                deconfounding_sets = backdoor_controller.get_all_z_subsets(treatments, y)
+
+                # Filter out our Z sets with observations in them and verify there are still sets Z
+
+                # deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
+                # print("Pre:", deconfounding_sets, self.graph.incoming_disabled, self.graph.outgoing_disabled)
+                # TODO - Xj | do(Xi) X1, or Xj | do(Xi) X2 seems to not like having X3 / X5, respectively
+
+                deconfounding_sets = [s for s in deconfounding_sets if all(g.name not in s for g in body)]
+                if len(deconfounding_sets) == 0:
+                    io.write("No deconfounding set Z can exist for the given data.")
+                    return
+
+                # Disable the incoming edges into our do's, and compute
+                self.graph.reset_disabled()
+                self.graph.disable_incoming(*[var for var in body if isinstance(var, Intervention)])
+                probability = self.probability_query_with_marginalization(head, body, deconfounding_sets)
+                self.graph.reset_disabled()
+
+            else:
+
+                # Compute
+                self.graph.reset_disabled()
+                self.graph.disable_incoming(*[var for var in body if isinstance(var, Intervention)])
+                engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
+                probability = engine.probability((head, body))
+                self.graph.reset_disabled()
 
         # End logging and return
         result = str_rep+" = {0:.{precision}f}".format(probability, precision=access("output_levels_of_precision")+1)
@@ -116,9 +132,9 @@ class CausalGraph:
         io.close()
         return probability
 
-    def probability_query_with_interventions(self, outcome: list, given: list, deconfounding_sets: list) -> float:
+    def probability_query_with_marginalization(self, outcome: list, given: list, deconfounding_sets: list) -> float:
         """
-        Our "given" includes an Intervention/do(X); choose Z set(s) and return the probability of this do-calculus
+        Our "given" includes an Intervention/do(X) and requires choosing Z set(s) to marginalize over
         :param outcome: A list of Outcomes
         :param given: A list of Outcomes and/or Interventions
         :param deconfounding_sets: A list of sets, each a sufficient Z

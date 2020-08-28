@@ -32,6 +32,8 @@ class Outcome:
         return hash(self.name + self.outcome)
 
     def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return self.name == other
         return self.name == other.name and self.outcome == other.outcome
 
 
@@ -93,9 +95,6 @@ class Intervention(Outcome):
 
     def __hash__(self):
         return hash(self.name + self.outcome)
-
-    def __eq__(self, other):
-        return self.name == other.name
 
     def __copy__(self):
         return Intervention(self.name, self.outcome)
