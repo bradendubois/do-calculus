@@ -1,21 +1,39 @@
-## Running
+## Running (CLI)
 
-To run the project, simply run the file ``main.py``, located in the root of the project:
+To run the CLI version of the project, simply run the file ``cli_main.py``, located in the ``src`` of the project:
+
+First, switch to this directory:
+
+```shell_script
+cd src
+```
+
+Then, run the ``cli_main.py`` file:
 
 ```shell script
-./main.py
+./cli_main.py
 ```
 
 or run it in Python:
 
 ```shell script
-python main.py
+python cli_main.py
 ```
 
-## Usage
+## Running (GUI)
 
-When the software is first started, you will be presented with a list of files located in the default graph file folder. 
-Additionally, if no configuration file exists in ``config``, a default one will be generated. 
+Assuming all the steps have been followed in the **Instructions** section, the project should be able to be run with:
+
+```shell_script
+npm start
+```
+
+This step may take a few moments to build and start the project.
+
+## Usage (CLI)
+
+When the software is first started, you will be presented with a list of files located in the default graph file folder.
+Additionally, if no configuration file exists in ``config``, a default one will be generated.
 
 After picking a file, you will be presented with a new set of options, dependant on the graph file selected:
 
@@ -35,7 +53,7 @@ If there are no variables with probability tables, or no continuous variables, t
 
 To format a probability query:
 
-- First, provide a "head"; this is the list of outcomes. 
+- First, provide a "head"; this is the list of outcomes.
 - Second, provide a "body"; this is the list of "given" information.
 
 These must be formatted as comma-separated lists of variables with their outcomes, such as "X=x, Y=y, Z=z". Whitespace is arbitrary, but these must be comma-separated.
@@ -81,7 +99,7 @@ This will ask for 3 sets of variables: our *outcomes*, *interventions*, and *obs
 
 To compute backdoor paths between X and Y, we are prompted to enter two sets of variables:
 
-- First, enter a comma-separated list of variables, X. 
+- First, enter a comma-separated list of variables, X.
 - Second, enter a comma-separated list of variables, Y.
 
 X should lead into Y with straight-line paths.
