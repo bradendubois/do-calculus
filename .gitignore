@@ -9,10 +9,10 @@
 
 # Log files from operating software
 logs/*
-src/python/logs/
+src/logs/
 
 # Config file is "personal" and generated on run
-src/python/config/config.json
+src/config/config.json
 
 # Isolated CLI-only builds
 probability-code-*

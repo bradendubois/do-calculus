@@ -1,18 +1,6 @@
 import itertools
-
-import webview
 import os
-
-from python.probability_structures.BackdoorController import BackdoorController
-from python.probability_structures.CausalGraph import CausalGraph
-from python.config.config_manager import access
-from python.util.ProbabilityExceptions import ProbabilityIndeterminableException
-from python.util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
-
-# Maybe this has to change for a build? How to get the path in dev, as well as a build?
-from python.util.helpers.PowerSet import power_set
-
-PREFIX = os.path.dirname(os.path.abspath(__file__)) + "/python/"
+import webview
 
 
 class API:
@@ -22,6 +10,15 @@ class API:
 
     def __init__(self):
 
+        os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+        from probability_structures.BackdoorController import BackdoorController
+        from probability_structures.CausalGraph import CausalGraph
+        from config.config_manager import access
+        from util.ProbabilityExceptions import ProbabilityIndeterminableException
+        from util.parsers.GraphLoader import parse_graph_file_data, parse_outcomes_and_interventions
+        from util.helpers.PowerSet import power_set
+
         self._parsed = None
         self._variables = None
         self._outcomes = None
@@ -29,6 +26,7 @@ class API:
         self._graph = None
         self._cg = None
         self._bc = None
+
 
     def loaded(self):
         return True
