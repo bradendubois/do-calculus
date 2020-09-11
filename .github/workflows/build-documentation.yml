@@ -23,8 +23,8 @@ jobs:
     # Build the Quick Usage
     - name: Build Quick Usage
       run: |
+        cat README_2.md > "../../Quick Usage.md"
         cd ../..
-        cat documentation/readme_sections/README_2.md > "Quick Usage.md"
 
     # Build the Configuration File documentation
     - name: Build Configuration File documentation
