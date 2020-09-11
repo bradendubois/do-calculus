@@ -20,7 +20,7 @@ import os
 from primary_configuration import *
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-documentation_file = root + "/documentation/configuration.md"
+documentation_file = root + "/../documentation/configuration.md"
 
 
 def generate_configuration_documentation():
@@ -51,7 +51,6 @@ def generate_configuration_documentation():
                 # This is the header/markdown required for a table
                 f.write("| Setting Name | Options | Default Value |\n|:-:|:-:|:-:|\n")
                 f.write("| ``" + parameter["parameter"] + "`` | " + str(parameter["options"]) + " | " + str(parameter["default_value"]) + " |\n\n")
-
 
 if __name__ == "__main__":
     generate_configuration_documentation()

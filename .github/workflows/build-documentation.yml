@@ -1,0 +1,46 @@
+
+# Build and update all documentation, includes assembling the README/Quick Usage and Configuration Guide
+name: Build Documentation
+
+# This workflow is triggered on pushes to the repository.
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    # Check out repository
+    - uses: actions/checkout@v2
+
+    # Build the README
+    - name: Concatenate README sections
+      run: |
+        cd documentation/readme_sections
+        cat README_1.md README_2.md README_3.md > ../../README.md
+
+    # Build the Quick Usage
+    - name: Build Quick Usage
+      run: |
+        cd ../..
+        cat documentation/readme_sections/README_2.md > "Quick Usage.md"
+
+    # Build the Configuration File documentation
+    - name: Build Configuration File documentation
+      run: |
+        python src/config/generate_config_docs.py
+
+    # Commit all the changes
+    - name: Update documentation
+      run: |
+        git config --local user.name "bradendubois"
+        git add *
+        git commit -m "Updating repository documentation"
+
+    # Push
+    - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          force: true

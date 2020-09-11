@@ -1,5 +1,6 @@
 # Ignore .files except the gitignore itself
 .*
+!.github
 !.gitignore
 
 # No pycache
