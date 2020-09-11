@@ -4,6 +4,8 @@ A Bayesian net written in Python, supporting the do-calculus of Judea Pearl.
 
 Written for Dr. Eric Neufeld, written by Braden Dubois (braden.dubois@usask.ca).
 
+**This is the public release of code created over the Spring/Summer 2020, done under the supervision of Dr. Eric Neufeld. Many adjustments are still being made, and all documentation is under revision/updating.**
+
 ## Contents
 
 - [Requirements](#requirements)
