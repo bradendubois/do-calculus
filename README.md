@@ -4,8 +4,6 @@ A Bayesian net written in Python, supporting the do-calculus of Judea Pearl.
 
 Written for Dr. Eric Neufeld, written by Braden Dubois (braden.dubois@usask.ca).
 
-**This is the public release of code created over the Spring/Summer 2020, done under the supervision of Dr. Eric Neufeld. Many adjustments are still being made, and all documentation is under revision/updating.**
-
 ## Contents
 
 - [Requirements](#requirements)
@@ -20,37 +18,32 @@ This project is written in Python 3, and requires an up-to-date (3.8+) version t
 
 Multiple libraries are needed to run the project, almost all of which *should* be a part of a standard Python installation.
 
-- json (used to read to/from text files)
-- argparse (used to enable command-line flags given to override configuartion settings)
-- itertools (used to create cross-products from iterables)
-- os (used to verify/create/read directories and files)
-- random (used to pick a random Z set in do-calculus)
-- re (used in probabilistic function evaluation / parsing text into respective Outcomes and Interventions)
-- numpy (used in formatting conditional probability tables to strings)
-- math (used in formatting conditional probability tables to strings)
-- operator (used in getting a class attribute, used in topological sorting)
-- datetime (used in getting the exact current date/time for regression test file names and decorators)
-- functools (used in function wrapping for decorators)
+- ``json`` (used to read to/from text files)
+- ``argparse`` (used to enable command-line flags given to override configuartion settings)
+- ``itertools`` (used to create cross-products from iterables)
+- ``os`` (used to verify/create/read directories and files)
+- ``random`` (used to pick a random Z set in do-calculus)
+- ``re`` (used in probabilistic function evaluation / parsing text into respective Outcomes and Interventions)
+- ``numpy`` (used in formatting conditional probability tables to strings)
+- ``math`` (used in formatting conditional probability tables to strings)
+- ``operator`` (used in getting a class attribute, used in topological sorting)
+- ``datetime`` (used in getting the exact current date/time for regression test file names and decorators)
+- ``functools`` (used in function wrapping for decorators)
+- ``platform`` (used in the self-updating script to pull from Github)
+
+There is an in
+
+The project has a fully function CLI interface, as well as an in-development GUI version. To run the GUI version, additional libraries must be installed and set up; see the subsection **Installation (GUI)** for additional setup instructions. The following is necessary exclusively for the **GUI version**.
+
+- **[pywebview](https://pywebview.flowrl.com/)**
+- **[node](https://nodejs.org/en/)**
+- **[npm](https://www.npmjs.com/)**
 
 ## Installation
 
-Of all libraries listed, it is most likely that **numpy** is not installed on a user's machine, as it is not part of a default installation.
-
-If Python is installed, ``pip`` should also be installed. To install *numpy*, run:
-
-```shell script
-pip install -U numpy
-```
-
-To download the project, either acquire a copy from Github, Dropbox, etc.
-
-### Git Clone
-
-There is a private repository on Github, hosting the most up-to-date version of the project.
+This code is a private repository on Github, hosting the most up-to-date version of the project.
 
 Link: [https://github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
-
-If you *can* view the project, simply clone the project, and change your working directory to its root.
 
 ```shell script
 git clone https://github.com/bradendubois/probability-code
@@ -58,24 +51,77 @@ cd probability-code
 ```
 
 As it is private, you will likely be prompted to login and verify your collaborator status.
-## Running
 
-To run the project, simply run the file ``main.py``, located in the root of the project:
+For both the CLI and GUI versions, **numpy** is used and may not be installed on a user's machine.
+
+If Python is installed, ``pip`` should also be installed. To install *numpy*, run:
 
 ```shell script
-./main.py
+pip install -U numpy
+```
+
+The following subsection concerns additional installation steps necessary to run the **GUI** version.
+
+### Installation (GUI)
+
+The GUI version is driven by **[Pywebview](https://pywebview.flowrl.com/)** providing a Python API / back-end capable of running a progressive web app.
+
+To set up the GUI, **[node](https://nodejs.org/en/)** must be installed on the user's machine. **[npm](https://www.npmjs.com/)** must also be installed, and is included with a **[node](https://nodejs.org/en/)** installation.
+
+Once **[node](https://nodejs.org/en/)** and **[npm](https://www.npmjs.com/)** are installed, from the root of the project, run:
+
+```shell_script
+npm run init
+```
+
+This will:
+
+- Install Node dependencies (and may take a while)
+- Set up a Python virtual environment
+- Install required modules in the virtual environment
+- Attempt to install any necessary GUI toolkit (QT or GTK)
+
+#### Troubleshooting
+
+This script may fail on a Linux system without "apt" installed.
+
+- Try running both ``npm run init:qt5`` and ``npm run init:gtk`` directly, and one should succeed.
+## Running (CLI)
+
+To run the CLI version of the project, simply run the file ``cli_main.py``, located in the ``src`` of the project:
+
+First, switch to this directory:
+
+```shell_script
+cd src
+```
+
+Then, run the ``cli_main.py`` file:
+
+```shell script
+./cli_main.py
 ```
 
 or run it in Python:
 
 ```shell script
-python main.py
+python cli_main.py
 ```
 
-## Usage
+## Running (GUI)
 
-When the software is first started, you will be presented with a list of files located in the default graph file folder. 
-Additionally, if no configuration file exists in ``config``, a default one will be generated. 
+Assuming all the steps have been followed in the **Instructions** section, the project should be able to be run with:
+
+```shell_script
+npm start
+```
+
+This step may take a few moments to build and start the project.
+
+## Usage (CLI)
+
+When the software is first started, you will be presented with a list of files located in the default graph file folder.
+Additionally, if no configuration file exists in ``config``, a default one will be generated.
 
 After picking a file, you will be presented with a new set of options, dependant on the graph file selected:
 
@@ -95,7 +141,7 @@ If there are no variables with probability tables, or no continuous variables, t
 
 To format a probability query:
 
-- First, provide a "head"; this is the list of outcomes. 
+- First, provide a "head"; this is the list of outcomes.
 - Second, provide a "body"; this is the list of "given" information.
 
 These must be formatted as comma-separated lists of variables with their outcomes, such as "X=x, Y=y, Z=z". Whitespace is arbitrary, but these must be comma-separated.
@@ -141,7 +187,7 @@ This will ask for 3 sets of variables: our *outcomes*, *interventions*, and *obs
 
 To compute backdoor paths between X and Y, we are prompted to enter two sets of variables:
 
-- First, enter a comma-separated list of variables, X. 
+- First, enter a comma-separated list of variables, X.
 - Second, enter a comma-separated list of variables, Y.
 
 X should lead into Y with straight-line paths.
@@ -192,4 +238,3 @@ For information on decorators, see ``Decorator Usage``.
 An effort has been made to document source code consistently and clearly. As well, an emphasis has been made to write *clear*, *readable*, and *robust* code.
 
 For information the overall architecture / design, see ``Architecture``.
-https://commons.wikimedia.org/wiki/File:Antu_arrow-up.svg

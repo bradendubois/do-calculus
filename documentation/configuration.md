@@ -94,7 +94,7 @@ A specific directory in which multiple graph files can be placed; they will be l
 
 | Setting Name | Options | Default Value |
 |:-:|:-:|:-:|
-| ``graph_file_folder`` | any valid path in the project | causal_graphs |
+| ``graph_file_folder`` | any valid path in the project | graphs/full |
 
 #### Regression Test Directory
 
