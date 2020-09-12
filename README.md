@@ -1,8 +1,10 @@
 # probability-code
 
-A Bayesian net written in Python, supporting the do-calculus of Judea Pearl.
+A modified Bayesian net written in Python, supporting the do-calculus of Judea Pearl.
 
 Written for Dr. Eric Neufeld, written by Braden Dubois (braden.dubois@usask.ca).
+
+This work is able to support standard probability distribution queries as in a typical Bayesian net (P(Y=y | X=x)) as well as handling interventional queries: P\*(Y=y | X=x). 
 
 ## Contents
 
@@ -19,7 +21,7 @@ This project is written in Python 3, and requires an up-to-date (3.8+) version t
 Multiple libraries are needed to run the project, almost all of which *should* be a part of a standard Python installation.
 
 - ``json`` (used to read to/from text files)
-- ``argparse`` (used to enable command-line flags given to override configuartion settings)
+- ``argparse`` (used to enable command-line flags given to override configuration settings)
 - ``itertools`` (used to create cross-products from iterables)
 - ``os`` (used to verify/create/read directories and files)
 - ``random`` (used to pick a random Z set in do-calculus)
@@ -31,109 +33,67 @@ Multiple libraries are needed to run the project, almost all of which *should* b
 - ``functools`` (used in function wrapping for decorators)
 - ``platform`` (used in the self-updating script to pull from Github)
 
-There is an in
-
-The project has a fully function CLI interface, as well as an in-development GUI version. To run the GUI version, additional libraries must be installed and set up; see the subsection **Installation (GUI)** for additional setup instructions. The following is necessary exclusively for the **GUI version**.
-
-- **[pywebview](https://pywebview.flowrl.com/)**
-- **[node](https://nodejs.org/en/)**
-- **[npm](https://www.npmjs.com/)**
+The project has a command-line interface, with an API forthcoming, to enable usage in other projects.
 
 ## Installation
 
-This code is a private repository on Github, hosting the most up-to-date version of the project.
-
-Link: [https://github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
+First, clone the repository to your machine.
 
 ```shell script
 git clone https://github.com/bradendubois/probability-code
 cd probability-code
 ```
 
-As it is private, you will likely be prompted to login and verify your collaborator status.
-
-For both the CLI and GUI versions, **numpy** is used and may not be installed on a user's machine.
-
-If Python is installed, ``pip`` should also be installed. To install *numpy*, run:
+Then, install any of the missing libraries from above. The most likely is *numpy*. If Python is installed, ``pip`` should also be installed. To install *numpy*, run:
 
 ```shell script
 pip install -U numpy
 ```
+## Running
 
-The following subsection concerns additional installation steps necessary to run the **GUI** version.
+To run the CLI, simply run the file ``main.py``, located in the ``src`` of the project:
 
-### Installation (GUI)
-
-The GUI version is driven by **[Pywebview](https://pywebview.flowrl.com/)** providing a Python API / back-end capable of running a progressive web app.
-
-To set up the GUI, **[node](https://nodejs.org/en/)** must be installed on the user's machine. **[npm](https://www.npmjs.com/)** must also be installed, and is included with a **[node](https://nodejs.org/en/)** installation.
-
-Once **[node](https://nodejs.org/en/)** and **[npm](https://www.npmjs.com/)** are installed, from the root of the project, run:
-
-```shell_script
-npm run init
-```
-
-This will:
-
-- Install Node dependencies (and may take a while)
-- Set up a Python virtual environment
-- Install required modules in the virtual environment
-- Attempt to install any necessary GUI toolkit (QT or GTK)
-
-#### Troubleshooting
-
-This script may fail on a Linux system without "apt" installed.
-
-- Try running both ``npm run init:qt5`` and ``npm run init:gtk`` directly, and one should succeed.
-## Running (CLI)
-
-To run the CLI version of the project, simply run the file ``cli_main.py``, located in the ``src`` of the project:
-
-First, switch to this directory:
+This can be done directly:
 
 ```shell_script
 cd src
+./main.py
 ```
 
-Then, run the ``cli_main.py`` file:
-
-```shell script
-./cli_main.py
-```
-
-or run it in Python:
-
-```shell script
-python cli_main.py
-```
-
-## Running (GUI)
-
-Assuming all the steps have been followed in the **Instructions** section, the project should be able to be run with:
+or
 
 ```shell_script
-npm start
+./src/main.py
 ```
 
-This step may take a few moments to build and start the project.
+Or it can be run in Python:
 
-## Usage (CLI)
+```shell script
+cd src
+python main.py
+```
 
-When the software is first started, you will be presented with a list of files located in the default graph file folder.
-Additionally, if no configuration file exists in ``config``, a default one will be generated.
+or
 
-After picking a file, you will be presented with a new set of options, dependant on the graph file selected:
+```shell script
+python src/main.py
+```
+
+## Usage
+
+When the software is first started:
+1. If no configuration file exists in ``src/config``, a default one will be generated.
+2. A regression test suite will run, verifying correctness of the software. Output from this can be ignored.
+3. The user will be presented with a list of files located in the default graph file folder.
+
+After picking a file, the user will be presented with a new set of options, dependant on the graph file selected:
 
 - Query a probability, such as P(Y = y | X = x).
-- Query the value of a continuous variable, such as f(X).
-- In-Progress: See the application of the 3 rules of do-calculus
+- See the application of the 3 rules of do-calculus
 - Detect backdoor paths between two sets of variables, X and Y, and find deconfounding sets Z.
 - Generate a Joint Distribution Table
 - See the topological ordering of the loaded graph
 - Switch Graph Files
-
-If there are no variables with probability tables, or no continuous variables, the respective, unavailable options will not be listed.
 
 **Warning**: If you wish to see a Joint Distribution Table for a large graph, ensure that computation-caching is enabled in your configuration file.
 
@@ -162,14 +122,6 @@ Here are a few examples, where the first on each line is the "head", and the sec
 When an intervention (do(X)) is given, we must identify a possible deconfounding set Z. These are automatically calculated.
 
 - Depending on configuration settings, we may *ask* the user to select one, *randomly* pick one, or try *all* of them.
-
-### Querying Functions
-
-If a variable is determined by a function, such as f(C) = f(A) * 2, then we simply input the variable we wish to query:
-
-- "C"
-
-Noise is supported, and creating functions is documented in ``Causal Graph Files``.
 
 ### Apply the Rules of *do*-calculus
 
@@ -226,12 +178,6 @@ For information on configuration settings, their usage and options, see ``Config
 A regression test suite is implemented in the software, and by default, is run at launch. Any number of test files can be created, and by default are located in ``regression_tests/test_files``. They allow for various kinds of tests, including simply checking that probability calculated matches an expected, whether some set of tests sum to some value, and a couple more.
 
 For information on creating test files, see ``Regression Tests``.
-
-### Decorator Usage
-
-Decorators are an advanced Python concept relying on its functional programming; it is not heavily used yet in this software.
-
-For information on decorators, see ``Decorator Usage``.
 
 ### Source Code Design / Architecture
 
