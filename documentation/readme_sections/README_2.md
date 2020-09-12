@@ -1,51 +1,48 @@
-## Running (CLI)
+## Running
 
-To run the CLI version of the project, simply run the file ``cli_main.py``, located in the ``src`` of the project:
+To run the CLI, simply run the file ``main.py``, located in the ``src`` of the project:
 
-First, switch to this directory:
+This can be done directly:
 
 ```shell_script
 cd src
+./main.py
 ```
 
-Then, run the ``cli_main.py`` file:
-
-```shell script
-./cli_main.py
-```
-
-or run it in Python:
-
-```shell script
-python cli_main.py
-```
-
-## Running (GUI)
-
-Assuming all the steps have been followed in the **Instructions** section, the project should be able to be run with:
+or
 
 ```shell_script
-npm start
+./src/main.py
 ```
 
-This step may take a few moments to build and start the project.
+Or it can be run in Python:
 
-## Usage (CLI)
+```shell script
+cd src
+python main.py
+```
 
-When the software is first started, you will be presented with a list of files located in the default graph file folder.
-Additionally, if no configuration file exists in ``config``, a default one will be generated.
+or
 
-After picking a file, you will be presented with a new set of options, dependant on the graph file selected:
+```shell script
+python src/main.py
+```
+
+## Usage
+
+When the software is first started:
+1. If no configuration file exists in ``src/config``, a default one will be generated.
+2. A regression test suite will run, verifying correctness of the software. Output from this can be ignored.
+3. The user will be presented with a list of files located in the default graph file folder.
+
+After picking a file, the user will be presented with a new set of options, dependant on the graph file selected:
 
 - Query a probability, such as P(Y = y | X = x).
-- Query the value of a continuous variable, such as f(X).
-- In-Progress: See the application of the 3 rules of do-calculus
+- See the application of the 3 rules of do-calculus
 - Detect backdoor paths between two sets of variables, X and Y, and find deconfounding sets Z.
 - Generate a Joint Distribution Table
 - See the topological ordering of the loaded graph
 - Switch Graph Files
-
-If there are no variables with probability tables, or no continuous variables, the respective, unavailable options will not be listed.
 
 **Warning**: If you wish to see a Joint Distribution Table for a large graph, ensure that computation-caching is enabled in your configuration file.
 
@@ -74,14 +71,6 @@ Here are a few examples, where the first on each line is the "head", and the sec
 When an intervention (do(X)) is given, we must identify a possible deconfounding set Z. These are automatically calculated.
 
 - Depending on configuration settings, we may *ask* the user to select one, *randomly* pick one, or try *all* of them.
-
-### Querying Functions
-
-If a variable is determined by a function, such as f(C) = f(A) * 2, then we simply input the variable we wish to query:
-
-- "C"
-
-Noise is supported, and creating functions is documented in ``Causal Graph Files``.
 
 ### Apply the Rules of *do*-calculus
 

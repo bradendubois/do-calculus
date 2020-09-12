@@ -20,12 +20,6 @@ A regression test suite is implemented in the software, and by default, is run a
 
 For information on creating test files, see ``Regression Tests``.
 
-### Decorator Usage
-
-Decorators are an advanced Python concept relying on its functional programming; it is not heavily used yet in this software.
-
-For information on decorators, see ``Decorator Usage``.
-
 ### Source Code Design / Architecture
 
 An effort has been made to document source code consistently and clearly. As well, an emphasis has been made to write *clear*, *readable*, and *robust* code.
