@@ -4,14 +4,14 @@ To run the CLI, simply run the file ``main.py``, located in the ``src`` of the p
 
 This can be done directly:
 
-```shell_script
+```shell script
 cd src
 ./main.py
 ```
 
 or
 
-```shell_script
+```shell script
 ./src/main.py
 ```
 

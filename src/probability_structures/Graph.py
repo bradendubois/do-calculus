@@ -29,15 +29,15 @@ class Graph:
         """
 
         self.v = v
-        self.e = e
+        self.e = [(i[0].strip(), i[1].strip()) for i in e]
 
         # Declare the keys (which are vertices)
         self.incoming = {vertex.strip(): set() for vertex in v}
         self.outgoing = {vertex.strip(): set() for vertex in v}
 
         for edge in e:
-            self.outgoing[edge[0].strip()].add(edge[1].strip())
-            self.incoming[edge[1].strip()].add(edge[0].strip())
+            self.outgoing[edge[0]].add(edge[1])
+            self.incoming[edge[1]].add(edge[0])
 
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
