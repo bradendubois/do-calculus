@@ -1,4 +1,4 @@
-from ID_algorithm import ExtendedGraph
+from ID_algorithm import ExtendedGraph, LatentGraph
 
 dataset = [
     {
@@ -39,3 +39,14 @@ for graph in dataset:
     print(str(g))
     transform = g.latent_projection()
     print("\nTransform\n", str(transform))
+    print("C Components: ")
+    seen = set()
+
+    latent = LatentGraph(transform.v, transform.e)
+
+    for n in latent.v:
+        component = ", ".join(list(latent.c_component(n)))
+        if component not in seen:
+            seen.add(component)
+            print(component)
+

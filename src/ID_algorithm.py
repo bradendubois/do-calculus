@@ -23,6 +23,7 @@ from util.parsers.GraphLoader import parse_graph_file_data
 # Load the graph
 eelworm_cg = CausalGraph(**parse_graph_file_data("./graphs/full/fumigants_eelworms.json"))
 
+
 # Some boilerplate test that'll allow me to layout ID very cleanly. Maybe. Hopefully!
 class ProbabilityDistribution:
 
@@ -82,9 +83,11 @@ class ExtendedGraph(Graph):
                 v.remove(r)
                 uc.remove(r)
 
+        # Convert all remaining unobservable to a list to iterate through
         uc = list(uc)
         while len(uc) > 0:
 
+            # Take one "current" unobservable to remove, and remove it from the graph entirely
             cur = uc.pop()
             v.remove(cur)
 
@@ -98,14 +101,21 @@ class ExtendedGraph(Graph):
             child_edges = {edge for edge in e if edge[0] == cur}
             e -= child_edges
 
-            children = set(x[1] for x in child_edges if x[1] != cur)
-            for cross in itertools.product(children, children):
-                c1, c2 = cross
-                if c1 == c2:
-                    continue
+            child_edges = list(child_edges)
+            for i in range(len(child_edges)):
+                a, b = child_edges[i], child_edges[(i + 1) % len(child_edges)]
+                e.add((a[1], b[1]))
+                e.add((b[1], a[1]))
 
-                e.add((c1, c2))
-                e.add((c2, c1))
+            # Old Implementation, adds excessive amount of edges (C-components become 'dense' sub-graphs)
+            # children = set(x[1] for x in child_edges if x[1] != cur)
+            # for cross in itertools.product(children, children):
+            #     c1, c2 = cross
+            #     if c1 == c2:
+            #         continue
+
+            #     e.add((c1, c2))
+            #     e.add((c2, c1))
 
         print(v)
         print(e)
