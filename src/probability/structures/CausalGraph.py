@@ -10,11 +10,11 @@
 import itertools        # Used to create cross-products from iterables
 import random           # Used to pick a random Z set in do-calculus
 
-from probability_structures.BackdoorController import BackdoorController
-from probability_structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from probability_structures.Graph import *
-from probability_structures.Probability_Engine import ProbabilityEngine
-from probability_structures.VariableStructures import *
+from probability.structures.BackdoorController import BackdoorController
+from probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from probability.structures.Graph import *
+from probability.structures.Probability_Engine import ProbabilityEngine
+from probability.structures.VariableStructures import *
 
 from util.IO_Logger import *
 from util.parsers.UserIndexSelection import *

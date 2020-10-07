@@ -56,7 +56,7 @@ if access("run_regression_tests_on_launch"):
 if os.path.isdir(access("graph_file_folder")):
 
     # Import the REPL Driver and Graph Loader libraries
-    from probability_structures.REPL_Driver import REPLDriver, user_index_selection
+    from probability.REPL_Driver import REPLDriver, user_index_selection
     from util.parsers.GraphLoader import parse_graph_file_data
 
     # Find all JSON files in that directory

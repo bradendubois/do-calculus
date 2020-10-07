@@ -10,7 +10,7 @@ import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
 from config.config_manager import *
-from probability_structures.VariableStructures import *
+from probability.structures.VariableStructures import *
 from util.IO_Logger import io
 from util.ProbabilityExceptions import *
 

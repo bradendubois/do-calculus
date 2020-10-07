@@ -13,9 +13,9 @@
 #   involving "do" usually must condition on certain variables, and so we do need this rule, even though it's not
 #   one of the big 3 rules.
 
-from probability_structures.Graph import Graph
-from probability_structures.do_calculus.application.CustomSetFunctions import rename, union
-from probability_structures.do_calculus.application.QueryStructures import Query, QueryBody, Sigma
+from probability.structures.Graph import Graph
+from probability.do_calculus.application.CustomSetFunctions import rename, union
+from probability.do_calculus.application.QueryStructures import Query, QueryBody, Sigma
 
 
 ###################################################

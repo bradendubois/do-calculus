@@ -7,10 +7,10 @@
 #                                                       #
 #########################################################
 
-from probability_structures.do_calculus.DoCalculus import do_calculus_repl
-from probability_structures.BackdoorController import BackdoorController
-from probability_structures.CausalGraph import CausalGraph
-from probability_structures.VariableStructures import *
+from probability.do_calculus.DoCalculus import do_calculus_repl
+from probability.structures.BackdoorController import BackdoorController
+from probability.structures.CausalGraph import CausalGraph
+from probability.structures.VariableStructures import *
 
 from util.IO_Logger import *
 from util.ResultCache import *

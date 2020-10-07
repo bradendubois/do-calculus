@@ -11,8 +11,8 @@
 
 import itertools
 
-from probability_structures.Graph import Graph
-from probability_structures.VariableStructures import *
+from probability.structures.Graph import Graph
+from probability.structures.VariableStructures import *
 
 from util.IO_Logger import io
 from util.parsers.ProbabilityString import p_str

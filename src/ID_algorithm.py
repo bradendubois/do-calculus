@@ -8,11 +8,12 @@
 #   Written for: Dr. Eric Neufeld                       #
 #                                                       #
 #########################################################
-import itertools
 
-from probability_structures.Graph import Graph
-from probability_structures.CausalGraph import CausalGraph
-from probability_structures.VariableStructures import Variable
+import itertools
+import random
+
+from probability.structures.Graph import Graph
+from probability.structures.CausalGraph import CausalGraph
 
 # y : some variable or set of variables
 # x : some variable or set of variables (interventions) ?
@@ -27,14 +28,11 @@ eelworm_cg = CausalGraph(**parse_graph_file_data("./graphs/full/fumigants_eelwor
 # Some boilerplate test that'll allow me to layout ID very cleanly. Maybe. Hopefully!
 class ProbabilityDistribution:
 
-    def __init__(self):
-        pass
+    def __init__(self, tables: dict):
+        self.tables = tables
 
-    def ancestors(self, *args):
-        return self
-
-    def p(self, *args):
-        return 0
+    def ancestors(self, subset):
+        return ProbabilityDistribution({k: self.tables[k] for k in subset})
 
 
 class ExtendedGraph(Graph):
@@ -42,11 +40,6 @@ class ExtendedGraph(Graph):
     def __init__(self, v, e, u):
         super().__init__(v, e)
         self.u = u - (v - u)
-
-    def subgraph(self, v):
-        v_p = {vertex for vertex in self.v if vertex in v}
-        e_p = {edge for edge in self.e if edge[0] in v and edge[1] in v}
-        return ExtendedGraph(v_p, e_p, set())
 
     def latent_projection(self):
 
@@ -119,7 +112,7 @@ class ExtendedGraph(Graph):
 
         print(v)
         print(e)
-        return ExtendedGraph(v, e, set())
+        return LatentGraph(v, e)
 
 
 class LatentGraph(Graph):
@@ -130,12 +123,24 @@ class LatentGraph(Graph):
     def bidirected(self, s, t):
         return (s, t) in self.e and (t, s) in self.e
 
+    def subgraph(self, v):
+        v_p = {vertex for vertex in self.v if vertex in v}
+        e_p = {edge for edge in self.e if edge[0] in v and edge[1] in v}
+        return LatentGraph(v_p, e_p)
+
     def c_component(self, v):
+
+        # Line 5: Is the Graph one big C Component?
+        if isinstance(v, Graph):
+            start = random.choice(list(v.v))
+        else:
+            start = v
+
         component = set()       # C Component is a set of vertices, can construct a subgraph
         seen = set()            # Prevent infinite loops, just a set of vertices examined
 
-        component.add(v)        # C component is at least a component of 1, the original vertex
-        queue = list(self.incoming[v] | self.outgoing[v])       # Start with everything connected to v
+        component.add(start)        # C component is at least a component of 1, the original vertex
+        queue = list(self.incoming[start] | self.outgoing[start])       # Start with everything connected to v
 
         while len(queue) > 0:
 
@@ -148,11 +153,25 @@ class LatentGraph(Graph):
                     component.add(current)
                     queue = list(self.incoming[current] | self.outgoing[current])
 
+        # Line 5
+        if isinstance(v, Graph):
+            if len(component) == len(v.v):
+                return v
+            else:
+                return component
+
         return component
 
 
+def gamma(p):
+    s = 1.0
+    for val in p:
+        s *= val
+    return s
+
+
 # noinspection PyPep8Naming
-def id_algorithm(y: set, x: set, P: ProbabilityDistribution, G: ExtendedGraph):
+def id_algorithm(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
 
     # 1 - if X == {}, return Sigma_{v\y}P(v)
     if len(x) == 0:
@@ -164,15 +183,28 @@ def id_algorithm(y: set, x: set, P: ProbabilityDistribution, G: ExtendedGraph):
         return id_algorithm(y, x & G.ancestors(y), P.ancestors(y), G.subgraph(G.ancestors(y)))
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
+    vx = G.v - x
+    G.disable_incoming(x)
+    W = vx - G.ancestors(y)
+    G.reset_disabled()
+
     # if W != {}, return id_algorithm(y, x ∪ w, P, G)
-    # if G.v - x != set():
-    #     return id_algorithm(y, x | )
+    if W != set():
+        return id_algorithm(y, x | W, P, G)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
     #   return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
+    if G.c_component(G.v - x) == {}: #S_1 -> S_k???
+        # return sum([gamma([id_algorithm(s, G.v - s, P, G) for s in S]) for z in G.v - (y | x)])
+        return
 
     #   if C(G \ X) == {S},
+    #if G.c_component(G.v - x) == S:
+
     #   5 - if C(G) == {G}, throw FAIL(G, S)
+    if G.c_component(G) == G:
+        raise Exception
+
     #   6 - if S ∈ C(G), return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
     #   7 -  if (∃S')S ⊂ S' ∈ C(G)
     #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')

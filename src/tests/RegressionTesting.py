@@ -9,8 +9,8 @@
 
 from datetime import datetime
 
-from probability_structures.CausalGraph import *
-from probability_structures.VariableStructures import *
+from probability.structures.CausalGraph import *
+from probability.structures.VariableStructures import *
 from util.ProbabilityExceptions import *
 from util.parsers.GraphLoader import parse_graph_file_data
 

@@ -9,8 +9,8 @@
 
 import itertools
 
-from probability_structures.Graph import Graph
-from probability_structures.VariableStructures import Variable
+from probability.structures.Graph import Graph
+from probability.structures.VariableStructures import Variable
 from util.IO_Logger import *
 from util.helpers.MinimizeSets import minimal_sets
 from util.helpers.PowerSet import power_set
