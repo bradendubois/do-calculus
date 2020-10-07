@@ -34,7 +34,7 @@ class ProbabilityEngine:
         :param outcomes: A dictionary mapping of variable to its respective outcomes
         :param tables: A dictionary mapping of Variable to its lookup table
         """
-        self.graph = graph
+        self.graph = graph.copy()
         self.outcomes = outcomes
         self.tables = tables
 
