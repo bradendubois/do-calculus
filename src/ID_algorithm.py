@@ -31,8 +31,8 @@ class ProbabilityDistribution:
     def __init__(self, tables: dict):
         self.tables = tables
 
-    def ancestors(self, subset):
-        return ProbabilityDistribution({k: self.tables[k] for k in subset})
+    def __call__(self, x):
+        return ProbabilityDistribution({p: self.tables[p] for p in self.tables if p in x})
 
 
 class ExtendedGraph(Graph):
@@ -120,6 +120,9 @@ class LatentGraph(Graph):
     def __init__(self, v, e):
         super().__init__(v, e)
 
+    def __call__(self, v: set):
+        return LatentGraph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
+
     def bidirected(self, s, t):
         return (s, t) in self.e and (t, s) in self.e
 
@@ -163,50 +166,80 @@ class LatentGraph(Graph):
         return component
 
 
-def gamma(p):
-    s = 1.0
-    for val in p:
-        s *= val
-    return s
+class FAIL(Exception):
+    def __init__(self, g, cg):
+        self.g = g
+        self.cg = cg
 
 
 # noinspection PyPep8Naming
-def id_algorithm(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
+def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
+
+    # noinspection PyPep8Naming
+    def C(X: LatentGraph):
+
+        components = []
+
+        for vertex in X.v:
+            component = G.c_component(vertex)
+            if component not in components:
+                components.append(component)
+
+        if len(components) == 1:
+            return components.pop()
+
+        return components
+
+    # noinspection PyPep8Naming
+    def An(X):
+        return G.ancestors(X)
+
+    # noinspection PyPep8Naming
+    def Sigma(*X):
+        return "Sigma", *X
+
+    # noinspection PyPep8Naming
+    def Gamma(*X):
+        return "Gamma", *X
+
+    V = G.v
+    empty = set()
 
     # 1 - if X == {}, return Sigma_{v\y}P(v)
-    if len(x) == 0:
-        return sum([P.p(v) for v in G.v - y])
+    if x != empty:
+        return Sigma([P(v) for v in V - x])
 
     # 2 - if V != An(Y)_G
     #   return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
-    if G.v != G.ancestors(y):
-        return id_algorithm(y, x & G.ancestors(y), P.ancestors(y), G.subgraph(G.ancestors(y)))
+    if V != An(y):
+        return ID(y, x & An(y), P(An(y)), G(An(y)))
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
-    vx = G.v - x
     G.disable_incoming(x)
-    W = vx - G.ancestors(y)
+    W = (V - x) - An(y)
     G.reset_disabled()
 
     # if W != {}, return id_algorithm(y, x ∪ w, P, G)
-    if W != set():
-        return id_algorithm(y, x | W, P, G)
+    if W != empty:
+        return ID(y, x | W, P, G)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
     #   return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
-    if G.c_component(G.v - x) == {}: #S_1 -> S_k???
+    if len(C(G(V - x))) > 1:
         # return sum([gamma([id_algorithm(s, G.v - s, P, G) for s in S]) for z in G.v - (y | x)])
-        return
+        return Sigma([Gamma(ID(s, V - s, P, G)) for s in V - (y | x)])
 
     #   if C(G \ X) == {S},
-    #if G.c_component(G.v - x) == S:
+    if len(C(G(V - x))) == 1:
 
-    #   5 - if C(G) == {G}, throw FAIL(G, S)
-    if G.c_component(G) == G:
-        raise Exception
+        #   5 - if C(G) == {G}, throw FAIL(G, S)
+        if C(G) == G:
+            raise FAIL(G, C(G))
 
-    #   6 - if S ∈ C(G), return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
-    #   7 -  if (∃S')S ⊂ S' ∈ C(G)
-    #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
+        #   6 - if S ∈ C(G), return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
+
+
+        #   7 -  if (∃S')S ⊂ S' ∈ C(G)
+        #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
 
     return
