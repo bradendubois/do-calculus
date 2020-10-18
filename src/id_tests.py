@@ -1,4 +1,5 @@
-from ID_algorithm import ExtendedGraph, LatentGraph
+from ID_algorithm import LatentGraph, latent_projection
+from probability.structures.Graph import Graph
 
 dataset = [
     {
@@ -27,26 +28,29 @@ for graph in dataset:
 
     v = set()
     e = set()
+    u = graph["u"]
 
+    # Parse minimal graph
     for line in graph["e"]:
         s = [i.strip() for i in line.split("->")]
         v.update(s)
         for i in range(len(s)-1):
             e.add((s[i], s[i+1]))
 
-    g = ExtendedGraph(v, e, graph["u"])
-    print("\n\n\n\n\n**********")
-    print(str(g))
-    transform = g.latent_projection()
-    print("\nTransform\n", str(transform))
+    g = Graph(v, e)
+
+    print("\n" + "*" * 50 + "\n")
+    print("Original:\n" + str(g), "\n")
+
+    latent = latent_projection(g, u)
+
+    print("Latent Projection:\n" + str(latent))
+
     print("C Components: ")
     seen = set()
 
-    latent = LatentGraph(transform.v, transform.e)
-
     for n in latent.v:
-        component = ", ".join(list(latent.c_component(n)))
+        component = ", ".join(list(latent.c_components[n]))
         if component not in seen:
             seen.add(component)
             print(component)
-
