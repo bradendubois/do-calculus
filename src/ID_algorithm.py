@@ -174,33 +174,33 @@ def latent_projection(G: Graph, U: set) -> LatentGraph:
 
 
 # noinspection PyPep8Naming
+def C(X: LatentGraph):
+    return X.all_c_components()
+
+
+# noinspection PyPep8Naming
+def Sigma(*X):
+    return "Sigma", *X
+
+
+# noinspection PyPep8Naming
+def Gamma(*X):
+    return "Gamma", *X
+
+
+# noinspection PyPep8Naming
 def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
-
-    # Helpers
-
-    # noinspection PyPep8Naming
-    def C(X: LatentGraph):
-        return X.all_c_components()
 
     # noinspection PyPep8Naming
     def An(X):
         return G.ancestors(X)
 
-    # noinspection PyPep8Naming
-    def Sigma(*X):
-        return "Sigma", *X
-
-    # noinspection PyPep8Naming
-    def Gamma(*X):
-        return "Gamma", *X
-
     V = G.v
-    empty = set()
 
     # ID
 
     # 1 - if X == {}, return Sigma_{v\y}P(v)
-    if x == empty:
+    if x == set():
         return Sigma([P(v) for v in V - x])
 
     # 2 - if V != An(Y)_G
@@ -214,7 +214,7 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
     G.reset_disabled()
 
     # if W != {}, return id_algorithm(y, x ∪ w, P, G)
-    if W != empty:
+    if W != set():
         return ID(y, x | W, P, G)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
