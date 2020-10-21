@@ -28,13 +28,25 @@ class ProbabilityDistribution:
     def __init__(self, tables: dict):
         self.tables = tables
 
-    def __call__(self, x):
+    def __call__(self, x, children=None):
         """
         Get subset X of some ProbabilityDistribution P.
         :param x: A set of variables in some ProbabilityDistribution P.
+        :param children: The set of children of X
         :return: A ProbabilityDistribution of the subset X.
         """
-        return ProbabilityDistribution({p: self.tables[p] for p in self.tables if p in x})
+
+        # Line 1 Return
+        if isinstance(x, str):
+            return self.tables[x]
+
+        # Line 2 Return
+        elif isinstance(x, set) and children is None:
+            return ProbabilityDistribution({p: self.tables[p] for p in self.tables if p in x})
+
+        # Line 6 return
+        elif isinstance(x, str) and children is not None:
+            return {self.tables[x]: [self.tables[c] for c in children]}
 
 
 # Custom exception to match the ID algorithm failure
@@ -174,8 +186,8 @@ def latent_projection(G: Graph, U: set) -> LatentGraph:
 
 
 # noinspection PyPep8Naming
-def C(X: LatentGraph):
-    return X.all_c_components()
+def C(G: LatentGraph):
+    return G.all_c_components()
 
 
 # noinspection PyPep8Naming
@@ -195,6 +207,9 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
     def An(X):
         return G.ancestors(X)
 
+    def children(v):
+        return G.children(v)
+
     V = G.v
 
     # ID
@@ -204,8 +219,8 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
         return Sigma([P(v) for v in V - x])
 
     # 2 - if V != An(Y)_G
-    #   return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
     if V != An(y):
+        # return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
         return ID(y, x & An(y), P(An(y)), G(An(y)))
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
@@ -213,24 +228,29 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
     W = (V - x) - An(y)
     G.reset_disabled()
 
-    # if W != {}, return id_algorithm(y, x ∪ w, P, G)
+    # if W != {}
     if W != set():
+        # return ID(y, x ∪ w, P, G)
         return ID(y, x | W, P, G)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
-    #   return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
-    if len(C(G(V - x))) > 1:
-        # return sum([gamma([id_algorithm(s, G.v - s, P, G) for s in S]) for z in G.v - (y | x)])
-        return Sigma([Gamma(ID(s, V - s, P, G)) for s in V - (y | x)])
+    if len(S := C(G(V - x))) > 1:
+        # return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
+        return Sigma([Gamma([ID(s, v - s, P, G) for s in S]) for v in V - (y | x)])
 
     #   if C(G \ X) == {S},
     if len(C(G(V - x))) == 1:
 
-        #   5 - if C(G) == {G}, throw FAIL(G, S)
+        #   5 - if C(G) == {G}
         if C(G) == G:
+            # throw FAIL(G, S)
             raise FAIL(G, C(G))
 
-        #   6 - if S ∈ C(G), return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
+        #   6 - if S ∈ C(G)
+        if C(G(V - x)) in C(G):
+
+            # return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
+            return Sigma([Gamma([P(v, children(v)) for v in s]) for s in S[0] - y])
 
         #   7 -  if (∃S')S ⊂ S' ∈ C(G)
         #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
