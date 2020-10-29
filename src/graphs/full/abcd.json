@@ -1,0 +1,45 @@
+{
+  "name": "Melanoma",
+  "variables": [{
+    "name": "Y",
+    "outcomes": ["y", "~y"],
+    "parents": ["X", "Z"],
+    "determination": {
+      "type": "table",
+      "table": [
+        ["y", ["x", "z"], 0.3],
+        ["y", ["x", "~z"], 0.6],
+        ["y", ["~x", "z"], 0.5],
+        ["y", ["~x", "~z"], 0.8],
+        ["~y", ["x", "z"], 0.7],
+        ["~y", ["x", "~z"], 0.4],
+        ["~y", ["~x", "z"], 0.5],
+        ["~y", ["~x", "~z"], 0.2]
+      ]
+    }
+  }, {
+    "name": "X",
+    "outcomes": ["x", "~x"],
+    "parents": ["Z"],
+    "determination": {
+      "type": "table",
+      "table": [
+        ["x", ["z"], 0.8],
+        ["x", ["~z"], 0.4],
+        ["~x", ["z"], 0.2],
+        ["~x", ["~z"], 0.6]
+      ]
+    }
+  }, {
+    "name": "Z",
+    "outcomes": ["z", "~z"],
+    "parents": [],
+    "determination": {
+      "type": "table",
+      "table": [
+        ["z", [], 0.7],
+        ["~z", [], 0.3]
+      ]
+    }
+  }]
+}

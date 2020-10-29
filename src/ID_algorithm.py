@@ -25,28 +25,37 @@ class ProbabilityDistribution:
     A dictionary, mapping a variable to its probability distribution
     """
 
-    def __init__(self, tables: dict):
+    def __init__(self, tables: dict, given=None):
         self.tables = tables
+        self.given = given
 
-    def __call__(self, x, children=None):
+    def __call__(self, x, parents=None):
         """
         Get subset X of some ProbabilityDistribution P.
         :param x: A set of variables in some ProbabilityDistribution P.
-        :param children: The set of children of X
+        :param parents: The set of parents of X
         :return: A ProbabilityDistribution of the subset X.
         """
 
         # Line 1 Return
         if isinstance(x, str):
-            return self.tables[x]
+            return ProbabilityDistribution({x: self.tables[x]})
 
         # Line 2 Return
-        elif isinstance(x, set) and children is None:
+        elif isinstance(x, set) and parents is None:
             return ProbabilityDistribution({p: self.tables[p] for p in self.tables if p in x})
 
         # Line 6 return
-        elif isinstance(x, str) and children is not None:
-            return {self.tables[x]: [self.tables[c] for c in children]}
+        elif isinstance(x, str) and parents is not None:
+            return ProbabilityDistribution({x: self.tables[x]}, {p: self.tables[p] for p in parents})
+
+    def __str__(self):
+        if self.tables is None:
+            return ""
+
+        if self.given is None:
+            return ", ".join(self.tables.keys())
+        return ", ".join(self.tables.keys()) + " | " + ", ".join(self.given.keys())
 
 
 # Custom exception to match the ID algorithm failure
@@ -92,6 +101,8 @@ class LatentGraph(Graph):
             for element in component:
                 self.c_components[element] = component
 
+        # print(self.incoming)
+
     def __call__(self, v: set):
         """
         Compute a subset V of some Graph G.
@@ -101,8 +112,8 @@ class LatentGraph(Graph):
         return LatentGraph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
 
     def __eq__(self, other) -> bool:
-        if isinstance(other, list):     # Comparison to a C component / list of components
-            return self.v == set().union(*other)    # Equality: The c components include every variable in G
+        if isinstance(other, list) and len(other) == 1:     # Comparison to a C component
+            return self.v == set(other[0])     # Equality: The c component includes every variable in G
         elif isinstance(other, Graph):  # Comparison to another graph
             return self.v == other.v and self.e == other.e
         return False
@@ -190,25 +201,78 @@ def C(G: LatentGraph):
     return G.all_c_components()
 
 
-# noinspection PyPep8Naming
-def Sigma(*X):
-    return "Sigma", *X
+class Symbol:
+
+    def __init__(self, s, exp):
+        self.s = s
+        self.exp = exp
+
+    def __str__(self):
+        if isinstance(self.exp, list):
+            exp = []
+
+            for item in self.exp:
+                if isinstance(item, Symbol) or isinstance(item, ProbabilityDistribution):
+                    exp.append(str(item))
+                else:
+                    print(type(item))
+            exp = ",".join(exp)
+        else:
+            exp = str(self.exp)
+
+        return exp
+
+
+class SigmaObj(Symbol):
+
+    def __init__(self, s, exp):
+        super().__init__(s, exp)
+
+    def __str__(self):
+        if len(self.s) > 0:
+            return "Sigma_" + str(self.s) + " [" + super().__str__() + "]"
+        else:
+            return super().__str__()
+
+
+class PiObj(Symbol):
+
+    def __init__(self, s, exp):
+        super().__init__(s, exp)
+
+    def __str__(self):
+        if len(self.s) > 0:
+            return "Pi_" + str(self.s) + " [" + super().__str__() + "]"
+        else:
+            return super().__str__()
 
 
 # noinspection PyPep8Naming
-def Gamma(*X):
-    return "Gamma", *X
+def Sigma(s, X):
+    return SigmaObj(s, X)
 
 
 # noinspection PyPep8Naming
-def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
+def Pi(s, X):
+    return PiObj(s, X)
+
+
+# noinspection PyPep8Naming
+def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph, rec=0):
+
+    print("*" * 10, rec, "*" * 10)
+    print("y", str(y), "x", str(x))
 
     # noinspection PyPep8Naming
-    def An(X):
-        return G.ancestors(X)
+    def An(X: set):
+        return set().union(*[G.ancestors(v) for v in X]) | X
 
     def children(v):
         return G.children(v)
+
+    def parents(v):
+        print(v, G.parents(v))
+        return G.parents(v)
 
     V = G.v
 
@@ -216,43 +280,51 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph):
 
     # 1 - if X == {}, return Sigma_{v\y}P(v)
     if x == set():
-        return Sigma([P(v) for v in V - x])
+        print("1", str(y), str(x))
+        return Sigma(V - y, [P(v) for v in V - y])
 
     # 2 - if V != An(Y)_G
-    if V != An(y):
+    if V != An(y):          # print("2", str(y), str(x))
         # return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
-        return ID(y, x & An(y), P(An(y)), G(An(y)))
+        return ID(y, x & An(y), P(An(y)), G(An(y)), rec+1)
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
-    G.disable_incoming(x)
+    G.disable_incoming(*x)
     W = (V - x) - An(y)
     G.reset_disabled()
 
+    print("W:", str(W))
+
     # if W != {}
-    if W != set():
+    if W != set():          # print("3", str(y), str(x))
         # return ID(y, x ∪ w, P, G)
-        return ID(y, x | W, P, G)
+        return ID(y, x | W, P, G, rec+1)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
-    if len(S := C(G(V - x))) > 1:
+    if len(S := C(G(V - x))) > 1:       # print("4", str(y), str(x))
         # return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
-        return Sigma([Gamma([ID(s, v - s, P, G) for s in S]) for v in V - (y | x)])
+        return Sigma(V - (y | x), Pi(S, [ID(s, V - s, P, G, rec+1) for s in S]))
 
     #   if C(G \ X) == {S},
     if len(C(G(V - x))) == 1:
 
         #   5 - if C(G) == {G}
-        if C(G) == G:
+        if C(G) == G:           # print("5", str(y), str(x))
             # throw FAIL(G, S)
             raise FAIL(G, C(G))
 
         #   6 - if S ∈ C(G)
-        if C(G(V - x)) in C(G):
+        if C(G(V - x))[0] in C(G):
+            S = S[0]   # Temp; S is currently a list of one element
 
+            print("6", str(y), str(x))
             # return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
-            return Sigma([Gamma([P(v, children(v)) for v in s]) for s in S[0] - y])
+            # print("r", str(S[0]), str(y), str([Gamma([P(v, parents(v)) for v in s]) for s in S[0]]))
+            # print("r", [k for k in [P(s, parents(s)) for s in y]])
+            return Sigma(S-y, [Pi(S, [P(v, parents(v)) for v in s]) for s in S])
 
         #   7 -  if (∃S')S ⊂ S' ∈ C(G)
         #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
 
-    return
+    print("end of line")
+    raise FAIL(G, C(G))
