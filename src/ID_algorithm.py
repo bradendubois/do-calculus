@@ -38,7 +38,7 @@ class ProbabilityDistribution:
         """
 
         # Line 1 Return
-        if isinstance(x, str):
+        if isinstance(x, str) and parents is None:
             return ProbabilityDistribution({x: self.tables[x]})
 
         # Line 2 Return
@@ -54,8 +54,8 @@ class ProbabilityDistribution:
             return ""
 
         if self.given is None:
-            return ", ".join(self.tables.keys())
-        return ", ".join(self.tables.keys()) + " | " + ", ".join(self.given.keys())
+            return "P(" + ", ".join(list(self.tables.keys())) + ")"
+        return "P(" + ", ".join(self.tables.keys()) + " | " + ", ".join(self.given.keys()) + ")"
 
 
 # Custom exception to match the ID algorithm failure
@@ -203,48 +203,50 @@ def C(G: LatentGraph):
 
 class Symbol:
 
-    def __init__(self, s, exp):
+    def __init__(self, s, exp, symbol):
+        self.symbol = symbol
         self.s = s
         self.exp = exp
 
     def __str__(self):
-        if isinstance(self.exp, list):
-            exp = []
 
+        rep = ""
+        if self.s is not None and len(self.s) > 0:
+            s = self.s
+            if isinstance(s, set):
+                s = list(s)
+            for i in range(len(s)):
+                if not isinstance(i, str):
+                    s[i] = "[" + ", ".join(list(s[i])) + "]"
+
+            rep += self.symbol + "_[" + ", ".join(self.s) + "] "
+
+        if isinstance(self.exp, list):
+            if len(self.exp) > 1:
+                rep += "["
             for item in self.exp:
                 if isinstance(item, Symbol) or isinstance(item, ProbabilityDistribution):
-                    exp.append(str(item))
+                    rep += str(item) + (", " if len(self.exp) > 1 else "")
                 else:
-                    print(type(item))
-            exp = ",".join(exp)
+                    print("CONFUSED: ", type(item))
+            if len(self.exp) > 1:
+                rep += "]"
         else:
-            exp = str(self.exp)
+            rep += str(self.exp)
 
-        return exp
+        return rep
 
 
 class SigmaObj(Symbol):
 
     def __init__(self, s, exp):
-        super().__init__(s, exp)
-
-    def __str__(self):
-        if len(self.s) > 0:
-            return "Sigma_" + str(self.s) + " [" + super().__str__() + "]"
-        else:
-            return super().__str__()
+        super().__init__(s, exp, "Sigma")
 
 
 class PiObj(Symbol):
 
     def __init__(self, s, exp):
-        super().__init__(s, exp)
-
-    def __str__(self):
-        if len(self.s) > 0:
-            return "Pi_" + str(self.s) + " [" + super().__str__() + "]"
-        else:
-            return super().__str__()
+        super().__init__(s, exp, "Pi")
 
 
 # noinspection PyPep8Naming
@@ -280,12 +282,13 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph, rec=0):
 
     # 1 - if X == {}, return Sigma_{v\y}P(v)
     if x == set():
-        print("1", str(y), str(x))
-        return Sigma(V - y, [P(v) for v in V - y])
+        print("1", str(y), str(x), V)
+        return Sigma(V - y, [P(v) for v in y])
 
     # 2 - if V != An(Y)_G
     if V != An(y):          # print("2", str(y), str(x))
         # return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
+        print("2")
         return ID(y, x & An(y), P(An(y)), G(An(y)), rec+1)
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
@@ -308,20 +311,20 @@ def ID(y: set, x: set, P: ProbabilityDistribution, G: LatentGraph, rec=0):
     #   if C(G \ X) == {S},
     if len(C(G(V - x))) == 1:
 
+        S = S[0]  # Temp; S is currently a list of one element
+
         #   5 - if C(G) == {G}
         if C(G) == G:           # print("5", str(y), str(x))
             # throw FAIL(G, S)
             raise FAIL(G, C(G))
 
         #   6 - if S ∈ C(G)
-        if C(G(V - x))[0] in C(G):
-            S = S[0]   # Temp; S is currently a list of one element
+        if S in C(G):
 
             print("6", str(y), str(x))
             # return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
-            # print("r", str(S[0]), str(y), str([Gamma([P(v, parents(v)) for v in s]) for s in S[0]]))
-            # print("r", [k for k in [P(s, parents(s)) for s in y]])
-            return Sigma(S-y, [Pi(S, [P(v, parents(v)) for v in s]) for s in S])
+            print("Parents:", parents(list(S)[0]))
+            return Sigma(S-y, Pi(S, [P(Vi, parents(Vi)) for Vi in S]))
 
         #   7 -  if (∃S')S ⊂ S' ∈ C(G)
         #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
