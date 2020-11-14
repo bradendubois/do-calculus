@@ -4,9 +4,82 @@ import itertools
 
 from probability.structures.Graph import Graph
 from probability.structures.CausalGraph import CausalGraph
+from probability.structures.VariableStructures import Outcome
 from util.parsers.GraphLoader import parse_graph_file_data
 
 from ID_algorithm import ID, ProbabilityDistribution, latent_projection
+
+from ID_algorithm import Symbol, PiObj, SigmaObj
+
+
+def parse_ID_result(result: Symbol, cg: CausalGraph, known: dict):
+
+    if known is None:
+        known = dict()
+
+    # Summation
+    if isinstance(result, SigmaObj):
+        if result.s is None or len(result.s) == 0:
+            if isinstance(result.exp, list):
+                i = 0.0
+                for item in result.exp:
+                    i += parse_ID_result(item, cg, known)
+                return i
+            return parse_ID_result(result.exp, cg, known)
+        else:
+            outcomes = list(result.s)
+            total = 0
+            cross = itertools.product(*[cg.outcomes[v] for v in outcomes])
+            for c in cross:
+                total = 0
+                for o in range(len(outcomes)):
+                    known[outcomes[o]] = c[o]
+
+                if isinstance(result.exp, list):
+                    for item in result.exp:
+                        total += parse_ID_result(item, cg, known)
+                else:
+                    total += parse_ID_result(result.exp, cg, known)
+
+            return total
+
+    # Product
+    elif isinstance(result, PiObj):
+
+        if isinstance(result.exp, list):
+            prod = 1.0
+            for item in result.exp:
+                prod *= parse_ID_result(item, cg, known)
+            return prod
+        else:
+            return parse_ID_result(result.exp, cg, known)
+
+    # Compute probability
+    elif isinstance(result, ProbabilityDistribution):
+        h = result.tables
+        b = result.given
+
+        head = []
+        for key in h:
+            if key not in known:
+                value = cg.outcomes[key][0]
+            else:
+                value = known[key]
+            head.append(Outcome(key, value))
+
+        body = []
+        if b is not None:
+            for key in b:
+                if key not in known:
+                    value = cg.outcomes[key][0]
+                else:
+                    value = known[key]
+                body.append(Outcome(key, value))
+
+        return cg.probability_query(head, body)
+
+    else:
+        print("UNCERTAIN:", type(result))
 
 """
 # Load the melanoma graph
@@ -72,3 +145,4 @@ print("Results: ", result)
 result = ID({"Y"}, {"X"}, ProbabilityDistribution(melanoma.tables), melanoma_l)
 print("Results: ", result)
 
+print(parse_ID_result(result, melanoma, dict()))
