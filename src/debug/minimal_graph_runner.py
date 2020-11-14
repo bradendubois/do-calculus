@@ -1,9 +1,9 @@
-from probability_structures.Graph import Graph
+from probability.structures.Graph import Graph
 
 from sys import argv
 from os import path
 
-from probability_structures.do_calculus.DoCalculus import do_calculus_repl
+from probability.do_calculus.DoCalculus import do_calculus_repl
 
 if len(argv) == 1:
     print("No graph specified.")

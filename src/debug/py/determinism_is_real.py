@@ -1,4 +1,4 @@
-from probability_structures.CausalGraph import *
+from probability.structures.CausalGraph import *
 
 
 def power_set(variable_list):
