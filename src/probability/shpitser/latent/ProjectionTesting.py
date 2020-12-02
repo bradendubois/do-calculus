@@ -1,5 +1,18 @@
-from ID_algorithm import LatentGraph, latent_projection
+#!/usr/bin/env python
+
+#########################################################
+#                                                       #
+#   ProjectionTesting                                   #
+#                                                       #
+#   Author: Braden Dubois (braden.dubois@usask.ca)      #
+#   Written for: Dr. Eric Neufeld                       #
+#                                                       #
+#########################################################
+
+from probability.shpitser.latent.LatentProjection import latent_projection
 from probability.structures.Graph import Graph
+
+# A runnable file to test the LatentGraph data structure
 
 dataset = [
     {

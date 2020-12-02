@@ -8,6 +8,7 @@
 #########################################################
 
 from probability.do_calculus.DoCalculus import do_calculus_repl
+from probability.shpitser.Shpitser import shpitser_repl
 from probability.structures.BackdoorController import BackdoorController
 from probability.structures.CausalGraph import CausalGraph
 from probability.structures.VariableStructures import *
@@ -87,6 +88,7 @@ class REPLDriver:
             # Start with base options
             menu_options = [
                 [self.run_do_calculus_repl, "Apply and test the 3 rules of do-calculus."],
+                [self.run_shpitser_repl, "Apply Shpitser & Pearl (2006)'s ID algorithm."],
                 [self.run_backdoor_controller, "Detect (and control) for \"back-door paths\"."],
                 [self.run_joint_distribution_table, "Generate a joint distribution table."],
                 [self.run_topological_sort, "See a topological sorting of the graph."],
@@ -193,3 +195,11 @@ class REPLDriver:
         Enter a smaller IO stage in which we take 4 sets (X, Y, W, Z) and see which of the 3 do_calculus rules apply.
         """
         do_calculus_repl(self.graph.copy(), self.outcomes, self.tables)
+
+    # Apply and use Shpitser & Pearl (2006)'s Identification algorithm
+
+    def run_shpitser_repl(self):
+        """
+        Enter a smaller IO stage in which we take Y and do(X) and apply ID(y, x)
+        """
+        shpitser_repl(self.cg)

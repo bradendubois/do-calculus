@@ -1,9 +1,0 @@
-Vertices: X, Y, Z
-Edges:
-Z -> X
-X -> Y
-Z -> Y
-{'Y': {'X', 'Z'}, 'X': {'Z'}, 'Z': set()}
-{'Y': {'Z'}, 'Z': set()}
-{'Y': set()}
-{'Y': set()}
