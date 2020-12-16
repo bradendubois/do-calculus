@@ -15,7 +15,7 @@ from probability.structures.VariableStructures import *
 from util.IO_Logger import *
 
 
-def parse_graph_file_data(filename: str) -> dict:
+def parse_graph_file_data(filename: str or dict) -> dict:
     """
     Load, read, and parse a graph file for use in Causal Graphs, etc.
     :param filename: The exact path to the file
@@ -23,13 +23,16 @@ def parse_graph_file_data(filename: str) -> dict:
     """
 
     # Ensure the file exists
-    if not os.path.isfile(filename):
+    if isinstance(filename, str) and not os.path.isfile(filename):
         io.write("ERROR: Can't find:", filename)
         raise Exception
 
     # Load the file, then we parse it
-    with open(filename) as json_file:
-        loaded_file = json.load(json_file)
+    if isinstance(filename, str):
+        with open(filename) as json_file:
+            loaded_file = json.load(json_file)
+    else:
+        loaded_file = filename
 
     # Maps string name to the Variable object instantiated
     variables = dict()
