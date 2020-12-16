@@ -13,7 +13,6 @@ from probability.shpitser.latent.LatentProjection import latent_projection
 from probability.shpitser.structures.Distribution import Distribution
 
 from probability.structures.CausalGraph import CausalGraph
-from probability.structures.Graph import Graph
 
 from util.parsers.UserIndexSelection import user_index_selection
 
@@ -90,7 +89,9 @@ def shpitser_repl(cg: CausalGraph):
                 return
 
             else:
-                parse_shpitser(identification, cg, known)
+                result = parse_shpitser(identification, cg, known)
+                print("\nResult:", result)
+                identification = None
 
         except AssertionError:
             print("Error: Some variable is not defined in the graph.")

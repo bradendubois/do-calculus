@@ -38,6 +38,37 @@ def within_precision(a: float, b: float) -> bool:
     return abs(a - b) < 1 / (10 ** access("regression_levels_of_precision"))
 
 
+def basic_validation(cg, test_file):
+
+    for variable in cg.variables:
+
+        # Skip variables that rely on functions rather than tables
+        if variable in cg.functions:
+            continue
+
+        try:
+            total = 0.0
+            for outcome in cg.variables[variable].outcomes:
+                result = cg.probability_query([Outcome(variable, outcome)], [])
+                total += result
+
+            assert within_precision(total, 1.0), variable + " does not sum to 1.0 across its outcomes."
+
+        # Probability failed to compute entirely
+        except ProbabilityIndeterminableException as e:
+            return False, "[ERROR: " + test_file + "]: Probability indeterminable for the graph." + str(e) + \
+                   ", Variable " + variable
+
+        # Indicates an invalid table, missing some row, etc.
+        except MissingTableRow as e:
+            return False, "[ERROR: " + test_file + "]: Invalid table for the graph." + str(e)
+
+        # Didn't match the expected total
+        except AssertionError as e:
+            return False, e.args
+
+    return True, "Basic tests passed."
+
 def run_test_file(test_file: str) -> (bool, str):
     """
     The main test driver that will run a test file, all the tests in it, plus a few identities
@@ -67,32 +98,9 @@ def run_test_file(test_file: str) -> (bool, str):
         return False, "Unexpected error in loading: " + loaded_test_file["test_file"] + ": " + str(e.args)
 
     # Independent of tests, ensure that the sum of all probabilities of any variable is 1.0.
-    for variable in causal_graph.variables:
-
-        # Skip variables that rely on functions rather than tables
-        if variable in causal_graph.functions:
-            continue
-
-        try:
-            total = 0.0
-            for outcome in causal_graph.variables[variable].outcomes:
-                result = causal_graph.probability_query([Outcome(variable, outcome)], [])
-                total += result
-
-            assert within_precision(total, 1.0), variable + " does not sum to 1.0 across its outcomes."
-
-        # Probability failed to compute entirely
-        except ProbabilityIndeterminableException as e:
-            return False, "[ERROR: " + test_file + "]: Probability indeterminable for the graph." + str(e) + \
-                   ", Variable " + variable
-
-        # Indicates an invalid table, missing some row, etc.
-        except MissingTableRow as e:
-            return False, "[ERROR: " + test_file + "]: Invalid table for the graph." + str(e)
-
-        # Didn't match the expected total
-        except AssertionError as e:
-            return False, e.args
+    success, msg = basic_validation(causal_graph, test_file)
+    if not success:
+        return success, msg
 
     # Run each test
     for test in loaded_test_file["tests"]:
