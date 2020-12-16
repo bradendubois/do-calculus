@@ -7,9 +7,9 @@ import itertools
 
 from probability.structures.Graph import Graph
 
-vertices = 50
-max_length = 15
-num_edges = 150
+vertices = 15
+max_length = 10
+num_edges = 30
 
 
 def cycle(v, e):
@@ -96,12 +96,7 @@ def generate_graph():
     print()
 
     tentative_e = set(itertools.product(v, v))
-
-    inner = set()
-    start = tentative_e.pop()
-
-    inner.update(start)
-    e.add(start)
+    inner = set(random.choice(list(v)))
 
     while len(inner) < len(v):
 
@@ -124,4 +119,4 @@ def generate_graph():
     return Graph(v, e)
 
 
-print(generate_graph())
+# print(generate_graph())
