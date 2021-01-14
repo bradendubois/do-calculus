@@ -1,0 +1,687 @@
+{
+    "latent-model": false,
+    "name": "m825",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oul",
+                        [],
+                        0.3278
+                    ],
+                    [
+                        "~oul",
+                        [],
+                        0.6722
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OUL",
+            "outcomes": [
+                "oul",
+                "~oul"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xid",
+                        [
+                            "cfw",
+                            "rnw"
+                        ],
+                        0.7985
+                    ],
+                    [
+                        "~xid",
+                        [
+                            "cfw",
+                            "rnw"
+                        ],
+                        0.2015
+                    ],
+                    [
+                        "xid",
+                        [
+                            "cfw",
+                            "~rnw"
+                        ],
+                        0.1167
+                    ],
+                    [
+                        "~xid",
+                        [
+                            "cfw",
+                            "~rnw"
+                        ],
+                        0.8833
+                    ],
+                    [
+                        "xid",
+                        [
+                            "~cfw",
+                            "rnw"
+                        ],
+                        0.0623
+                    ],
+                    [
+                        "~xid",
+                        [
+                            "~cfw",
+                            "rnw"
+                        ],
+                        0.9377
+                    ],
+                    [
+                        "xid",
+                        [
+                            "~cfw",
+                            "~rnw"
+                        ],
+                        0.6617
+                    ],
+                    [
+                        "~xid",
+                        [
+                            "~cfw",
+                            "~rnw"
+                        ],
+                        0.3383
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XID",
+            "outcomes": [
+                "xid",
+                "~xid"
+            ],
+            "parents": [
+                "CFW",
+                "RNW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kqs",
+                        [
+                            "gfv",
+                            "qyu"
+                        ],
+                        0.7289
+                    ],
+                    [
+                        "~kqs",
+                        [
+                            "gfv",
+                            "qyu"
+                        ],
+                        0.2711
+                    ],
+                    [
+                        "kqs",
+                        [
+                            "gfv",
+                            "~qyu"
+                        ],
+                        0.3086
+                    ],
+                    [
+                        "~kqs",
+                        [
+                            "gfv",
+                            "~qyu"
+                        ],
+                        0.6914
+                    ],
+                    [
+                        "kqs",
+                        [
+                            "~gfv",
+                            "qyu"
+                        ],
+                        0.3362
+                    ],
+                    [
+                        "~kqs",
+                        [
+                            "~gfv",
+                            "qyu"
+                        ],
+                        0.6638
+                    ],
+                    [
+                        "kqs",
+                        [
+                            "~gfv",
+                            "~qyu"
+                        ],
+                        0.0361
+                    ],
+                    [
+                        "~kqs",
+                        [
+                            "~gfv",
+                            "~qyu"
+                        ],
+                        0.9639
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KQS",
+            "outcomes": [
+                "kqs",
+                "~kqs"
+            ],
+            "parents": [
+                "GFV",
+                "QYU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rnw",
+                        [],
+                        0.7525
+                    ],
+                    [
+                        "~rnw",
+                        [],
+                        0.2475
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RNW",
+            "outcomes": [
+                "rnw",
+                "~rnw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fko",
+                        [
+                            "hlw"
+                        ],
+                        0.2382
+                    ],
+                    [
+                        "~fko",
+                        [
+                            "hlw"
+                        ],
+                        0.7618
+                    ],
+                    [
+                        "fko",
+                        [
+                            "~hlw"
+                        ],
+                        0.8934
+                    ],
+                    [
+                        "~fko",
+                        [
+                            "~hlw"
+                        ],
+                        0.1066
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FKO",
+            "outcomes": [
+                "fko",
+                "~fko"
+            ],
+            "parents": [
+                "HLW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jgg",
+                        [],
+                        0.9612
+                    ],
+                    [
+                        "~jgg",
+                        [],
+                        0.0388
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JGG",
+            "outcomes": [
+                "jgg",
+                "~jgg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hht",
+                        [
+                            "xid"
+                        ],
+                        0.726
+                    ],
+                    [
+                        "~hht",
+                        [
+                            "xid"
+                        ],
+                        0.274
+                    ],
+                    [
+                        "hht",
+                        [
+                            "~xid"
+                        ],
+                        0.1083
+                    ],
+                    [
+                        "~hht",
+                        [
+                            "~xid"
+                        ],
+                        0.8917
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HHT",
+            "outcomes": [
+                "hht",
+                "~hht"
+            ],
+            "parents": [
+                "XID"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qyu",
+                        [
+                            "rnw",
+                            "uzi"
+                        ],
+                        0.9071
+                    ],
+                    [
+                        "~qyu",
+                        [
+                            "rnw",
+                            "uzi"
+                        ],
+                        0.0929
+                    ],
+                    [
+                        "qyu",
+                        [
+                            "rnw",
+                            "~uzi"
+                        ],
+                        0.1
+                    ],
+                    [
+                        "~qyu",
+                        [
+                            "rnw",
+                            "~uzi"
+                        ],
+                        0.9
+                    ],
+                    [
+                        "qyu",
+                        [
+                            "~rnw",
+                            "uzi"
+                        ],
+                        0.3772
+                    ],
+                    [
+                        "~qyu",
+                        [
+                            "~rnw",
+                            "uzi"
+                        ],
+                        0.6228
+                    ],
+                    [
+                        "qyu",
+                        [
+                            "~rnw",
+                            "~uzi"
+                        ],
+                        0.5894
+                    ],
+                    [
+                        "~qyu",
+                        [
+                            "~rnw",
+                            "~uzi"
+                        ],
+                        0.4106
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QYU",
+            "outcomes": [
+                "qyu",
+                "~qyu"
+            ],
+            "parents": [
+                "RNW",
+                "UZI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "haw",
+                        [
+                            "qyu",
+                            "xid"
+                        ],
+                        0.529
+                    ],
+                    [
+                        "~haw",
+                        [
+                            "qyu",
+                            "xid"
+                        ],
+                        0.471
+                    ],
+                    [
+                        "haw",
+                        [
+                            "qyu",
+                            "~xid"
+                        ],
+                        0.3359
+                    ],
+                    [
+                        "~haw",
+                        [
+                            "qyu",
+                            "~xid"
+                        ],
+                        0.6641
+                    ],
+                    [
+                        "haw",
+                        [
+                            "~qyu",
+                            "xid"
+                        ],
+                        0.6209
+                    ],
+                    [
+                        "~haw",
+                        [
+                            "~qyu",
+                            "xid"
+                        ],
+                        0.3791
+                    ],
+                    [
+                        "haw",
+                        [
+                            "~qyu",
+                            "~xid"
+                        ],
+                        0.5169
+                    ],
+                    [
+                        "~haw",
+                        [
+                            "~qyu",
+                            "~xid"
+                        ],
+                        0.4831
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HAW",
+            "outcomes": [
+                "haw",
+                "~haw"
+            ],
+            "parents": [
+                "QYU",
+                "XID"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hlw",
+                        [],
+                        0.6086
+                    ],
+                    [
+                        "~hlw",
+                        [],
+                        0.3914
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HLW",
+            "outcomes": [
+                "hlw",
+                "~hlw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uzi",
+                        [
+                            "hht",
+                            "oul"
+                        ],
+                        0.783
+                    ],
+                    [
+                        "~uzi",
+                        [
+                            "hht",
+                            "oul"
+                        ],
+                        0.217
+                    ],
+                    [
+                        "uzi",
+                        [
+                            "hht",
+                            "~oul"
+                        ],
+                        0.4483
+                    ],
+                    [
+                        "~uzi",
+                        [
+                            "hht",
+                            "~oul"
+                        ],
+                        0.5517
+                    ],
+                    [
+                        "uzi",
+                        [
+                            "~hht",
+                            "oul"
+                        ],
+                        0.2987
+                    ],
+                    [
+                        "~uzi",
+                        [
+                            "~hht",
+                            "oul"
+                        ],
+                        0.7013
+                    ],
+                    [
+                        "uzi",
+                        [
+                            "~hht",
+                            "~oul"
+                        ],
+                        0.5708
+                    ],
+                    [
+                        "~uzi",
+                        [
+                            "~hht",
+                            "~oul"
+                        ],
+                        0.4292
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UZI",
+            "outcomes": [
+                "uzi",
+                "~uzi"
+            ],
+            "parents": [
+                "HHT",
+                "OUL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cfw",
+                        [],
+                        0.3528
+                    ],
+                    [
+                        "~cfw",
+                        [],
+                        0.6472
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CFW",
+            "outcomes": [
+                "cfw",
+                "~cfw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gfv",
+                        [
+                            "cfw",
+                            "oul"
+                        ],
+                        0.0901
+                    ],
+                    [
+                        "~gfv",
+                        [
+                            "cfw",
+                            "oul"
+                        ],
+                        0.9099
+                    ],
+                    [
+                        "gfv",
+                        [
+                            "cfw",
+                            "~oul"
+                        ],
+                        0.6542
+                    ],
+                    [
+                        "~gfv",
+                        [
+                            "cfw",
+                            "~oul"
+                        ],
+                        0.3458
+                    ],
+                    [
+                        "gfv",
+                        [
+                            "~cfw",
+                            "oul"
+                        ],
+                        0.3925
+                    ],
+                    [
+                        "~gfv",
+                        [
+                            "~cfw",
+                            "oul"
+                        ],
+                        0.6075
+                    ],
+                    [
+                        "gfv",
+                        [
+                            "~cfw",
+                            "~oul"
+                        ],
+                        0.3595
+                    ],
+                    [
+                        "~gfv",
+                        [
+                            "~cfw",
+                            "~oul"
+                        ],
+                        0.6405
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GFV",
+            "outcomes": [
+                "gfv",
+                "~gfv"
+            ],
+            "parents": [
+                "CFW",
+                "OUL"
+            ]
+        }
+    ]
+}

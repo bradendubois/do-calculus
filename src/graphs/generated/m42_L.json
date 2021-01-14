@@ -1,0 +1,870 @@
+{
+    "latent-model": true,
+    "name": "m42_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nel",
+                        [
+                            "edh",
+                            "tol"
+                        ],
+                        0.8464
+                    ],
+                    [
+                        "~nel",
+                        [
+                            "edh",
+                            "tol"
+                        ],
+                        0.1536
+                    ],
+                    [
+                        "nel",
+                        [
+                            "edh",
+                            "~tol"
+                        ],
+                        0.9547
+                    ],
+                    [
+                        "~nel",
+                        [
+                            "edh",
+                            "~tol"
+                        ],
+                        0.0453
+                    ],
+                    [
+                        "nel",
+                        [
+                            "~edh",
+                            "tol"
+                        ],
+                        0.3579
+                    ],
+                    [
+                        "~nel",
+                        [
+                            "~edh",
+                            "tol"
+                        ],
+                        0.6421
+                    ],
+                    [
+                        "nel",
+                        [
+                            "~edh",
+                            "~tol"
+                        ],
+                        0.3653
+                    ],
+                    [
+                        "~nel",
+                        [
+                            "~edh",
+                            "~tol"
+                        ],
+                        0.6347
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NEL",
+            "outcomes": [
+                "nel",
+                "~nel"
+            ],
+            "parents": [
+                "EDH",
+                "TOL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tol",
+                        [
+                            "cxk",
+                            "eix",
+                            "xoa"
+                        ],
+                        0.355
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "cxk",
+                            "eix",
+                            "xoa"
+                        ],
+                        0.645
+                    ],
+                    [
+                        "tol",
+                        [
+                            "cxk",
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.4877
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "cxk",
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.5123
+                    ],
+                    [
+                        "tol",
+                        [
+                            "cxk",
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.5085
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "cxk",
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.4915
+                    ],
+                    [
+                        "tol",
+                        [
+                            "cxk",
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.0196
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "cxk",
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.9804
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~cxk",
+                            "eix",
+                            "xoa"
+                        ],
+                        0.1407
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~cxk",
+                            "eix",
+                            "xoa"
+                        ],
+                        0.8593
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~cxk",
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.7244
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~cxk",
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.2756
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~cxk",
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.4501
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~cxk",
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.5499
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~cxk",
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.6793
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~cxk",
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.3207
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TOL",
+            "outcomes": [
+                "tol",
+                "~tol"
+            ],
+            "parents": [
+                "CXK",
+                "EIX",
+                "XOA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wnr",
+                        [],
+                        0.4563
+                    ],
+                    [
+                        "~wnr",
+                        [],
+                        0.5437
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WNR",
+            "outcomes": [
+                "wnr",
+                "~wnr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aoc",
+                        [
+                            "kew"
+                        ],
+                        0.7063
+                    ],
+                    [
+                        "~aoc",
+                        [
+                            "kew"
+                        ],
+                        0.2937
+                    ],
+                    [
+                        "aoc",
+                        [
+                            "~kew"
+                        ],
+                        0.7512
+                    ],
+                    [
+                        "~aoc",
+                        [
+                            "~kew"
+                        ],
+                        0.2488
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AOC",
+            "outcomes": [
+                "aoc",
+                "~aoc"
+            ],
+            "parents": [
+                "KEW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "edh",
+                        [
+                            "eix",
+                            "xoa"
+                        ],
+                        0.1799
+                    ],
+                    [
+                        "~edh",
+                        [
+                            "eix",
+                            "xoa"
+                        ],
+                        0.8201
+                    ],
+                    [
+                        "edh",
+                        [
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.4534
+                    ],
+                    [
+                        "~edh",
+                        [
+                            "eix",
+                            "~xoa"
+                        ],
+                        0.5466
+                    ],
+                    [
+                        "edh",
+                        [
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.1433
+                    ],
+                    [
+                        "~edh",
+                        [
+                            "~eix",
+                            "xoa"
+                        ],
+                        0.8567
+                    ],
+                    [
+                        "edh",
+                        [
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.8993
+                    ],
+                    [
+                        "~edh",
+                        [
+                            "~eix",
+                            "~xoa"
+                        ],
+                        0.1007
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EDH",
+            "outcomes": [
+                "edh",
+                "~edh"
+            ],
+            "parents": [
+                "EIX",
+                "XOA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eix",
+                        [],
+                        0.1652
+                    ],
+                    [
+                        "~eix",
+                        [],
+                        0.8348
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EIX",
+            "outcomes": [
+                "eix",
+                "~eix"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "avv",
+                        [
+                            "nel",
+                            "qlc"
+                        ],
+                        0.8015
+                    ],
+                    [
+                        "~avv",
+                        [
+                            "nel",
+                            "qlc"
+                        ],
+                        0.1985
+                    ],
+                    [
+                        "avv",
+                        [
+                            "nel",
+                            "~qlc"
+                        ],
+                        0.8448
+                    ],
+                    [
+                        "~avv",
+                        [
+                            "nel",
+                            "~qlc"
+                        ],
+                        0.1552
+                    ],
+                    [
+                        "avv",
+                        [
+                            "~nel",
+                            "qlc"
+                        ],
+                        0.6122
+                    ],
+                    [
+                        "~avv",
+                        [
+                            "~nel",
+                            "qlc"
+                        ],
+                        0.3878
+                    ],
+                    [
+                        "avv",
+                        [
+                            "~nel",
+                            "~qlc"
+                        ],
+                        0.6721
+                    ],
+                    [
+                        "~avv",
+                        [
+                            "~nel",
+                            "~qlc"
+                        ],
+                        0.3279
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AVV",
+            "outcomes": [
+                "avv",
+                "~avv"
+            ],
+            "parents": [
+                "NEL",
+                "QLC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cxk",
+                        [
+                            "edh",
+                            "rcy"
+                        ],
+                        0.7098
+                    ],
+                    [
+                        "~cxk",
+                        [
+                            "edh",
+                            "rcy"
+                        ],
+                        0.2902
+                    ],
+                    [
+                        "cxk",
+                        [
+                            "edh",
+                            "~rcy"
+                        ],
+                        0.8689
+                    ],
+                    [
+                        "~cxk",
+                        [
+                            "edh",
+                            "~rcy"
+                        ],
+                        0.1311
+                    ],
+                    [
+                        "cxk",
+                        [
+                            "~edh",
+                            "rcy"
+                        ],
+                        0.1814
+                    ],
+                    [
+                        "~cxk",
+                        [
+                            "~edh",
+                            "rcy"
+                        ],
+                        0.8186
+                    ],
+                    [
+                        "cxk",
+                        [
+                            "~edh",
+                            "~rcy"
+                        ],
+                        0.4461
+                    ],
+                    [
+                        "~cxk",
+                        [
+                            "~edh",
+                            "~rcy"
+                        ],
+                        0.5539
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CXK",
+            "outcomes": [
+                "cxk",
+                "~cxk"
+            ],
+            "parents": [
+                "EDH",
+                "RCY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rcy",
+                        [
+                            "zof"
+                        ],
+                        0.348
+                    ],
+                    [
+                        "~rcy",
+                        [
+                            "zof"
+                        ],
+                        0.652
+                    ],
+                    [
+                        "rcy",
+                        [
+                            "~zof"
+                        ],
+                        0.3315
+                    ],
+                    [
+                        "~rcy",
+                        [
+                            "~zof"
+                        ],
+                        0.6685
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RCY",
+            "outcomes": [
+                "rcy",
+                "~rcy"
+            ],
+            "parents": [
+                "ZOF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xoa",
+                        [],
+                        0.5395
+                    ],
+                    [
+                        "~xoa",
+                        [],
+                        0.4605
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "XOA",
+            "outcomes": [
+                "xoa",
+                "~xoa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wsj",
+                        [
+                            "tol",
+                            "wnr"
+                        ],
+                        0.8003
+                    ],
+                    [
+                        "~wsj",
+                        [
+                            "tol",
+                            "wnr"
+                        ],
+                        0.1997
+                    ],
+                    [
+                        "wsj",
+                        [
+                            "tol",
+                            "~wnr"
+                        ],
+                        0.9259
+                    ],
+                    [
+                        "~wsj",
+                        [
+                            "tol",
+                            "~wnr"
+                        ],
+                        0.0741
+                    ],
+                    [
+                        "wsj",
+                        [
+                            "~tol",
+                            "wnr"
+                        ],
+                        0.879
+                    ],
+                    [
+                        "~wsj",
+                        [
+                            "~tol",
+                            "wnr"
+                        ],
+                        0.121
+                    ],
+                    [
+                        "wsj",
+                        [
+                            "~tol",
+                            "~wnr"
+                        ],
+                        0.8768
+                    ],
+                    [
+                        "~wsj",
+                        [
+                            "~tol",
+                            "~wnr"
+                        ],
+                        0.1232
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WSJ",
+            "outcomes": [
+                "wsj",
+                "~wsj"
+            ],
+            "parents": [
+                "TOL",
+                "WNR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qlc",
+                        [
+                            "edh"
+                        ],
+                        0.012
+                    ],
+                    [
+                        "~qlc",
+                        [
+                            "edh"
+                        ],
+                        0.988
+                    ],
+                    [
+                        "qlc",
+                        [
+                            "~edh"
+                        ],
+                        0.9687
+                    ],
+                    [
+                        "~qlc",
+                        [
+                            "~edh"
+                        ],
+                        0.0313
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QLC",
+            "outcomes": [
+                "qlc",
+                "~qlc"
+            ],
+            "parents": [
+                "EDH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kew",
+                        [
+                            "qlc",
+                            "tol"
+                        ],
+                        0.9643
+                    ],
+                    [
+                        "~kew",
+                        [
+                            "qlc",
+                            "tol"
+                        ],
+                        0.0357
+                    ],
+                    [
+                        "kew",
+                        [
+                            "qlc",
+                            "~tol"
+                        ],
+                        0.7957
+                    ],
+                    [
+                        "~kew",
+                        [
+                            "qlc",
+                            "~tol"
+                        ],
+                        0.2043
+                    ],
+                    [
+                        "kew",
+                        [
+                            "~qlc",
+                            "tol"
+                        ],
+                        0.9431
+                    ],
+                    [
+                        "~kew",
+                        [
+                            "~qlc",
+                            "tol"
+                        ],
+                        0.0569
+                    ],
+                    [
+                        "kew",
+                        [
+                            "~qlc",
+                            "~tol"
+                        ],
+                        0.1005
+                    ],
+                    [
+                        "~kew",
+                        [
+                            "~qlc",
+                            "~tol"
+                        ],
+                        0.8995
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KEW",
+            "outcomes": [
+                "kew",
+                "~kew"
+            ],
+            "parents": [
+                "QLC",
+                "TOL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zof",
+                        [],
+                        0.8717
+                    ],
+                    [
+                        "~zof",
+                        [],
+                        0.1283
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZOF",
+            "outcomes": [
+                "zof",
+                "~zof"
+            ],
+            "parents": []
+        }
+    ]
+}

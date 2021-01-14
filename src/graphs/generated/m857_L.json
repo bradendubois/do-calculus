@@ -1,0 +1,487 @@
+{
+    "latent-model": true,
+    "name": "m857_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ymm",
+                        [
+                            "prq",
+                            "zfy"
+                        ],
+                        0.5937
+                    ],
+                    [
+                        "~ymm",
+                        [
+                            "prq",
+                            "zfy"
+                        ],
+                        0.4063
+                    ],
+                    [
+                        "ymm",
+                        [
+                            "prq",
+                            "~zfy"
+                        ],
+                        0.748
+                    ],
+                    [
+                        "~ymm",
+                        [
+                            "prq",
+                            "~zfy"
+                        ],
+                        0.252
+                    ],
+                    [
+                        "ymm",
+                        [
+                            "~prq",
+                            "zfy"
+                        ],
+                        0.2253
+                    ],
+                    [
+                        "~ymm",
+                        [
+                            "~prq",
+                            "zfy"
+                        ],
+                        0.7747
+                    ],
+                    [
+                        "ymm",
+                        [
+                            "~prq",
+                            "~zfy"
+                        ],
+                        0.6474
+                    ],
+                    [
+                        "~ymm",
+                        [
+                            "~prq",
+                            "~zfy"
+                        ],
+                        0.3526
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YMM",
+            "outcomes": [
+                "ymm",
+                "~ymm"
+            ],
+            "parents": [
+                "PRQ",
+                "ZFY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zfy",
+                        [],
+                        0.0592
+                    ],
+                    [
+                        "~zfy",
+                        [],
+                        0.9408
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZFY",
+            "outcomes": [
+                "zfy",
+                "~zfy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kbm",
+                        [
+                            "edt",
+                            "prq",
+                            "ulx"
+                        ],
+                        0.8415
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "edt",
+                            "prq",
+                            "ulx"
+                        ],
+                        0.1585
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "edt",
+                            "prq",
+                            "~ulx"
+                        ],
+                        0.9618
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "edt",
+                            "prq",
+                            "~ulx"
+                        ],
+                        0.0382
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "edt",
+                            "~prq",
+                            "ulx"
+                        ],
+                        0.4499
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "edt",
+                            "~prq",
+                            "ulx"
+                        ],
+                        0.5501
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "edt",
+                            "~prq",
+                            "~ulx"
+                        ],
+                        0.6505
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "edt",
+                            "~prq",
+                            "~ulx"
+                        ],
+                        0.3495
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "~edt",
+                            "prq",
+                            "ulx"
+                        ],
+                        0.4087
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "~edt",
+                            "prq",
+                            "ulx"
+                        ],
+                        0.5913
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "~edt",
+                            "prq",
+                            "~ulx"
+                        ],
+                        0.0731
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "~edt",
+                            "prq",
+                            "~ulx"
+                        ],
+                        0.9269
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "~edt",
+                            "~prq",
+                            "ulx"
+                        ],
+                        0.9279
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "~edt",
+                            "~prq",
+                            "ulx"
+                        ],
+                        0.0721
+                    ],
+                    [
+                        "kbm",
+                        [
+                            "~edt",
+                            "~prq",
+                            "~ulx"
+                        ],
+                        0.9359
+                    ],
+                    [
+                        "~kbm",
+                        [
+                            "~edt",
+                            "~prq",
+                            "~ulx"
+                        ],
+                        0.0641
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KBM",
+            "outcomes": [
+                "kbm",
+                "~kbm"
+            ],
+            "parents": [
+                "EDT",
+                "PRQ",
+                "ULX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tzq",
+                        [],
+                        0.8839
+                    ],
+                    [
+                        "~tzq",
+                        [],
+                        0.1161
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TZQ",
+            "outcomes": [
+                "tzq",
+                "~tzq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sgi",
+                        [
+                            "tzq",
+                            "ulx"
+                        ],
+                        0.9049
+                    ],
+                    [
+                        "~sgi",
+                        [
+                            "tzq",
+                            "ulx"
+                        ],
+                        0.0951
+                    ],
+                    [
+                        "sgi",
+                        [
+                            "tzq",
+                            "~ulx"
+                        ],
+                        0.4796
+                    ],
+                    [
+                        "~sgi",
+                        [
+                            "tzq",
+                            "~ulx"
+                        ],
+                        0.5204
+                    ],
+                    [
+                        "sgi",
+                        [
+                            "~tzq",
+                            "ulx"
+                        ],
+                        0.3181
+                    ],
+                    [
+                        "~sgi",
+                        [
+                            "~tzq",
+                            "ulx"
+                        ],
+                        0.6819
+                    ],
+                    [
+                        "sgi",
+                        [
+                            "~tzq",
+                            "~ulx"
+                        ],
+                        0.2107
+                    ],
+                    [
+                        "~sgi",
+                        [
+                            "~tzq",
+                            "~ulx"
+                        ],
+                        0.7893
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SGI",
+            "outcomes": [
+                "sgi",
+                "~sgi"
+            ],
+            "parents": [
+                "TZQ",
+                "ULX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "edt",
+                        [],
+                        0.2195
+                    ],
+                    [
+                        "~edt",
+                        [],
+                        0.7805
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EDT",
+            "outcomes": [
+                "edt",
+                "~edt"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "prq",
+                        [],
+                        0.3
+                    ],
+                    [
+                        "~prq",
+                        [],
+                        0.7
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PRQ",
+            "outcomes": [
+                "prq",
+                "~prq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cmp",
+                        [
+                            "zfy"
+                        ],
+                        0.6927
+                    ],
+                    [
+                        "~cmp",
+                        [
+                            "zfy"
+                        ],
+                        0.3073
+                    ],
+                    [
+                        "cmp",
+                        [
+                            "~zfy"
+                        ],
+                        0.5767
+                    ],
+                    [
+                        "~cmp",
+                        [
+                            "~zfy"
+                        ],
+                        0.4233
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CMP",
+            "outcomes": [
+                "cmp",
+                "~cmp"
+            ],
+            "parents": [
+                "ZFY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ulx",
+                        [],
+                        0.7312
+                    ],
+                    [
+                        "~ulx",
+                        [],
+                        0.2688
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ULX",
+            "outcomes": [
+                "ulx",
+                "~ulx"
+            ],
+            "parents": []
+        }
+    ]
+}

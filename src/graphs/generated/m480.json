@@ -1,0 +1,798 @@
+{
+    "latent-model": false,
+    "name": "m480",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ppp",
+                        [],
+                        0.7422
+                    ],
+                    [
+                        "~ppp",
+                        [],
+                        0.2578
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PPP",
+            "outcomes": [
+                "ppp",
+                "~ppp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ctr",
+                        [
+                            "itr"
+                        ],
+                        0.7399
+                    ],
+                    [
+                        "~ctr",
+                        [
+                            "itr"
+                        ],
+                        0.2601
+                    ],
+                    [
+                        "ctr",
+                        [
+                            "~itr"
+                        ],
+                        0.2038
+                    ],
+                    [
+                        "~ctr",
+                        [
+                            "~itr"
+                        ],
+                        0.7962
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CTR",
+            "outcomes": [
+                "ctr",
+                "~ctr"
+            ],
+            "parents": [
+                "ITR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kzj",
+                        [
+                            "xja"
+                        ],
+                        0.4514
+                    ],
+                    [
+                        "~kzj",
+                        [
+                            "xja"
+                        ],
+                        0.5486
+                    ],
+                    [
+                        "kzj",
+                        [
+                            "~xja"
+                        ],
+                        0.0225
+                    ],
+                    [
+                        "~kzj",
+                        [
+                            "~xja"
+                        ],
+                        0.9775
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KZJ",
+            "outcomes": [
+                "kzj",
+                "~kzj"
+            ],
+            "parents": [
+                "XJA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "exm",
+                        [
+                            "ctr"
+                        ],
+                        0.1947
+                    ],
+                    [
+                        "~exm",
+                        [
+                            "ctr"
+                        ],
+                        0.8053
+                    ],
+                    [
+                        "exm",
+                        [
+                            "~ctr"
+                        ],
+                        0.6607
+                    ],
+                    [
+                        "~exm",
+                        [
+                            "~ctr"
+                        ],
+                        0.3393
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EXM",
+            "outcomes": [
+                "exm",
+                "~exm"
+            ],
+            "parents": [
+                "CTR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kay",
+                        [
+                            "kzj"
+                        ],
+                        0.0395
+                    ],
+                    [
+                        "~kay",
+                        [
+                            "kzj"
+                        ],
+                        0.9605
+                    ],
+                    [
+                        "kay",
+                        [
+                            "~kzj"
+                        ],
+                        0.9814
+                    ],
+                    [
+                        "~kay",
+                        [
+                            "~kzj"
+                        ],
+                        0.0186
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KAY",
+            "outcomes": [
+                "kay",
+                "~kay"
+            ],
+            "parents": [
+                "KZJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ayf",
+                        [
+                            "crf"
+                        ],
+                        0.4694
+                    ],
+                    [
+                        "~ayf",
+                        [
+                            "crf"
+                        ],
+                        0.5306
+                    ],
+                    [
+                        "ayf",
+                        [
+                            "~crf"
+                        ],
+                        0.6427
+                    ],
+                    [
+                        "~ayf",
+                        [
+                            "~crf"
+                        ],
+                        0.3573
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AYF",
+            "outcomes": [
+                "ayf",
+                "~ayf"
+            ],
+            "parents": [
+                "CRF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hhw",
+                        [
+                            "itr"
+                        ],
+                        0.6287
+                    ],
+                    [
+                        "~hhw",
+                        [
+                            "itr"
+                        ],
+                        0.3713
+                    ],
+                    [
+                        "hhw",
+                        [
+                            "~itr"
+                        ],
+                        0.5749
+                    ],
+                    [
+                        "~hhw",
+                        [
+                            "~itr"
+                        ],
+                        0.4251
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HHW",
+            "outcomes": [
+                "hhw",
+                "~hhw"
+            ],
+            "parents": [
+                "ITR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mzx",
+                        [
+                            "itr"
+                        ],
+                        0.58
+                    ],
+                    [
+                        "~mzx",
+                        [
+                            "itr"
+                        ],
+                        0.42
+                    ],
+                    [
+                        "mzx",
+                        [
+                            "~itr"
+                        ],
+                        0.3166
+                    ],
+                    [
+                        "~mzx",
+                        [
+                            "~itr"
+                        ],
+                        0.6834
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MZX",
+            "outcomes": [
+                "mzx",
+                "~mzx"
+            ],
+            "parents": [
+                "ITR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "crf",
+                        [],
+                        0.2573
+                    ],
+                    [
+                        "~crf",
+                        [],
+                        0.7427
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CRF",
+            "outcomes": [
+                "crf",
+                "~crf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "itr",
+                        [
+                            "kay",
+                            "ppp",
+                            "xja"
+                        ],
+                        0.3498
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "kay",
+                            "ppp",
+                            "xja"
+                        ],
+                        0.6502
+                    ],
+                    [
+                        "itr",
+                        [
+                            "kay",
+                            "ppp",
+                            "~xja"
+                        ],
+                        0.1058
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "kay",
+                            "ppp",
+                            "~xja"
+                        ],
+                        0.8942
+                    ],
+                    [
+                        "itr",
+                        [
+                            "kay",
+                            "~ppp",
+                            "xja"
+                        ],
+                        0.4654
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "kay",
+                            "~ppp",
+                            "xja"
+                        ],
+                        0.5346
+                    ],
+                    [
+                        "itr",
+                        [
+                            "kay",
+                            "~ppp",
+                            "~xja"
+                        ],
+                        0.6063
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "kay",
+                            "~ppp",
+                            "~xja"
+                        ],
+                        0.3937
+                    ],
+                    [
+                        "itr",
+                        [
+                            "~kay",
+                            "ppp",
+                            "xja"
+                        ],
+                        0.9342
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "~kay",
+                            "ppp",
+                            "xja"
+                        ],
+                        0.0658
+                    ],
+                    [
+                        "itr",
+                        [
+                            "~kay",
+                            "ppp",
+                            "~xja"
+                        ],
+                        0.5843
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "~kay",
+                            "ppp",
+                            "~xja"
+                        ],
+                        0.4157
+                    ],
+                    [
+                        "itr",
+                        [
+                            "~kay",
+                            "~ppp",
+                            "xja"
+                        ],
+                        0.8975
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "~kay",
+                            "~ppp",
+                            "xja"
+                        ],
+                        0.1025
+                    ],
+                    [
+                        "itr",
+                        [
+                            "~kay",
+                            "~ppp",
+                            "~xja"
+                        ],
+                        0.5644
+                    ],
+                    [
+                        "~itr",
+                        [
+                            "~kay",
+                            "~ppp",
+                            "~xja"
+                        ],
+                        0.4356
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ITR",
+            "outcomes": [
+                "itr",
+                "~itr"
+            ],
+            "parents": [
+                "KAY",
+                "PPP",
+                "XJA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fxx",
+                        [
+                            "mzx",
+                            "ppp"
+                        ],
+                        0.8207
+                    ],
+                    [
+                        "~fxx",
+                        [
+                            "mzx",
+                            "ppp"
+                        ],
+                        0.1793
+                    ],
+                    [
+                        "fxx",
+                        [
+                            "mzx",
+                            "~ppp"
+                        ],
+                        0.9296
+                    ],
+                    [
+                        "~fxx",
+                        [
+                            "mzx",
+                            "~ppp"
+                        ],
+                        0.0704
+                    ],
+                    [
+                        "fxx",
+                        [
+                            "~mzx",
+                            "ppp"
+                        ],
+                        0.5762
+                    ],
+                    [
+                        "~fxx",
+                        [
+                            "~mzx",
+                            "ppp"
+                        ],
+                        0.4238
+                    ],
+                    [
+                        "fxx",
+                        [
+                            "~mzx",
+                            "~ppp"
+                        ],
+                        0.8163
+                    ],
+                    [
+                        "~fxx",
+                        [
+                            "~mzx",
+                            "~ppp"
+                        ],
+                        0.1837
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FXX",
+            "outcomes": [
+                "fxx",
+                "~fxx"
+            ],
+            "parents": [
+                "MZX",
+                "PPP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xcx",
+                        [
+                            "hhw",
+                            "kzj",
+                            "mzx"
+                        ],
+                        0.0589
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "hhw",
+                            "kzj",
+                            "mzx"
+                        ],
+                        0.9411
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "hhw",
+                            "kzj",
+                            "~mzx"
+                        ],
+                        0.8261
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "hhw",
+                            "kzj",
+                            "~mzx"
+                        ],
+                        0.1739
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "hhw",
+                            "~kzj",
+                            "mzx"
+                        ],
+                        0.8312
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "hhw",
+                            "~kzj",
+                            "mzx"
+                        ],
+                        0.1688
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "hhw",
+                            "~kzj",
+                            "~mzx"
+                        ],
+                        0.0007
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "hhw",
+                            "~kzj",
+                            "~mzx"
+                        ],
+                        0.9993
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "~hhw",
+                            "kzj",
+                            "mzx"
+                        ],
+                        0.2867
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "~hhw",
+                            "kzj",
+                            "mzx"
+                        ],
+                        0.7133
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "~hhw",
+                            "kzj",
+                            "~mzx"
+                        ],
+                        0.3006
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "~hhw",
+                            "kzj",
+                            "~mzx"
+                        ],
+                        0.6994
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "~hhw",
+                            "~kzj",
+                            "mzx"
+                        ],
+                        0.892
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "~hhw",
+                            "~kzj",
+                            "mzx"
+                        ],
+                        0.108
+                    ],
+                    [
+                        "xcx",
+                        [
+                            "~hhw",
+                            "~kzj",
+                            "~mzx"
+                        ],
+                        0.0508
+                    ],
+                    [
+                        "~xcx",
+                        [
+                            "~hhw",
+                            "~kzj",
+                            "~mzx"
+                        ],
+                        0.9492
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XCX",
+            "outcomes": [
+                "xcx",
+                "~xcx"
+            ],
+            "parents": [
+                "HHW",
+                "KZJ",
+                "MZX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xja",
+                        [
+                            "ppp"
+                        ],
+                        0.5437
+                    ],
+                    [
+                        "~xja",
+                        [
+                            "ppp"
+                        ],
+                        0.4563
+                    ],
+                    [
+                        "xja",
+                        [
+                            "~ppp"
+                        ],
+                        0.9762
+                    ],
+                    [
+                        "~xja",
+                        [
+                            "~ppp"
+                        ],
+                        0.0238
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XJA",
+            "outcomes": [
+                "xja",
+                "~xja"
+            ],
+            "parents": [
+                "PPP"
+            ]
+        }
+    ]
+}

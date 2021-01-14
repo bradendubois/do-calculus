@@ -1,0 +1,561 @@
+{
+    "latent-model": false,
+    "name": "m342",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rdh",
+                        [
+                            "lzb",
+                            "xdl"
+                        ],
+                        0.2927
+                    ],
+                    [
+                        "~rdh",
+                        [
+                            "lzb",
+                            "xdl"
+                        ],
+                        0.7073
+                    ],
+                    [
+                        "rdh",
+                        [
+                            "lzb",
+                            "~xdl"
+                        ],
+                        0.2201
+                    ],
+                    [
+                        "~rdh",
+                        [
+                            "lzb",
+                            "~xdl"
+                        ],
+                        0.7799
+                    ],
+                    [
+                        "rdh",
+                        [
+                            "~lzb",
+                            "xdl"
+                        ],
+                        0.3051
+                    ],
+                    [
+                        "~rdh",
+                        [
+                            "~lzb",
+                            "xdl"
+                        ],
+                        0.6949
+                    ],
+                    [
+                        "rdh",
+                        [
+                            "~lzb",
+                            "~xdl"
+                        ],
+                        0.3548
+                    ],
+                    [
+                        "~rdh",
+                        [
+                            "~lzb",
+                            "~xdl"
+                        ],
+                        0.6452
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RDH",
+            "outcomes": [
+                "rdh",
+                "~rdh"
+            ],
+            "parents": [
+                "LZB",
+                "XDL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zgw",
+                        [
+                            "ihs",
+                            "oxr"
+                        ],
+                        0.5872
+                    ],
+                    [
+                        "~zgw",
+                        [
+                            "ihs",
+                            "oxr"
+                        ],
+                        0.4128
+                    ],
+                    [
+                        "zgw",
+                        [
+                            "ihs",
+                            "~oxr"
+                        ],
+                        0.4528
+                    ],
+                    [
+                        "~zgw",
+                        [
+                            "ihs",
+                            "~oxr"
+                        ],
+                        0.5472
+                    ],
+                    [
+                        "zgw",
+                        [
+                            "~ihs",
+                            "oxr"
+                        ],
+                        0.2693
+                    ],
+                    [
+                        "~zgw",
+                        [
+                            "~ihs",
+                            "oxr"
+                        ],
+                        0.7307
+                    ],
+                    [
+                        "zgw",
+                        [
+                            "~ihs",
+                            "~oxr"
+                        ],
+                        0.348
+                    ],
+                    [
+                        "~zgw",
+                        [
+                            "~ihs",
+                            "~oxr"
+                        ],
+                        0.652
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZGW",
+            "outcomes": [
+                "zgw",
+                "~zgw"
+            ],
+            "parents": [
+                "IHS",
+                "OXR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zfp",
+                        [
+                            "ihs",
+                            "xdl"
+                        ],
+                        0.4552
+                    ],
+                    [
+                        "~zfp",
+                        [
+                            "ihs",
+                            "xdl"
+                        ],
+                        0.5448
+                    ],
+                    [
+                        "zfp",
+                        [
+                            "ihs",
+                            "~xdl"
+                        ],
+                        0.2321
+                    ],
+                    [
+                        "~zfp",
+                        [
+                            "ihs",
+                            "~xdl"
+                        ],
+                        0.7679
+                    ],
+                    [
+                        "zfp",
+                        [
+                            "~ihs",
+                            "xdl"
+                        ],
+                        0.0286
+                    ],
+                    [
+                        "~zfp",
+                        [
+                            "~ihs",
+                            "xdl"
+                        ],
+                        0.9714
+                    ],
+                    [
+                        "zfp",
+                        [
+                            "~ihs",
+                            "~xdl"
+                        ],
+                        0.1058
+                    ],
+                    [
+                        "~zfp",
+                        [
+                            "~ihs",
+                            "~xdl"
+                        ],
+                        0.8942
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZFP",
+            "outcomes": [
+                "zfp",
+                "~zfp"
+            ],
+            "parents": [
+                "IHS",
+                "XDL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qgt",
+                        [
+                            "xdl"
+                        ],
+                        0.5771
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "xdl"
+                        ],
+                        0.4229
+                    ],
+                    [
+                        "qgt",
+                        [
+                            "~xdl"
+                        ],
+                        0.0634
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "~xdl"
+                        ],
+                        0.9366
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QGT",
+            "outcomes": [
+                "qgt",
+                "~qgt"
+            ],
+            "parents": [
+                "XDL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xdl",
+                        [],
+                        0.3647
+                    ],
+                    [
+                        "~xdl",
+                        [],
+                        0.6353
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XDL",
+            "outcomes": [
+                "xdl",
+                "~xdl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ihs",
+                        [],
+                        0.2383
+                    ],
+                    [
+                        "~ihs",
+                        [],
+                        0.7617
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IHS",
+            "outcomes": [
+                "ihs",
+                "~ihs"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oxr",
+                        [],
+                        0.968
+                    ],
+                    [
+                        "~oxr",
+                        [],
+                        0.032
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OXR",
+            "outcomes": [
+                "oxr",
+                "~oxr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uax",
+                        [
+                            "hgc",
+                            "lzb"
+                        ],
+                        0.8354
+                    ],
+                    [
+                        "~uax",
+                        [
+                            "hgc",
+                            "lzb"
+                        ],
+                        0.1646
+                    ],
+                    [
+                        "uax",
+                        [
+                            "hgc",
+                            "~lzb"
+                        ],
+                        0.0597
+                    ],
+                    [
+                        "~uax",
+                        [
+                            "hgc",
+                            "~lzb"
+                        ],
+                        0.9403
+                    ],
+                    [
+                        "uax",
+                        [
+                            "~hgc",
+                            "lzb"
+                        ],
+                        0.1521
+                    ],
+                    [
+                        "~uax",
+                        [
+                            "~hgc",
+                            "lzb"
+                        ],
+                        0.8479
+                    ],
+                    [
+                        "uax",
+                        [
+                            "~hgc",
+                            "~lzb"
+                        ],
+                        0.5328
+                    ],
+                    [
+                        "~uax",
+                        [
+                            "~hgc",
+                            "~lzb"
+                        ],
+                        0.4672
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UAX",
+            "outcomes": [
+                "uax",
+                "~uax"
+            ],
+            "parents": [
+                "HGC",
+                "LZB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lzb",
+                        [
+                            "qgt"
+                        ],
+                        0.9203
+                    ],
+                    [
+                        "~lzb",
+                        [
+                            "qgt"
+                        ],
+                        0.0797
+                    ],
+                    [
+                        "lzb",
+                        [
+                            "~qgt"
+                        ],
+                        0.0335
+                    ],
+                    [
+                        "~lzb",
+                        [
+                            "~qgt"
+                        ],
+                        0.9665
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LZB",
+            "outcomes": [
+                "lzb",
+                "~lzb"
+            ],
+            "parents": [
+                "QGT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hgc",
+                        [
+                            "ihs",
+                            "oxr"
+                        ],
+                        0.4384
+                    ],
+                    [
+                        "~hgc",
+                        [
+                            "ihs",
+                            "oxr"
+                        ],
+                        0.5616
+                    ],
+                    [
+                        "hgc",
+                        [
+                            "ihs",
+                            "~oxr"
+                        ],
+                        0.5156
+                    ],
+                    [
+                        "~hgc",
+                        [
+                            "ihs",
+                            "~oxr"
+                        ],
+                        0.4844
+                    ],
+                    [
+                        "hgc",
+                        [
+                            "~ihs",
+                            "oxr"
+                        ],
+                        0.1331
+                    ],
+                    [
+                        "~hgc",
+                        [
+                            "~ihs",
+                            "oxr"
+                        ],
+                        0.8669
+                    ],
+                    [
+                        "hgc",
+                        [
+                            "~ihs",
+                            "~oxr"
+                        ],
+                        0.0237
+                    ],
+                    [
+                        "~hgc",
+                        [
+                            "~ihs",
+                            "~oxr"
+                        ],
+                        0.9763
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HGC",
+            "outcomes": [
+                "hgc",
+                "~hgc"
+            ],
+            "parents": [
+                "IHS",
+                "OXR"
+            ]
+        }
+    ]
+}

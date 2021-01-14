@@ -1,0 +1,528 @@
+{
+    "latent-model": false,
+    "name": "m855",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eah",
+                        [],
+                        0.4316
+                    ],
+                    [
+                        "~eah",
+                        [],
+                        0.5684
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EAH",
+            "outcomes": [
+                "eah",
+                "~eah"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "llu",
+                        [
+                            "eah",
+                            "tcz"
+                        ],
+                        0.7094
+                    ],
+                    [
+                        "~llu",
+                        [
+                            "eah",
+                            "tcz"
+                        ],
+                        0.2906
+                    ],
+                    [
+                        "llu",
+                        [
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.1977
+                    ],
+                    [
+                        "~llu",
+                        [
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.8023
+                    ],
+                    [
+                        "llu",
+                        [
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.6418
+                    ],
+                    [
+                        "~llu",
+                        [
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.3582
+                    ],
+                    [
+                        "llu",
+                        [
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.452
+                    ],
+                    [
+                        "~llu",
+                        [
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.548
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LLU",
+            "outcomes": [
+                "llu",
+                "~llu"
+            ],
+            "parents": [
+                "EAH",
+                "TCZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tno",
+                        [
+                            "bgr",
+                            "phn"
+                        ],
+                        0.3052
+                    ],
+                    [
+                        "~tno",
+                        [
+                            "bgr",
+                            "phn"
+                        ],
+                        0.6948
+                    ],
+                    [
+                        "tno",
+                        [
+                            "bgr",
+                            "~phn"
+                        ],
+                        0.916
+                    ],
+                    [
+                        "~tno",
+                        [
+                            "bgr",
+                            "~phn"
+                        ],
+                        0.084
+                    ],
+                    [
+                        "tno",
+                        [
+                            "~bgr",
+                            "phn"
+                        ],
+                        0.3813
+                    ],
+                    [
+                        "~tno",
+                        [
+                            "~bgr",
+                            "phn"
+                        ],
+                        0.6187
+                    ],
+                    [
+                        "tno",
+                        [
+                            "~bgr",
+                            "~phn"
+                        ],
+                        0.7006
+                    ],
+                    [
+                        "~tno",
+                        [
+                            "~bgr",
+                            "~phn"
+                        ],
+                        0.2994
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TNO",
+            "outcomes": [
+                "tno",
+                "~tno"
+            ],
+            "parents": [
+                "BGR",
+                "PHN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zwh",
+                        [],
+                        0.5807
+                    ],
+                    [
+                        "~zwh",
+                        [],
+                        0.4193
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZWH",
+            "outcomes": [
+                "zwh",
+                "~zwh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bgr",
+                        [],
+                        0.9072
+                    ],
+                    [
+                        "~bgr",
+                        [],
+                        0.0928
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BGR",
+            "outcomes": [
+                "bgr",
+                "~bgr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "phn",
+                        [],
+                        0.2482
+                    ],
+                    [
+                        "~phn",
+                        [],
+                        0.7518
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PHN",
+            "outcomes": [
+                "phn",
+                "~phn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aor",
+                        [
+                            "zwh"
+                        ],
+                        0.3001
+                    ],
+                    [
+                        "~aor",
+                        [
+                            "zwh"
+                        ],
+                        0.6999
+                    ],
+                    [
+                        "aor",
+                        [
+                            "~zwh"
+                        ],
+                        0.5243
+                    ],
+                    [
+                        "~aor",
+                        [
+                            "~zwh"
+                        ],
+                        0.4757
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AOR",
+            "outcomes": [
+                "aor",
+                "~aor"
+            ],
+            "parents": [
+                "ZWH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cii",
+                        [
+                            "bgr"
+                        ],
+                        0.5148
+                    ],
+                    [
+                        "~cii",
+                        [
+                            "bgr"
+                        ],
+                        0.4852
+                    ],
+                    [
+                        "cii",
+                        [
+                            "~bgr"
+                        ],
+                        0.6514
+                    ],
+                    [
+                        "~cii",
+                        [
+                            "~bgr"
+                        ],
+                        0.3486
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CII",
+            "outcomes": [
+                "cii",
+                "~cii"
+            ],
+            "parents": [
+                "BGR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tcz",
+                        [],
+                        0.9066
+                    ],
+                    [
+                        "~tcz",
+                        [],
+                        0.0934
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TCZ",
+            "outcomes": [
+                "tcz",
+                "~tcz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oof",
+                        [
+                            "bgr",
+                            "eah",
+                            "tcz"
+                        ],
+                        0.9206
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "bgr",
+                            "eah",
+                            "tcz"
+                        ],
+                        0.0794
+                    ],
+                    [
+                        "oof",
+                        [
+                            "bgr",
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.8127
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "bgr",
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.1873
+                    ],
+                    [
+                        "oof",
+                        [
+                            "bgr",
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.9424
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "bgr",
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.0576
+                    ],
+                    [
+                        "oof",
+                        [
+                            "bgr",
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.2449
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "bgr",
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.7551
+                    ],
+                    [
+                        "oof",
+                        [
+                            "~bgr",
+                            "eah",
+                            "tcz"
+                        ],
+                        0.4261
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "~bgr",
+                            "eah",
+                            "tcz"
+                        ],
+                        0.5739
+                    ],
+                    [
+                        "oof",
+                        [
+                            "~bgr",
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.3245
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "~bgr",
+                            "eah",
+                            "~tcz"
+                        ],
+                        0.6755
+                    ],
+                    [
+                        "oof",
+                        [
+                            "~bgr",
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.537
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "~bgr",
+                            "~eah",
+                            "tcz"
+                        ],
+                        0.463
+                    ],
+                    [
+                        "oof",
+                        [
+                            "~bgr",
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.2178
+                    ],
+                    [
+                        "~oof",
+                        [
+                            "~bgr",
+                            "~eah",
+                            "~tcz"
+                        ],
+                        0.7822
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OOF",
+            "outcomes": [
+                "oof",
+                "~oof"
+            ],
+            "parents": [
+                "BGR",
+                "EAH",
+                "TCZ"
+            ]
+        }
+    ]
+}

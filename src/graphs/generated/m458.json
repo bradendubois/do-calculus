@@ -1,0 +1,330 @@
+{
+    "latent-model": false,
+    "name": "m458",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "abe",
+                        [
+                            "pub"
+                        ],
+                        0.6827
+                    ],
+                    [
+                        "~abe",
+                        [
+                            "pub"
+                        ],
+                        0.3173
+                    ],
+                    [
+                        "abe",
+                        [
+                            "~pub"
+                        ],
+                        0.6925
+                    ],
+                    [
+                        "~abe",
+                        [
+                            "~pub"
+                        ],
+                        0.3075
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ABE",
+            "outcomes": [
+                "abe",
+                "~abe"
+            ],
+            "parents": [
+                "PUB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pub",
+                        [
+                            "jqt"
+                        ],
+                        0.1014
+                    ],
+                    [
+                        "~pub",
+                        [
+                            "jqt"
+                        ],
+                        0.8986
+                    ],
+                    [
+                        "pub",
+                        [
+                            "~jqt"
+                        ],
+                        0.1594
+                    ],
+                    [
+                        "~pub",
+                        [
+                            "~jqt"
+                        ],
+                        0.8406
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PUB",
+            "outcomes": [
+                "pub",
+                "~pub"
+            ],
+            "parents": [
+                "JQT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xcg",
+                        [
+                            "fzx"
+                        ],
+                        0.0366
+                    ],
+                    [
+                        "~xcg",
+                        [
+                            "fzx"
+                        ],
+                        0.9634
+                    ],
+                    [
+                        "xcg",
+                        [
+                            "~fzx"
+                        ],
+                        0.4269
+                    ],
+                    [
+                        "~xcg",
+                        [
+                            "~fzx"
+                        ],
+                        0.5731
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XCG",
+            "outcomes": [
+                "xcg",
+                "~xcg"
+            ],
+            "parents": [
+                "FZX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jqt",
+                        [
+                            "xcg"
+                        ],
+                        0.9269
+                    ],
+                    [
+                        "~jqt",
+                        [
+                            "xcg"
+                        ],
+                        0.0731
+                    ],
+                    [
+                        "jqt",
+                        [
+                            "~xcg"
+                        ],
+                        0.8056
+                    ],
+                    [
+                        "~jqt",
+                        [
+                            "~xcg"
+                        ],
+                        0.1944
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JQT",
+            "outcomes": [
+                "jqt",
+                "~jqt"
+            ],
+            "parents": [
+                "XCG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xqz",
+                        [
+                            "jqt"
+                        ],
+                        0.2827
+                    ],
+                    [
+                        "~xqz",
+                        [
+                            "jqt"
+                        ],
+                        0.7173
+                    ],
+                    [
+                        "xqz",
+                        [
+                            "~jqt"
+                        ],
+                        0.1831
+                    ],
+                    [
+                        "~xqz",
+                        [
+                            "~jqt"
+                        ],
+                        0.8169
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XQZ",
+            "outcomes": [
+                "xqz",
+                "~xqz"
+            ],
+            "parents": [
+                "JQT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fzx",
+                        [],
+                        0.5184
+                    ],
+                    [
+                        "~fzx",
+                        [],
+                        0.4816
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FZX",
+            "outcomes": [
+                "fzx",
+                "~fzx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hfz",
+                        [
+                            "xqz"
+                        ],
+                        0.368
+                    ],
+                    [
+                        "~hfz",
+                        [
+                            "xqz"
+                        ],
+                        0.632
+                    ],
+                    [
+                        "hfz",
+                        [
+                            "~xqz"
+                        ],
+                        0.4219
+                    ],
+                    [
+                        "~hfz",
+                        [
+                            "~xqz"
+                        ],
+                        0.5781
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HFZ",
+            "outcomes": [
+                "hfz",
+                "~hfz"
+            ],
+            "parents": [
+                "XQZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bnn",
+                        [
+                            "xcg"
+                        ],
+                        0.5786
+                    ],
+                    [
+                        "~bnn",
+                        [
+                            "xcg"
+                        ],
+                        0.4214
+                    ],
+                    [
+                        "bnn",
+                        [
+                            "~xcg"
+                        ],
+                        0.6115
+                    ],
+                    [
+                        "~bnn",
+                        [
+                            "~xcg"
+                        ],
+                        0.3885
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BNN",
+            "outcomes": [
+                "bnn",
+                "~bnn"
+            ],
+            "parents": [
+                "XCG"
+            ]
+        }
+    ]
+}

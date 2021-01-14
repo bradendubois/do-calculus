@@ -1,0 +1,374 @@
+{
+    "latent-model": true,
+    "name": "m10_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zzp",
+                        [
+                            "grn",
+                            "tye"
+                        ],
+                        0.9921
+                    ],
+                    [
+                        "~zzp",
+                        [
+                            "grn",
+                            "tye"
+                        ],
+                        0.0079
+                    ],
+                    [
+                        "zzp",
+                        [
+                            "grn",
+                            "~tye"
+                        ],
+                        0.5217
+                    ],
+                    [
+                        "~zzp",
+                        [
+                            "grn",
+                            "~tye"
+                        ],
+                        0.4783
+                    ],
+                    [
+                        "zzp",
+                        [
+                            "~grn",
+                            "tye"
+                        ],
+                        0.066
+                    ],
+                    [
+                        "~zzp",
+                        [
+                            "~grn",
+                            "tye"
+                        ],
+                        0.934
+                    ],
+                    [
+                        "zzp",
+                        [
+                            "~grn",
+                            "~tye"
+                        ],
+                        0.1713
+                    ],
+                    [
+                        "~zzp",
+                        [
+                            "~grn",
+                            "~tye"
+                        ],
+                        0.8287
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZZP",
+            "outcomes": [
+                "zzp",
+                "~zzp"
+            ],
+            "parents": [
+                "GRN",
+                "TYE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "csb",
+                        [
+                            "bjf",
+                            "tye",
+                            "zzp"
+                        ],
+                        0.4889
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "bjf",
+                            "tye",
+                            "zzp"
+                        ],
+                        0.5111
+                    ],
+                    [
+                        "csb",
+                        [
+                            "bjf",
+                            "tye",
+                            "~zzp"
+                        ],
+                        0.5251
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "bjf",
+                            "tye",
+                            "~zzp"
+                        ],
+                        0.4749
+                    ],
+                    [
+                        "csb",
+                        [
+                            "bjf",
+                            "~tye",
+                            "zzp"
+                        ],
+                        0.3735
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "bjf",
+                            "~tye",
+                            "zzp"
+                        ],
+                        0.6265
+                    ],
+                    [
+                        "csb",
+                        [
+                            "bjf",
+                            "~tye",
+                            "~zzp"
+                        ],
+                        0.0076
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "bjf",
+                            "~tye",
+                            "~zzp"
+                        ],
+                        0.9924
+                    ],
+                    [
+                        "csb",
+                        [
+                            "~bjf",
+                            "tye",
+                            "zzp"
+                        ],
+                        0.0314
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "~bjf",
+                            "tye",
+                            "zzp"
+                        ],
+                        0.9686
+                    ],
+                    [
+                        "csb",
+                        [
+                            "~bjf",
+                            "tye",
+                            "~zzp"
+                        ],
+                        0.781
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "~bjf",
+                            "tye",
+                            "~zzp"
+                        ],
+                        0.219
+                    ],
+                    [
+                        "csb",
+                        [
+                            "~bjf",
+                            "~tye",
+                            "zzp"
+                        ],
+                        0.717
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "~bjf",
+                            "~tye",
+                            "zzp"
+                        ],
+                        0.283
+                    ],
+                    [
+                        "csb",
+                        [
+                            "~bjf",
+                            "~tye",
+                            "~zzp"
+                        ],
+                        0.0724
+                    ],
+                    [
+                        "~csb",
+                        [
+                            "~bjf",
+                            "~tye",
+                            "~zzp"
+                        ],
+                        0.9276
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CSB",
+            "outcomes": [
+                "csb",
+                "~csb"
+            ],
+            "parents": [
+                "BJF",
+                "TYE",
+                "ZZP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "grn",
+                        [],
+                        0.6608
+                    ],
+                    [
+                        "~grn",
+                        [],
+                        0.3392
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GRN",
+            "outcomes": [
+                "grn",
+                "~grn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tye",
+                        [],
+                        0.376
+                    ],
+                    [
+                        "~tye",
+                        [],
+                        0.624
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TYE",
+            "outcomes": [
+                "tye",
+                "~tye"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bjf",
+                        [
+                            "grn",
+                            "tye"
+                        ],
+                        0.0765
+                    ],
+                    [
+                        "~bjf",
+                        [
+                            "grn",
+                            "tye"
+                        ],
+                        0.9235
+                    ],
+                    [
+                        "bjf",
+                        [
+                            "grn",
+                            "~tye"
+                        ],
+                        0.6844
+                    ],
+                    [
+                        "~bjf",
+                        [
+                            "grn",
+                            "~tye"
+                        ],
+                        0.3156
+                    ],
+                    [
+                        "bjf",
+                        [
+                            "~grn",
+                            "tye"
+                        ],
+                        0.2518
+                    ],
+                    [
+                        "~bjf",
+                        [
+                            "~grn",
+                            "tye"
+                        ],
+                        0.7482
+                    ],
+                    [
+                        "bjf",
+                        [
+                            "~grn",
+                            "~tye"
+                        ],
+                        0.7215
+                    ],
+                    [
+                        "~bjf",
+                        [
+                            "~grn",
+                            "~tye"
+                        ],
+                        0.2785
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BJF",
+            "outcomes": [
+                "bjf",
+                "~bjf"
+            ],
+            "parents": [
+                "GRN",
+                "TYE"
+            ]
+        }
+    ]
+}

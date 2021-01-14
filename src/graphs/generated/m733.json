@@ -1,0 +1,490 @@
+{
+    "latent-model": false,
+    "name": "m733",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "thy",
+                        [
+                            "jjr",
+                            "xhg"
+                        ],
+                        0.4722
+                    ],
+                    [
+                        "~thy",
+                        [
+                            "jjr",
+                            "xhg"
+                        ],
+                        0.5278
+                    ],
+                    [
+                        "thy",
+                        [
+                            "jjr",
+                            "~xhg"
+                        ],
+                        0.1881
+                    ],
+                    [
+                        "~thy",
+                        [
+                            "jjr",
+                            "~xhg"
+                        ],
+                        0.8119
+                    ],
+                    [
+                        "thy",
+                        [
+                            "~jjr",
+                            "xhg"
+                        ],
+                        0.6133
+                    ],
+                    [
+                        "~thy",
+                        [
+                            "~jjr",
+                            "xhg"
+                        ],
+                        0.3867
+                    ],
+                    [
+                        "thy",
+                        [
+                            "~jjr",
+                            "~xhg"
+                        ],
+                        0.5949
+                    ],
+                    [
+                        "~thy",
+                        [
+                            "~jjr",
+                            "~xhg"
+                        ],
+                        0.4051
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "THY",
+            "outcomes": [
+                "thy",
+                "~thy"
+            ],
+            "parents": [
+                "JJR",
+                "XHG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cwy",
+                        [
+                            "bec"
+                        ],
+                        0.084
+                    ],
+                    [
+                        "~cwy",
+                        [
+                            "bec"
+                        ],
+                        0.916
+                    ],
+                    [
+                        "cwy",
+                        [
+                            "~bec"
+                        ],
+                        0.9657
+                    ],
+                    [
+                        "~cwy",
+                        [
+                            "~bec"
+                        ],
+                        0.0343
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CWY",
+            "outcomes": [
+                "cwy",
+                "~cwy"
+            ],
+            "parents": [
+                "BEC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xhg",
+                        [
+                            "yox"
+                        ],
+                        0.5233
+                    ],
+                    [
+                        "~xhg",
+                        [
+                            "yox"
+                        ],
+                        0.4767
+                    ],
+                    [
+                        "xhg",
+                        [
+                            "~yox"
+                        ],
+                        0.8633
+                    ],
+                    [
+                        "~xhg",
+                        [
+                            "~yox"
+                        ],
+                        0.1367
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XHG",
+            "outcomes": [
+                "xhg",
+                "~xhg"
+            ],
+            "parents": [
+                "YOX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yfy",
+                        [
+                            "xkx"
+                        ],
+                        0.8686
+                    ],
+                    [
+                        "~yfy",
+                        [
+                            "xkx"
+                        ],
+                        0.1314
+                    ],
+                    [
+                        "yfy",
+                        [
+                            "~xkx"
+                        ],
+                        0.0997
+                    ],
+                    [
+                        "~yfy",
+                        [
+                            "~xkx"
+                        ],
+                        0.9003
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YFY",
+            "outcomes": [
+                "yfy",
+                "~yfy"
+            ],
+            "parents": [
+                "XKX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xkx",
+                        [
+                            "cwy"
+                        ],
+                        0.0902
+                    ],
+                    [
+                        "~xkx",
+                        [
+                            "cwy"
+                        ],
+                        0.9098
+                    ],
+                    [
+                        "xkx",
+                        [
+                            "~cwy"
+                        ],
+                        0.0386
+                    ],
+                    [
+                        "~xkx",
+                        [
+                            "~cwy"
+                        ],
+                        0.9614
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XKX",
+            "outcomes": [
+                "xkx",
+                "~xkx"
+            ],
+            "parents": [
+                "CWY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yox",
+                        [
+                            "bec"
+                        ],
+                        0.2659
+                    ],
+                    [
+                        "~yox",
+                        [
+                            "bec"
+                        ],
+                        0.7341
+                    ],
+                    [
+                        "yox",
+                        [
+                            "~bec"
+                        ],
+                        0.0911
+                    ],
+                    [
+                        "~yox",
+                        [
+                            "~bec"
+                        ],
+                        0.9089
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YOX",
+            "outcomes": [
+                "yox",
+                "~yox"
+            ],
+            "parents": [
+                "BEC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fdc",
+                        [
+                            "yox"
+                        ],
+                        0.3747
+                    ],
+                    [
+                        "~fdc",
+                        [
+                            "yox"
+                        ],
+                        0.6253
+                    ],
+                    [
+                        "fdc",
+                        [
+                            "~yox"
+                        ],
+                        0.6464
+                    ],
+                    [
+                        "~fdc",
+                        [
+                            "~yox"
+                        ],
+                        0.3536
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FDC",
+            "outcomes": [
+                "fdc",
+                "~fdc"
+            ],
+            "parents": [
+                "YOX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bec",
+                        [],
+                        0.5245
+                    ],
+                    [
+                        "~bec",
+                        [],
+                        0.4755
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BEC",
+            "outcomes": [
+                "bec",
+                "~bec"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gme",
+                        [
+                            "bec"
+                        ],
+                        0.8109
+                    ],
+                    [
+                        "~gme",
+                        [
+                            "bec"
+                        ],
+                        0.1891
+                    ],
+                    [
+                        "gme",
+                        [
+                            "~bec"
+                        ],
+                        0.3383
+                    ],
+                    [
+                        "~gme",
+                        [
+                            "~bec"
+                        ],
+                        0.6617
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GME",
+            "outcomes": [
+                "gme",
+                "~gme"
+            ],
+            "parents": [
+                "BEC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jjr",
+                        [
+                            "cwy",
+                            "gme"
+                        ],
+                        0.3358
+                    ],
+                    [
+                        "~jjr",
+                        [
+                            "cwy",
+                            "gme"
+                        ],
+                        0.6642
+                    ],
+                    [
+                        "jjr",
+                        [
+                            "cwy",
+                            "~gme"
+                        ],
+                        0.1674
+                    ],
+                    [
+                        "~jjr",
+                        [
+                            "cwy",
+                            "~gme"
+                        ],
+                        0.8326
+                    ],
+                    [
+                        "jjr",
+                        [
+                            "~cwy",
+                            "gme"
+                        ],
+                        0.7059
+                    ],
+                    [
+                        "~jjr",
+                        [
+                            "~cwy",
+                            "gme"
+                        ],
+                        0.2941
+                    ],
+                    [
+                        "jjr",
+                        [
+                            "~cwy",
+                            "~gme"
+                        ],
+                        0.6683
+                    ],
+                    [
+                        "~jjr",
+                        [
+                            "~cwy",
+                            "~gme"
+                        ],
+                        0.3317
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JJR",
+            "outcomes": [
+                "jjr",
+                "~jjr"
+            ],
+            "parents": [
+                "CWY",
+                "GME"
+            ]
+        }
+    ]
+}

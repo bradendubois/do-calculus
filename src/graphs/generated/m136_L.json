@@ -1,0 +1,581 @@
+{
+    "latent-model": true,
+    "name": "m136_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dhy",
+                        [
+                            "ulm"
+                        ],
+                        0.8967
+                    ],
+                    [
+                        "~dhy",
+                        [
+                            "ulm"
+                        ],
+                        0.1033
+                    ],
+                    [
+                        "dhy",
+                        [
+                            "~ulm"
+                        ],
+                        0.2754
+                    ],
+                    [
+                        "~dhy",
+                        [
+                            "~ulm"
+                        ],
+                        0.7246
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DHY",
+            "outcomes": [
+                "dhy",
+                "~dhy"
+            ],
+            "parents": [
+                "ULM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ivw",
+                        [
+                            "vtg"
+                        ],
+                        0.3942
+                    ],
+                    [
+                        "~ivw",
+                        [
+                            "vtg"
+                        ],
+                        0.6058
+                    ],
+                    [
+                        "ivw",
+                        [
+                            "~vtg"
+                        ],
+                        0.9943
+                    ],
+                    [
+                        "~ivw",
+                        [
+                            "~vtg"
+                        ],
+                        0.0057
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IVW",
+            "outcomes": [
+                "ivw",
+                "~ivw"
+            ],
+            "parents": [
+                "VTG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dqa",
+                        [
+                            "dfn",
+                            "ivw",
+                            "ulm"
+                        ],
+                        0.9385
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "dfn",
+                            "ivw",
+                            "ulm"
+                        ],
+                        0.0615
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "dfn",
+                            "ivw",
+                            "~ulm"
+                        ],
+                        0.457
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "dfn",
+                            "ivw",
+                            "~ulm"
+                        ],
+                        0.543
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "dfn",
+                            "~ivw",
+                            "ulm"
+                        ],
+                        0.1973
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "dfn",
+                            "~ivw",
+                            "ulm"
+                        ],
+                        0.8027
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "dfn",
+                            "~ivw",
+                            "~ulm"
+                        ],
+                        0.0531
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "dfn",
+                            "~ivw",
+                            "~ulm"
+                        ],
+                        0.9469
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "~dfn",
+                            "ivw",
+                            "ulm"
+                        ],
+                        0.3987
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "~dfn",
+                            "ivw",
+                            "ulm"
+                        ],
+                        0.6013
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "~dfn",
+                            "ivw",
+                            "~ulm"
+                        ],
+                        0.1896
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "~dfn",
+                            "ivw",
+                            "~ulm"
+                        ],
+                        0.8104
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "~dfn",
+                            "~ivw",
+                            "ulm"
+                        ],
+                        0.473
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "~dfn",
+                            "~ivw",
+                            "ulm"
+                        ],
+                        0.527
+                    ],
+                    [
+                        "dqa",
+                        [
+                            "~dfn",
+                            "~ivw",
+                            "~ulm"
+                        ],
+                        0.433
+                    ],
+                    [
+                        "~dqa",
+                        [
+                            "~dfn",
+                            "~ivw",
+                            "~ulm"
+                        ],
+                        0.567
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DQA",
+            "outcomes": [
+                "dqa",
+                "~dqa"
+            ],
+            "parents": [
+                "DFN",
+                "IVW",
+                "ULM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ulm",
+                        [],
+                        0.6004
+                    ],
+                    [
+                        "~ulm",
+                        [],
+                        0.3996
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ULM",
+            "outcomes": [
+                "ulm",
+                "~ulm"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vdu",
+                        [],
+                        0.0213
+                    ],
+                    [
+                        "~vdu",
+                        [],
+                        0.9787
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "VDU",
+            "outcomes": [
+                "vdu",
+                "~vdu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aat",
+                        [
+                            "ulm"
+                        ],
+                        0.4764
+                    ],
+                    [
+                        "~aat",
+                        [
+                            "ulm"
+                        ],
+                        0.5236
+                    ],
+                    [
+                        "aat",
+                        [
+                            "~ulm"
+                        ],
+                        0.185
+                    ],
+                    [
+                        "~aat",
+                        [
+                            "~ulm"
+                        ],
+                        0.815
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AAT",
+            "outcomes": [
+                "aat",
+                "~aat"
+            ],
+            "parents": [
+                "ULM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dfn",
+                        [],
+                        0.8831
+                    ],
+                    [
+                        "~dfn",
+                        [],
+                        0.1169
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "DFN",
+            "outcomes": [
+                "dfn",
+                "~dfn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ezq",
+                        [
+                            "vdu"
+                        ],
+                        0.4666
+                    ],
+                    [
+                        "~ezq",
+                        [
+                            "vdu"
+                        ],
+                        0.5334
+                    ],
+                    [
+                        "ezq",
+                        [
+                            "~vdu"
+                        ],
+                        0.9072
+                    ],
+                    [
+                        "~ezq",
+                        [
+                            "~vdu"
+                        ],
+                        0.0928
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EZQ",
+            "outcomes": [
+                "ezq",
+                "~ezq"
+            ],
+            "parents": [
+                "VDU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zxo",
+                        [
+                            "elw",
+                            "vtg"
+                        ],
+                        0.5857
+                    ],
+                    [
+                        "~zxo",
+                        [
+                            "elw",
+                            "vtg"
+                        ],
+                        0.4143
+                    ],
+                    [
+                        "zxo",
+                        [
+                            "elw",
+                            "~vtg"
+                        ],
+                        0.3381
+                    ],
+                    [
+                        "~zxo",
+                        [
+                            "elw",
+                            "~vtg"
+                        ],
+                        0.6619
+                    ],
+                    [
+                        "zxo",
+                        [
+                            "~elw",
+                            "vtg"
+                        ],
+                        0.5485
+                    ],
+                    [
+                        "~zxo",
+                        [
+                            "~elw",
+                            "vtg"
+                        ],
+                        0.4515
+                    ],
+                    [
+                        "zxo",
+                        [
+                            "~elw",
+                            "~vtg"
+                        ],
+                        0.3374
+                    ],
+                    [
+                        "~zxo",
+                        [
+                            "~elw",
+                            "~vtg"
+                        ],
+                        0.6626
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZXO",
+            "outcomes": [
+                "zxo",
+                "~zxo"
+            ],
+            "parents": [
+                "ELW",
+                "VTG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "elw",
+                        [],
+                        0.2637
+                    ],
+                    [
+                        "~elw",
+                        [],
+                        0.7363
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ELW",
+            "outcomes": [
+                "elw",
+                "~elw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ygp",
+                        [
+                            "aat"
+                        ],
+                        0.7496
+                    ],
+                    [
+                        "~ygp",
+                        [
+                            "aat"
+                        ],
+                        0.2504
+                    ],
+                    [
+                        "ygp",
+                        [
+                            "~aat"
+                        ],
+                        0.9801
+                    ],
+                    [
+                        "~ygp",
+                        [
+                            "~aat"
+                        ],
+                        0.0199
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YGP",
+            "outcomes": [
+                "ygp",
+                "~ygp"
+            ],
+            "parents": [
+                "AAT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vtg",
+                        [],
+                        0.0517
+                    ],
+                    [
+                        "~vtg",
+                        [],
+                        0.9483
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VTG",
+            "outcomes": [
+                "vtg",
+                "~vtg"
+            ],
+            "parents": []
+        }
+    ]
+}

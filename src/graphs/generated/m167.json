@@ -1,0 +1,504 @@
+{
+    "latent-model": false,
+    "name": "m167",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kae",
+                        [
+                            "fcy",
+                            "nvt"
+                        ],
+                        0.3262
+                    ],
+                    [
+                        "~kae",
+                        [
+                            "fcy",
+                            "nvt"
+                        ],
+                        0.6738
+                    ],
+                    [
+                        "kae",
+                        [
+                            "fcy",
+                            "~nvt"
+                        ],
+                        0.2036
+                    ],
+                    [
+                        "~kae",
+                        [
+                            "fcy",
+                            "~nvt"
+                        ],
+                        0.7964
+                    ],
+                    [
+                        "kae",
+                        [
+                            "~fcy",
+                            "nvt"
+                        ],
+                        0.7992
+                    ],
+                    [
+                        "~kae",
+                        [
+                            "~fcy",
+                            "nvt"
+                        ],
+                        0.2008
+                    ],
+                    [
+                        "kae",
+                        [
+                            "~fcy",
+                            "~nvt"
+                        ],
+                        0.053
+                    ],
+                    [
+                        "~kae",
+                        [
+                            "~fcy",
+                            "~nvt"
+                        ],
+                        0.947
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KAE",
+            "outcomes": [
+                "kae",
+                "~kae"
+            ],
+            "parents": [
+                "FCY",
+                "NVT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fpn",
+                        [
+                            "pek",
+                            "vxq"
+                        ],
+                        0.8165
+                    ],
+                    [
+                        "~fpn",
+                        [
+                            "pek",
+                            "vxq"
+                        ],
+                        0.1835
+                    ],
+                    [
+                        "fpn",
+                        [
+                            "pek",
+                            "~vxq"
+                        ],
+                        0.4116
+                    ],
+                    [
+                        "~fpn",
+                        [
+                            "pek",
+                            "~vxq"
+                        ],
+                        0.5884
+                    ],
+                    [
+                        "fpn",
+                        [
+                            "~pek",
+                            "vxq"
+                        ],
+                        0.3404
+                    ],
+                    [
+                        "~fpn",
+                        [
+                            "~pek",
+                            "vxq"
+                        ],
+                        0.6596
+                    ],
+                    [
+                        "fpn",
+                        [
+                            "~pek",
+                            "~vxq"
+                        ],
+                        0.097
+                    ],
+                    [
+                        "~fpn",
+                        [
+                            "~pek",
+                            "~vxq"
+                        ],
+                        0.903
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FPN",
+            "outcomes": [
+                "fpn",
+                "~fpn"
+            ],
+            "parents": [
+                "PEK",
+                "VXQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fcy",
+                        [
+                            "pek"
+                        ],
+                        0.743
+                    ],
+                    [
+                        "~fcy",
+                        [
+                            "pek"
+                        ],
+                        0.257
+                    ],
+                    [
+                        "fcy",
+                        [
+                            "~pek"
+                        ],
+                        0.4531
+                    ],
+                    [
+                        "~fcy",
+                        [
+                            "~pek"
+                        ],
+                        0.5469
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FCY",
+            "outcomes": [
+                "fcy",
+                "~fcy"
+            ],
+            "parents": [
+                "PEK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pek",
+                        [],
+                        0.4514
+                    ],
+                    [
+                        "~pek",
+                        [],
+                        0.5486
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PEK",
+            "outcomes": [
+                "pek",
+                "~pek"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nvt",
+                        [],
+                        0.7555
+                    ],
+                    [
+                        "~nvt",
+                        [],
+                        0.2445
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NVT",
+            "outcomes": [
+                "nvt",
+                "~nvt"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "shh",
+                        [
+                            "eea"
+                        ],
+                        0.7068
+                    ],
+                    [
+                        "~shh",
+                        [
+                            "eea"
+                        ],
+                        0.2932
+                    ],
+                    [
+                        "shh",
+                        [
+                            "~eea"
+                        ],
+                        0.0283
+                    ],
+                    [
+                        "~shh",
+                        [
+                            "~eea"
+                        ],
+                        0.9717
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SHH",
+            "outcomes": [
+                "shh",
+                "~shh"
+            ],
+            "parents": [
+                "EEA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eea",
+                        [
+                            "fpn",
+                            "nvt"
+                        ],
+                        0.1396
+                    ],
+                    [
+                        "~eea",
+                        [
+                            "fpn",
+                            "nvt"
+                        ],
+                        0.8604
+                    ],
+                    [
+                        "eea",
+                        [
+                            "fpn",
+                            "~nvt"
+                        ],
+                        0.8313
+                    ],
+                    [
+                        "~eea",
+                        [
+                            "fpn",
+                            "~nvt"
+                        ],
+                        0.1687
+                    ],
+                    [
+                        "eea",
+                        [
+                            "~fpn",
+                            "nvt"
+                        ],
+                        0.3011
+                    ],
+                    [
+                        "~eea",
+                        [
+                            "~fpn",
+                            "nvt"
+                        ],
+                        0.6989
+                    ],
+                    [
+                        "eea",
+                        [
+                            "~fpn",
+                            "~nvt"
+                        ],
+                        0.9161
+                    ],
+                    [
+                        "~eea",
+                        [
+                            "~fpn",
+                            "~nvt"
+                        ],
+                        0.0839
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EEA",
+            "outcomes": [
+                "eea",
+                "~eea"
+            ],
+            "parents": [
+                "FPN",
+                "NVT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ash",
+                        [
+                            "fcy",
+                            "vxq"
+                        ],
+                        0.9667
+                    ],
+                    [
+                        "~ash",
+                        [
+                            "fcy",
+                            "vxq"
+                        ],
+                        0.0333
+                    ],
+                    [
+                        "ash",
+                        [
+                            "fcy",
+                            "~vxq"
+                        ],
+                        0.9221
+                    ],
+                    [
+                        "~ash",
+                        [
+                            "fcy",
+                            "~vxq"
+                        ],
+                        0.0779
+                    ],
+                    [
+                        "ash",
+                        [
+                            "~fcy",
+                            "vxq"
+                        ],
+                        0.0774
+                    ],
+                    [
+                        "~ash",
+                        [
+                            "~fcy",
+                            "vxq"
+                        ],
+                        0.9226
+                    ],
+                    [
+                        "ash",
+                        [
+                            "~fcy",
+                            "~vxq"
+                        ],
+                        0.0572
+                    ],
+                    [
+                        "~ash",
+                        [
+                            "~fcy",
+                            "~vxq"
+                        ],
+                        0.9428
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ASH",
+            "outcomes": [
+                "ash",
+                "~ash"
+            ],
+            "parents": [
+                "FCY",
+                "VXQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zam",
+                        [],
+                        0.3219
+                    ],
+                    [
+                        "~zam",
+                        [],
+                        0.6781
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZAM",
+            "outcomes": [
+                "zam",
+                "~zam"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vxq",
+                        [],
+                        0.5162
+                    ],
+                    [
+                        "~vxq",
+                        [],
+                        0.4838
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VXQ",
+            "outcomes": [
+                "vxq",
+                "~vxq"
+            ],
+            "parents": []
+        }
+    ]
+}

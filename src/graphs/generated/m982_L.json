@@ -1,0 +1,236 @@
+{
+    "latent-model": true,
+    "name": "m982_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wlu",
+                        [],
+                        0.204
+                    ],
+                    [
+                        "~wlu",
+                        [],
+                        0.796
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WLU",
+            "outcomes": [
+                "wlu",
+                "~wlu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iom",
+                        [],
+                        0.4988
+                    ],
+                    [
+                        "~iom",
+                        [],
+                        0.5012
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IOM",
+            "outcomes": [
+                "iom",
+                "~iom"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ibx",
+                        [],
+                        0.8573
+                    ],
+                    [
+                        "~ibx",
+                        [],
+                        0.1427
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "IBX",
+            "outcomes": [
+                "ibx",
+                "~ibx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zxb",
+                        [
+                            "iom",
+                            "wlu"
+                        ],
+                        0.5564
+                    ],
+                    [
+                        "~zxb",
+                        [
+                            "iom",
+                            "wlu"
+                        ],
+                        0.4436
+                    ],
+                    [
+                        "zxb",
+                        [
+                            "iom",
+                            "~wlu"
+                        ],
+                        0.7909
+                    ],
+                    [
+                        "~zxb",
+                        [
+                            "iom",
+                            "~wlu"
+                        ],
+                        0.2091
+                    ],
+                    [
+                        "zxb",
+                        [
+                            "~iom",
+                            "wlu"
+                        ],
+                        0.9823
+                    ],
+                    [
+                        "~zxb",
+                        [
+                            "~iom",
+                            "wlu"
+                        ],
+                        0.0177
+                    ],
+                    [
+                        "zxb",
+                        [
+                            "~iom",
+                            "~wlu"
+                        ],
+                        0.8047
+                    ],
+                    [
+                        "~zxb",
+                        [
+                            "~iom",
+                            "~wlu"
+                        ],
+                        0.1953
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZXB",
+            "outcomes": [
+                "zxb",
+                "~zxb"
+            ],
+            "parents": [
+                "IOM",
+                "WLU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kgn",
+                        [
+                            "ibx",
+                            "iom"
+                        ],
+                        0.0436
+                    ],
+                    [
+                        "~kgn",
+                        [
+                            "ibx",
+                            "iom"
+                        ],
+                        0.9564
+                    ],
+                    [
+                        "kgn",
+                        [
+                            "ibx",
+                            "~iom"
+                        ],
+                        0.4647
+                    ],
+                    [
+                        "~kgn",
+                        [
+                            "ibx",
+                            "~iom"
+                        ],
+                        0.5353
+                    ],
+                    [
+                        "kgn",
+                        [
+                            "~ibx",
+                            "iom"
+                        ],
+                        0.7875
+                    ],
+                    [
+                        "~kgn",
+                        [
+                            "~ibx",
+                            "iom"
+                        ],
+                        0.2125
+                    ],
+                    [
+                        "kgn",
+                        [
+                            "~ibx",
+                            "~iom"
+                        ],
+                        0.6361
+                    ],
+                    [
+                        "~kgn",
+                        [
+                            "~ibx",
+                            "~iom"
+                        ],
+                        0.3639
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KGN",
+            "outcomes": [
+                "kgn",
+                "~kgn"
+            ],
+            "parents": [
+                "IBX",
+                "IOM"
+            ]
+        }
+    ]
+}

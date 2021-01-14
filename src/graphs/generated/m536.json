@@ -1,0 +1,218 @@
+{
+    "latent-model": false,
+    "name": "m536",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qaf",
+                        [],
+                        0.6433
+                    ],
+                    [
+                        "~qaf",
+                        [],
+                        0.3567
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QAF",
+            "outcomes": [
+                "qaf",
+                "~qaf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lbn",
+                        [],
+                        0.6507
+                    ],
+                    [
+                        "~lbn",
+                        [],
+                        0.3493
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LBN",
+            "outcomes": [
+                "lbn",
+                "~lbn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "brf",
+                        [
+                            "fry",
+                            "qaf"
+                        ],
+                        0.4811
+                    ],
+                    [
+                        "~brf",
+                        [
+                            "fry",
+                            "qaf"
+                        ],
+                        0.5189
+                    ],
+                    [
+                        "brf",
+                        [
+                            "fry",
+                            "~qaf"
+                        ],
+                        0.6877
+                    ],
+                    [
+                        "~brf",
+                        [
+                            "fry",
+                            "~qaf"
+                        ],
+                        0.3123
+                    ],
+                    [
+                        "brf",
+                        [
+                            "~fry",
+                            "qaf"
+                        ],
+                        0.7611
+                    ],
+                    [
+                        "~brf",
+                        [
+                            "~fry",
+                            "qaf"
+                        ],
+                        0.2389
+                    ],
+                    [
+                        "brf",
+                        [
+                            "~fry",
+                            "~qaf"
+                        ],
+                        0.2424
+                    ],
+                    [
+                        "~brf",
+                        [
+                            "~fry",
+                            "~qaf"
+                        ],
+                        0.7576
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BRF",
+            "outcomes": [
+                "brf",
+                "~brf"
+            ],
+            "parents": [
+                "FRY",
+                "QAF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fry",
+                        [
+                            "lbn"
+                        ],
+                        0.1584
+                    ],
+                    [
+                        "~fry",
+                        [
+                            "lbn"
+                        ],
+                        0.8416
+                    ],
+                    [
+                        "fry",
+                        [
+                            "~lbn"
+                        ],
+                        0.0486
+                    ],
+                    [
+                        "~fry",
+                        [
+                            "~lbn"
+                        ],
+                        0.9514
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FRY",
+            "outcomes": [
+                "fry",
+                "~fry"
+            ],
+            "parents": [
+                "LBN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "idv",
+                        [
+                            "lbn"
+                        ],
+                        0.2556
+                    ],
+                    [
+                        "~idv",
+                        [
+                            "lbn"
+                        ],
+                        0.7444
+                    ],
+                    [
+                        "idv",
+                        [
+                            "~lbn"
+                        ],
+                        0.3956
+                    ],
+                    [
+                        "~idv",
+                        [
+                            "~lbn"
+                        ],
+                        0.6044
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IDV",
+            "outcomes": [
+                "idv",
+                "~idv"
+            ],
+            "parents": [
+                "LBN"
+            ]
+        }
+    ]
+}

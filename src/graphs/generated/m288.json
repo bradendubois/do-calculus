@@ -1,0 +1,504 @@
+{
+    "latent-model": false,
+    "name": "m288",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jnd",
+                        [
+                            "cab"
+                        ],
+                        0.7304
+                    ],
+                    [
+                        "~jnd",
+                        [
+                            "cab"
+                        ],
+                        0.2696
+                    ],
+                    [
+                        "jnd",
+                        [
+                            "~cab"
+                        ],
+                        0.8734
+                    ],
+                    [
+                        "~jnd",
+                        [
+                            "~cab"
+                        ],
+                        0.1266
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JND",
+            "outcomes": [
+                "jnd",
+                "~jnd"
+            ],
+            "parents": [
+                "CAB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cab",
+                        [
+                            "dcr",
+                            "lnj"
+                        ],
+                        0.8353
+                    ],
+                    [
+                        "~cab",
+                        [
+                            "dcr",
+                            "lnj"
+                        ],
+                        0.1647
+                    ],
+                    [
+                        "cab",
+                        [
+                            "dcr",
+                            "~lnj"
+                        ],
+                        0.4792
+                    ],
+                    [
+                        "~cab",
+                        [
+                            "dcr",
+                            "~lnj"
+                        ],
+                        0.5208
+                    ],
+                    [
+                        "cab",
+                        [
+                            "~dcr",
+                            "lnj"
+                        ],
+                        0.1253
+                    ],
+                    [
+                        "~cab",
+                        [
+                            "~dcr",
+                            "lnj"
+                        ],
+                        0.8747
+                    ],
+                    [
+                        "cab",
+                        [
+                            "~dcr",
+                            "~lnj"
+                        ],
+                        0.7253
+                    ],
+                    [
+                        "~cab",
+                        [
+                            "~dcr",
+                            "~lnj"
+                        ],
+                        0.2747
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CAB",
+            "outcomes": [
+                "cab",
+                "~cab"
+            ],
+            "parents": [
+                "DCR",
+                "LNJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ljs",
+                        [],
+                        0.4289
+                    ],
+                    [
+                        "~ljs",
+                        [],
+                        0.5711
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LJS",
+            "outcomes": [
+                "ljs",
+                "~ljs"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ycq",
+                        [
+                            "cab",
+                            "eey"
+                        ],
+                        0.8937
+                    ],
+                    [
+                        "~ycq",
+                        [
+                            "cab",
+                            "eey"
+                        ],
+                        0.1063
+                    ],
+                    [
+                        "ycq",
+                        [
+                            "cab",
+                            "~eey"
+                        ],
+                        0.9595
+                    ],
+                    [
+                        "~ycq",
+                        [
+                            "cab",
+                            "~eey"
+                        ],
+                        0.0405
+                    ],
+                    [
+                        "ycq",
+                        [
+                            "~cab",
+                            "eey"
+                        ],
+                        0.821
+                    ],
+                    [
+                        "~ycq",
+                        [
+                            "~cab",
+                            "eey"
+                        ],
+                        0.179
+                    ],
+                    [
+                        "ycq",
+                        [
+                            "~cab",
+                            "~eey"
+                        ],
+                        0.3734
+                    ],
+                    [
+                        "~ycq",
+                        [
+                            "~cab",
+                            "~eey"
+                        ],
+                        0.6266
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YCQ",
+            "outcomes": [
+                "ycq",
+                "~ycq"
+            ],
+            "parents": [
+                "CAB",
+                "EEY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lnj",
+                        [],
+                        0.5073
+                    ],
+                    [
+                        "~lnj",
+                        [],
+                        0.4927
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LNJ",
+            "outcomes": [
+                "lnj",
+                "~lnj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lbf",
+                        [],
+                        0.6862
+                    ],
+                    [
+                        "~lbf",
+                        [],
+                        0.3138
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LBF",
+            "outcomes": [
+                "lbf",
+                "~lbf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kpw",
+                        [
+                            "ljs",
+                            "zbs"
+                        ],
+                        0.233
+                    ],
+                    [
+                        "~kpw",
+                        [
+                            "ljs",
+                            "zbs"
+                        ],
+                        0.767
+                    ],
+                    [
+                        "kpw",
+                        [
+                            "ljs",
+                            "~zbs"
+                        ],
+                        0.9213
+                    ],
+                    [
+                        "~kpw",
+                        [
+                            "ljs",
+                            "~zbs"
+                        ],
+                        0.0787
+                    ],
+                    [
+                        "kpw",
+                        [
+                            "~ljs",
+                            "zbs"
+                        ],
+                        0.059
+                    ],
+                    [
+                        "~kpw",
+                        [
+                            "~ljs",
+                            "zbs"
+                        ],
+                        0.941
+                    ],
+                    [
+                        "kpw",
+                        [
+                            "~ljs",
+                            "~zbs"
+                        ],
+                        0.3677
+                    ],
+                    [
+                        "~kpw",
+                        [
+                            "~ljs",
+                            "~zbs"
+                        ],
+                        0.6323
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KPW",
+            "outcomes": [
+                "kpw",
+                "~kpw"
+            ],
+            "parents": [
+                "LJS",
+                "ZBS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eey",
+                        [
+                            "dcr",
+                            "lnj"
+                        ],
+                        0.721
+                    ],
+                    [
+                        "~eey",
+                        [
+                            "dcr",
+                            "lnj"
+                        ],
+                        0.279
+                    ],
+                    [
+                        "eey",
+                        [
+                            "dcr",
+                            "~lnj"
+                        ],
+                        0.3497
+                    ],
+                    [
+                        "~eey",
+                        [
+                            "dcr",
+                            "~lnj"
+                        ],
+                        0.6503
+                    ],
+                    [
+                        "eey",
+                        [
+                            "~dcr",
+                            "lnj"
+                        ],
+                        0.1031
+                    ],
+                    [
+                        "~eey",
+                        [
+                            "~dcr",
+                            "lnj"
+                        ],
+                        0.8969
+                    ],
+                    [
+                        "eey",
+                        [
+                            "~dcr",
+                            "~lnj"
+                        ],
+                        0.1741
+                    ],
+                    [
+                        "~eey",
+                        [
+                            "~dcr",
+                            "~lnj"
+                        ],
+                        0.8259
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EEY",
+            "outcomes": [
+                "eey",
+                "~eey"
+            ],
+            "parents": [
+                "DCR",
+                "LNJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dcr",
+                        [],
+                        0.9662
+                    ],
+                    [
+                        "~dcr",
+                        [],
+                        0.0338
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DCR",
+            "outcomes": [
+                "dcr",
+                "~dcr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zbs",
+                        [
+                            "lbf"
+                        ],
+                        0.8544
+                    ],
+                    [
+                        "~zbs",
+                        [
+                            "lbf"
+                        ],
+                        0.1456
+                    ],
+                    [
+                        "zbs",
+                        [
+                            "~lbf"
+                        ],
+                        0.7523
+                    ],
+                    [
+                        "~zbs",
+                        [
+                            "~lbf"
+                        ],
+                        0.2477
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZBS",
+            "outcomes": [
+                "zbs",
+                "~zbs"
+            ],
+            "parents": [
+                "LBF"
+            ]
+        }
+    ]
+}

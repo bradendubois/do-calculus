@@ -1,0 +1,480 @@
+{
+    "latent-model": true,
+    "name": "m774_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pao",
+                        [
+                            "gnr"
+                        ],
+                        0.8912
+                    ],
+                    [
+                        "~pao",
+                        [
+                            "gnr"
+                        ],
+                        0.1088
+                    ],
+                    [
+                        "pao",
+                        [
+                            "~gnr"
+                        ],
+                        0.8661
+                    ],
+                    [
+                        "~pao",
+                        [
+                            "~gnr"
+                        ],
+                        0.1339
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PAO",
+            "outcomes": [
+                "pao",
+                "~pao"
+            ],
+            "parents": [
+                "GNR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mra",
+                        [
+                            "gnr"
+                        ],
+                        0.5151
+                    ],
+                    [
+                        "~mra",
+                        [
+                            "gnr"
+                        ],
+                        0.4849
+                    ],
+                    [
+                        "mra",
+                        [
+                            "~gnr"
+                        ],
+                        0.889
+                    ],
+                    [
+                        "~mra",
+                        [
+                            "~gnr"
+                        ],
+                        0.111
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MRA",
+            "outcomes": [
+                "mra",
+                "~mra"
+            ],
+            "parents": [
+                "GNR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gnr",
+                        [],
+                        0.5647
+                    ],
+                    [
+                        "~gnr",
+                        [],
+                        0.4353
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "GNR",
+            "outcomes": [
+                "gnr",
+                "~gnr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "drb",
+                        [
+                            "hen",
+                            "pao",
+                            "smv"
+                        ],
+                        0.4501
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "hen",
+                            "pao",
+                            "smv"
+                        ],
+                        0.5499
+                    ],
+                    [
+                        "drb",
+                        [
+                            "hen",
+                            "pao",
+                            "~smv"
+                        ],
+                        0.0408
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "hen",
+                            "pao",
+                            "~smv"
+                        ],
+                        0.9592
+                    ],
+                    [
+                        "drb",
+                        [
+                            "hen",
+                            "~pao",
+                            "smv"
+                        ],
+                        0.9621
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "hen",
+                            "~pao",
+                            "smv"
+                        ],
+                        0.0379
+                    ],
+                    [
+                        "drb",
+                        [
+                            "hen",
+                            "~pao",
+                            "~smv"
+                        ],
+                        0.7351
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "hen",
+                            "~pao",
+                            "~smv"
+                        ],
+                        0.2649
+                    ],
+                    [
+                        "drb",
+                        [
+                            "~hen",
+                            "pao",
+                            "smv"
+                        ],
+                        0.5962
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "~hen",
+                            "pao",
+                            "smv"
+                        ],
+                        0.4038
+                    ],
+                    [
+                        "drb",
+                        [
+                            "~hen",
+                            "pao",
+                            "~smv"
+                        ],
+                        0.6607
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "~hen",
+                            "pao",
+                            "~smv"
+                        ],
+                        0.3393
+                    ],
+                    [
+                        "drb",
+                        [
+                            "~hen",
+                            "~pao",
+                            "smv"
+                        ],
+                        0.8671
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "~hen",
+                            "~pao",
+                            "smv"
+                        ],
+                        0.1329
+                    ],
+                    [
+                        "drb",
+                        [
+                            "~hen",
+                            "~pao",
+                            "~smv"
+                        ],
+                        0.0622
+                    ],
+                    [
+                        "~drb",
+                        [
+                            "~hen",
+                            "~pao",
+                            "~smv"
+                        ],
+                        0.9378
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DRB",
+            "outcomes": [
+                "drb",
+                "~drb"
+            ],
+            "parents": [
+                "HEN",
+                "PAO",
+                "SMV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hen",
+                        [
+                            "mra",
+                            "pao"
+                        ],
+                        0.5819
+                    ],
+                    [
+                        "~hen",
+                        [
+                            "mra",
+                            "pao"
+                        ],
+                        0.4181
+                    ],
+                    [
+                        "hen",
+                        [
+                            "mra",
+                            "~pao"
+                        ],
+                        0.3554
+                    ],
+                    [
+                        "~hen",
+                        [
+                            "mra",
+                            "~pao"
+                        ],
+                        0.6446
+                    ],
+                    [
+                        "hen",
+                        [
+                            "~mra",
+                            "pao"
+                        ],
+                        0.1716
+                    ],
+                    [
+                        "~hen",
+                        [
+                            "~mra",
+                            "pao"
+                        ],
+                        0.8284
+                    ],
+                    [
+                        "hen",
+                        [
+                            "~mra",
+                            "~pao"
+                        ],
+                        0.8289
+                    ],
+                    [
+                        "~hen",
+                        [
+                            "~mra",
+                            "~pao"
+                        ],
+                        0.1711
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HEN",
+            "outcomes": [
+                "hen",
+                "~hen"
+            ],
+            "parents": [
+                "MRA",
+                "PAO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "smv",
+                        [
+                            "gnr",
+                            "hen"
+                        ],
+                        0.0214
+                    ],
+                    [
+                        "~smv",
+                        [
+                            "gnr",
+                            "hen"
+                        ],
+                        0.9786
+                    ],
+                    [
+                        "smv",
+                        [
+                            "gnr",
+                            "~hen"
+                        ],
+                        0.6715
+                    ],
+                    [
+                        "~smv",
+                        [
+                            "gnr",
+                            "~hen"
+                        ],
+                        0.3285
+                    ],
+                    [
+                        "smv",
+                        [
+                            "~gnr",
+                            "hen"
+                        ],
+                        0.997
+                    ],
+                    [
+                        "~smv",
+                        [
+                            "~gnr",
+                            "hen"
+                        ],
+                        0.003
+                    ],
+                    [
+                        "smv",
+                        [
+                            "~gnr",
+                            "~hen"
+                        ],
+                        0.7341
+                    ],
+                    [
+                        "~smv",
+                        [
+                            "~gnr",
+                            "~hen"
+                        ],
+                        0.2659
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SMV",
+            "outcomes": [
+                "smv",
+                "~smv"
+            ],
+            "parents": [
+                "GNR",
+                "HEN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tex",
+                        [
+                            "mra"
+                        ],
+                        0.1032
+                    ],
+                    [
+                        "~tex",
+                        [
+                            "mra"
+                        ],
+                        0.8968
+                    ],
+                    [
+                        "tex",
+                        [
+                            "~mra"
+                        ],
+                        0.1717
+                    ],
+                    [
+                        "~tex",
+                        [
+                            "~mra"
+                        ],
+                        0.8283
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TEX",
+            "outcomes": [
+                "tex",
+                "~tex"
+            ],
+            "parents": [
+                "MRA"
+            ]
+        }
+    ]
+}

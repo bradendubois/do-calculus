@@ -1,0 +1,617 @@
+{
+    "latent-model": true,
+    "name": "m840_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hqn",
+                        [
+                            "fxu",
+                            "kky",
+                            "zzz"
+                        ],
+                        0.2192
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "fxu",
+                            "kky",
+                            "zzz"
+                        ],
+                        0.7808
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "fxu",
+                            "kky",
+                            "~zzz"
+                        ],
+                        0.5541
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "fxu",
+                            "kky",
+                            "~zzz"
+                        ],
+                        0.4459
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "fxu",
+                            "~kky",
+                            "zzz"
+                        ],
+                        0.0398
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "fxu",
+                            "~kky",
+                            "zzz"
+                        ],
+                        0.9602
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "fxu",
+                            "~kky",
+                            "~zzz"
+                        ],
+                        0.3593
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "fxu",
+                            "~kky",
+                            "~zzz"
+                        ],
+                        0.6407
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "~fxu",
+                            "kky",
+                            "zzz"
+                        ],
+                        0.9288
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "~fxu",
+                            "kky",
+                            "zzz"
+                        ],
+                        0.0712
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "~fxu",
+                            "kky",
+                            "~zzz"
+                        ],
+                        0.5053
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "~fxu",
+                            "kky",
+                            "~zzz"
+                        ],
+                        0.4947
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "~fxu",
+                            "~kky",
+                            "zzz"
+                        ],
+                        0.9609
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "~fxu",
+                            "~kky",
+                            "zzz"
+                        ],
+                        0.0391
+                    ],
+                    [
+                        "hqn",
+                        [
+                            "~fxu",
+                            "~kky",
+                            "~zzz"
+                        ],
+                        0.3486
+                    ],
+                    [
+                        "~hqn",
+                        [
+                            "~fxu",
+                            "~kky",
+                            "~zzz"
+                        ],
+                        0.6514
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HQN",
+            "outcomes": [
+                "hqn",
+                "~hqn"
+            ],
+            "parents": [
+                "FXU",
+                "KKY",
+                "ZZZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vwd",
+                        [],
+                        0.7195
+                    ],
+                    [
+                        "~vwd",
+                        [],
+                        0.2805
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VWD",
+            "outcomes": [
+                "vwd",
+                "~vwd"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tch",
+                        [
+                            "bce",
+                            "mck"
+                        ],
+                        0.123
+                    ],
+                    [
+                        "~tch",
+                        [
+                            "bce",
+                            "mck"
+                        ],
+                        0.877
+                    ],
+                    [
+                        "tch",
+                        [
+                            "bce",
+                            "~mck"
+                        ],
+                        0.6939
+                    ],
+                    [
+                        "~tch",
+                        [
+                            "bce",
+                            "~mck"
+                        ],
+                        0.3061
+                    ],
+                    [
+                        "tch",
+                        [
+                            "~bce",
+                            "mck"
+                        ],
+                        0.1026
+                    ],
+                    [
+                        "~tch",
+                        [
+                            "~bce",
+                            "mck"
+                        ],
+                        0.8974
+                    ],
+                    [
+                        "tch",
+                        [
+                            "~bce",
+                            "~mck"
+                        ],
+                        0.9023
+                    ],
+                    [
+                        "~tch",
+                        [
+                            "~bce",
+                            "~mck"
+                        ],
+                        0.0977
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TCH",
+            "outcomes": [
+                "tch",
+                "~tch"
+            ],
+            "parents": [
+                "BCE",
+                "MCK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bce",
+                        [],
+                        0.4482
+                    ],
+                    [
+                        "~bce",
+                        [],
+                        0.5518
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "BCE",
+            "outcomes": [
+                "bce",
+                "~bce"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pwk",
+                        [],
+                        0.5688
+                    ],
+                    [
+                        "~pwk",
+                        [],
+                        0.4312
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "PWK",
+            "outcomes": [
+                "pwk",
+                "~pwk"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jij",
+                        [],
+                        0.6845
+                    ],
+                    [
+                        "~jij",
+                        [],
+                        0.3155
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JIJ",
+            "outcomes": [
+                "jij",
+                "~jij"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fxu",
+                        [
+                            "pwk",
+                            "vwd"
+                        ],
+                        0.4048
+                    ],
+                    [
+                        "~fxu",
+                        [
+                            "pwk",
+                            "vwd"
+                        ],
+                        0.5952
+                    ],
+                    [
+                        "fxu",
+                        [
+                            "pwk",
+                            "~vwd"
+                        ],
+                        0.1515
+                    ],
+                    [
+                        "~fxu",
+                        [
+                            "pwk",
+                            "~vwd"
+                        ],
+                        0.8485
+                    ],
+                    [
+                        "fxu",
+                        [
+                            "~pwk",
+                            "vwd"
+                        ],
+                        0.6072
+                    ],
+                    [
+                        "~fxu",
+                        [
+                            "~pwk",
+                            "vwd"
+                        ],
+                        0.3928
+                    ],
+                    [
+                        "fxu",
+                        [
+                            "~pwk",
+                            "~vwd"
+                        ],
+                        0.5325
+                    ],
+                    [
+                        "~fxu",
+                        [
+                            "~pwk",
+                            "~vwd"
+                        ],
+                        0.4675
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FXU",
+            "outcomes": [
+                "fxu",
+                "~fxu"
+            ],
+            "parents": [
+                "PWK",
+                "VWD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mck",
+                        [
+                            "vwd"
+                        ],
+                        0.0953
+                    ],
+                    [
+                        "~mck",
+                        [
+                            "vwd"
+                        ],
+                        0.9047
+                    ],
+                    [
+                        "mck",
+                        [
+                            "~vwd"
+                        ],
+                        0.4775
+                    ],
+                    [
+                        "~mck",
+                        [
+                            "~vwd"
+                        ],
+                        0.5225
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MCK",
+            "outcomes": [
+                "mck",
+                "~mck"
+            ],
+            "parents": [
+                "VWD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zzz",
+                        [],
+                        0.247
+                    ],
+                    [
+                        "~zzz",
+                        [],
+                        0.753
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ZZZ",
+            "outcomes": [
+                "zzz",
+                "~zzz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uml",
+                        [
+                            "jij"
+                        ],
+                        0.2237
+                    ],
+                    [
+                        "~uml",
+                        [
+                            "jij"
+                        ],
+                        0.7763
+                    ],
+                    [
+                        "uml",
+                        [
+                            "~jij"
+                        ],
+                        0.2528
+                    ],
+                    [
+                        "~uml",
+                        [
+                            "~jij"
+                        ],
+                        0.7472
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UML",
+            "outcomes": [
+                "uml",
+                "~uml"
+            ],
+            "parents": [
+                "JIJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xcu",
+                        [
+                            "zzz"
+                        ],
+                        0.3279
+                    ],
+                    [
+                        "~xcu",
+                        [
+                            "zzz"
+                        ],
+                        0.6721
+                    ],
+                    [
+                        "xcu",
+                        [
+                            "~zzz"
+                        ],
+                        0.1719
+                    ],
+                    [
+                        "~xcu",
+                        [
+                            "~zzz"
+                        ],
+                        0.8281
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XCU",
+            "outcomes": [
+                "xcu",
+                "~xcu"
+            ],
+            "parents": [
+                "ZZZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kky",
+                        [
+                            "bce"
+                        ],
+                        0.8409
+                    ],
+                    [
+                        "~kky",
+                        [
+                            "bce"
+                        ],
+                        0.1591
+                    ],
+                    [
+                        "kky",
+                        [
+                            "~bce"
+                        ],
+                        0.1321
+                    ],
+                    [
+                        "~kky",
+                        [
+                            "~bce"
+                        ],
+                        0.8679
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KKY",
+            "outcomes": [
+                "kky",
+                "~kky"
+            ],
+            "parents": [
+                "BCE"
+            ]
+        }
+    ]
+}

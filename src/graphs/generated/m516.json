@@ -1,0 +1,422 @@
+{
+    "latent-model": false,
+    "name": "m516",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qqh",
+                        [],
+                        0.6571
+                    ],
+                    [
+                        "~qqh",
+                        [],
+                        0.3429
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QQH",
+            "outcomes": [
+                "qqh",
+                "~qqh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zwu",
+                        [
+                            "qqh"
+                        ],
+                        0.5098
+                    ],
+                    [
+                        "~zwu",
+                        [
+                            "qqh"
+                        ],
+                        0.4902
+                    ],
+                    [
+                        "zwu",
+                        [
+                            "~qqh"
+                        ],
+                        0.095
+                    ],
+                    [
+                        "~zwu",
+                        [
+                            "~qqh"
+                        ],
+                        0.905
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZWU",
+            "outcomes": [
+                "zwu",
+                "~zwu"
+            ],
+            "parents": [
+                "QQH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ssg",
+                        [
+                            "zwu"
+                        ],
+                        0.8237
+                    ],
+                    [
+                        "~ssg",
+                        [
+                            "zwu"
+                        ],
+                        0.1763
+                    ],
+                    [
+                        "ssg",
+                        [
+                            "~zwu"
+                        ],
+                        0.3645
+                    ],
+                    [
+                        "~ssg",
+                        [
+                            "~zwu"
+                        ],
+                        0.6355
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SSG",
+            "outcomes": [
+                "ssg",
+                "~ssg"
+            ],
+            "parents": [
+                "ZWU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "unj",
+                        [
+                            "hhm",
+                            "qiz",
+                            "qqh"
+                        ],
+                        0.3164
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "hhm",
+                            "qiz",
+                            "qqh"
+                        ],
+                        0.6836
+                    ],
+                    [
+                        "unj",
+                        [
+                            "hhm",
+                            "qiz",
+                            "~qqh"
+                        ],
+                        0.2612
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "hhm",
+                            "qiz",
+                            "~qqh"
+                        ],
+                        0.7388
+                    ],
+                    [
+                        "unj",
+                        [
+                            "hhm",
+                            "~qiz",
+                            "qqh"
+                        ],
+                        0.5755
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "hhm",
+                            "~qiz",
+                            "qqh"
+                        ],
+                        0.4245
+                    ],
+                    [
+                        "unj",
+                        [
+                            "hhm",
+                            "~qiz",
+                            "~qqh"
+                        ],
+                        0.9666
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "hhm",
+                            "~qiz",
+                            "~qqh"
+                        ],
+                        0.0334
+                    ],
+                    [
+                        "unj",
+                        [
+                            "~hhm",
+                            "qiz",
+                            "qqh"
+                        ],
+                        0.8787
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "~hhm",
+                            "qiz",
+                            "qqh"
+                        ],
+                        0.1213
+                    ],
+                    [
+                        "unj",
+                        [
+                            "~hhm",
+                            "qiz",
+                            "~qqh"
+                        ],
+                        0.2757
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "~hhm",
+                            "qiz",
+                            "~qqh"
+                        ],
+                        0.7243
+                    ],
+                    [
+                        "unj",
+                        [
+                            "~hhm",
+                            "~qiz",
+                            "qqh"
+                        ],
+                        0.3171
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "~hhm",
+                            "~qiz",
+                            "qqh"
+                        ],
+                        0.6829
+                    ],
+                    [
+                        "unj",
+                        [
+                            "~hhm",
+                            "~qiz",
+                            "~qqh"
+                        ],
+                        0.3295
+                    ],
+                    [
+                        "~unj",
+                        [
+                            "~hhm",
+                            "~qiz",
+                            "~qqh"
+                        ],
+                        0.6705
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UNJ",
+            "outcomes": [
+                "unj",
+                "~unj"
+            ],
+            "parents": [
+                "HHM",
+                "QIZ",
+                "QQH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zfr",
+                        [
+                            "hhm",
+                            "qiz"
+                        ],
+                        0.8297
+                    ],
+                    [
+                        "~zfr",
+                        [
+                            "hhm",
+                            "qiz"
+                        ],
+                        0.1703
+                    ],
+                    [
+                        "zfr",
+                        [
+                            "hhm",
+                            "~qiz"
+                        ],
+                        0.4435
+                    ],
+                    [
+                        "~zfr",
+                        [
+                            "hhm",
+                            "~qiz"
+                        ],
+                        0.5565
+                    ],
+                    [
+                        "zfr",
+                        [
+                            "~hhm",
+                            "qiz"
+                        ],
+                        0.1272
+                    ],
+                    [
+                        "~zfr",
+                        [
+                            "~hhm",
+                            "qiz"
+                        ],
+                        0.8728
+                    ],
+                    [
+                        "zfr",
+                        [
+                            "~hhm",
+                            "~qiz"
+                        ],
+                        0.6675
+                    ],
+                    [
+                        "~zfr",
+                        [
+                            "~hhm",
+                            "~qiz"
+                        ],
+                        0.3325
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZFR",
+            "outcomes": [
+                "zfr",
+                "~zfr"
+            ],
+            "parents": [
+                "HHM",
+                "QIZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hhm",
+                        [
+                            "qqh"
+                        ],
+                        0.4841
+                    ],
+                    [
+                        "~hhm",
+                        [
+                            "qqh"
+                        ],
+                        0.5159
+                    ],
+                    [
+                        "hhm",
+                        [
+                            "~qqh"
+                        ],
+                        0.7394
+                    ],
+                    [
+                        "~hhm",
+                        [
+                            "~qqh"
+                        ],
+                        0.2606
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HHM",
+            "outcomes": [
+                "hhm",
+                "~hhm"
+            ],
+            "parents": [
+                "QQH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qiz",
+                        [],
+                        0.7165
+                    ],
+                    [
+                        "~qiz",
+                        [],
+                        0.2835
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QIZ",
+            "outcomes": [
+                "qiz",
+                "~qiz"
+            ],
+            "parents": []
+        }
+    ]
+}

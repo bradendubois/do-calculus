@@ -1,0 +1,660 @@
+{
+    "latent-model": true,
+    "name": "m256_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eww",
+                        [
+                            "cwa",
+                            "muw"
+                        ],
+                        0.1489
+                    ],
+                    [
+                        "~eww",
+                        [
+                            "cwa",
+                            "muw"
+                        ],
+                        0.8511
+                    ],
+                    [
+                        "eww",
+                        [
+                            "cwa",
+                            "~muw"
+                        ],
+                        0.3033
+                    ],
+                    [
+                        "~eww",
+                        [
+                            "cwa",
+                            "~muw"
+                        ],
+                        0.6967
+                    ],
+                    [
+                        "eww",
+                        [
+                            "~cwa",
+                            "muw"
+                        ],
+                        0.041
+                    ],
+                    [
+                        "~eww",
+                        [
+                            "~cwa",
+                            "muw"
+                        ],
+                        0.959
+                    ],
+                    [
+                        "eww",
+                        [
+                            "~cwa",
+                            "~muw"
+                        ],
+                        0.6709
+                    ],
+                    [
+                        "~eww",
+                        [
+                            "~cwa",
+                            "~muw"
+                        ],
+                        0.3291
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EWW",
+            "outcomes": [
+                "eww",
+                "~eww"
+            ],
+            "parents": [
+                "CWA",
+                "MUW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nix",
+                        [
+                            "xtq"
+                        ],
+                        0.4279
+                    ],
+                    [
+                        "~nix",
+                        [
+                            "xtq"
+                        ],
+                        0.5721
+                    ],
+                    [
+                        "nix",
+                        [
+                            "~xtq"
+                        ],
+                        0.1615
+                    ],
+                    [
+                        "~nix",
+                        [
+                            "~xtq"
+                        ],
+                        0.8385
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NIX",
+            "outcomes": [
+                "nix",
+                "~nix"
+            ],
+            "parents": [
+                "XTQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cwa",
+                        [
+                            "qfc"
+                        ],
+                        0.7786
+                    ],
+                    [
+                        "~cwa",
+                        [
+                            "qfc"
+                        ],
+                        0.2214
+                    ],
+                    [
+                        "cwa",
+                        [
+                            "~qfc"
+                        ],
+                        0.8267
+                    ],
+                    [
+                        "~cwa",
+                        [
+                            "~qfc"
+                        ],
+                        0.1733
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CWA",
+            "outcomes": [
+                "cwa",
+                "~cwa"
+            ],
+            "parents": [
+                "QFC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tva",
+                        [
+                            "nix",
+                            "sau"
+                        ],
+                        0.5308
+                    ],
+                    [
+                        "~tva",
+                        [
+                            "nix",
+                            "sau"
+                        ],
+                        0.4692
+                    ],
+                    [
+                        "tva",
+                        [
+                            "nix",
+                            "~sau"
+                        ],
+                        0.5117
+                    ],
+                    [
+                        "~tva",
+                        [
+                            "nix",
+                            "~sau"
+                        ],
+                        0.4883
+                    ],
+                    [
+                        "tva",
+                        [
+                            "~nix",
+                            "sau"
+                        ],
+                        0.4502
+                    ],
+                    [
+                        "~tva",
+                        [
+                            "~nix",
+                            "sau"
+                        ],
+                        0.5498
+                    ],
+                    [
+                        "tva",
+                        [
+                            "~nix",
+                            "~sau"
+                        ],
+                        0.5091
+                    ],
+                    [
+                        "~tva",
+                        [
+                            "~nix",
+                            "~sau"
+                        ],
+                        0.4909
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TVA",
+            "outcomes": [
+                "tva",
+                "~tva"
+            ],
+            "parents": [
+                "NIX",
+                "SAU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sau",
+                        [],
+                        0.5151
+                    ],
+                    [
+                        "~sau",
+                        [],
+                        0.4849
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "SAU",
+            "outcomes": [
+                "sau",
+                "~sau"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "emu",
+                        [
+                            "xhv",
+                            "xtq"
+                        ],
+                        0.9245
+                    ],
+                    [
+                        "~emu",
+                        [
+                            "xhv",
+                            "xtq"
+                        ],
+                        0.0755
+                    ],
+                    [
+                        "emu",
+                        [
+                            "xhv",
+                            "~xtq"
+                        ],
+                        0.646
+                    ],
+                    [
+                        "~emu",
+                        [
+                            "xhv",
+                            "~xtq"
+                        ],
+                        0.354
+                    ],
+                    [
+                        "emu",
+                        [
+                            "~xhv",
+                            "xtq"
+                        ],
+                        0.4824
+                    ],
+                    [
+                        "~emu",
+                        [
+                            "~xhv",
+                            "xtq"
+                        ],
+                        0.5176
+                    ],
+                    [
+                        "emu",
+                        [
+                            "~xhv",
+                            "~xtq"
+                        ],
+                        0.6949
+                    ],
+                    [
+                        "~emu",
+                        [
+                            "~xhv",
+                            "~xtq"
+                        ],
+                        0.3051
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EMU",
+            "outcomes": [
+                "emu",
+                "~emu"
+            ],
+            "parents": [
+                "XHV",
+                "XTQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "muw",
+                        [],
+                        0.6692
+                    ],
+                    [
+                        "~muw",
+                        [],
+                        0.3308
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "MUW",
+            "outcomes": [
+                "muw",
+                "~muw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nhv",
+                        [
+                            "qmi"
+                        ],
+                        0.8206
+                    ],
+                    [
+                        "~nhv",
+                        [
+                            "qmi"
+                        ],
+                        0.1794
+                    ],
+                    [
+                        "nhv",
+                        [
+                            "~qmi"
+                        ],
+                        0.3854
+                    ],
+                    [
+                        "~nhv",
+                        [
+                            "~qmi"
+                        ],
+                        0.6146
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NHV",
+            "outcomes": [
+                "nhv",
+                "~nhv"
+            ],
+            "parents": [
+                "QMI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qfc",
+                        [],
+                        0.085
+                    ],
+                    [
+                        "~qfc",
+                        [],
+                        0.915
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "QFC",
+            "outcomes": [
+                "qfc",
+                "~qfc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aej",
+                        [
+                            "eww"
+                        ],
+                        0.5906
+                    ],
+                    [
+                        "~aej",
+                        [
+                            "eww"
+                        ],
+                        0.4094
+                    ],
+                    [
+                        "aej",
+                        [
+                            "~eww"
+                        ],
+                        0.2796
+                    ],
+                    [
+                        "~aej",
+                        [
+                            "~eww"
+                        ],
+                        0.7204
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AEJ",
+            "outcomes": [
+                "aej",
+                "~aej"
+            ],
+            "parents": [
+                "EWW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fib",
+                        [
+                            "qmi",
+                            "tva"
+                        ],
+                        0.6658
+                    ],
+                    [
+                        "~fib",
+                        [
+                            "qmi",
+                            "tva"
+                        ],
+                        0.3342
+                    ],
+                    [
+                        "fib",
+                        [
+                            "qmi",
+                            "~tva"
+                        ],
+                        0.3474
+                    ],
+                    [
+                        "~fib",
+                        [
+                            "qmi",
+                            "~tva"
+                        ],
+                        0.6526
+                    ],
+                    [
+                        "fib",
+                        [
+                            "~qmi",
+                            "tva"
+                        ],
+                        0.2178
+                    ],
+                    [
+                        "~fib",
+                        [
+                            "~qmi",
+                            "tva"
+                        ],
+                        0.7822
+                    ],
+                    [
+                        "fib",
+                        [
+                            "~qmi",
+                            "~tva"
+                        ],
+                        0.7342
+                    ],
+                    [
+                        "~fib",
+                        [
+                            "~qmi",
+                            "~tva"
+                        ],
+                        0.2658
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FIB",
+            "outcomes": [
+                "fib",
+                "~fib"
+            ],
+            "parents": [
+                "QMI",
+                "TVA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xhv",
+                        [],
+                        0.3603
+                    ],
+                    [
+                        "~xhv",
+                        [],
+                        0.6397
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "XHV",
+            "outcomes": [
+                "xhv",
+                "~xhv"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qmi",
+                        [],
+                        0.2796
+                    ],
+                    [
+                        "~qmi",
+                        [],
+                        0.7204
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QMI",
+            "outcomes": [
+                "qmi",
+                "~qmi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xtq",
+                        [
+                            "sau"
+                        ],
+                        0.3549
+                    ],
+                    [
+                        "~xtq",
+                        [
+                            "sau"
+                        ],
+                        0.6451
+                    ],
+                    [
+                        "xtq",
+                        [
+                            "~sau"
+                        ],
+                        0.7018
+                    ],
+                    [
+                        "~xtq",
+                        [
+                            "~sau"
+                        ],
+                        0.2982
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XTQ",
+            "outcomes": [
+                "xtq",
+                "~xtq"
+            ],
+            "parents": [
+                "SAU"
+            ]
+        }
+    ]
+}

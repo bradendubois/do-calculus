@@ -1,0 +1,716 @@
+{
+    "latent-model": true,
+    "name": "m322_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dvp",
+                        [
+                            "vol"
+                        ],
+                        0.9047
+                    ],
+                    [
+                        "~dvp",
+                        [
+                            "vol"
+                        ],
+                        0.0953
+                    ],
+                    [
+                        "dvp",
+                        [
+                            "~vol"
+                        ],
+                        0.9445
+                    ],
+                    [
+                        "~dvp",
+                        [
+                            "~vol"
+                        ],
+                        0.0555
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DVP",
+            "outcomes": [
+                "dvp",
+                "~dvp"
+            ],
+            "parents": [
+                "VOL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "foz",
+                        [
+                            "iaj",
+                            "ixd",
+                            "yky"
+                        ],
+                        0.2298
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "iaj",
+                            "ixd",
+                            "yky"
+                        ],
+                        0.7702
+                    ],
+                    [
+                        "foz",
+                        [
+                            "iaj",
+                            "ixd",
+                            "~yky"
+                        ],
+                        0.4134
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "iaj",
+                            "ixd",
+                            "~yky"
+                        ],
+                        0.5866
+                    ],
+                    [
+                        "foz",
+                        [
+                            "iaj",
+                            "~ixd",
+                            "yky"
+                        ],
+                        0.2349
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "iaj",
+                            "~ixd",
+                            "yky"
+                        ],
+                        0.7651
+                    ],
+                    [
+                        "foz",
+                        [
+                            "iaj",
+                            "~ixd",
+                            "~yky"
+                        ],
+                        0.6136
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "iaj",
+                            "~ixd",
+                            "~yky"
+                        ],
+                        0.3864
+                    ],
+                    [
+                        "foz",
+                        [
+                            "~iaj",
+                            "ixd",
+                            "yky"
+                        ],
+                        0.3116
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "~iaj",
+                            "ixd",
+                            "yky"
+                        ],
+                        0.6884
+                    ],
+                    [
+                        "foz",
+                        [
+                            "~iaj",
+                            "ixd",
+                            "~yky"
+                        ],
+                        0.0155
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "~iaj",
+                            "ixd",
+                            "~yky"
+                        ],
+                        0.9845
+                    ],
+                    [
+                        "foz",
+                        [
+                            "~iaj",
+                            "~ixd",
+                            "yky"
+                        ],
+                        0.6155
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "~iaj",
+                            "~ixd",
+                            "yky"
+                        ],
+                        0.3845
+                    ],
+                    [
+                        "foz",
+                        [
+                            "~iaj",
+                            "~ixd",
+                            "~yky"
+                        ],
+                        0.3779
+                    ],
+                    [
+                        "~foz",
+                        [
+                            "~iaj",
+                            "~ixd",
+                            "~yky"
+                        ],
+                        0.6221
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FOZ",
+            "outcomes": [
+                "foz",
+                "~foz"
+            ],
+            "parents": [
+                "IAJ",
+                "IXD",
+                "YKY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ved",
+                        [],
+                        0.4745
+                    ],
+                    [
+                        "~ved",
+                        [],
+                        0.5255
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VED",
+            "outcomes": [
+                "ved",
+                "~ved"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mec",
+                        [
+                            "ved"
+                        ],
+                        0.3499
+                    ],
+                    [
+                        "~mec",
+                        [
+                            "ved"
+                        ],
+                        0.6501
+                    ],
+                    [
+                        "mec",
+                        [
+                            "~ved"
+                        ],
+                        0.5916
+                    ],
+                    [
+                        "~mec",
+                        [
+                            "~ved"
+                        ],
+                        0.4084
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MEC",
+            "outcomes": [
+                "mec",
+                "~mec"
+            ],
+            "parents": [
+                "VED"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ufy",
+                        [
+                            "foz",
+                            "iaj",
+                            "ved"
+                        ],
+                        0.6594
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "foz",
+                            "iaj",
+                            "ved"
+                        ],
+                        0.3406
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "foz",
+                            "iaj",
+                            "~ved"
+                        ],
+                        0.0404
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "foz",
+                            "iaj",
+                            "~ved"
+                        ],
+                        0.9596
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "foz",
+                            "~iaj",
+                            "ved"
+                        ],
+                        0.8097
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "foz",
+                            "~iaj",
+                            "ved"
+                        ],
+                        0.1903
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "foz",
+                            "~iaj",
+                            "~ved"
+                        ],
+                        0.08
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "foz",
+                            "~iaj",
+                            "~ved"
+                        ],
+                        0.92
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "~foz",
+                            "iaj",
+                            "ved"
+                        ],
+                        0.9255
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "~foz",
+                            "iaj",
+                            "ved"
+                        ],
+                        0.0745
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "~foz",
+                            "iaj",
+                            "~ved"
+                        ],
+                        0.4295
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "~foz",
+                            "iaj",
+                            "~ved"
+                        ],
+                        0.5705
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "~foz",
+                            "~iaj",
+                            "ved"
+                        ],
+                        0.8717
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "~foz",
+                            "~iaj",
+                            "ved"
+                        ],
+                        0.1283
+                    ],
+                    [
+                        "ufy",
+                        [
+                            "~foz",
+                            "~iaj",
+                            "~ved"
+                        ],
+                        0.5401
+                    ],
+                    [
+                        "~ufy",
+                        [
+                            "~foz",
+                            "~iaj",
+                            "~ved"
+                        ],
+                        0.4599
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UFY",
+            "outcomes": [
+                "ufy",
+                "~ufy"
+            ],
+            "parents": [
+                "FOZ",
+                "IAJ",
+                "VED"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yky",
+                        [],
+                        0.5995
+                    ],
+                    [
+                        "~yky",
+                        [],
+                        0.4005
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YKY",
+            "outcomes": [
+                "yky",
+                "~yky"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vol",
+                        [],
+                        0.5577
+                    ],
+                    [
+                        "~vol",
+                        [],
+                        0.4423
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "VOL",
+            "outcomes": [
+                "vol",
+                "~vol"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vff",
+                        [
+                            "mec",
+                            "obx",
+                            "yky"
+                        ],
+                        0.9262
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "mec",
+                            "obx",
+                            "yky"
+                        ],
+                        0.0738
+                    ],
+                    [
+                        "vff",
+                        [
+                            "mec",
+                            "obx",
+                            "~yky"
+                        ],
+                        0.274
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "mec",
+                            "obx",
+                            "~yky"
+                        ],
+                        0.726
+                    ],
+                    [
+                        "vff",
+                        [
+                            "mec",
+                            "~obx",
+                            "yky"
+                        ],
+                        0.3034
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "mec",
+                            "~obx",
+                            "yky"
+                        ],
+                        0.6966
+                    ],
+                    [
+                        "vff",
+                        [
+                            "mec",
+                            "~obx",
+                            "~yky"
+                        ],
+                        0.1223
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "mec",
+                            "~obx",
+                            "~yky"
+                        ],
+                        0.8777
+                    ],
+                    [
+                        "vff",
+                        [
+                            "~mec",
+                            "obx",
+                            "yky"
+                        ],
+                        0.578
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "~mec",
+                            "obx",
+                            "yky"
+                        ],
+                        0.422
+                    ],
+                    [
+                        "vff",
+                        [
+                            "~mec",
+                            "obx",
+                            "~yky"
+                        ],
+                        0.3885
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "~mec",
+                            "obx",
+                            "~yky"
+                        ],
+                        0.6115
+                    ],
+                    [
+                        "vff",
+                        [
+                            "~mec",
+                            "~obx",
+                            "yky"
+                        ],
+                        0.5836
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "~mec",
+                            "~obx",
+                            "yky"
+                        ],
+                        0.4164
+                    ],
+                    [
+                        "vff",
+                        [
+                            "~mec",
+                            "~obx",
+                            "~yky"
+                        ],
+                        0.2243
+                    ],
+                    [
+                        "~vff",
+                        [
+                            "~mec",
+                            "~obx",
+                            "~yky"
+                        ],
+                        0.7757
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VFF",
+            "outcomes": [
+                "vff",
+                "~vff"
+            ],
+            "parents": [
+                "MEC",
+                "OBX",
+                "YKY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iaj",
+                        [],
+                        0.6129
+                    ],
+                    [
+                        "~iaj",
+                        [],
+                        0.3871
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "IAJ",
+            "outcomes": [
+                "iaj",
+                "~iaj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "obx",
+                        [],
+                        0.7435
+                    ],
+                    [
+                        "~obx",
+                        [],
+                        0.2565
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "OBX",
+            "outcomes": [
+                "obx",
+                "~obx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ixd",
+                        [],
+                        0.1395
+                    ],
+                    [
+                        "~ixd",
+                        [],
+                        0.8605
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IXD",
+            "outcomes": [
+                "ixd",
+                "~ixd"
+            ],
+            "parents": []
+        }
+    ]
+}

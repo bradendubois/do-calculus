@@ -1,0 +1,462 @@
+{
+    "latent-model": false,
+    "name": "m712",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mej",
+                        [],
+                        0.6776
+                    ],
+                    [
+                        "~mej",
+                        [],
+                        0.3224
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MEJ",
+            "outcomes": [
+                "mej",
+                "~mej"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ilc",
+                        [
+                            "agi",
+                            "pej"
+                        ],
+                        0.7515
+                    ],
+                    [
+                        "~ilc",
+                        [
+                            "agi",
+                            "pej"
+                        ],
+                        0.2485
+                    ],
+                    [
+                        "ilc",
+                        [
+                            "agi",
+                            "~pej"
+                        ],
+                        0.5654
+                    ],
+                    [
+                        "~ilc",
+                        [
+                            "agi",
+                            "~pej"
+                        ],
+                        0.4346
+                    ],
+                    [
+                        "ilc",
+                        [
+                            "~agi",
+                            "pej"
+                        ],
+                        0.2062
+                    ],
+                    [
+                        "~ilc",
+                        [
+                            "~agi",
+                            "pej"
+                        ],
+                        0.7938
+                    ],
+                    [
+                        "ilc",
+                        [
+                            "~agi",
+                            "~pej"
+                        ],
+                        0.987
+                    ],
+                    [
+                        "~ilc",
+                        [
+                            "~agi",
+                            "~pej"
+                        ],
+                        0.013
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ILC",
+            "outcomes": [
+                "ilc",
+                "~ilc"
+            ],
+            "parents": [
+                "AGI",
+                "PEJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pej",
+                        [
+                            "agi",
+                            "mej"
+                        ],
+                        0.7965
+                    ],
+                    [
+                        "~pej",
+                        [
+                            "agi",
+                            "mej"
+                        ],
+                        0.2035
+                    ],
+                    [
+                        "pej",
+                        [
+                            "agi",
+                            "~mej"
+                        ],
+                        0.1411
+                    ],
+                    [
+                        "~pej",
+                        [
+                            "agi",
+                            "~mej"
+                        ],
+                        0.8589
+                    ],
+                    [
+                        "pej",
+                        [
+                            "~agi",
+                            "mej"
+                        ],
+                        0.0793
+                    ],
+                    [
+                        "~pej",
+                        [
+                            "~agi",
+                            "mej"
+                        ],
+                        0.9207
+                    ],
+                    [
+                        "pej",
+                        [
+                            "~agi",
+                            "~mej"
+                        ],
+                        0.6502
+                    ],
+                    [
+                        "~pej",
+                        [
+                            "~agi",
+                            "~mej"
+                        ],
+                        0.3498
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PEJ",
+            "outcomes": [
+                "pej",
+                "~pej"
+            ],
+            "parents": [
+                "AGI",
+                "MEJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rkl",
+                        [],
+                        0.9336
+                    ],
+                    [
+                        "~rkl",
+                        [],
+                        0.0664
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RKL",
+            "outcomes": [
+                "rkl",
+                "~rkl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bxu",
+                        [],
+                        0.1869
+                    ],
+                    [
+                        "~bxu",
+                        [],
+                        0.8131
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BXU",
+            "outcomes": [
+                "bxu",
+                "~bxu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oyg",
+                        [],
+                        0.3404
+                    ],
+                    [
+                        "~oyg",
+                        [],
+                        0.6596
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OYG",
+            "outcomes": [
+                "oyg",
+                "~oyg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "twx",
+                        [
+                            "rkl"
+                        ],
+                        0.7153
+                    ],
+                    [
+                        "~twx",
+                        [
+                            "rkl"
+                        ],
+                        0.2847
+                    ],
+                    [
+                        "twx",
+                        [
+                            "~rkl"
+                        ],
+                        0.9087
+                    ],
+                    [
+                        "~twx",
+                        [
+                            "~rkl"
+                        ],
+                        0.0913
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TWX",
+            "outcomes": [
+                "twx",
+                "~twx"
+            ],
+            "parents": [
+                "RKL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "agi",
+                        [
+                            "bxu",
+                            "mej",
+                            "rkl"
+                        ],
+                        0.8276
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "bxu",
+                            "mej",
+                            "rkl"
+                        ],
+                        0.1724
+                    ],
+                    [
+                        "agi",
+                        [
+                            "bxu",
+                            "mej",
+                            "~rkl"
+                        ],
+                        0.1968
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "bxu",
+                            "mej",
+                            "~rkl"
+                        ],
+                        0.8032
+                    ],
+                    [
+                        "agi",
+                        [
+                            "bxu",
+                            "~mej",
+                            "rkl"
+                        ],
+                        0.2384
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "bxu",
+                            "~mej",
+                            "rkl"
+                        ],
+                        0.7616
+                    ],
+                    [
+                        "agi",
+                        [
+                            "bxu",
+                            "~mej",
+                            "~rkl"
+                        ],
+                        0.3221
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "bxu",
+                            "~mej",
+                            "~rkl"
+                        ],
+                        0.6779
+                    ],
+                    [
+                        "agi",
+                        [
+                            "~bxu",
+                            "mej",
+                            "rkl"
+                        ],
+                        0.2546
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "~bxu",
+                            "mej",
+                            "rkl"
+                        ],
+                        0.7454
+                    ],
+                    [
+                        "agi",
+                        [
+                            "~bxu",
+                            "mej",
+                            "~rkl"
+                        ],
+                        0.4451
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "~bxu",
+                            "mej",
+                            "~rkl"
+                        ],
+                        0.5549
+                    ],
+                    [
+                        "agi",
+                        [
+                            "~bxu",
+                            "~mej",
+                            "rkl"
+                        ],
+                        0.8884
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "~bxu",
+                            "~mej",
+                            "rkl"
+                        ],
+                        0.1116
+                    ],
+                    [
+                        "agi",
+                        [
+                            "~bxu",
+                            "~mej",
+                            "~rkl"
+                        ],
+                        0.3592
+                    ],
+                    [
+                        "~agi",
+                        [
+                            "~bxu",
+                            "~mej",
+                            "~rkl"
+                        ],
+                        0.6408
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AGI",
+            "outcomes": [
+                "agi",
+                "~agi"
+            ],
+            "parents": [
+                "BXU",
+                "MEJ",
+                "RKL"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,594 @@
+{
+    "latent-model": false,
+    "name": "m115",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zww",
+                        [
+                            "qhc",
+                            "vsi"
+                        ],
+                        0.5028
+                    ],
+                    [
+                        "~zww",
+                        [
+                            "qhc",
+                            "vsi"
+                        ],
+                        0.4972
+                    ],
+                    [
+                        "zww",
+                        [
+                            "qhc",
+                            "~vsi"
+                        ],
+                        0.9464
+                    ],
+                    [
+                        "~zww",
+                        [
+                            "qhc",
+                            "~vsi"
+                        ],
+                        0.0536
+                    ],
+                    [
+                        "zww",
+                        [
+                            "~qhc",
+                            "vsi"
+                        ],
+                        0.8818
+                    ],
+                    [
+                        "~zww",
+                        [
+                            "~qhc",
+                            "vsi"
+                        ],
+                        0.1182
+                    ],
+                    [
+                        "zww",
+                        [
+                            "~qhc",
+                            "~vsi"
+                        ],
+                        0.8459
+                    ],
+                    [
+                        "~zww",
+                        [
+                            "~qhc",
+                            "~vsi"
+                        ],
+                        0.1541
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZWW",
+            "outcomes": [
+                "zww",
+                "~zww"
+            ],
+            "parents": [
+                "QHC",
+                "VSI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jhv",
+                        [
+                            "elk",
+                            "jlp"
+                        ],
+                        0.7064
+                    ],
+                    [
+                        "~jhv",
+                        [
+                            "elk",
+                            "jlp"
+                        ],
+                        0.2936
+                    ],
+                    [
+                        "jhv",
+                        [
+                            "elk",
+                            "~jlp"
+                        ],
+                        0.8679
+                    ],
+                    [
+                        "~jhv",
+                        [
+                            "elk",
+                            "~jlp"
+                        ],
+                        0.1321
+                    ],
+                    [
+                        "jhv",
+                        [
+                            "~elk",
+                            "jlp"
+                        ],
+                        0.3274
+                    ],
+                    [
+                        "~jhv",
+                        [
+                            "~elk",
+                            "jlp"
+                        ],
+                        0.6726
+                    ],
+                    [
+                        "jhv",
+                        [
+                            "~elk",
+                            "~jlp"
+                        ],
+                        0.9287
+                    ],
+                    [
+                        "~jhv",
+                        [
+                            "~elk",
+                            "~jlp"
+                        ],
+                        0.0713
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JHV",
+            "outcomes": [
+                "jhv",
+                "~jhv"
+            ],
+            "parents": [
+                "ELK",
+                "JLP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "arb",
+                        [
+                            "mif"
+                        ],
+                        0.083
+                    ],
+                    [
+                        "~arb",
+                        [
+                            "mif"
+                        ],
+                        0.917
+                    ],
+                    [
+                        "arb",
+                        [
+                            "~mif"
+                        ],
+                        0.6164
+                    ],
+                    [
+                        "~arb",
+                        [
+                            "~mif"
+                        ],
+                        0.3836
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ARB",
+            "outcomes": [
+                "arb",
+                "~arb"
+            ],
+            "parents": [
+                "MIF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qhc",
+                        [],
+                        0.6883
+                    ],
+                    [
+                        "~qhc",
+                        [],
+                        0.3117
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QHC",
+            "outcomes": [
+                "qhc",
+                "~qhc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vsi",
+                        [],
+                        0.273
+                    ],
+                    [
+                        "~vsi",
+                        [],
+                        0.727
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VSI",
+            "outcomes": [
+                "vsi",
+                "~vsi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jlp",
+                        [],
+                        0.9481
+                    ],
+                    [
+                        "~jlp",
+                        [],
+                        0.0519
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JLP",
+            "outcomes": [
+                "jlp",
+                "~jlp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sgh",
+                        [],
+                        0.5167
+                    ],
+                    [
+                        "~sgh",
+                        [],
+                        0.4833
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SGH",
+            "outcomes": [
+                "sgh",
+                "~sgh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "elk",
+                        [],
+                        0.647
+                    ],
+                    [
+                        "~elk",
+                        [],
+                        0.353
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ELK",
+            "outcomes": [
+                "elk",
+                "~elk"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ewa",
+                        [
+                            "vsi"
+                        ],
+                        0.3206
+                    ],
+                    [
+                        "~ewa",
+                        [
+                            "vsi"
+                        ],
+                        0.6794
+                    ],
+                    [
+                        "ewa",
+                        [
+                            "~vsi"
+                        ],
+                        0.3443
+                    ],
+                    [
+                        "~ewa",
+                        [
+                            "~vsi"
+                        ],
+                        0.6557
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EWA",
+            "outcomes": [
+                "ewa",
+                "~ewa"
+            ],
+            "parents": [
+                "VSI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "huy",
+                        [
+                            "nef",
+                            "qhc",
+                            "zww"
+                        ],
+                        0.2543
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "nef",
+                            "qhc",
+                            "zww"
+                        ],
+                        0.7457
+                    ],
+                    [
+                        "huy",
+                        [
+                            "nef",
+                            "qhc",
+                            "~zww"
+                        ],
+                        0.3756
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "nef",
+                            "qhc",
+                            "~zww"
+                        ],
+                        0.6244
+                    ],
+                    [
+                        "huy",
+                        [
+                            "nef",
+                            "~qhc",
+                            "zww"
+                        ],
+                        0.3104
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "nef",
+                            "~qhc",
+                            "zww"
+                        ],
+                        0.6896
+                    ],
+                    [
+                        "huy",
+                        [
+                            "nef",
+                            "~qhc",
+                            "~zww"
+                        ],
+                        0.8508
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "nef",
+                            "~qhc",
+                            "~zww"
+                        ],
+                        0.1492
+                    ],
+                    [
+                        "huy",
+                        [
+                            "~nef",
+                            "qhc",
+                            "zww"
+                        ],
+                        0.0469
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "~nef",
+                            "qhc",
+                            "zww"
+                        ],
+                        0.9531
+                    ],
+                    [
+                        "huy",
+                        [
+                            "~nef",
+                            "qhc",
+                            "~zww"
+                        ],
+                        0.8899
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "~nef",
+                            "qhc",
+                            "~zww"
+                        ],
+                        0.1101
+                    ],
+                    [
+                        "huy",
+                        [
+                            "~nef",
+                            "~qhc",
+                            "zww"
+                        ],
+                        0.8032
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "~nef",
+                            "~qhc",
+                            "zww"
+                        ],
+                        0.1968
+                    ],
+                    [
+                        "huy",
+                        [
+                            "~nef",
+                            "~qhc",
+                            "~zww"
+                        ],
+                        0.9238
+                    ],
+                    [
+                        "~huy",
+                        [
+                            "~nef",
+                            "~qhc",
+                            "~zww"
+                        ],
+                        0.0762
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HUY",
+            "outcomes": [
+                "huy",
+                "~huy"
+            ],
+            "parents": [
+                "NEF",
+                "QHC",
+                "ZWW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nef",
+                        [],
+                        0.6803
+                    ],
+                    [
+                        "~nef",
+                        [],
+                        0.3197
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NEF",
+            "outcomes": [
+                "nef",
+                "~nef"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mif",
+                        [
+                            "ewa"
+                        ],
+                        0.6732
+                    ],
+                    [
+                        "~mif",
+                        [
+                            "ewa"
+                        ],
+                        0.3268
+                    ],
+                    [
+                        "mif",
+                        [
+                            "~ewa"
+                        ],
+                        0.7709
+                    ],
+                    [
+                        "~mif",
+                        [
+                            "~ewa"
+                        ],
+                        0.2291
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MIF",
+            "outcomes": [
+                "mif",
+                "~mif"
+            ],
+            "parents": [
+                "EWA"
+            ]
+        }
+    ]
+}

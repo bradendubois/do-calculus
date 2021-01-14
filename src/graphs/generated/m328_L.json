@@ -1,0 +1,316 @@
+{
+    "latent-model": true,
+    "name": "m328_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rzj",
+                        [],
+                        0.5397
+                    ],
+                    [
+                        "~rzj",
+                        [],
+                        0.4603
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "RZJ",
+            "outcomes": [
+                "rzj",
+                "~rzj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "miv",
+                        [
+                            "fsd",
+                            "nca"
+                        ],
+                        0.192
+                    ],
+                    [
+                        "~miv",
+                        [
+                            "fsd",
+                            "nca"
+                        ],
+                        0.808
+                    ],
+                    [
+                        "miv",
+                        [
+                            "fsd",
+                            "~nca"
+                        ],
+                        0.5995
+                    ],
+                    [
+                        "~miv",
+                        [
+                            "fsd",
+                            "~nca"
+                        ],
+                        0.4005
+                    ],
+                    [
+                        "miv",
+                        [
+                            "~fsd",
+                            "nca"
+                        ],
+                        0.152
+                    ],
+                    [
+                        "~miv",
+                        [
+                            "~fsd",
+                            "nca"
+                        ],
+                        0.848
+                    ],
+                    [
+                        "miv",
+                        [
+                            "~fsd",
+                            "~nca"
+                        ],
+                        0.7
+                    ],
+                    [
+                        "~miv",
+                        [
+                            "~fsd",
+                            "~nca"
+                        ],
+                        0.3
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MIV",
+            "outcomes": [
+                "miv",
+                "~miv"
+            ],
+            "parents": [
+                "FSD",
+                "NCA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jrw",
+                        [
+                            "gyd",
+                            "rzj"
+                        ],
+                        0.6574
+                    ],
+                    [
+                        "~jrw",
+                        [
+                            "gyd",
+                            "rzj"
+                        ],
+                        0.3426
+                    ],
+                    [
+                        "jrw",
+                        [
+                            "gyd",
+                            "~rzj"
+                        ],
+                        0.919
+                    ],
+                    [
+                        "~jrw",
+                        [
+                            "gyd",
+                            "~rzj"
+                        ],
+                        0.081
+                    ],
+                    [
+                        "jrw",
+                        [
+                            "~gyd",
+                            "rzj"
+                        ],
+                        0.7407
+                    ],
+                    [
+                        "~jrw",
+                        [
+                            "~gyd",
+                            "rzj"
+                        ],
+                        0.2593
+                    ],
+                    [
+                        "jrw",
+                        [
+                            "~gyd",
+                            "~rzj"
+                        ],
+                        0.7632
+                    ],
+                    [
+                        "~jrw",
+                        [
+                            "~gyd",
+                            "~rzj"
+                        ],
+                        0.2368
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JRW",
+            "outcomes": [
+                "jrw",
+                "~jrw"
+            ],
+            "parents": [
+                "GYD",
+                "RZJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gyd",
+                        [],
+                        0.0182
+                    ],
+                    [
+                        "~gyd",
+                        [],
+                        0.9818
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GYD",
+            "outcomes": [
+                "gyd",
+                "~gyd"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nca",
+                        [
+                            "fsd",
+                            "gyd"
+                        ],
+                        0.8084
+                    ],
+                    [
+                        "~nca",
+                        [
+                            "fsd",
+                            "gyd"
+                        ],
+                        0.1916
+                    ],
+                    [
+                        "nca",
+                        [
+                            "fsd",
+                            "~gyd"
+                        ],
+                        0.0685
+                    ],
+                    [
+                        "~nca",
+                        [
+                            "fsd",
+                            "~gyd"
+                        ],
+                        0.9315
+                    ],
+                    [
+                        "nca",
+                        [
+                            "~fsd",
+                            "gyd"
+                        ],
+                        0.1241
+                    ],
+                    [
+                        "~nca",
+                        [
+                            "~fsd",
+                            "gyd"
+                        ],
+                        0.8759
+                    ],
+                    [
+                        "nca",
+                        [
+                            "~fsd",
+                            "~gyd"
+                        ],
+                        0.1963
+                    ],
+                    [
+                        "~nca",
+                        [
+                            "~fsd",
+                            "~gyd"
+                        ],
+                        0.8037
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NCA",
+            "outcomes": [
+                "nca",
+                "~nca"
+            ],
+            "parents": [
+                "FSD",
+                "GYD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fsd",
+                        [],
+                        0.2831
+                    ],
+                    [
+                        "~fsd",
+                        [],
+                        0.7169
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FSD",
+            "outcomes": [
+                "fsd",
+                "~fsd"
+            ],
+            "parents": []
+        }
+    ]
+}

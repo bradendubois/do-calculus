@@ -1,0 +1,363 @@
+{
+    "latent-model": true,
+    "name": "m674_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "auk",
+                        [
+                            "kls"
+                        ],
+                        0.5135
+                    ],
+                    [
+                        "~auk",
+                        [
+                            "kls"
+                        ],
+                        0.4865
+                    ],
+                    [
+                        "auk",
+                        [
+                            "~kls"
+                        ],
+                        0.5954
+                    ],
+                    [
+                        "~auk",
+                        [
+                            "~kls"
+                        ],
+                        0.4046
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AUK",
+            "outcomes": [
+                "auk",
+                "~auk"
+            ],
+            "parents": [
+                "KLS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kls",
+                        [
+                            "zvh"
+                        ],
+                        0.8202
+                    ],
+                    [
+                        "~kls",
+                        [
+                            "zvh"
+                        ],
+                        0.1798
+                    ],
+                    [
+                        "kls",
+                        [
+                            "~zvh"
+                        ],
+                        0.8537
+                    ],
+                    [
+                        "~kls",
+                        [
+                            "~zvh"
+                        ],
+                        0.1463
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KLS",
+            "outcomes": [
+                "kls",
+                "~kls"
+            ],
+            "parents": [
+                "ZVH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bfy",
+                        [
+                            "zvh"
+                        ],
+                        0.2475
+                    ],
+                    [
+                        "~bfy",
+                        [
+                            "zvh"
+                        ],
+                        0.7525
+                    ],
+                    [
+                        "bfy",
+                        [
+                            "~zvh"
+                        ],
+                        0.6246
+                    ],
+                    [
+                        "~bfy",
+                        [
+                            "~zvh"
+                        ],
+                        0.3754
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BFY",
+            "outcomes": [
+                "bfy",
+                "~bfy"
+            ],
+            "parents": [
+                "ZVH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "osi",
+                        [
+                            "auk",
+                            "bfy",
+                            "zvh"
+                        ],
+                        0.5175
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "auk",
+                            "bfy",
+                            "zvh"
+                        ],
+                        0.4825
+                    ],
+                    [
+                        "osi",
+                        [
+                            "auk",
+                            "bfy",
+                            "~zvh"
+                        ],
+                        0.4571
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "auk",
+                            "bfy",
+                            "~zvh"
+                        ],
+                        0.5429
+                    ],
+                    [
+                        "osi",
+                        [
+                            "auk",
+                            "~bfy",
+                            "zvh"
+                        ],
+                        0.8085
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "auk",
+                            "~bfy",
+                            "zvh"
+                        ],
+                        0.1915
+                    ],
+                    [
+                        "osi",
+                        [
+                            "auk",
+                            "~bfy",
+                            "~zvh"
+                        ],
+                        0.3639
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "auk",
+                            "~bfy",
+                            "~zvh"
+                        ],
+                        0.6361
+                    ],
+                    [
+                        "osi",
+                        [
+                            "~auk",
+                            "bfy",
+                            "zvh"
+                        ],
+                        0.3634
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "~auk",
+                            "bfy",
+                            "zvh"
+                        ],
+                        0.6366
+                    ],
+                    [
+                        "osi",
+                        [
+                            "~auk",
+                            "bfy",
+                            "~zvh"
+                        ],
+                        0.1646
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "~auk",
+                            "bfy",
+                            "~zvh"
+                        ],
+                        0.8354
+                    ],
+                    [
+                        "osi",
+                        [
+                            "~auk",
+                            "~bfy",
+                            "zvh"
+                        ],
+                        0.798
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "~auk",
+                            "~bfy",
+                            "zvh"
+                        ],
+                        0.202
+                    ],
+                    [
+                        "osi",
+                        [
+                            "~auk",
+                            "~bfy",
+                            "~zvh"
+                        ],
+                        0.9186
+                    ],
+                    [
+                        "~osi",
+                        [
+                            "~auk",
+                            "~bfy",
+                            "~zvh"
+                        ],
+                        0.0814
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OSI",
+            "outcomes": [
+                "osi",
+                "~osi"
+            ],
+            "parents": [
+                "AUK",
+                "BFY",
+                "ZVH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zvh",
+                        [],
+                        0.3883
+                    ],
+                    [
+                        "~zvh",
+                        [],
+                        0.6117
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ZVH",
+            "outcomes": [
+                "zvh",
+                "~zvh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gpl",
+                        [
+                            "kls"
+                        ],
+                        0.6398
+                    ],
+                    [
+                        "~gpl",
+                        [
+                            "kls"
+                        ],
+                        0.3602
+                    ],
+                    [
+                        "gpl",
+                        [
+                            "~kls"
+                        ],
+                        0.8314
+                    ],
+                    [
+                        "~gpl",
+                        [
+                            "~kls"
+                        ],
+                        0.1686
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GPL",
+            "outcomes": [
+                "gpl",
+                "~gpl"
+            ],
+            "parents": [
+                "KLS"
+            ]
+        }
+    ]
+}

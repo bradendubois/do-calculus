@@ -1,0 +1,533 @@
+{
+    "latent-model": false,
+    "name": "m314",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wko",
+                        [
+                            "avl"
+                        ],
+                        0.6234
+                    ],
+                    [
+                        "~wko",
+                        [
+                            "avl"
+                        ],
+                        0.3766
+                    ],
+                    [
+                        "wko",
+                        [
+                            "~avl"
+                        ],
+                        0.5329
+                    ],
+                    [
+                        "~wko",
+                        [
+                            "~avl"
+                        ],
+                        0.4671
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WKO",
+            "outcomes": [
+                "wko",
+                "~wko"
+            ],
+            "parents": [
+                "AVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cte",
+                        [
+                            "dbp",
+                            "muy"
+                        ],
+                        0.309
+                    ],
+                    [
+                        "~cte",
+                        [
+                            "dbp",
+                            "muy"
+                        ],
+                        0.691
+                    ],
+                    [
+                        "cte",
+                        [
+                            "dbp",
+                            "~muy"
+                        ],
+                        0.5312
+                    ],
+                    [
+                        "~cte",
+                        [
+                            "dbp",
+                            "~muy"
+                        ],
+                        0.4688
+                    ],
+                    [
+                        "cte",
+                        [
+                            "~dbp",
+                            "muy"
+                        ],
+                        0.3456
+                    ],
+                    [
+                        "~cte",
+                        [
+                            "~dbp",
+                            "muy"
+                        ],
+                        0.6544
+                    ],
+                    [
+                        "cte",
+                        [
+                            "~dbp",
+                            "~muy"
+                        ],
+                        0.419
+                    ],
+                    [
+                        "~cte",
+                        [
+                            "~dbp",
+                            "~muy"
+                        ],
+                        0.581
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CTE",
+            "outcomes": [
+                "cte",
+                "~cte"
+            ],
+            "parents": [
+                "DBP",
+                "MUY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dyg",
+                        [
+                            "ckv",
+                            "gfz"
+                        ],
+                        0.9912
+                    ],
+                    [
+                        "~dyg",
+                        [
+                            "ckv",
+                            "gfz"
+                        ],
+                        0.0088
+                    ],
+                    [
+                        "dyg",
+                        [
+                            "ckv",
+                            "~gfz"
+                        ],
+                        0.8393
+                    ],
+                    [
+                        "~dyg",
+                        [
+                            "ckv",
+                            "~gfz"
+                        ],
+                        0.1607
+                    ],
+                    [
+                        "dyg",
+                        [
+                            "~ckv",
+                            "gfz"
+                        ],
+                        0.9588
+                    ],
+                    [
+                        "~dyg",
+                        [
+                            "~ckv",
+                            "gfz"
+                        ],
+                        0.0412
+                    ],
+                    [
+                        "dyg",
+                        [
+                            "~ckv",
+                            "~gfz"
+                        ],
+                        0.2731
+                    ],
+                    [
+                        "~dyg",
+                        [
+                            "~ckv",
+                            "~gfz"
+                        ],
+                        0.7269
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DYG",
+            "outcomes": [
+                "dyg",
+                "~dyg"
+            ],
+            "parents": [
+                "CKV",
+                "GFZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "muy",
+                        [
+                            "yny"
+                        ],
+                        0.3232
+                    ],
+                    [
+                        "~muy",
+                        [
+                            "yny"
+                        ],
+                        0.6768
+                    ],
+                    [
+                        "muy",
+                        [
+                            "~yny"
+                        ],
+                        0.3398
+                    ],
+                    [
+                        "~muy",
+                        [
+                            "~yny"
+                        ],
+                        0.6602
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MUY",
+            "outcomes": [
+                "muy",
+                "~muy"
+            ],
+            "parents": [
+                "YNY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yny",
+                        [
+                            "ini"
+                        ],
+                        0.9264
+                    ],
+                    [
+                        "~yny",
+                        [
+                            "ini"
+                        ],
+                        0.0736
+                    ],
+                    [
+                        "yny",
+                        [
+                            "~ini"
+                        ],
+                        0.1472
+                    ],
+                    [
+                        "~yny",
+                        [
+                            "~ini"
+                        ],
+                        0.8528
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YNY",
+            "outcomes": [
+                "yny",
+                "~yny"
+            ],
+            "parents": [
+                "INI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dbp",
+                        [],
+                        0.7343
+                    ],
+                    [
+                        "~dbp",
+                        [],
+                        0.2657
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DBP",
+            "outcomes": [
+                "dbp",
+                "~dbp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "esh",
+                        [],
+                        0.7056
+                    ],
+                    [
+                        "~esh",
+                        [],
+                        0.2944
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ESH",
+            "outcomes": [
+                "esh",
+                "~esh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ini",
+                        [],
+                        0.899
+                    ],
+                    [
+                        "~ini",
+                        [],
+                        0.101
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "INI",
+            "outcomes": [
+                "ini",
+                "~ini"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gfz",
+                        [
+                            "ckv",
+                            "ini"
+                        ],
+                        0.1336
+                    ],
+                    [
+                        "~gfz",
+                        [
+                            "ckv",
+                            "ini"
+                        ],
+                        0.8664
+                    ],
+                    [
+                        "gfz",
+                        [
+                            "ckv",
+                            "~ini"
+                        ],
+                        0.2178
+                    ],
+                    [
+                        "~gfz",
+                        [
+                            "ckv",
+                            "~ini"
+                        ],
+                        0.7822
+                    ],
+                    [
+                        "gfz",
+                        [
+                            "~ckv",
+                            "ini"
+                        ],
+                        0.9972
+                    ],
+                    [
+                        "~gfz",
+                        [
+                            "~ckv",
+                            "ini"
+                        ],
+                        0.0028
+                    ],
+                    [
+                        "gfz",
+                        [
+                            "~ckv",
+                            "~ini"
+                        ],
+                        0.8447
+                    ],
+                    [
+                        "~gfz",
+                        [
+                            "~ckv",
+                            "~ini"
+                        ],
+                        0.1553
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GFZ",
+            "outcomes": [
+                "gfz",
+                "~gfz"
+            ],
+            "parents": [
+                "CKV",
+                "INI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nla",
+                        [
+                            "avl"
+                        ],
+                        0.7902
+                    ],
+                    [
+                        "~nla",
+                        [
+                            "avl"
+                        ],
+                        0.2098
+                    ],
+                    [
+                        "nla",
+                        [
+                            "~avl"
+                        ],
+                        0.6044
+                    ],
+                    [
+                        "~nla",
+                        [
+                            "~avl"
+                        ],
+                        0.3956
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NLA",
+            "outcomes": [
+                "nla",
+                "~nla"
+            ],
+            "parents": [
+                "AVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "avl",
+                        [],
+                        0.934
+                    ],
+                    [
+                        "~avl",
+                        [],
+                        0.066
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AVL",
+            "outcomes": [
+                "avl",
+                "~avl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ckv",
+                        [],
+                        0.3092
+                    ],
+                    [
+                        "~ckv",
+                        [],
+                        0.6908
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CKV",
+            "outcomes": [
+                "ckv",
+                "~ckv"
+            ],
+            "parents": []
+        }
+    ]
+}

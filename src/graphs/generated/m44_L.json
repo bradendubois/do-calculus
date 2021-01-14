@@ -1,0 +1,239 @@
+{
+    "latent-model": true,
+    "name": "m44_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pbq",
+                        [
+                            "vna"
+                        ],
+                        0.6866
+                    ],
+                    [
+                        "~pbq",
+                        [
+                            "vna"
+                        ],
+                        0.3134
+                    ],
+                    [
+                        "pbq",
+                        [
+                            "~vna"
+                        ],
+                        0.9375
+                    ],
+                    [
+                        "~pbq",
+                        [
+                            "~vna"
+                        ],
+                        0.0625
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PBQ",
+            "outcomes": [
+                "pbq",
+                "~pbq"
+            ],
+            "parents": [
+                "VNA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bgj",
+                        [],
+                        0.8627
+                    ],
+                    [
+                        "~bgj",
+                        [],
+                        0.1373
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "BGJ",
+            "outcomes": [
+                "bgj",
+                "~bgj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dvj",
+                        [
+                            "bgj",
+                            "kfx"
+                        ],
+                        0.1839
+                    ],
+                    [
+                        "~dvj",
+                        [
+                            "bgj",
+                            "kfx"
+                        ],
+                        0.8161
+                    ],
+                    [
+                        "dvj",
+                        [
+                            "bgj",
+                            "~kfx"
+                        ],
+                        0.2303
+                    ],
+                    [
+                        "~dvj",
+                        [
+                            "bgj",
+                            "~kfx"
+                        ],
+                        0.7697
+                    ],
+                    [
+                        "dvj",
+                        [
+                            "~bgj",
+                            "kfx"
+                        ],
+                        0.9635
+                    ],
+                    [
+                        "~dvj",
+                        [
+                            "~bgj",
+                            "kfx"
+                        ],
+                        0.0365
+                    ],
+                    [
+                        "dvj",
+                        [
+                            "~bgj",
+                            "~kfx"
+                        ],
+                        0.6758
+                    ],
+                    [
+                        "~dvj",
+                        [
+                            "~bgj",
+                            "~kfx"
+                        ],
+                        0.3242
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DVJ",
+            "outcomes": [
+                "dvj",
+                "~dvj"
+            ],
+            "parents": [
+                "BGJ",
+                "KFX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kfx",
+                        [
+                            "bgj"
+                        ],
+                        0.2272
+                    ],
+                    [
+                        "~kfx",
+                        [
+                            "bgj"
+                        ],
+                        0.7728
+                    ],
+                    [
+                        "kfx",
+                        [
+                            "~bgj"
+                        ],
+                        0.1437
+                    ],
+                    [
+                        "~kfx",
+                        [
+                            "~bgj"
+                        ],
+                        0.8563
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KFX",
+            "outcomes": [
+                "kfx",
+                "~kfx"
+            ],
+            "parents": [
+                "BGJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vna",
+                        [
+                            "bgj"
+                        ],
+                        0.0729
+                    ],
+                    [
+                        "~vna",
+                        [
+                            "bgj"
+                        ],
+                        0.9271
+                    ],
+                    [
+                        "vna",
+                        [
+                            "~bgj"
+                        ],
+                        0.2178
+                    ],
+                    [
+                        "~vna",
+                        [
+                            "~bgj"
+                        ],
+                        0.7822
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VNA",
+            "outcomes": [
+                "vna",
+                "~vna"
+            ],
+            "parents": [
+                "BGJ"
+            ]
+        }
+    ]
+}

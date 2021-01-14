@@ -1,0 +1,367 @@
+{
+    "latent-model": false,
+    "name": "m847",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qmd",
+                        [
+                            "eye"
+                        ],
+                        0.4356
+                    ],
+                    [
+                        "~qmd",
+                        [
+                            "eye"
+                        ],
+                        0.5644
+                    ],
+                    [
+                        "qmd",
+                        [
+                            "~eye"
+                        ],
+                        0.5544
+                    ],
+                    [
+                        "~qmd",
+                        [
+                            "~eye"
+                        ],
+                        0.4456
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QMD",
+            "outcomes": [
+                "qmd",
+                "~qmd"
+            ],
+            "parents": [
+                "EYE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nxl",
+                        [
+                            "cxe"
+                        ],
+                        0.9957
+                    ],
+                    [
+                        "~nxl",
+                        [
+                            "cxe"
+                        ],
+                        0.0043
+                    ],
+                    [
+                        "nxl",
+                        [
+                            "~cxe"
+                        ],
+                        0.7893
+                    ],
+                    [
+                        "~nxl",
+                        [
+                            "~cxe"
+                        ],
+                        0.2107
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NXL",
+            "outcomes": [
+                "nxl",
+                "~nxl"
+            ],
+            "parents": [
+                "CXE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eye",
+                        [
+                            "cxe"
+                        ],
+                        0.4618
+                    ],
+                    [
+                        "~eye",
+                        [
+                            "cxe"
+                        ],
+                        0.5382
+                    ],
+                    [
+                        "eye",
+                        [
+                            "~cxe"
+                        ],
+                        0.573
+                    ],
+                    [
+                        "~eye",
+                        [
+                            "~cxe"
+                        ],
+                        0.427
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EYE",
+            "outcomes": [
+                "eye",
+                "~eye"
+            ],
+            "parents": [
+                "CXE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bmo",
+                        [
+                            "eye"
+                        ],
+                        0.172
+                    ],
+                    [
+                        "~bmo",
+                        [
+                            "eye"
+                        ],
+                        0.828
+                    ],
+                    [
+                        "bmo",
+                        [
+                            "~eye"
+                        ],
+                        0.808
+                    ],
+                    [
+                        "~bmo",
+                        [
+                            "~eye"
+                        ],
+                        0.192
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BMO",
+            "outcomes": [
+                "bmo",
+                "~bmo"
+            ],
+            "parents": [
+                "EYE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iqf",
+                        [
+                            "nxl"
+                        ],
+                        0.5127
+                    ],
+                    [
+                        "~iqf",
+                        [
+                            "nxl"
+                        ],
+                        0.4873
+                    ],
+                    [
+                        "iqf",
+                        [
+                            "~nxl"
+                        ],
+                        0.7152
+                    ],
+                    [
+                        "~iqf",
+                        [
+                            "~nxl"
+                        ],
+                        0.2848
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IQF",
+            "outcomes": [
+                "iqf",
+                "~iqf"
+            ],
+            "parents": [
+                "NXL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "opz",
+                        [
+                            "qmd"
+                        ],
+                        0.3254
+                    ],
+                    [
+                        "~opz",
+                        [
+                            "qmd"
+                        ],
+                        0.6746
+                    ],
+                    [
+                        "opz",
+                        [
+                            "~qmd"
+                        ],
+                        0.1893
+                    ],
+                    [
+                        "~opz",
+                        [
+                            "~qmd"
+                        ],
+                        0.8107
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OPZ",
+            "outcomes": [
+                "opz",
+                "~opz"
+            ],
+            "parents": [
+                "QMD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "teq",
+                        [
+                            "eye",
+                            "iqf"
+                        ],
+                        0.62
+                    ],
+                    [
+                        "~teq",
+                        [
+                            "eye",
+                            "iqf"
+                        ],
+                        0.38
+                    ],
+                    [
+                        "teq",
+                        [
+                            "eye",
+                            "~iqf"
+                        ],
+                        0.2727
+                    ],
+                    [
+                        "~teq",
+                        [
+                            "eye",
+                            "~iqf"
+                        ],
+                        0.7273
+                    ],
+                    [
+                        "teq",
+                        [
+                            "~eye",
+                            "iqf"
+                        ],
+                        0.4147
+                    ],
+                    [
+                        "~teq",
+                        [
+                            "~eye",
+                            "iqf"
+                        ],
+                        0.5853
+                    ],
+                    [
+                        "teq",
+                        [
+                            "~eye",
+                            "~iqf"
+                        ],
+                        0.2169
+                    ],
+                    [
+                        "~teq",
+                        [
+                            "~eye",
+                            "~iqf"
+                        ],
+                        0.7831
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TEQ",
+            "outcomes": [
+                "teq",
+                "~teq"
+            ],
+            "parents": [
+                "EYE",
+                "IQF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cxe",
+                        [],
+                        0.3685
+                    ],
+                    [
+                        "~cxe",
+                        [],
+                        0.6315
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CXE",
+            "outcomes": [
+                "cxe",
+                "~cxe"
+            ],
+            "parents": []
+        }
+    ]
+}

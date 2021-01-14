@@ -1,0 +1,536 @@
+{
+    "latent-model": true,
+    "name": "m6_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ryl",
+                        [],
+                        0.5761
+                    ],
+                    [
+                        "~ryl",
+                        [],
+                        0.4239
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RYL",
+            "outcomes": [
+                "ryl",
+                "~ryl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gfo",
+                        [
+                            "tdh"
+                        ],
+                        0.6741
+                    ],
+                    [
+                        "~gfo",
+                        [
+                            "tdh"
+                        ],
+                        0.3259
+                    ],
+                    [
+                        "gfo",
+                        [
+                            "~tdh"
+                        ],
+                        0.5513
+                    ],
+                    [
+                        "~gfo",
+                        [
+                            "~tdh"
+                        ],
+                        0.4487
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GFO",
+            "outcomes": [
+                "gfo",
+                "~gfo"
+            ],
+            "parents": [
+                "TDH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ufx",
+                        [
+                            "qob",
+                            "zfa"
+                        ],
+                        0.6812
+                    ],
+                    [
+                        "~ufx",
+                        [
+                            "qob",
+                            "zfa"
+                        ],
+                        0.3188
+                    ],
+                    [
+                        "ufx",
+                        [
+                            "qob",
+                            "~zfa"
+                        ],
+                        0.4544
+                    ],
+                    [
+                        "~ufx",
+                        [
+                            "qob",
+                            "~zfa"
+                        ],
+                        0.5456
+                    ],
+                    [
+                        "ufx",
+                        [
+                            "~qob",
+                            "zfa"
+                        ],
+                        0.8435
+                    ],
+                    [
+                        "~ufx",
+                        [
+                            "~qob",
+                            "zfa"
+                        ],
+                        0.1565
+                    ],
+                    [
+                        "ufx",
+                        [
+                            "~qob",
+                            "~zfa"
+                        ],
+                        0.8233
+                    ],
+                    [
+                        "~ufx",
+                        [
+                            "~qob",
+                            "~zfa"
+                        ],
+                        0.1767
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UFX",
+            "outcomes": [
+                "ufx",
+                "~ufx"
+            ],
+            "parents": [
+                "QOB",
+                "ZFA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fga",
+                        [
+                            "tdh"
+                        ],
+                        0.9529
+                    ],
+                    [
+                        "~fga",
+                        [
+                            "tdh"
+                        ],
+                        0.0471
+                    ],
+                    [
+                        "fga",
+                        [
+                            "~tdh"
+                        ],
+                        0.9467
+                    ],
+                    [
+                        "~fga",
+                        [
+                            "~tdh"
+                        ],
+                        0.0533
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FGA",
+            "outcomes": [
+                "fga",
+                "~fga"
+            ],
+            "parents": [
+                "TDH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fyv",
+                        [
+                            "fga",
+                            "zfa"
+                        ],
+                        0.75
+                    ],
+                    [
+                        "~fyv",
+                        [
+                            "fga",
+                            "zfa"
+                        ],
+                        0.25
+                    ],
+                    [
+                        "fyv",
+                        [
+                            "fga",
+                            "~zfa"
+                        ],
+                        0.192
+                    ],
+                    [
+                        "~fyv",
+                        [
+                            "fga",
+                            "~zfa"
+                        ],
+                        0.808
+                    ],
+                    [
+                        "fyv",
+                        [
+                            "~fga",
+                            "zfa"
+                        ],
+                        0.0607
+                    ],
+                    [
+                        "~fyv",
+                        [
+                            "~fga",
+                            "zfa"
+                        ],
+                        0.9393
+                    ],
+                    [
+                        "fyv",
+                        [
+                            "~fga",
+                            "~zfa"
+                        ],
+                        0.5585
+                    ],
+                    [
+                        "~fyv",
+                        [
+                            "~fga",
+                            "~zfa"
+                        ],
+                        0.4415
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FYV",
+            "outcomes": [
+                "fyv",
+                "~fyv"
+            ],
+            "parents": [
+                "FGA",
+                "ZFA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mgy",
+                        [],
+                        0.3687
+                    ],
+                    [
+                        "~mgy",
+                        [],
+                        0.6313
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MGY",
+            "outcomes": [
+                "mgy",
+                "~mgy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qoq",
+                        [
+                            "rae",
+                            "ufx"
+                        ],
+                        0.0585
+                    ],
+                    [
+                        "~qoq",
+                        [
+                            "rae",
+                            "ufx"
+                        ],
+                        0.9415
+                    ],
+                    [
+                        "qoq",
+                        [
+                            "rae",
+                            "~ufx"
+                        ],
+                        0.5154
+                    ],
+                    [
+                        "~qoq",
+                        [
+                            "rae",
+                            "~ufx"
+                        ],
+                        0.4846
+                    ],
+                    [
+                        "qoq",
+                        [
+                            "~rae",
+                            "ufx"
+                        ],
+                        0.9996
+                    ],
+                    [
+                        "~qoq",
+                        [
+                            "~rae",
+                            "ufx"
+                        ],
+                        0.0004
+                    ],
+                    [
+                        "qoq",
+                        [
+                            "~rae",
+                            "~ufx"
+                        ],
+                        0.9696
+                    ],
+                    [
+                        "~qoq",
+                        [
+                            "~rae",
+                            "~ufx"
+                        ],
+                        0.0304
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QOQ",
+            "outcomes": [
+                "qoq",
+                "~qoq"
+            ],
+            "parents": [
+                "RAE",
+                "UFX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ivj",
+                        [
+                            "mgy"
+                        ],
+                        0.7339
+                    ],
+                    [
+                        "~ivj",
+                        [
+                            "mgy"
+                        ],
+                        0.2661
+                    ],
+                    [
+                        "ivj",
+                        [
+                            "~mgy"
+                        ],
+                        0.0533
+                    ],
+                    [
+                        "~ivj",
+                        [
+                            "~mgy"
+                        ],
+                        0.9467
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IVJ",
+            "outcomes": [
+                "ivj",
+                "~ivj"
+            ],
+            "parents": [
+                "MGY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zfa",
+                        [],
+                        0.4197
+                    ],
+                    [
+                        "~zfa",
+                        [],
+                        0.5803
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ZFA",
+            "outcomes": [
+                "zfa",
+                "~zfa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qob",
+                        [],
+                        0.6036
+                    ],
+                    [
+                        "~qob",
+                        [],
+                        0.3964
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "QOB",
+            "outcomes": [
+                "qob",
+                "~qob"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tdh",
+                        [],
+                        0.7544
+                    ],
+                    [
+                        "~tdh",
+                        [],
+                        0.2456
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TDH",
+            "outcomes": [
+                "tdh",
+                "~tdh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rae",
+                        [
+                            "fyv"
+                        ],
+                        0.9683
+                    ],
+                    [
+                        "~rae",
+                        [
+                            "fyv"
+                        ],
+                        0.0317
+                    ],
+                    [
+                        "rae",
+                        [
+                            "~fyv"
+                        ],
+                        0.2584
+                    ],
+                    [
+                        "~rae",
+                        [
+                            "~fyv"
+                        ],
+                        0.7416
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RAE",
+            "outcomes": [
+                "rae",
+                "~rae"
+            ],
+            "parents": [
+                "FYV"
+            ]
+        }
+    ]
+}
