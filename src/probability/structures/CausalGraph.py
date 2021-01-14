@@ -101,11 +101,6 @@ class CausalGraph:
                 deconfounding_sets = backdoor_controller.get_all_z_subsets(treatments, y)
 
                 # Filter out our Z sets with observations in them and verify there are still sets Z
-
-                # deconfounding_sets = [s for s in deconfounding_sets if all(not isinstance(g, Intervention) for g in s)]
-                # print("Pre:", deconfounding_sets, self.graph.incoming_disabled, self.graph.outgoing_disabled)
-                # TODO - Xj | do(Xi) X1, or Xj | do(Xi) X2 seems to not like having X3 / X5, respectively
-
                 deconfounding_sets = [s for s in deconfounding_sets if all(g.name not in s for g in body)]
                 if len(deconfounding_sets) == 0:
                     io.write("No deconfounding set Z can exist for the given data.")
@@ -159,9 +154,6 @@ class CausalGraph:
             for cross in itertools.product(*[self.outcomes[var] for var in given_set]):
 
                 # Construct the respective Outcome list of each Z outcome cross product
-                # z_outcomes = []
-                # for cross_idx in range(len(given_set)):
-                #    z_outcomes.append(Outcome(list(given_set)[cross_idx], cross[cross_idx]))
                 z_outcomes = [Outcome(x, cross[i]) for i, x in enumerate(given_set)]
 
                 # First, we do our P(Y | do(X), Z)

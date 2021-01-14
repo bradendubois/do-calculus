@@ -1,18 +1,14 @@
 import itertools
 import random
 
-from graph_generator import generate_graph
-from probability.structures.CausalGraph import CausalGraph
-from tests.RegressionTesting import basic_validation
-from util.parsers.GraphLoader import parse_graph_file_data
-
+from probability.structures import Graph
 
 def sum_to(x, y):
 
     left = y
     nums = []
 
-    for i in range(x-1):
+    for _ in range(x-1):
         select = random.randrange(left)
         left -= select
         nums.append(select)
@@ -23,7 +19,7 @@ def sum_to(x, y):
     return nums
 
 
-def generate_distribution(graph):
+def generate_distribution(graph: Graph):
 
     variables = {}
 
@@ -61,16 +57,3 @@ def generate_distribution(graph):
         variables[v]["determination"]["table"] = distribution
 
     return variables
-
-g = generate_graph()
-temp = generate_distribution(g)
-
-print(g)
-
-for k in temp:
-    print(k, temp[k])
-
-r = CausalGraph(**parse_graph_file_data({"variables": list(temp.values())}))
-
-error, message = basic_validation(r, "none")
-print(error, message)

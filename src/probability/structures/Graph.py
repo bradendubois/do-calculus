@@ -68,6 +68,13 @@ class Graph:
         msg += "Edges:\n" + "\n".join(" -> ".join(i for i in edge) for edge in self.e)
         return msg
 
+    def roots(self) -> set:
+        """
+        Get the roots of the the graph G.
+        :return: A set of vertices (strings) in G that have no parents.
+        """
+        return set([x for x in self.v if len(self.parents(x)) == 0])
+
     def parents(self, v: CG_Types) -> set:
         """
         Get the parents of v, which may actually be currently controlled
@@ -171,7 +178,7 @@ class Graph:
         Copy builtin allowing the Graph to be copied
         :return: A copied Graph
         """
-        copied = Graph(self.v.copy(), self.e.copy())
+        copied = Graph(self.v.copy(), set(self.e.copy()))
         copied.incoming_disabled = self.incoming_disabled.copy()
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied

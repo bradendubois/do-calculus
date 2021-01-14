@@ -80,7 +80,7 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
     # 4 - if C(G\X) == { S_1, ..., S_k},
     if len(S := C(G(V - x))) > 1:
 
-        # return Sigma_{v\(y ∪ x)} Gamma_i id_algorithm(s_i, v \ s_i, P, G)
+        # return Sigma_{v\(y ∪ x)} Pi_i id_algorithm(s_i, v \ s_i, P, G)
         return Sigma(V - (y | x), Pi(S, [ID(s, V - s, P, G, rec+1) for s in S]))
 
     #   if C(G \ X) == {S},
@@ -96,11 +96,16 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
         #   6 - if S ∈ C(G)
         if S in C(G):
 
-            # return Sigma_{S\Y} Gamma_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
+            # return Sigma_{S\Y} Pi_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
             return Sigma(S-y, Pi(S, [P(Vi, parents(Vi)) for Vi in S]))
 
         #   7 -  if (∃S')S ⊂ S' ∈ C(G)
-        #       return ID(y, x ∩ S', Gamma_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
+        if any(S.issubset(Si) for Si in C(G)):
+
+            Si = [Si for Si in C(G) if S.issubset(Si)][0]
+
+            # return ID(y, x ∩ S', Pi_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
+            return ID(y, x & Si, P, G(Si))
 
     print("end of line")
     raise FAIL(G, C(G))
