@@ -7,11 +7,6 @@ import itertools
 
 from probability.structures.Graph import Graph
 
-vertices = 15
-max_length = 10
-num_edges = 30
-
-
 def cycle(v, e):
 
     mid = set()
@@ -55,7 +50,7 @@ def longest(v, e):
     return max([_reach_all(x) for x in v])
 
 
-def generate_graph():
+def generate_graph(vertices, max_length, minimum_edges):
 
     v = set()
     e = set()
@@ -98,25 +93,21 @@ def generate_graph():
     tentative_e = set(itertools.product(v, v))
     inner = set(random.choice(list(v)))
 
+    def insert_edge(edge):
+        inner.update(edge)
+        e.add(edge)
+        print("Generating edges... {} of {} : ({:.2f}%)".format(len(e), minimum_edges, len(e) / minimum_edges * 100), end='\r')
+
     while len(inner) < len(v):
+        insert_edge(generate_valid_edge(list(v - inner), v))
 
-        edge = generate_valid_edge(list(v - inner), v)
-        inner.update(edge)
-
-        e.add(edge)
-        print("Generating edges... {} of {} : ({:.2f}%)".format(len(e), num_edges, len(e) / num_edges * 100), end='\r')
-
-    while len(e) < num_edges:
-
-        edge = generate_valid_edge(v, v)
-        inner.update(edge)
-
-        e.add(edge)
-
-        print("Generating edges... {} of {} : ({:.2f}%)".format(len(e), num_edges, len(e) / num_edges * 100), end='\r')
+    while len(e) < minimum_edges:
+        insert_edge(generate_valid_edge(v, v))
     print()
 
     return Graph(v, e)
 
 
-# print(generate_graph())
+def randomized_latent_variables(g: Graph):
+    roots = g.roots()
+    return random.choices(list(roots), k=random.randrange(1, len(roots)+1))
