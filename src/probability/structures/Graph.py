@@ -52,7 +52,7 @@ class Graph:
             """
             label = to_label(vertex)
             self.topology_map[label] = max(self.topology_map[label], depth)
-            for child in [c for c in self.outgoing[label]]:
+            for child in [c for c in self.outgoing[label] if c not in self.incoming[label]]:
                 initialize_topology(child, depth+1)
 
         # Begin the topological ordering, which is started from every "root" in the graph
@@ -85,7 +85,7 @@ class Graph:
         if label in self.incoming_disabled:
             return set()
 
-        return {p for p in self.incoming[label] if p not in self.outgoing_disabled}
+        return {p for p in self.incoming[label] if p not in self.outgoing_disabled and p not in self.outgoing[label]}
 
     def children(self, v: CG_Types) -> set:
         """
@@ -97,7 +97,7 @@ class Graph:
         if label in self.outgoing_disabled:
             return set()
 
-        return {c for c in self.outgoing[label] if c not in self.incoming_disabled}
+        return {c for c in self.outgoing[label] if c not in self.incoming_disabled and c not in self.incoming[label]}
 
     def ancestors(self, v: CG_Types) -> set:
         """

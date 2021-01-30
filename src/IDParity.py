@@ -29,7 +29,7 @@ from util.parsers.GraphLoader import parse_graph_file_data
 
 def parity(cg: CausalGraph, y: set, x: set):
 
-    latent = latent_projection(cg.graph, set())
+    latent = latent_projection(cg.graph, cg.latent)
 
     identification = ID(y, x, Distribution(cg.tables), latent)
     result_identification = parse_shpitser(identification, cg, dict())
@@ -50,7 +50,7 @@ graph_files = [f for f in os.listdir(loc) if os.path.isfile(os.path.join(loc, f)
 corr = 0
 fail = 0
 
-for graph_file in graph_files:
+for graph_file in [f for f in graph_files if not f.endswith("L.json")]:
 
     # Skip this graph as it is from testing some ideas and can't be used
     if graph_file == 'causal_graph_4.json':

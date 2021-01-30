@@ -36,7 +36,7 @@ while N:
 
         num_vertices = randrange(5, 15)
         max_path_length = randrange(round(.2 * num_vertices), round(.8 * num_vertices))
-        num_edges = randrange(round(.8 * num_vertices), round(3 * num_vertices))
+        num_edges = randrange(num_vertices - 1, round(3 * num_vertices))
 
         g = generate_graph(num_vertices, max_path_length, num_edges)
         distribution = generate_distribution(g)

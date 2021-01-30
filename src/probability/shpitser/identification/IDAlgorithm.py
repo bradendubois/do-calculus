@@ -107,5 +107,4 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
             # return ID(y, x ∩ S', Pi_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
             return ID(y, x & Si, P, G(Si))
 
-    print("end of line")
     raise FAIL(G, C(G))

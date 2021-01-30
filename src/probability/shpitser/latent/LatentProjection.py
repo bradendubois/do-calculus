@@ -7,6 +7,8 @@
 #                                                       #
 #########################################################
 
+import itertools
+
 from probability.structures.Graph import Graph
 from probability.shpitser.structures.LatentGraph import LatentGraph
 

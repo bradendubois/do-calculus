@@ -47,7 +47,7 @@ class CausalGraph:
         "\n  Query: "
 
     # **kwargs allows a parsed graph file dictionary to be **unpacked into the initializer for a CausalGraph
-    def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, functions: dict, **kwargs):
+    def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, functions: dict, latent: set, **kwargs):
 
         # Clear the cached computations, since a different Causal Graph may have defined and cached computations with
         #   the same Variable names
@@ -59,6 +59,7 @@ class CausalGraph:
         self.outcomes = outcomes    # Maps string name *and* corresponding variable to a list of outcome values
         self.tables = tables        # Maps to corresponding tables
         self.functions = functions  # Maps to the functions a variable may be resolved by
+        self.latent = latent        # Set of latent variables in the graph
 
     # Probability Query
 

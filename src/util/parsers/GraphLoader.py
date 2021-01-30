@@ -49,6 +49,9 @@ def parse_graph_file_data(filename: str or dict) -> dict:
     # Maps to corresponding functions
     functions = dict()
 
+    # Set of latent variables
+    latent = set()
+
     for v in loaded_file["variables"]:
 
         # Load the relevant data to construct a Variable
@@ -69,6 +72,10 @@ def parse_graph_file_data(filename: str or dict) -> dict:
         # Is the variable determined by a function or direct tables?
         determination = v["determination"]
         determination_type = determination["type"]
+
+        if "latent" in v and v["latent"]:
+            latent.add(name)
+            latent.add(variable)
 
         if determination["type"] == "table":
 
@@ -111,7 +118,8 @@ def parse_graph_file_data(filename: str or dict) -> dict:
         "functions": functions,
         "v": v,
         "e": e,
-        "graph": graph
+        "graph": graph,
+        "latent": latent
     }
 
     return parsed
