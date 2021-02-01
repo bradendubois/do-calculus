@@ -87,4 +87,5 @@ def run_repl(graph_location="src/graphs/full"):
         parse, func = lookup[f]
 
         # Parse input, call api function
+        # TODO - To tailor API output, switch from printing in the REPL to having the API print a string representation
         print(func(**parse(arg)))

@@ -2,28 +2,44 @@
 #                   probability-code API                  #
 ###########################################################
 
+from itertools import product
+
+
 from src.api.probability_query import api_probability_query
 
 from src.probability.structures.BackdoorController import BackdoorController
-from src.probability.structures.VariableStructures import *
 from src.probability.structures.CausalGraph import CausalGraph
 
 from src.util.parsers.GraphLoader import parse_graph_file_data
 
-from itertools import product
-
 
 class Do:
 
-    def __init__(self, model: dict or None, print_details=False, print_result=False, log_details=False):
+    def __init__(self, model: dict or None, print_details=False, print_result=False, log_details=False, log_fd=None):
+        """
+        Initializer for an instance of the API.
+        @param model: An optional dictionary of a loaded causal graph model. Can be None, and loaded later.
+        @param print_details: Boolean; whether the computation steps involved in queries should be printed.
+        @param print_result: Boolean; whether the result of a query should be printed.
+        @param log_details: Boolean; whether the computation steps involved in queries should logged to a file. If this
+            is true, a file must have been set to log to. This can be done by providing a file descriptor either as
+            an argument to log_fd, or can be done later with a call to set_log_fd.
+        @param log_fd: An open file descriptor to write to, if log_details is enabled.
+        """
         if model:
             data = parse_graph_file_data(model)
             self.load_model(data)
 
         else:
-            self.cg = None
-            self.g = None
-            self.bc = None
+            self._cg = None
+            self._g = None
+            self._bc = None
+        self._log = log_details
+        self._logging_fd = log_fd or None
+
+    ################################################################
+    #                       API Modifications                      #
+    ################################################################
 
     def load_model(self, data: dict):
         """
@@ -31,26 +47,44 @@ class Do:
         @param data: A dictionary conforming to the required causal model specification to be loaded
             into the API.
         """
-        self.cg = CausalGraph(**data)
-        self.g = data["graph"]
-        self.bc = BackdoorController(self.g.copy())
+        self._cg = CausalGraph(**data)
+        self._g = data["graph"]
+        self._bc = BackdoorController(self._g.copy())
+
+    def set_logging(self, log: bool):
+        """
+        Set whether to log computation steps.
+        @precondition A file descriptor has been given to the API either in the initializer, or in a call to set_log_fd.
+        @param log: Boolean; whether or not to log computation steps.
+        """
+        self._log = log
+
+    def set_log_fd(self, log_fd):
+        """
+        Set the internal file descriptor to log computation steps to, if this option is enabled.
+        @param log_fd: An open file descriptor to write computation details to.
+        """
+        self._logging_fd = log_fd
 
     ################################################################
     #                         Distributions                        #
     ################################################################
 
-    #def p(self, p_str):
-    #    return self.cg.probability_query(*[parse_outcomes_and_interventions(g) for g in p_str])
-
     def p(self, y: set, x: set):
         """
         Compute a probability query of Y, given X.
-        :param y: Head of query; a set of variable-outcome tuples; Ex: {("Y", "y"), ("Weather", "sunny")}
-        :param x: Body of query; a set of variable-outcome tuples; Ex: {("Y", "y"), ("Weather", "sunny")}
-        :return: The probability of P(Y | X), in the range [0.0, 1.0]
+        @param y: Head of query; a set of Outcome objects
+        @param x: Body of query; a set of Outcome and/or Variable objects
+        @return: The probability of P(Y | X), in the range [0.0, 1.0]
+        @raise ProbabilityException when the given probability cannot be computed, such as an invalid Outcome
         """
-        # TODO - Interventions
-        return api_probability_query(self.cg, y, x)
+        # All deconfounding is handled by the CG
+        return api_probability_query(self._cg, y, x)
+
+
+
+
+    # TODO - Everything below
 
     ################################################################
     #               Pathfinding (Backdoor Controller)              #
@@ -70,4 +104,3 @@ class Do:
 
     def backdoor_paths(self, src: set, dst: set):
         ...
-

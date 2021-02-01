@@ -25,7 +25,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 run_debug = len(argv) >= 2 and argv[1].lower() in ["validate", "debug", "test"]
 
-
 #######################################
 #     Test Software (if specified)    #
 #######################################
