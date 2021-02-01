@@ -9,11 +9,11 @@
 
 import itertools
 
-from probability.structures.Graph import Graph
-from probability.structures.VariableStructures import Variable
-from util.IO_Logger import *
-from util.helpers.MinimizeSets import minimal_sets
-from util.helpers.PowerSet import power_set
+from src.probability.structures.Graph import Graph
+from src.probability.structures.VariableStructures import Variable
+from src.util.IO_Logger import *
+from src.util.helpers.MinimizeSets import minimal_sets
+from src.util.helpers.PowerSet import power_set
 
 
 class BackdoorController:

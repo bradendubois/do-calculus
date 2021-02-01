@@ -9,10 +9,10 @@
 
 # Here, we can simply take a graph file and load it, isolating this code and reducing the Causal Graph filesize
 
-from probability.structures.ConditionalProbabilityTable import *
-from probability.structures.Graph import Graph
-from probability.structures.VariableStructures import *
-from util.IO_Logger import *
+from src.probability.structures.ConditionalProbabilityTable import *
+from src.probability.structures.Graph import Graph
+from src.probability.structures.VariableStructures import *
+from src.util.IO_Logger import *
 
 
 def parse_graph_file_data(filename: str or dict) -> dict:

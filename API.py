@@ -2,18 +2,35 @@
 #                   probability-code API                  #
 ###########################################################
 
-from probability.structures.BackdoorController import BackdoorController
-from probability.structures.VariableStructures import *
-from probability.structures.CausalGraph import CausalGraph
+from src.api.probability_query import api_probability_query
+
+from src.probability.structures.BackdoorController import BackdoorController
+from src.probability.structures.VariableStructures import *
+from src.probability.structures.CausalGraph import CausalGraph
 
 from src.util.parsers.GraphLoader import parse_graph_file_data
 
 from itertools import product
 
+
 class Do:
 
-    def __init__(self, model: dict):
-        data = parse_graph_file_data(model)
+    def __init__(self, model: dict or None, print_details=False, print_result=False, log_details=False):
+        if model:
+            data = parse_graph_file_data(model)
+            self.load_model(data)
+
+        else:
+            self.cg = None
+            self.g = None
+            self.bc = None
+
+    def load_model(self, data: dict):
+        """
+        Load a model into the API.
+        @param data: A dictionary conforming to the required causal model specification to be loaded
+            into the API.
+        """
         self.cg = CausalGraph(**data)
         self.g = data["graph"]
         self.bc = BackdoorController(self.g.copy())
@@ -33,7 +50,7 @@ class Do:
         :return: The probability of P(Y | X), in the range [0.0, 1.0]
         """
         # TODO - Interventions
-        # return self.cg.probability_query(y, x)
+        return api_probability_query(self.cg, y, x)
 
     ################################################################
     #               Pathfinding (Backdoor Controller)              #
@@ -50,4 +67,7 @@ class Do:
 
     def all_paths(self, s, t):
         return self.bc.all_paths_cumulative(s, t, [], [])
+
+    def backdoor_paths(self, src: set, dst: set):
+        ...
 

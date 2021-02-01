@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from config.config_manager import *
+from src.config.config_manager import *
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 logging_dir = root + "/" + access("logging_directory")

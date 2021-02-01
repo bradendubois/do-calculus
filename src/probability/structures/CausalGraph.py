@@ -10,16 +10,16 @@
 import itertools        # Used to create cross-products from iterables
 import random           # Used to pick a random Z set in do-calculus
 
-from probability.structures.BackdoorController import BackdoorController
-from probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from probability.structures.Graph import *
-from probability.structures.Probability_Engine import ProbabilityEngine
-from probability.structures.VariableStructures import *
+from src.probability.structures.BackdoorController import BackdoorController
+from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from src.probability.structures.Graph import *
+from src.probability.structures.Probability_Engine import ProbabilityEngine
+from src.probability.structures.VariableStructures import *
 
-from util.IO_Logger import *
-from util.parsers.UserIndexSelection import *
-from util.parsers.ProbabilityString import *
-from util.ResultCache import *
+from src.util.IO_Logger import *
+from src.util.parsers.UserIndexSelection import *
+from src.util.parsers.ProbabilityString import *
+from src.util.ResultCache import *
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
