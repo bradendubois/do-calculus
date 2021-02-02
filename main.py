@@ -24,19 +24,18 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #######################################
 
 run_debug = len(argv) >= 2 and argv[1].lower() in ["validate", "debug", "test"]
+print(run_debug)
 
 #######################################
 #     Test Software (if specified)    #
 #######################################
 
 if run_debug:
-    from tests.RegressionTesting import run_full_regression_suite
+    from src.validation.full_driver import full_testing_suite
 
-    # List of (success_boolean, message) tuples returned
-    # Last item will be a summary "(false, "there were errors")" / "(true, "no errors")"
-    results = run_full_regression_suite()
-    success, summary = results[-1]
-    print("\n".join(map(str, results)))
+    # Boolean result returned: True if all tests are successful, False otherwise
+    success = full_testing_suite()
+    print("[All Tests Passed]" if success else "[Some Errors Occurred]")
 
 #######################################
 #                 REPL                #
