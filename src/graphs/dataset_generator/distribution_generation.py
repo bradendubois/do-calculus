@@ -1,7 +1,8 @@
 import itertools
 import random
 
-from probability.structures import Graph
+from src.probability.structures import Graph
+
 
 def sum_to(x, y):
 
@@ -38,7 +39,6 @@ def generate_distribution(graph: Graph):
         }
 
         variables[v] = cur
-
 
     for v in graph.v:
 

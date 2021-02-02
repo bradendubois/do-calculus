@@ -6,7 +6,6 @@ from src.api.deconfounding_sets import api_deconfounding_sets_parse
 from src.api.probability_query import api_probability_query_parse
 
 from API import Do
-from src.util.parsers.GraphLoader import parse_graph_file_data
 
 
 # TODO - Change graph_location to allow a specific graph to be given and loaded, or specify a user directory without

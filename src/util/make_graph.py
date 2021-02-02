@@ -1,3 +1,5 @@
+
+"""
 original_edges = [
     "Z0 -> X",
     "X -> Y",
@@ -10,19 +12,27 @@ original_edges = [
     "X -> Z2",
     "Z2 -> Z3"
 ]
+"""
 
-variables = set()
-parents = dict()
 
-for edge in original_edges:
-    p, c = [item.strip() for item in edge.split("->")]
-    if p not in variables:
-        variables.add(p)
-        parents[p] = set()
+def create_graph(edge_strings: list) -> (set, set):
+    """
+    Create a graph from a list of edges
+    @param edge_strings: A list of strings, where each string is of the form "X -> Y"
+    @return: Two sets, V and E, used to construct a graph.
+    """
 
-    if c not in variables:
-        variables.add(c)
-        parents[c] = set()
+    v = set()
+    e = set()
 
-    parents[c].add(p)
+    for edge in edge_strings:
+        s, t = [item.strip() for item in edge.split("->")]
+        if s not in v:
+            v.add(s)
 
+        if t not in v:
+            v.add(t)
+
+        e.add((s, t))
+
+    return v, e

@@ -2,8 +2,6 @@
 #                   probability-code API                  #
 ###########################################################
 
-from itertools import product
-
 from src.api.backdoor_paths import api_backdoor_paths
 from src.api.deconfounding_sets import api_deconfounding_sets
 from src.api.probability_query import api_probability_query
@@ -11,7 +9,7 @@ from src.api.probability_query import api_probability_query
 from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.CausalGraph import CausalGraph
 
-from src.util.parsers.GraphLoader import parse_graph_file_data
+from src.util.ModelLoader import parse_graph_file_data
 
 
 class Do:
@@ -38,7 +36,7 @@ class Do:
         self._print_result = print_result
         self._print_detail = print_details
         self._log_detail = log_details
-        self._logging_fd = log_fd or None
+        self._logging_fd = log_fd if log_fd else None
 
     ################################################################
     #                       API Modifications                      #
