@@ -6,7 +6,7 @@ def api_probability_query_parse(query: str) -> (tuple, tuple):
     """
     Parse a query string into Outcome and Intervention structures.
     @param query: A string of the form "Y=y, X=x | W=w", or just "Y=y, X=x"
-    @return: A dictionary mapping "head" and "body" to lists of Outcome and Intervention objects
+    @return A dictionary mapping "head" and "body" to lists of Outcome and Intervention objects
     """
     if "|" in query:
         l, r = query.split("|")

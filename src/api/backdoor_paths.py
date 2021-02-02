@@ -6,15 +6,26 @@ from src.probability.structures.BackdoorController import BackdoorController
 def api_backdoor_paths_parse(query: str) -> (set, set):
     """
     Convert a given query string into a pair of sets to compute all backdoor paths between
-    @param query: A string of the form "X, Y, Z -> A, B, C"
-    @return Two sets, containing all variables on the left and right sides of the arrow, respectively.
+    @param query: A string of the form "X, Y, Z -> A, B, C" or "X, Y, Z -> A, B, C | I, J, K"
+    @return A dictionary mapping "src", "dst", and "dcf" to sets, containing all vertices on the left and right sides
+        of the arrow, and the third as all vertices are the right of the bar, respectively.
     """
     def clean(x):
-        return set(map(x.strip(), x))
+        return set(map(lambda y: y.strip(), x.strip().split(" ")))
 
     l, r = query.split("->")
-    r, dcf = map(clean, r.split("|")) if "|" in r else clean(r), {}
-    return clean(l), r, dcf
+
+    if "|" in r:
+        s = r.split("|")
+        r, dcf = clean(s[0]), clean(s[1])
+    else:
+        r, dcf = clean(r), {}
+
+    return {
+        "src": clean(l),
+        "dst": r,
+        "dcf": dcf
+    }
 
 
 def api_backdoor_paths(bc: BackdoorController, src: set, dst: set, dcf: set) -> list:

@@ -1,3 +1,4 @@
+import json
 from os import path, listdir
 
 from src.api.backdoor_paths import api_backdoor_paths_parse
@@ -8,6 +9,8 @@ from API import Do
 from src.util.parsers.GraphLoader import parse_graph_file_data
 
 
+# TODO - Change graph_location to allow a specific graph to be given and loaded, or specify a user directory without
+#   there being path issues depending on the working directory
 def run_repl(graph_location="src/graphs/full"):
     """
     Run an interactive IO prompt allowing full use of the causality software.
@@ -15,7 +18,7 @@ def run_repl(graph_location="src/graphs/full"):
         which are JSON files and conform to the causal graph model specification.
     """
 
-    api = Do(model=None, print_details=True, print_result=False)
+    api = Do(model=None, print_details=True, print_result=True)
 
     """
     This is a mapping that will connect user-inputting strings to the respective functionality requested.
@@ -33,7 +36,7 @@ def run_repl(graph_location="src/graphs/full"):
     """
     api_map = {
         (api_probability_query_parse, api.p): ["probability", "p", "compute", "query"],
-        (api_deconfounding_sets_parse, api.all_deconfounding_sets): ["dcs", "dcf", "deconfound", "deconfounding"],
+        (api_deconfounding_sets_parse, api.deconfounding_sets): ["dcs", "dcf", "deconfound", "deconfounding"],
         (api_backdoor_paths_parse, api.backdoor_paths): ["backdoor", "backdoors", "path", "paths"],
     }
 
@@ -71,7 +74,9 @@ def run_repl(graph_location="src/graphs/full"):
             s = arg + (".json" if not arg.endswith(".json") else "")
             assert path.isfile(full_path := graph_location + "/" + s), \
                 "File: {} does not exist!".format(s)
-            api.load_model(parse_graph_file_data(full_path))
+
+            with open(full_path) as f:
+                api.load_model(json.load(f))
             continue
 
         # Quit / Close
@@ -87,5 +92,7 @@ def run_repl(graph_location="src/graphs/full"):
         parse, func = lookup[f]
 
         # Parse input, call api function
-        # TODO - To tailor API output, switch from printing in the REPL to having the API print a string representation
-        print(func(**parse(arg)))
+        try:
+            func(**parse(arg))
+        except Exception as e:
+            print("EXCEPTION:", str(e))

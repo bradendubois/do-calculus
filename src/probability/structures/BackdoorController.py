@@ -86,7 +86,7 @@ class BackdoorController:
         disallowed_vertices = x | y | descendants_of_x
         z_power_set = power_set(set(self.graph.v) - disallowed_vertices)
 
-        print(set(self.graph.v) - disallowed_vertices)
+        #  print(set(self.graph.v) - disallowed_vertices)
         # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
         # any set in here is one which yields no backdoor backs from X x Y.
         valid_z_subsets = set()
