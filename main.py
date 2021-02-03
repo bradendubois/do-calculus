@@ -10,7 +10,6 @@
 #########################################################
 
 # Main libraries can always be loaded
-import json
 import os
 from sys import argv
 
@@ -31,10 +30,10 @@ print(run_debug)
 #######################################
 
 if run_debug:
-    from src.validation.full_driver import full_testing_suite
+    from src.validation.full_driver import run_all_tests
 
     # Boolean result returned: True if all tests are successful, False otherwise
-    success = full_testing_suite()
+    success = run_all_tests()
     print("[All Tests Passed]" if success else "[Some Errors Occurred]")
 
 #######################################

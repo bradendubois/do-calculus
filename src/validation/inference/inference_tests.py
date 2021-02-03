@@ -1,12 +1,3 @@
-#########################################################
-#                                                       #
-#   Regression Tests                                    #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
 from os import listdir
 
 from src.probability.structures.CausalGraph import *
@@ -26,11 +17,12 @@ def within_precision(a: float, b: float) -> bool:
     return abs(a - b) < 1 / (10 ** access("regression_levels_of_precision"))
 
 
-def model_inference_validation(cg: CausalGraph):
+def model_inference_validation(cg: CausalGraph) -> (bool, str):
     """
     Validate all distributions in the given Causal Graph
     @param cg: a Causal Graph model
-    @return: True if the sum of probabilities of each outcome equals 1 for each variable, False otherwise
+    @return: True if the sum of probabilities of each outcome equals 1 for each variable, False otherwise, as well
+        as a string message summary.
     """
 
     for variable in cg.variables:
@@ -54,9 +46,9 @@ def model_inference_validation(cg: CausalGraph):
     return True, "Basic tests passed."
 
 
-def inference_tests(graph_location) -> bool:
+def inference_tests(graph_location: str) -> bool:
     """
-    Load and run all tests on all models located in a given directory of graphs
+    Run tests on all models located in a given directory of graphs, verifying the probabilities in the model.
     @param graph_location: A string path to a directory containing any number of causal graph JSON files
     @return: True if all tests are successful, False otherwise
     """
@@ -68,7 +60,7 @@ def inference_tests(graph_location) -> bool:
 
     for test_file in files:
 
-        with open(access("regression_directory") + "/" + test_file) as f:
+        with open(graph_location + "/" + test_file) as f:
             json_model = json.load(f)
 
         parsed_model = parse_graph_file_data(json_model)

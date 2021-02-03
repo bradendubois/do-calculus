@@ -1,6 +1,6 @@
 # TODO - Run all the tests involved in the entire testing suite - implement threading for that
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
-from src.validation.inference.inference_tests import full_testing_suite, inference_tests
+from src.validation.inference.inference_tests import inference_tests
 from src.validation.shpitser.shpitser_tests import shpitser_tests
 
 
@@ -23,7 +23,7 @@ def print_test_result(success: bool, msg: str):
     @param msg: string; Any arbitrary message returned by the test
     """
     color = bcolors.OKGREEN if success else bcolors.WARNING
-    print(f"[{bcolors.WARNING}{success}{bcolors.ENDC}]: {msg}")
+    print(f"[{color}{success}{bcolors.ENDC}]: {msg}")
 
 
 def run_all_tests() -> bool:

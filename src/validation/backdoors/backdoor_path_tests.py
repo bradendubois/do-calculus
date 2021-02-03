@@ -1,8 +1,78 @@
+import itertools
+from os import listdir
+from os.path import dirname, abspath
+from json import load
+
+from src.probability.structures.BackdoorController import BackdoorController
+from src.util.ModelLoader import parse_graph_file_data
+from src.validation.full_driver import print_test_result
+
+test_file_directory = dirname(abspath(__file__)) + "/test_files"
 
 
-def backdoor_tests() -> (bool, str):
+def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool, str):
     """
-    Run the entire set of tests to validate the
-    @return:
+    Validate backdoor path tests provided against a given model
+    @param bc: A BackdoorController containing the data necessary to compute
+    @param test_data: a dictionary { "graph_filename": string, tests: [] } where each test in the list is of the form
+        { "src": [], "dst": [], "expect": [[], [], []] }. src and dst map to lists of string vertices in the given
+        model. Backdoor paths are searched for from any vertex in src to any vertex in dst. "expect" is a list of lists,
+        where each sublist contains a set of string vertices that constitute a backdoor path from some vertex in "src"
+        to some vertex in "dst". This sublist must contain these respective endpoints, but the order itself does not
+        matter. An optional value in this dictionary can be "dcf": [], which will be a list of string vertices to use
+        as a deconfounding set in the respective path searches.
+    @return: True if all tests are successful, False otherwise, as well as a string message summary.
     """
-    return True, "TODO"
+
+    for test in test_data:
+
+        expected_paths = list(map(sorted, test_data["expect"]))
+
+        paths = []
+        for s, t in itertools.product(test["src"], test["dst"]):
+            paths.extend(bc.backdoor_paths(s, t, test["dcf"] if "dcf" in test else {}))
+
+        # Sort each path to improve some sor
+        paths = list(map(sorted, paths))
+
+        if len(paths) < len(expected_paths):
+            return False, f"Only {len(paths)} found, but expected {len(expected_paths)}"
+
+        if not all(map(lambda p: p in expected_paths, paths)):
+            erroneous_paths = list(filter(lambda p: p not in expected_paths))
+            return False
+
+
+    return True, "Backdoor tests passed."
+
+
+def backdoor_tests(graph_location: str) -> bool:
+    """
+    Run tests on models located in a given directory of graphs, verifying various backdoor paths in the models.
+    @param graph_location: a directory containing causal graph models in JSON
+    @return: True if all tests are successful, False otherwise
+    """
+
+    files = sorted(list(filter(lambda x: x.endswith(".json"), listdir(test_file_directory))))
+    all_successful = True
+
+    # TODO - Threading ? Good for inference tests but shouldn't take too long here
+
+    for test_file in files:
+
+        with open(f"{test_file_directory}/{test_file}") as f:
+            json_test_data = load(f)
+
+        graph_filename = json_test_data["graph_filename"]
+        with open(f"{graph_location}/{graph_filename}") as f:
+            graph_data = load(f)
+
+        bc = parse_graph_file_data(graph_data)["bc"]
+
+        success, msg = model_backdoor_validation(bc, json_test_data)
+        print_test_result(success, msg)
+
+        if not success:
+            all_successful = False
+
+    return all_successful
