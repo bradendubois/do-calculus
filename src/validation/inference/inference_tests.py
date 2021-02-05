@@ -4,7 +4,7 @@ from src.probability.structures.CausalGraph import *
 from src.probability.structures.VariableStructures import *
 from src.util.ProbabilityExceptions import *
 from src.util.ModelLoader import parse_graph_file_data
-from src.validation.full_driver import print_test_result
+from src.validation.test_util import print_test_result
 
 
 def within_precision(a: float, b: float) -> bool:
@@ -28,7 +28,7 @@ def model_inference_validation(cg: CausalGraph) -> (bool, str):
     for variable in cg.variables:
 
         try:
-            total = sum(cg.probability_query({Outcome(variable, outcome)}, {}) for outcome in cg.outcomes[variable])
+            total = sum(cg.probability_query({Outcome(variable, outcome)}, set()) for outcome in cg.outcomes[variable])
             assert within_precision(total, 1.0), f"{variable} does not sum to 1.0 across its outcomes ({total})."
 
         # Probability failed to compute entirely
@@ -46,11 +46,11 @@ def model_inference_validation(cg: CausalGraph) -> (bool, str):
     return True, "Basic tests passed."
 
 
-def inference_tests(graph_location: str) -> bool:
+def inference_tests(graph_location: str) -> (bool, str):
     """
     Run tests on all models located in a given directory of graphs, verifying the probabilities in the model.
     @param graph_location: A string path to a directory containing any number of causal graph JSON files
-    @return: True if all tests are successful, False otherwise
+    @return: True if all tests are successful, False otherwise, along with a string summary message.
     """
 
     files = sorted(list(filter(lambda x: x.endswith(".json"), listdir(graph_location))))
@@ -72,4 +72,4 @@ def inference_tests(graph_location: str) -> bool:
         if not success:
             all_successful = False
 
-    return all_successful
+    return all_successful, "Inference module passed" if all_successful else "Inference module encountered errors"

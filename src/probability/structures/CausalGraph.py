@@ -63,7 +63,7 @@ class CausalGraph:
 
     # Probability Query
 
-    def probability_query(self, head, body):
+    def probability_query(self, head: set, body: set):
         """
         Compute a query P(Y | X), modifying the graph given as necessary to make it possible
         :param head: The head of our query, the Y in P(Y | X)
@@ -72,7 +72,7 @@ class CausalGraph:
         """
 
         # String representation of the given query
-        str_rep = p_str(head, body)
+        str_rep = p_str(list(head), list(body))
 
         # Begin logging
         io.write("Query:", str_rep)

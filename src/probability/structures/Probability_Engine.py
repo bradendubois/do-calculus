@@ -68,12 +68,12 @@ class ProbabilityEngine:
 
         # Validate the queried variables and any given
         # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
-        for out in head + body:
+        for out in list(head) + list(body):
             assert out.name in self.graph.v and out.outcome in self.outcomes[out.name], self.error_msg_formatting
 
         # Double check that all our edges are properly disabled where they should be
         self.graph.reset_disabled()
-        self.graph.disable_incoming(*{s for s in head + body if isinstance(s, Intervention)})
+        self.graph.disable_incoming(*{s for s in list(head) + list(body) if isinstance(s, Intervention)})
         return self._compute(head, body)
 
     def _compute(self, head: list, body: list, depth=0) -> float:

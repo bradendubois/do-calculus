@@ -1,0 +1,9 @@
+{
+  "graph_filename": "causal_graph_5.json",
+  "tests": [{
+    "src": ["Xi"],
+    "dst":  ["Xj"],
+    "expect": [],
+    "exhaustive": false
+  }]
+}
