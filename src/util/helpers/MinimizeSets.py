@@ -10,7 +10,7 @@
 # Reduce a collection of sets to a list of minimal sets
 
 
-def minimal_sets(set_of_sets: set) -> list:
+def minimal_sets(set_of_sets: list) -> list:
     """
     Take a set of sets, and return only the minimal sets
     :param set_of_sets: A set of sets, each set containing strings

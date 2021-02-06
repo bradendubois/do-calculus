@@ -7,11 +7,10 @@
 #                                                       #
 #########################################################
 
-import itertools
+from itertools import product
 
+from src.config.config_manager import access
 from src.probability.structures.Graph import Graph
-from src.probability.structures.VariableStructures import Variable
-from src.util.IO_Logger import *
 from src.util.helpers.MinimizeSets import minimal_sets
 from src.util.helpers.PowerSet import power_set
 
@@ -47,7 +46,7 @@ class BackdoorController:
         paths = []
 
         # Use the product of src, dst to try each possible pairing
-        for s, t in itertools.product(src, dst):
+        for s, t in product(src, dst):
             paths += self.backdoor_paths_pair(s, t, dcf)
 
         return paths
@@ -114,131 +113,84 @@ class BackdoorController:
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
         return list(filter(lambda l: l[0] in self.graph.children(l[1]), backdoor_paths))
 
-    def get_all_z_subsets(self, x: set, y: set) -> list:
+    def all_dcf_sets(self, src: set, dst: set) -> list:
         """
-        Finds all Z subsets that serve as deconfounding sets between X and Y
-        :param x: Some set of variables X
-        :param y: Some set of variables Y, which we want to find sets Z to give independence from X
-        :return: A list of sets, each set representing a set of variables that are a sufficient Z set
+        Finds all Z subsets that serve as deconfounding sets between two sets of vertices, such as for the purpose of
+        measuring interventional distributions.
+        @param src: Some set of (string) vertices in the graph
+        @param dst: Some set of (string) vertices, which we want to find sets Z to give independence from X
+        @return: A list of sets, each set representing a set of variables that are a sufficient Z set
         """
 
-        # The cross product of X and Y
-        cross_product = list(itertools.product(x, y))
+        # Can't use anything in src, dst, or any descendant of any vertex in src as a deconfounding/blocking vertex
+        disallowed_vertices = src | dst | set().union(*[self.graph.reach(s) for s in src])
 
-        # Get the power set of all remaining variables, and check which subsets yield causal independence
-        descendants_of_x = set().union(*[self.graph.reach(s) for s in x])
-        disallowed_vertices = x | y | descendants_of_x
-        z_power_set = power_set(set(self.graph.v) - disallowed_vertices)
+        valid_deconfounding_sets = list()
 
-        #  print(set(self.graph.v) - disallowed_vertices)
-        # A set of all "eligible" subsets of the power set of the compliment of x|y|all_straight_line_path_variables;
-        # any set in here is one which yields no backdoor backs from X x Y.
-        valid_z_subsets = set()
-
-        # Get the list of all backdoor paths detected in each subset
-        for z_subset in z_power_set:
+        # Candidates deconfounding sets remaining are the power set of all the possible remaining vertices
+        for tentative_dcf in power_set(self.graph.v - disallowed_vertices):
 
             # Tentative, indicating that no specific cross product in this subset has yet yielded any backdoor paths
             any_backdoor_paths = False
 
             # Cross represents one (x in X, y in Y) tuple
-            for cross in cross_product:
+            for s, t in product(src, dst):
 
-                # Get any/all backdoor paths between this (x, y) and Z combination
-                backdoor_paths = self.backdoor_paths_pair(cross[0], cross[1], set(z_subset))
-
-                # Debugging help
-                # for path in backdoor_paths:
-                #     print([str(item) for item in path])
+                # Get any/all backdoor paths for this particular pair of vertices in src,dst with given potential
+                #   deconfounding set
+                backdoor_paths = self.backdoor_paths_pair(s, t, set(tentative_dcf))
 
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
-                    io.write_log(z_subset, "yields backdoor paths between", cross, end="")
-
-                    for path in backdoor_paths:
-                        msg = "  "
-                        for index in range(len(path) - 1):
-                            msg += path[index] + " "
-                            msg += " <- " if path[index] in self.graph.children(path[index+1]) else " -> "
-                        msg += path[-1]
-                        io.write_log(msg)
-
-                else:
-                    io.write_log(z_subset, "yielded no backdoor paths for", cross, end="")
+                    break
 
             # None found in any cross product -> Valid subset
             if not any_backdoor_paths:
-                valid_z_subsets.add(z_subset)
+                valid_deconfounding_sets.append(tentative_dcf)
 
         # Minimize the sets, if enabled
+        # TODO - Revisit configuration detail implementation
         if access("minimize_backdoor_sets"):
-            valid_z_subsets = minimal_sets(valid_z_subsets)
+            valid_deconfounding_sets = minimal_sets(valid_deconfounding_sets)
 
-        return list(valid_z_subsets)
+        return list(valid_deconfounding_sets)
 
-    def any_backdoor_paths(self, x: set, y: set, z: set) -> bool:
+    def all_paths_cumulative(self, s: str, t: str, path: list, path_list: list) -> list:
         """
-        Without seeing *which* paths are found, detect any backdoor paths between X and Y
-        :param x: A set X, to be independent from Y
-        :param y: A set Y, to be independent from X
-        :param z: A set Z, to block paths between X and Y
-        :return: True if there are any backdoor paths, False otherwise
-        """
-        for cross in itertools.product(x, y):
-            if len(self.backdoor_paths_pair(cross[0], cross[1], z)) > 0:
-                return True
-        return False
-
-
-
-    def all_paths_cumulative(self, source: str, target: str, path: list, path_list: list) -> list:
-        """
-        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent.
-        This is used in the detection of backdoor paths from Source to Target.
+        Return a list of lists of all paths from a source to a target, with conditional movement from child to parent,
+        or parent to child.
         This is a modified version of the graph-traversal algorithm provided by Dr. Eric Neufeld.
-        :param source: The "source" Variable
-        :param target: The "target"/destination Variable
-        :param path: A current "path" of Variables seen along this traversal.
-        :param path_list: A list which will contain lists of paths
-        :return: A list of lists of Variables, where each sublist denotes a path from source to target
+        @param s: A source (string) vertex defined in the graph.
+        @param t: A target (string) destination vertex defined in the graph.
+        @param path: A list representing the current path at any given point in the traversal.
+        @param path_list: A list which will contain lists of paths from s to t.
+        @return: A list of lists of Variables, where each sublist denotes a path from s to t .
         """
-        if source == target:
-            return path_list + [path + [target]]
-        if source not in path:
-            for child in self.graph.children(source):
-                path_list = self.all_paths_cumulative(child, target, path + [source], path_list)
+        if s == t:
+            return path_list + [path + [t]]
+        if s not in path:
+            for child in self.graph.children(s):
+                path_list = self.all_paths_cumulative(child, t, path + [s], path_list)
         return path_list
 
-    def get_variable_set(self, prompt: str) -> set:
+    def independent(self, src: set, dst: set, dcf: set) -> bool:
         """
-        Take a prompt to serve to the user and get a set of variables from the comma-separated response
-        :param prompt:
-        :return: A set processed from a comma-separated string of values, handling an empty string
-        """
-        input_set = set([item.strip() for item in input(prompt).split(",")])
-
-        # Empty it if "enter" was the only thing given
-        if input_set == {""}:
-            input_set = set()
-        return input_set
-
-    def independent(self, x: set, y: set, z: set):
-        """
-        Helper function that makes some do_calculus logic more readable
-        :param x: A set X, to be independent from Y
-        :param y: A set Y, to be independent from X
-        :param z: A set Z, to block paths between X and Y
-        :return: True if there are no backdoor paths and no straight-line paths, False otherwise
+        Helper function that makes some do_calculus logic more readable; determine if two sets are independent, given
+        some third set.
+        @param src: A source set (of strings) X, to be independent from Y
+        @param dst: A destination set (of strings) Y, to be independent from X
+        @param dcf: A deconfounding set (of strings) Z, to block paths between X and Y
+        @return: True if there are no backdoor paths and no straight-line paths, False otherwise
         """
         # Not independent if there are any unblocked backdoor paths
-        if self.any_backdoor_paths(x, y, z):
+        if len(self.backdoor_paths(src, dst, dcf)) > 0:
             return False
 
         # Ensure no straight-line variables from any X -> Y or Y -> X
-        for cross in itertools.product(x, y):
-            if len(self.all_paths_cumulative(cross[0], cross[1], [], [])) != 0:
+        for s, t in product(src, dst):
+            if len(self.all_paths_cumulative(s, t, [], [])) != 0:
                 return False        # x -> y
-            if len(self.all_paths_cumulative(cross[1], cross[0], [], [])) != 0:
+            if len(self.all_paths_cumulative(t, s, [], [])) != 0:
                 return False        # y -> x
 
         # No paths, must be independent

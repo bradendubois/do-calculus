@@ -99,7 +99,7 @@ class CausalGraph:
             # Ensure we have enough defined variables that any backdoor paths are blocked
             if any(backdoor_controller.any_backdoor_paths({z}, y, set(body_names) - {z}) for z in treatments):
 
-                deconfounding_sets = backdoor_controller.get_all_z_subsets(treatments, y)
+                deconfounding_sets = backdoor_controller.all_dcf_sets(treatments, y)
 
                 # Filter out our Z sets with observations in them and verify there are still sets Z
                 deconfounding_sets = [s for s in deconfounding_sets if all(g.name not in s for g in body)]

@@ -30,4 +30,4 @@ def api_deconfounding_sets(bc: BackdoorController, src: set, dst: set) -> list:
     @return a list of sets, where each set - a set of string vertices - is sufficient at blocking all backdoor paths
         from any vertex in src to any other vertex in dst.
     """
-    return bc.get_all_z_subsets(src, dst)
+    return bc.all_dcf_sets(src, dst)
