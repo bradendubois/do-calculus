@@ -67,7 +67,7 @@ def inference_tests(graph_location: str) -> (bool, str):
         causal_graph = CausalGraph(**parsed_model)
 
         success, msg = model_inference_validation(causal_graph)
-        print_test_result(success, msg)
+        print_test_result(success, msg if not success else f"All tests in {test_file} passed")
 
         if not success:
             all_successful = False

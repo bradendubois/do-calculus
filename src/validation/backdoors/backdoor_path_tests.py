@@ -36,11 +36,11 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
         # Sort each path to improve some sor
         paths = list(map(sorted, paths))
 
-        if test["exhaustive"] and len(paths) < len(expected_paths):
-            return False, f"Only {len(paths)} found, but expected {len(expected_paths)}"
+        if test["exhaustive"] and len(paths) != len(expected_paths):
+            return False, f"{len(paths)} found, but expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
 
-        if not all(map(lambda p: p in expected_paths, paths)):
-            missing = list(filter(lambda p: p not in expected_paths, paths))
+        if not all(map(lambda p: p in paths, expected_paths)):
+            missing = list(filter(lambda p: p not in paths, expected_paths))
             return False, f"Missing {len(missing)} paths: {missing}"
 
     return True, "Backdoor tests passed."
@@ -70,9 +70,9 @@ def backdoor_tests(graph_location: str) -> (bool, str):
         bc = BackdoorController(parse_graph_file_data(graph_data)["graph"])
 
         success, msg = model_backdoor_validation(bc, json_test_data)
-        print_test_result(success, msg)
+        print_test_result(success, msg if not success else f"All tests in {test_file}, {graph_filename} passed")
 
         if not success:
             all_successful = False
 
-    return all_successful, "Backdoor module passed" if all_successful else "Backdoor module encountered errors"
+    return all_successful, "[Backdoor module passed]" if all_successful else "[Backdoor module encountered errors]"

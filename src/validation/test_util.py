@@ -16,5 +16,5 @@ def print_test_result(success: bool, msg: str):
     @param success: bool; True if the test was successful, False otherwise
     @param msg: string; Any arbitrary message returned by the test
     """
-    color = bcolors.OKGREEN if success else bcolors.WARNING
+    color = bcolors.OKGREEN if success else bcolors.FAIL
     print(f"[{color}{success}{bcolors.ENDC}]: {msg}")
