@@ -35,17 +35,17 @@ class OutputLogger:
     #               Print / Log               #
     ###########################################
 
-    def result(self, msg: str):
+    def result(self, msg):
         if self._print_result:
             print(msg)
         self.log(msg)
 
-    def detail(self, msg: str):
+    def detail(self, msg):
         if self._print_detail:
             print(msg)
         self.log(msg)
 
-    def log(self, msg: str):
+    def log(self, msg):
         if not self._log or not self._log_fd:
             return
 

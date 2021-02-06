@@ -10,17 +10,18 @@ from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.CausalGraph import CausalGraph
 
 from src.util.ModelLoader import parse_graph_file_data
+from src.util.Output_Logger import OutputLogger
 
 
 class Do:
 
-    def __init__(self, model: dict or None, print_detail=False, print_result=False, log_detail=False, log_fd=None):
+    def __init__(self, model: dict or None, print_detail=False, print_result=False, log=False, log_fd=None):
         """
         Initializer for an instance of the API.
         @param model: An optional dictionary of a loaded causal graph model. Can be None, and loaded later.
         @param print_detail: Boolean; whether the computation steps involved in queries should be printed.
         @param print_result: Boolean; whether the result of a query should be printed.
-        @param log_detail: Boolean; whether the computation steps involved in queries should logged to a file. If this
+        @param log: Boolean; whether the computation steps involved in queries should logged to a file. If this
             is true, a file must have been set to log to. This can be done by providing a file descriptor either as
             an argument to log_fd, or can be done later with a call to set_log_fd.
         @param log_fd: An open file descriptor to write to, if log_details is enabled.
@@ -34,9 +35,7 @@ class Do:
             self._bc = None
 
         self._print_result = print_result
-        self._print_detail = print_detail
-        self._log_detail = log_detail
-        self._logging_fd = log_fd if log_fd else None
+        self._output = OutputLogger(print_result, print_detail, log, log_fd)
 
     ################################################################
     #                       API Modifications                      #
@@ -50,7 +49,7 @@ class Do:
         """
         d = parse_graph_file_data(data)
 
-        self._cg = CausalGraph(**d)
+        self._cg = CausalGraph(output=self._output, **d)
         self._g = d["graph"]
         self._bc = BackdoorController(self._g.copy())
 
@@ -59,6 +58,7 @@ class Do:
         Set whether or not to print the result of any API query to standard output
         @param to_print: Boolean; True to print results, False to not print results.
         """
+        self._output.set_print_result(to_print)
         self._print_result = to_print
 
     def set_print_detail(self, to_print: bool):
@@ -66,22 +66,22 @@ class Do:
         Set whether or not to print the computation steps of any API query to standard output
         @param to_print: Boolean; True to print results, False to not print steps.
         """
-        self._print_detail = to_print
+        self._output.set_print_detail(to_print)
 
-    def set_logging(self, to_log_detail: bool):
+    def set_logging(self, to_log: bool):
         """
-        Set whether to log computation steps.
+        Set whether to log computation steps and results.
         @precondition A file descriptor has been given to the API either in the initializer, or in a call to set_log_fd.
-        @param to_log_detail: Boolean; whether or not to log computation steps.
+        @param to_log: Boolean; whether or not to log computation steps.
         """
-        self._log_detail = to_log_detail
+        self._output.set_log(to_log)
 
     def set_log_fd(self, log_fd):
         """
         Set the internal file descriptor to log computation steps to, if this option is enabled.
         @param log_fd: An open file descriptor to write computation details to.
         """
-        self._logging_fd = log_fd
+        self._output.set_log_fd(log_fd)
 
     ################################################################
     #                         Distributions                        #
@@ -97,8 +97,7 @@ class Do:
         """
         # All deconfounding is handled by the CG
         result = api_probability_query(self._cg, y, x)
-        if self._print_result:
-            print(result)
+        self._output.result(result)
 
         return result
 
@@ -119,6 +118,7 @@ class Do:
             and each vertex within the sub-list is a vertex along this path.
         """
         result = api_backdoor_paths(self._bc, src, dst, dcf)
+
         if self._print_result:
             for path in result:
                 for left, right in zip(path[:-1], path[1:]):

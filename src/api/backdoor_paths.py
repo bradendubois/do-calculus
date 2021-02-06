@@ -45,5 +45,5 @@ def api_backdoor_paths(bc: BackdoorController, src: set, dst: set, dcf: set) -> 
     # TODO Add a method in Backdoor Controller that can return all paths immediately
     paths = []
     for s, t in product(src, dst):
-        paths += bc.backdoor_paths(s, t, dcf)
+        paths += bc.backdoor_paths_pair(s, t, dcf)
     return paths
