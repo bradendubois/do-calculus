@@ -17,7 +17,7 @@ def run_repl(graph_location="src/graphs/full"):
         which are JSON files and conform to the causal graph model specification.
     """
 
-    api = Do(model=None, print_details=True, print_result=True)
+    api = Do(model=None, print_detail=True, print_result=True)
 
     """
     This is a mapping that will connect user-inputting strings to the respective functionality requested.

@@ -14,13 +14,13 @@ from src.util.ModelLoader import parse_graph_file_data
 
 class Do:
 
-    def __init__(self, model: dict or None, print_details=False, print_result=False, log_details=False, log_fd=None):
+    def __init__(self, model: dict or None, print_detail=False, print_result=False, log_detail=False, log_fd=None):
         """
         Initializer for an instance of the API.
         @param model: An optional dictionary of a loaded causal graph model. Can be None, and loaded later.
-        @param print_details: Boolean; whether the computation steps involved in queries should be printed.
+        @param print_detail: Boolean; whether the computation steps involved in queries should be printed.
         @param print_result: Boolean; whether the result of a query should be printed.
-        @param log_details: Boolean; whether the computation steps involved in queries should logged to a file. If this
+        @param log_detail: Boolean; whether the computation steps involved in queries should logged to a file. If this
             is true, a file must have been set to log to. This can be done by providing a file descriptor either as
             an argument to log_fd, or can be done later with a call to set_log_fd.
         @param log_fd: An open file descriptor to write to, if log_details is enabled.
@@ -34,8 +34,8 @@ class Do:
             self._bc = None
 
         self._print_result = print_result
-        self._print_detail = print_details
-        self._log_detail = log_details
+        self._print_detail = print_detail
+        self._log_detail = log_detail
         self._logging_fd = log_fd if log_fd else None
 
     ################################################################
