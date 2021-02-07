@@ -9,19 +9,18 @@
 import numpy as np      # Used in table->str formatting
 import math             # Used in table->str formatting
 
-from src.config.config_manager import *
-from src.probability.structures.VariableStructures import *
-from src.util.IO_Logger import io
-from src.util.ProbabilityExceptions import *
+from src.config.config_manager import access
+from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
+from src.util.ProbabilityExceptions import MissingTableRow
 
 
 class ConditionalProbabilityTable:
     """
     A basic conditional probability table that reflects the values of one Variable, and any number of conditional
     values
-    :param variable: A Variable object, representing the variable this table computes a probability for
-    :param given: A (possibly empty) list of Variables, representing the parents for the variable given
-    :param table_rows: A list of rows in the table, each formatted as [<OUTCOME>, ["<GIVEN_1_OUTCOME>, ...], <P>]
+    @param variable: A Variable object, representing the variable this table computes a probability for
+    @param given: A (possibly empty) list of Variables, representing the parents for the variable given
+    @param table_rows: A list of rows in the table, each formatted as [<OUTCOME>, ["<GIVEN_1_OUTCOME>, ...], <P>]
     """
 
     # Padding units on the left/right sides of each cell
@@ -36,14 +35,14 @@ class ConditionalProbabilityTable:
         # Clean up the rows; Each is formatted as: [outcome of variable, list of outcomes of parents, probability]
         for row in table_rows:
             outcomes = []
-            for i in range(len(self.given)):
-                outcomes.append(Outcome(self.given[i], row[1][i]))
+            for i, x in enumerate(self.given):
+                outcomes.append(Outcome(x, row[1][i]))
             self.table_rows.append([Outcome(variable.name, row[0]), outcomes, float(row[2])])
 
     def __str__(self) -> str:
         """
         String builtin for a ConditionalProbabilityTable
-        :return: A string representation of the table.
+        @return: A string representation of the table.
         """
 
         # Create a snazzy numpy table
@@ -72,7 +71,7 @@ class ConditionalProbabilityTable:
                 table[i+1][1+given_idx] = row[1][given_idx].outcome
 
             # The probability, to some modifiable number of digits
-            table[i+1][table.shape[1]-1] = "{0:.{precision}f}".format(row[2], precision=access("output_levels_of_precision"))
+            table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=access("output_levels_of_precision"))
 
         # Wiggle/Padding, column by column
         for column_index in range(1 + len(self.given) + 1):
@@ -93,26 +92,26 @@ class ConditionalProbabilityTable:
     def __eq__(self, other) -> bool:
         """
         Equality builtin for a ConditionalProbabilityTable
-        :param other: Another ConditionalProbabilityTable to compare to
-        :return:
+        @param other: Another ConditionalProbabilityTable to compare to
+        @return:
         """
         if isinstance(other, ConditionalProbabilityTable):
             return self.variable == other.variable and set(self.given) == set(other.given)
         else:
             return False
 
-    def probability_lookup(self, outcome: list, given: list) -> float:
+    def probability_lookup(self, outcome: Outcome or Intervention, given: list) -> float:
         """
         Directly lookup the probability for the row corresponding to the queried outcome and given data
-        :param outcome: The specific outcome to lookup
-        :param given: A list of Outcome objects
-        :return: A probability corresponding to the respective row. Raises an Exception otherwise.
+        @param outcome: The specific outcome to lookup
+        @param given: A list of Outcome objects
+        @return: A probability corresponding to the respective row. Raises an Exception otherwise.
         """
-        for row in self.table_rows:
+        for row_outcome, row_given, row_p in self.table_rows:
             # If the outcome for this row matches, and each outcome for the given data matches...
-            if outcome[0] == row[0] and set(row[1]) == set(given):
-                return row[2]       # We have our answer
+            if outcome == row_outcome and set(row_given) == set(given):
+                return row_p       # We have our answer
 
         # Iterated over all the rows and didn't find the correct one
-        io.write_log("Couldn't find row:", str([str(i) for i in outcome]), "|", str([str(i) for i in given]))
+        print("Couldn't find row:", str([str(i) for i in outcome]), "|", str([str(i) for i in given]))
         raise MissingTableRow

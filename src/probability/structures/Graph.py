@@ -24,20 +24,20 @@ class Graph:
     def __init__(self, v: set, e: set):
         """
         Initializer for a basic Graph.
-        :param v: A set of vertices
-        :param e: A set of edges, each edge being (source, target)
+        @param v: A set of vertices
+        @param e: A set of edges, each edge being (source, target)
         """
 
         self.v = v
-        self.e = [(i[0].strip(), i[1].strip()) for i in e]
+        self.e = {(s.strip(), t.strip()) for s, t in e}
 
         # Declare the keys (which are vertices)
         self.incoming = {vertex.strip(): set() for vertex in v}
         self.outgoing = {vertex.strip(): set() for vertex in v}
 
-        for edge in e:
-            self.outgoing[edge[0]].add(edge[1])
-            self.incoming[edge[1]].add(edge[0])
+        for s, t in e:
+            self.outgoing[s].add(t)
+            self.incoming[t].add(s)
 
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
@@ -47,8 +47,8 @@ class Graph:
         def initialize_topology(vertex: CG_Types, depth=0):
             """
             Helper function to initialize the ordering of the Variables in the graph
-            :param vertex: A Variable to set the ordering of, and then all its children
-            :param depth: How many "levels deep"/variables traversed to reach current
+            @param vertex: A Variable to set the ordering of, and then all its children
+            @param depth: How many "levels deep"/variables traversed to reach current
             """
             label = to_label(vertex)
             self.topology_map[label] = max(self.topology_map[label], depth)
@@ -62,7 +62,7 @@ class Graph:
     def __str__(self) -> str:
         """
         String builtin for the Graph class
-        :return: A string representation of the given Graph instance
+        @return: A string representation of the given Graph instance
         """
         msg = "Vertices: " + ", ".join(sorted(i for i in self.v)) + "\n"
         msg += "Edges:\n" + "\n".join(" -> ".join(i for i in edge) for edge in self.e)
@@ -71,15 +71,15 @@ class Graph:
     def roots(self) -> set:
         """
         Get the roots of the the graph G.
-        :return: A set of vertices (strings) in G that have no parents.
+        @return: A set of vertices (strings) in G that have no parents.
         """
         return set([x for x in self.v if len(self.parents(x)) == 0])
 
     def parents(self, v: CG_Types) -> set:
         """
         Get the parents of v, which may actually be currently controlled
-        :param v: A variable in our graph
-        :return: All parents reachable (which would be none if being controlled)
+        @param v: A variable in our graph
+        @return: All parents reachable (which would be none if being controlled)
         """
         label = to_label(v)
         if label in self.incoming_disabled:
@@ -90,8 +90,8 @@ class Graph:
     def children(self, v: CG_Types) -> set:
         """
         Get the children of v, which may actually be currently controlled
-        :param v: A variable in our graph
-        :return: All children reachable (which would be none if being controlled)
+        @param v: A variable in our graph
+        @return: All children reachable (which would be none if being controlled)
         """
         label = to_label(v)
         if label in self.outgoing_disabled:
@@ -102,8 +102,8 @@ class Graph:
     def ancestors(self, v: CG_Types) -> set:
         """
         Get the ancestors of v, accounting for disabled vertices
-        :param v: The vertex to find all ancestors of
-        :return: A set of reachable ancestors of v
+        @param v: The vertex to find all ancestors of
+        @return: A set of reachable ancestors of v
         """
 
         ancestors = set()
@@ -120,8 +120,8 @@ class Graph:
     def reach(self, v: CG_Types) -> set:
         """
         Get the reach of v, accounting for disabled vertices
-        :param v: The vertex to find all descendants of
-        :return: A set of reachable descendants of v
+        @param v: The vertex to find all descendants of
+        @return: A set of reachable descendants of v
         """
 
         children = set()
@@ -138,7 +138,7 @@ class Graph:
     def disable_outgoing(self, *disable: CG_Types):
         """
         Disable the given vertices' outgoing edges
-        :param disable: Any number of vertices to disable
+        @param disable: Any number of vertices to disable
         """
         for v in disable:
             self.outgoing_disabled.add(to_label(v))
@@ -146,7 +146,7 @@ class Graph:
     def disable_incoming(self, *disable: CG_Types):
         """
         Disable the given vertices' incoming edges
-        :param disable: Any number of vertices to disable
+        @param disable: Any number of vertices to disable
         """
         for v in disable:
             self.incoming_disabled.add(to_label(v))
@@ -161,22 +161,22 @@ class Graph:
     def get_topology(self, v: CG_Types) -> int:
         """
         Determine the "depth" a given Variable is at in a topological sort of the graph
-        :param v: The variable to determine the depth of
-        :return: Some non-negative integer representing the depth of this variable
+        @param v: The variable to determine the depth of
+        @return: Some non-negative integer representing the depth of this variable
         """
         return self.topology_map[to_label(v)]
 
     def copy(self):
         """
         Public copy method; copies v, e, and the disabled sets
-        :return: A copied Graph
+        @return: A copied Graph
         """
         return self.__copy__()
 
     def __copy__(self):
         """
         Copy builtin allowing the Graph to be copied
-        :return: A copied Graph
+        @return: A copied Graph
         """
         copied = Graph(self.v.copy(), set(self.e.copy()))
         copied.incoming_disabled = self.incoming_disabled.copy()
@@ -186,8 +186,8 @@ class Graph:
     def topological_variable_sort(self, variables: list) -> list:
         """
         A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
-        :param variables: A list of any number of Variable/Outcome/Intervention instances
-        :return: A list, sorted (currently in the form of a topological sort)
+        @param variables: A list of any number of Variable/Outcome/Intervention instances
+        @return: A list, sorted (currently in the form of a topological sort)
         """
         if len(variables) == 0:
             return []
@@ -200,8 +200,8 @@ class Graph:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
-        :param variables: A list of any number of Variable/Outcome/Intervention instances
-        :return: A sorted list, such that any instance has no ancestor earlier in the list
+        @param variables: A list of any number of Variable/Outcome/Intervention instances
+        @return: A sorted list, such that any instance has no ancestor earlier in the list
         """
         # We can already do top-down sorting, just reverse the answer
         return self.topological_variable_sort(variables)[::-1]
@@ -210,7 +210,7 @@ class Graph:
 def to_label(item: str or Variable or Outcome or Intervention) -> str:
     """
     Convert a variable to its string name, if not already provided as such
-    :param item: The item to convert, either a string (done) or some Variable
-    :return: A string name of the given item, if not already provided as a string
+    @param item: The item to convert, either a string (done) or some Variable
+    @return: A string name of the given item, if not already provided as a string
     """
     return item.strip("'") if isinstance(item, str) else item.name.strip("'")

@@ -11,9 +11,9 @@ from src.validation.test_util import print_test_result
 def within_precision(a: float, b: float) -> bool:
     """
     Check whether two values differ by an amount less than some number of digits of precision
-    :param a: The first value
-    :param b: The second value
-    :return: True if the values are within the margin of error acceptable, False otherwise
+    @param a: The first value
+    @param b: The second value
+    @return: True if the values are within the margin of error acceptable, False otherwise
     """
     return abs(a - b) < 1 / (10 ** access("regression_levels_of_precision"))
 

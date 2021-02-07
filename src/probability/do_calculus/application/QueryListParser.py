@@ -9,12 +9,12 @@
 
 # Take a QueryList and evaluate the probability (assumes a valid/correct QueryList)
 
-import itertools
+from itertools import product
 
-from probability.do_calculus.application.CustomSetFunctions import clean
-from probability.do_calculus.application.QueryStructures import QueryList, Sigma, Query
-from probability.structures.Graph import Graph, Outcome, Intervention
-from probability.structures.Probability_Engine import ProbabilityEngine
+from src.probability.do_calculus.application.CustomSetFunctions import clean
+from src.probability.do_calculus.application.QueryStructures import QueryList, Sigma, Query
+from src.probability.structures.Graph import Graph, Outcome, Intervention
+from src.probability.structures.Probability_Engine import ProbabilityEngine
 
 
 def ql_probability(known: dict, graph: Graph, outcomes: dict, tables: dict, ql: QueryList, **kwargs):
@@ -42,7 +42,7 @@ def ql_probability(known: dict, graph: Graph, outcomes: dict, tables: dict, ql: 
         over = list(item.over)
 
         # Cross product of all the possible outcomes
-        for cross in itertools.product(*[outcomes[clean(v)] for v in over]):
+        for cross in product(*[outcomes[clean(v)] for v in over]):
 
             # Copy the dictionary mapping variables to rename
             new_known = known.copy()
@@ -65,15 +65,15 @@ def ql_probability(known: dict, graph: Graph, outcomes: dict, tables: dict, ql: 
         item: Query
 
         # Can simply convert everything in our head to Outcomes - shouldn't contain any Interventions
-        head = [Outcome(clean(variable), known[variable]) for variable in item.head]
+        head = {Outcome(clean(variable), known[variable]) for variable in item.head}
 
         # Convert everything in the body to either an Outcome or Intervention, "cleaning" the variable name so that
         #   all variables are consistent with the graph
-        body_interventions = [Intervention(clean(variable), known[variable]) for variable in item.body.interventions]
-        body_outcomes = [Outcome(clean(variable), known[variable]) for variable in item.body.observations]
+        body_interventions = {Intervention(clean(variable), known[variable]) for variable in item.body.interventions}
+        body_outcomes = {Outcome(clean(variable), known[variable]) for variable in item.body.observations}
 
         # Resulting probability this Query item
-        result = ProbabilityEngine(graph, outcomes, tables).probability((head, body_outcomes + body_interventions))
+        result = ProbabilityEngine(graph, outcomes, tables).probability(head, body_outcomes | body_interventions)
 
         # All done
         if len(new_ql.queries) == 0:

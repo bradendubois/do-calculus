@@ -72,7 +72,7 @@ class CausalGraph:
         if len(interventions) == 0:
 
             engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
-            probability = engine.probability((head, body))
+            probability = engine.probability(head, body)
 
         # There are interventions; may need to find some valid Z to compute
         else:
@@ -90,7 +90,7 @@ class CausalGraph:
                 self.graph.disable_incoming(*interventions)
 
                 engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
-                probability = engine.probability((head, body))
+                probability = engine.probability(head, body)
 
             # Backdoor paths found; find deconfounding set to compute
             else:
@@ -143,15 +143,15 @@ class CausalGraph:
         for cross in product(*[self.outcomes[var] for var in dcf]):
 
             # Construct the respective Outcome list of each Z outcome cross product
-            z_outcomes = [Outcome(x, cross[i]) for i, x in enumerate(dcf)]
+            z_outcomes = {Outcome(x, cross[i]) for i, x in enumerate(dcf)}
 
             # First, we do P(Y | do(X), Z)
-            self.output.detail(f"Computing sub-query: {p_str(list(head), list(body) + z_outcomes)}")
-            p_y_x_z = engine.probability((head, body | set(z_outcomes)))
+            self.output.detail(f"Computing sub-query: {p_str(list(head), list(body | z_outcomes))}")
+            p_y_x_z = engine.probability(head, body | set(z_outcomes))
 
             # Second, P(Z)
-            self.output.detail(f"Computing sub-query: {p_str(z_outcomes, list(body))}")
-            p_z = engine.probability((z_outcomes, body))
+            self.output.detail(f"Computing sub-query: {p_str(list(z_outcomes), list(body))}")
+            p_z = engine.probability(z_outcomes, body)
 
             probability += p_y_x_z * p_z
 

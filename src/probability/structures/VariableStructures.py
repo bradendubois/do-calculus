@@ -19,8 +19,8 @@ class Outcome:
     def __init__(self, name: str, outcome: str):
         """
         Constructor for an Outcome
-        :param name: The name of the variable. Ex: "X"
-        :param outcome: The specific outcome of the variable. Ex: "x" or "~x"
+        @param name: The name of the variable. Ex: "X"
+        @param outcome: The specific outcome of the variable. Ex: "x" or "~x"
         """
         self.name = name.strip()
         self.outcome = outcome.strip()
@@ -46,11 +46,11 @@ class Variable:
     def __init__(self, name: str, outcomes: list, parents: list, reach=None, topological_order=0):
         """
         A basic Variable for use in a CPT or Causal Graph
-        :param name: The name of the Variable, "X"
-        :param outcomes: A list of all potential outcomes of the variable: ["x", "~x"]
-        :param parents: A list of strings representing the names of all the parents of this Variable
-        :param reach: An optional set of Variables which are reachable from this Variable
-        :param topological_order: Used in the ordering of Variables as defined by a topological sort
+        @param name: The name of the Variable, "X"
+        @param outcomes: A list of all potential outcomes of the variable: ["x", "~x"]
+        @param parents: A list of strings representing the names of all the parents of this Variable
+        @param reach: An optional set of Variables which are reachable from this Variable
+        @param topological_order: Used in the ordering of Variables as defined by a topological sort
         """
         self.name = name.strip()
         self.outcomes = [outcome.strip() for outcome in outcomes]
@@ -72,8 +72,8 @@ class Variable:
             return self.name == other
 
         return self.name == other.name and \
-               set(self.outcomes) == set(other.outcomes) and \
-               set(self.parents) == set(other.parents)
+            set(self.outcomes) == set(other.outcomes) and \
+            set(self.parents) == set(other.parents)
 
     def __copy__(self):
         return Variable(self.name, self.outcomes.copy(), self.parents.copy(), reach=self.reach.copy())
@@ -106,8 +106,8 @@ class Intervention(Outcome):
 def parse_outcomes_and_interventions(line: str) -> set:
     """
     Take one string line and parse it into a list of Outcomes and Interventions
-    :param line: A string representing the query
-    :return: A list, of Outcomes and/or Interventions
+    @param line: A string representing the query
+    @return: A list, of Outcomes and/or Interventions
     """
     # "do(X=x)", "do(X=x, Y=y)", "do(X-x), do(Y=y)" are all valid ways to write interventions
     interventions_preprocessed = re.findall(r'do\([^do]*\)', line)
