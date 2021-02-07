@@ -15,7 +15,7 @@ from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import Outcome, Intervention
 
 from src.util.Output_Logger import OutputLogger
-from src.util.parsers.ProbabilityString import p_str
+from src.util.helpers import p_str
 from src.util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 

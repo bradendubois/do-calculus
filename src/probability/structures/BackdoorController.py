@@ -11,8 +11,8 @@ from itertools import product
 
 from src.config.config_manager import access
 from src.probability.structures.Graph import Graph
-from src.util.helpers.MinimizeSets import minimal_sets
-from src.util.helpers.PowerSet import power_set
+from src.util.helpers import minimal_sets
+from src.util.helpers import power_set
 
 
 class BackdoorController:

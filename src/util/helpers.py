@@ -2,10 +2,10 @@ from itertools import chain, combinations
 from typing import Iterator
 
 
-def power_set(variable_list, allow_empty_set=True) -> Iterator[any, any]:
+def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any, any]:
     """
-    Quick helper that creates a chain of tuples, which will be the power set of the given list
-    @param variable_list: A list of string variables
+    Quick helper that creates a chain of tuples, which will be the power set of the given list or set
+    @param variable_list: Any arbitrary list or set
     @param allow_empty_set: Whether or not to consider the empty set {} as a valid set
     @return: A chain object of tuples; power set of variable_list
     """
@@ -18,7 +18,7 @@ def minimal_sets(set_of_sets: list) -> list:
     """
     Take a set of sets, and return only the minimal sets
     @param set_of_sets: A set of sets, each set containing strings
-    @return: A list of minimal sets
+    @return: A list of minimal sets; that is, all sets such that there is no superset
     """
     sorted_sets = sorted(map(set, set_of_sets), key=len)
     minimal_subsets = []
@@ -36,3 +36,16 @@ def disjoint(*sets) -> bool:
     @return: True if all sets are disjoint, False otherwise
     """
     return len(set().intersection(*sets)) == 0
+
+
+def p_str(lhs: list, rhs: list) -> str:
+    """
+    Convert a head&body to a properly-formatted string
+    @param lhs: The head/LHS of the query; a list of Outcome/Intervention objects
+    @param rhs: The body/RHS of the query; a list of Outcome/Intervention objects
+    @return: A string representation "P(X | Y)"
+    """
+    if len(rhs) == 0:
+        return f'P({", ".join(map(str, lhs))})'
+
+    return f'P({", ".join(map(str, lhs))} | {", ".join(map(str, rhs))})'

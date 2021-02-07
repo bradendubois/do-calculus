@@ -17,8 +17,7 @@ from src.probability.structures.Probability_Engine import ProbabilityEngine
 from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
 
 from src.util.Output_Logger import OutputLogger
-from src.util.parsers.ProbabilityString import p_str
-
+from src.util.helpers import p_str
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
