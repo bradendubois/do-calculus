@@ -30,10 +30,11 @@ run_debug = len(argv) >= 2 and argv[1].lower() in ["validate", "debug", "test"]
 
 if run_debug:
     from src.validation.full_driver import run_all_tests
+    from src.validation.test_util import print_test_result
 
     # Boolean result returned: True if all tests are successful, False otherwise
     success = run_all_tests()
-    print("[All Tests Passed]" if success else "[Some Errors Occurred]")
+    print_test_result(success, "[All Tests Passed]" if success else "[Some Errors Occurred]")
 
 #######################################
 #                 REPL                #
