@@ -4,10 +4,13 @@
 
 from src.api.backdoor_paths import api_backdoor_paths
 from src.api.deconfounding_sets import api_deconfounding_sets
+from src.api.joint_distribution_table import api_joint_distribution_table
 from src.api.probability_query import api_probability_query
 
 from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.CausalGraph import CausalGraph
+from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from src.probability.structures.VariableStructures import Variable
 
 from src.util.ModelLoader import parse_graph_file_data
 from src.util.Output_Logger import OutputLogger
@@ -98,6 +101,25 @@ class Do:
         # All deconfounding is handled by the CG
         result = api_probability_query(self._cg, y, x)
         self._output.result(result)
+
+        return result
+
+    def joint_distribution_table(self):
+        """
+        Compute a joint distribution table across the entire model loaded.
+        @return: A list of tuples, (Outcomes, P), where Outcomes is a unique set of Outcome objects for the model, and
+            P is the corresponding probability.
+        """
+        result = api_joint_distribution_table(self._cg)
+
+        if self._print_result:
+            keys = sorted(self._cg.variables.keys())
+            rows = [[",".join(outcomes), [], p] for outcomes, p in result]
+            rows.append(["Total:", [], sum(filter(lambda r: r[2], result))])
+            cpt = ConditionalProbabilityTable(Variable(",".join(keys), [], []), [], rows)
+
+            self._output.result(f"Joint Distribution Table for: {','.join(keys)}")
+            self._output.result(f"{cpt}")
 
         return result
 

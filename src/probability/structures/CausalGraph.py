@@ -9,15 +9,16 @@
 
 from itertools import product
 
+from src.config.config_manager import access
+
 from src.probability.structures.BackdoorController import BackdoorController
-from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from src.probability.structures.Graph import *
+from src.probability.structures.Graph import Graph
 from src.probability.structures.Probability_Engine import ProbabilityEngine
-from src.probability.structures.VariableStructures import *
+from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
 
 from src.util.Output_Logger import OutputLogger
-from src.util.parsers.ProbabilityString import *
-from src.util.ResultCache import *
+from src.util.parsers.ProbabilityString import p_str
+
 
 # Union all Variable types with string for functions that can take any of these
 CG_Types = str or Variable or Outcome or Intervention
@@ -156,34 +157,7 @@ class CausalGraph:
 
         return probability
 
-    # Joint Distribution Table
     # TODO -> Move these into API?
-
-    def joint_distribution_table(self):
-        """
-        Generate and present a joint distribution table for the loaded graph.
-        """
-        # Sort the variables for some nice presentation
-        sort_keys = sorted(self.variables.keys())
-
-        # Get all the possible outcomes for each respective variable, stored as a list of lists, ordered mirroring keys
-        sorted_outcomes = [self.variables[key].outcomes for key in sort_keys]
-        results = []
-
-        # Cross product of this list and calculate each probability
-        for cross in product(*sorted_outcomes):
-
-            # Construct each Outcome by pairing the sorted keys with the outcome chosen
-            outcomes = [Outcome(sort_keys[i], cross[i]) for i in range(len(sort_keys))]
-            result = self.probability_query(set(outcomes), set())
-            results.append([",".join(cross), [], result])
-
-        results.append(["Total:", [], sum(r[2] for r in results)])
-
-        # Create the table, then print it (with some aesthetic offsetting)
-        cpt = ConditionalProbabilityTable(Variable(",".join(sort_keys), [], []), [], results)
-        self.output.result(f"Joint Distribution Table for: {','.join(sort_keys)}")
-        self.output.result(f"{cpt}")
 
     # Topological Sort
 
