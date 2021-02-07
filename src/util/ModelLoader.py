@@ -9,10 +9,12 @@
 
 # Here, we can simply take a graph file and load it, isolating this code and reducing the Causal Graph filesize
 
+from json import load
+from os import path
+
 from src.probability.structures.ConditionalProbabilityTable import *
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import *
-from src.util.IO_Logger import *
 
 
 def parse_graph_file_data(filename: str or dict) -> dict:
@@ -23,14 +25,14 @@ def parse_graph_file_data(filename: str or dict) -> dict:
     """
 
     # Ensure the file exists
-    if isinstance(filename, str) and not os.path.isfile(filename):
-        io.write("ERROR: Can't find:", filename)
+    if isinstance(filename, str) and not path.isfile(filename):
+        print("ERROR: Can't find:", filename)
         raise Exception
 
     # Load the file, then we parse it
     if isinstance(filename, str):
         with open(filename) as json_file:
-            loaded_file = json.load(json_file)
+            loaded_file = load(json_file)
     else:
         loaded_file = filename
 

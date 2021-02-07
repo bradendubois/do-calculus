@@ -35,18 +35,22 @@ class OutputLogger:
     #               Print / Log               #
     ###########################################
 
-    def result(self, msg):
+    def result(self, msg, x=0):
         if self._print_result:
-            print(msg)
-        self.log(msg)
+            print(" " * x, str(msg))
+        self.log(msg, x=x)
 
-    def detail(self, msg):
+    def detail(self, *msgs, x=0, join=" ", end="\n"):
         if self._print_detail:
-            print(msg)
-        self.log(msg)
+            for line in msgs:
+                print(" " * x, str(line), end=join)
+            print(end, end="")
+        self.log(msgs, x=x, join=join, end=end)
 
-    def log(self, msg):
+    def log(self, *msgs, x=0, join=" ", end="\n"):
         if not self._log or not self._log_fd:
             return
 
-        self._log_fd.write(msg + "\n")
+        for line in msgs:
+            self._log_fd.write(" " * x + str(line) + join)
+        self._log_fd.write(end)
