@@ -156,20 +156,3 @@ class CausalGraph:
             probability += p_y_x_z * p_z
 
         return probability
-
-    # TODO -> Move these into API?
-
-    # Topological Sort
-
-    def topological_sort(self):
-        """
-        Generate and present a topological sorting of the graph
-        """
-        maximum_depth = max(self.graph.get_topology(v) for v in self.variables) + 1
-        sorted_by_depth = self.graph.topological_variable_sort(list(self.variables.keys()))
-        self.output.result("*** Topological Sort ***" + "\n")
-        for depth in range(maximum_depth):
-            this_depth = []
-            while len(sorted_by_depth) > 0 and self.graph.get_topology(sorted_by_depth[0]) == depth:
-                this_depth.append(sorted_by_depth.pop(0))
-            self.output.result("Depth {}: {}".format(depth, ", ".join(sorted(this_depth))))

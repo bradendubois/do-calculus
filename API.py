@@ -104,7 +104,7 @@ class Do:
 
         return result
 
-    def joint_distribution_table(self):
+    def joint_distribution_table(self) -> list:
         """
         Compute a joint distribution table across the entire model loaded.
         @return: A list of tuples, (Outcomes, P), where Outcomes is a unique set of Outcome objects for the model, and
@@ -163,6 +163,10 @@ class Do:
             for s in result:
                 print("-", ", ".join(map(str, s)))
         return result
+
+    ################################################################
+    #                         Graph-Related                        #
+    ################################################################
 
     ################################################################
     #                          Bookkeeping                         #
