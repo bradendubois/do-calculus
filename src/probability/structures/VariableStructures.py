@@ -103,7 +103,7 @@ class Intervention(Outcome):
         return self.__copy__()
 
 
-def parse_outcomes_and_interventions(line: str) -> list:
+def parse_outcomes_and_interventions(line: str) -> set:
     """
     Take one string line and parse it into a list of Outcomes and Interventions
     :param line: A string representing the query
@@ -129,4 +129,4 @@ def parse_outcomes_and_interventions(line: str) -> list:
     together.extend(outcomes)
     together.extend(interventions)
 
-    return together
+    return set(together)

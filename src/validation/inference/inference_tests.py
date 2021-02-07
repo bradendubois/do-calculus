@@ -1,3 +1,4 @@
+from json import load
 from os import listdir
 
 from src.probability.structures.CausalGraph import *
@@ -61,7 +62,7 @@ def inference_tests(graph_location: str) -> (bool, str):
     for test_file in files:
 
         with open(graph_location + "/" + test_file) as f:
-            json_model = json.load(f)
+            json_model = load(f)
 
         parsed_model = parse_graph_file_data(json_model)
         causal_graph = CausalGraph(**parsed_model)

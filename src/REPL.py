@@ -91,7 +91,7 @@ def run_repl(graph_location="src/graphs/full"):
         parse, func = lookup[f]
 
         # Parse input, call api function
-        try:
-            func(**parse(arg))
-        except Exception as e:
-            print("EXCEPTION:", str(e))
+        #try:
+        func(**parse(arg))
+        # except Exception as e:
+        #    print("EXCEPTION:", str(e))
