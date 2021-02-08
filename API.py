@@ -114,8 +114,8 @@ class Do:
 
         if self._print_result:
             keys = sorted(self._cg.variables.keys())
-            rows = [[",".join(outcomes), [], p] for outcomes, p in result]
-            rows.append(["Total:", [], sum(filter(lambda r: r[2], result))])
+            rows = [[",".join(map(str, outcomes)), [], p] for outcomes, p in result]
+            rows.append(["Total:", [], sum(map(lambda r: r[1], result))])
             cpt = ConditionalProbabilityTable(Variable(",".join(keys), [], []), [], rows)
 
             self._output.result(f"Joint Distribution Table for: {','.join(keys)}")

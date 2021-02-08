@@ -2,7 +2,7 @@ from itertools import chain, combinations
 from typing import Iterator
 
 
-def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any, any]:
+def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
     """
     Quick helper that creates a chain of tuples, which will be the power set of the given list or set
     @param variable_list: Any arbitrary list or set

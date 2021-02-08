@@ -115,7 +115,7 @@ class CausalGraph:
                     assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
         msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=access("output_levels_of_precision") + 1)
-        self.output.result(msg)
+        self.output.detail(msg)
         self.graph.reset_disabled()
         return probability
 

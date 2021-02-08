@@ -16,8 +16,10 @@ def run_repl(graph_location="src/graphs/full"):
     @param graph_location: A string of the path from the working directory to a directory of graphs
         which are JSON files and conform to the causal graph model specification.
     """
+    def skip(*args, **kwargs):
+        return {}
 
-    api = Do(model=None, print_detail=True, print_result=True)
+    api = Do(model=None, print_detail=False, print_result=True)
 
     """
     This is a mapping that will connect user-inputting strings to the respective functionality requested.
@@ -37,11 +39,12 @@ def run_repl(graph_location="src/graphs/full"):
         (api_probability_query_parse, api.p): ["probability", "p", "compute", "query"],
         (api_deconfounding_sets_parse, api.deconfounding_sets): ["dcs", "dcf", "deconfound", "deconfounding"],
         (api_backdoor_paths_parse, api.backdoor_paths): ["backdoor", "backdoors", "path", "paths"],
+        (skip, api.joint_distribution_table): ["jdt", "joint"]
     }
 
     help_options = ["?", "help", "options"]
     list_options = ["list", "all", "see", "l", "ls"]
-    load_options = ["load", "start", "graph"]
+    load_options = ["load", "import", "start", "graph"]
     exit_options = ["quit", "exit", "stop", "leave", "q"]
 
     assert len(set().union(*api_map.values())) == sum(map(len, api_map.values())), \
