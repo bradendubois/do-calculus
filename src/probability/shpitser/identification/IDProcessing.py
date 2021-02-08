@@ -9,11 +9,11 @@
 
 import itertools
 
-from probability.shpitser.structures.Distribution import Distribution
-from probability.shpitser.structures.Expressions import Symbol, PiObj, SigmaObj
+from src.probability.shpitser.structures.Distribution import Distribution
+from src.probability.shpitser.structures.Expressions import Symbol, PiObj, SigmaObj
 
-from probability.structures.CausalGraph import CausalGraph
-from probability.structures.VariableStructures import Outcome
+from src.probability.structures.CausalGraph import CausalGraph
+from src.probability.structures.VariableStructures import Outcome
 
 
 # Parse an Expression object produced by the application of Shpitser & Pearl's ID algorithm

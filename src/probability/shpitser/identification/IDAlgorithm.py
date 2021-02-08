@@ -7,9 +7,9 @@
 #                                                       #
 #########################################################
 
-from probability.shpitser.structures.Expressions import SigmaObj, PiObj
-from probability.shpitser.structures.Distribution import Distribution
-from probability.shpitser.structures.LatentGraph import LatentGraph
+from src.probability.shpitser.structures.Expressions import SigmaObj, PiObj
+from src.probability.shpitser.structures.Distribution import Distribution
+from src.probability.shpitser.structures.LatentGraph import LatentGraph
 
 # This is the implementation of Shpitser & Pearl (2006)'s 3rd algorithm, which provides an identification of
 #   an interventional distribution using observational distributions, without any of Pearl's backdoor criterion.

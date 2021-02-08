@@ -7,19 +7,19 @@
 #                                                       #
 #########################################################
 
-from probability.shpitser.identification.IDAlgorithm import ID
-from probability.shpitser.identification.IDProcessing import parse_shpitser
-from probability.shpitser.latent.LatentProjection import latent_projection
-from probability.shpitser.structures.Distribution import Distribution
+from src.probability.shpitser.identification.IDAlgorithm import ID
+from src.probability.shpitser.identification.IDProcessing import parse_shpitser
+from src.probability.shpitser.latent.LatentProjection import latent_projection
+from src.probability.shpitser.structures.Distribution import Distribution
 
-from probability.structures.CausalGraph import CausalGraph
+from src.probability.structures.CausalGraph import CausalGraph
 
-from util.parsers.UserIndexSelection import user_index_selection
-
+# TODO Deprecated; Incorporate into the new REPL system
 
 ########################
 #     Shpitser REPL    #
 ########################
+
 
 def shpitser_repl(cg: CausalGraph):
     """

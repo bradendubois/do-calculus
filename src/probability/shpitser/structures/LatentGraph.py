@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from probability.structures.Graph import Graph
+from src.probability.structures.Graph import Graph
 
 # A representation of a Latent Graph, in which we have replaced all unobservable
 #   variables with bidirected arcs between the observable variables

@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from probability.shpitser.structures.Distribution import Distribution
+from src.probability.shpitser.structures.Distribution import Distribution
 
 # A representation of Summation / Product symbols for use in Shpitser
 

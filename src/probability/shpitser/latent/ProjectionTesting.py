@@ -9,8 +9,8 @@
 #                                                       #
 #########################################################
 
-from probability.shpitser.latent.LatentProjection import latent_projection
-from probability.structures.Graph import Graph
+from src.probability.shpitser.latent.LatentProjection import latent_projection
+from src.probability.structures.Graph import Graph
 
 # A runnable file to test the LatentGraph data structure
 
