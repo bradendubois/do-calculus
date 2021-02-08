@@ -9,10 +9,10 @@
 
 # The actual rules of do-calculus; so short, so succinct!
 
-from probability.do_calculus.application.QueryStructures import *
-from probability.do_calculus.application.CustomSetFunctions import clean, subtract, union
-from probability.structures.BackdoorController import BackdoorController
-from probability.structures.Graph import Graph
+from src.probability.do_calculus.application.QueryStructures import Query, QueryBody
+from src.probability.do_calculus.application.CustomSetFunctions import clean, subtract, union
+from src.probability.structures.BackdoorController import BackdoorController
+from src.probability.structures.Graph import Graph
 
 #################################################
 #   Rule 1 - Insertion/deletion of observation  #

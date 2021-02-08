@@ -13,7 +13,7 @@ from src.probability.structures.ConditionalProbabilityTable import ConditionalPr
 from src.probability.structures.VariableStructures import Variable
 
 from src.util.ModelLoader import parse_graph_file_data
-from src.util.Output_Logger import OutputLogger
+from src.util.OutputLogger import OutputLogger
 
 
 class Do:

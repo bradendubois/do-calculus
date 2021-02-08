@@ -10,14 +10,13 @@
 # Basic IDS-approach solver taking an initial query and solving until there are no interventions left
 #   Thanks, Professor Horsch, for CMPT 317!
 
-from probability.do_calculus.application.CustomSetFunctions import clean
-from probability.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
-from probability.do_calculus.application.DoCalculusQueryOptions import do_calculus_options, query_cache
-from probability.do_calculus.ids_ai.Stack import Stack
-from probability.do_calculus.ids_ai.Solution import Solution
-from probability.structures.Graph import Graph
-from util.Decorators import print_time
-from util.IO_Logger import io
+from src.probability.do_calculus.application.CustomSetFunctions import clean
+from src.probability.do_calculus.application.QueryStructures import QueryList, Query, QueryBody
+from src.probability.do_calculus.application.DoCalculusQueryOptions import do_calculus_options, query_cache
+from src.probability.do_calculus.ids_ai.Stack import Stack
+from src.probability.do_calculus.ids_ai.Solution import Solution
+from src.probability.structures.Graph import Graph
+from src.util.Decorators import print_time
 
 
 class IDSSolver:
@@ -119,11 +118,11 @@ class IDSSolver:
                     unexplored = True
 
             # Couldn't find an answer at this depth
-            io.write_log("Couldn't find a solution at depth:", current_max_depth, "Looked at:", len(seen), "queries.")
+            # io.write_log("Couldn't find a solution at depth:", current_max_depth, "Looked at:", len(seen), "queries.")
 
             # The stack was fully exhausted, but never through a depth-limit; we have no more options to explore
             if not unexplored:
-                io.write_log("There are no more branches to explore; the solver cannot find an answer.")
+                # io.write_log("There are no more branches to explore; the solver cannot find an answer.")
                 break
 
             # Increase the depth and run again
