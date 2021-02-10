@@ -1,7 +1,8 @@
-# Ignore .files except the gitignore itself
+# Ignore most .files
 .*
 !.github
 !.gitignore
+!.releaserc.yml
 
 # No pycache
 */__pycache__/*

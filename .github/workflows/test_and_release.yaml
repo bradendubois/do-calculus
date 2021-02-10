@@ -1,11 +1,6 @@
-name: Python package
+name: Test project and release
 
-on:
-  push:
-    branches:
-      - main
-      - master
-      - develop
+on: [push]
 
 jobs:
   build:
