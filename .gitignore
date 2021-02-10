@@ -9,23 +9,7 @@
 *.pyc
 
 # Log files from operating software
-logs/*
 src/logs/
 
-# Config file is "personal" and generated on run
+# Config file is generated on run
 src/config/config.json
-
-# Isolated CLI-only builds
-probability-code-*
-
-# Generated documentation
-Quick_Usage.md
-
-# Web modules from the GUI components
-node_modules/*
-
-# Virtual environment / generated code from build process / parcel / pyinstaller / py2app
-venv/*
-build/*
-dist/*
-gui/*
