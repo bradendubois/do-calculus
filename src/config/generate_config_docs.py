@@ -20,12 +20,12 @@ import os
 from primary_configuration import *
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-documentation_file = root + "/../documentation/configuration.md"
+documentation_file = root + "/../doc/configuration.md"
 
 
 def generate_configuration_documentation():
     """
-    Generates the markdown file for configuration file documentation
+    Generates the markdown file for configuration file doc
     """
     # Delete it if it exists; making a new one
     if os.path.isfile(documentation_file):
