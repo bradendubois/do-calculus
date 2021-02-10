@@ -1,7 +1,11 @@
 branches:
-  - master
-  - main
-  - develop
+  master:
+    prerelease: false
+  main:
+    prerelease: false
+  develop:
+    prerelease: true
+
 
 plugins:
   - '@semantic-release/commit-analyzer'
