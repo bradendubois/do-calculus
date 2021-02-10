@@ -5,6 +5,9 @@ from src.validation.shpitser.shpitser_tests import shpitser_tests
 
 from src.validation.test_util import print_test_result
 
+graph_location = "src/graphs/full"
+generated_location = "src/graphs/generated"
+
 
 def run_all_tests(extreme=False) -> bool:
     """
@@ -15,9 +18,6 @@ def run_all_tests(extreme=False) -> bool:
     @postcondition Output of all tests is printed to standard output
     @return: True if all tests are successful, False otherwise
     """
-
-    graph_location = "src/graphs/full"
-    generated_location = "src/graphs/generated"
 
     inference_bool, inference_msg = inference_tests(graph_location)
     backdoor_bool, backdoor_msg = backdoor_tests(graph_location)

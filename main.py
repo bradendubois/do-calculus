@@ -14,13 +14,25 @@ import os
 from sys import argv
 
 from src.REPL import run_repl
+from src.validation.backdoors.backdoor_path_tests import backdoor_tests
+from src.validation.inference.inference_tests import inference_tests
+from src.validation.test_driver import graph_location
 
 # TODO - Examine if necessary after re-works; should always set cwd to root of file itself
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 #######################################
 #             Parse Input             #
 #######################################
+
+if len(argv) > 1 and argv[1].lower() == "inference":
+    inference_bool, inference_msg = inference_tests(graph_location)
+    assert inference_bool, f"Inference module has failed: {inference_msg}"
+
+if len(argv) > 1 and argv[1].lower() == "backdoor":
+    backdoor_bool, backdoor_msg = backdoor_tests(graph_location)
+    assert backdoor_bool, f"Backdoor module has failed: {backdoor_msg}"
 
 run_debug = len(argv) >= 2 and argv[1].lower() == "debug"
 
@@ -29,7 +41,7 @@ run_debug = len(argv) >= 2 and argv[1].lower() == "debug"
 #######################################
 
 if run_debug:
-    from src.validation.full_driver import run_all_tests
+    from src.validation.test_driver import run_all_tests
     from src.validation.test_util import print_test_result
 
     index = argv.index("debug")
