@@ -1,9 +1,9 @@
 branches:
-  master:
+  - name: master
     prerelease: false
-  main:
+  - name: main
     prerelease: false
-  develop:
+  - name: develop
     prerelease: true
 
 
