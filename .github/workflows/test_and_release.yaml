@@ -1,14 +1,20 @@
 name: Python package
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
@@ -22,3 +28,7 @@ jobs:
     - name: Run backdoor tests
       run: |
         python main.py backdoor
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npx semantic-release
