@@ -1,6 +1,6 @@
 name: Test project and release
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
