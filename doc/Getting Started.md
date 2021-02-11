@@ -72,6 +72,6 @@ pip install -r requirements.txt
 
 ## Running
 
-A basic [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) is available, and [details can be found here|REPL].
+A basic [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) is available, and [[details can be found here|REPL]].
 
-An [API](https://en.wikipedia.org/wiki/API) is also available, and [details can be found here|API].
+An [API](https://en.wikipedia.org/wiki/API) is also available, and [[details can be found here|API]].
