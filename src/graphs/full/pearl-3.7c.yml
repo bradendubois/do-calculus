@@ -1,0 +1,83 @@
+model:
+  U1:
+    outcomes:
+    - u1
+    - ~u1
+    parents: []
+    table: [
+      [u1, 0.3],
+      [~u1, 0.7]
+   ]
+  U2:
+    outcomes:
+    - u2
+    - ~u2
+    parents: []
+    table: [
+      [u2, 0.3],
+      [~u2, 0.7]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    parents:
+    - U1
+    table: [
+      [x, u1, 0.2],
+      [x, ~u1, 0.1],
+      [~x, u1, 0.8],
+      [~x, ~u1, 0.9]
+    ]
+  Y:
+    outcomes:
+    - y
+    - ~y
+    parents:
+    - Z1
+    - Z2
+    table: [
+      [y, z1, z2, 0.3],
+      [y, z1, ~z2, 0.6],
+      [y, ~z1, z2, 0.5],
+      [y, ~z1, ~z2, 0.8],
+      [~y, z1, z2, 0.7],
+      [~y, z1, ~z2, 0.4],
+      [~y, ~z1, z2, 0.5],
+      [~y, ~z1, ~z2, 0.2]
+    ]
+  Z1:
+    outcomes:
+    - z1
+    - ~z1
+    parents:
+    - U2
+    - X
+    table: [
+      [z1, u2, x, 0.3],
+      [z1, u2, ~x, 0.6],
+      [z1, ~u2, x, 0.5],
+      [z1, ~u2, ~x, 0.8],
+      [~z1,  u2,  x, 0.7],
+      [~z1,  u2, ~x, 0.4],
+      [~z1, ~u2, x, 0.5],
+      [~z1, ~u2, ~x, 0.2]
+    ]
+  Z2:
+    outcomes:
+    - z2
+    - ~z2
+    parents:
+    - U1
+    - U2
+    table: [
+      [z2, u1, u2, 0.3],
+      [z2, u1, ~u2, 0.6],
+      [z2, ~u1, u2, 0.5],
+      [z2, ~u1, ~u2, 0.8],
+      [~z2, u1, u2, 0.7],
+      [~z2, u1, ~u2, 0.4],
+      [~z2, ~u1, u2, 0.5],
+      [~z2, ~u1, ~u2, 0.2]
+    ]
+name: 'Pearl: Figure 3.7c'
