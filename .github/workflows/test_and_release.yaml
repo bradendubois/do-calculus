@@ -1,6 +1,10 @@
-name: Test project and release
+name: Test and Release
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+      - beta
 
 jobs:
   build:
@@ -23,7 +27,7 @@ jobs:
     - name: Run backdoor tests
       run: |
         python main.py backdoor
-    - name: Release
+    - name: Create Release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release

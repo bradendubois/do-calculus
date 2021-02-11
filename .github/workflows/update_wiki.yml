@@ -6,19 +6,22 @@ on:
     paths:
       - 'doc/**'
 
-    # Trigger only on main
+    # Trigger only on main/beta
     branches:
       - main
+      - beta
 
 jobs:
-  update-wiki:
+  deploy-wiki:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
-    - name: Update Wiki
+    - name: Push Wiki Changes
       uses: Andrew-Chen-Wang/github-wiki-action@v2
       env:
+        # Make sure you have that / at the end. We use rsync
+        # WIKI_DIR's default is wiki/
         WIKI_DIR: doc/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_MAIL: ${{ secrets.GITHUB_EMAIL }}
