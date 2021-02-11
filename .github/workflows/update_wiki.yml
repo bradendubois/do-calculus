@@ -25,5 +25,5 @@ jobs:
         # WIKI_DIR's default is wiki/
         WIKI_DIR: doc/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_MAIL: ${{ secrets.GITHUB_EMAIL }}
+        GH_MAIL: ${{ secrets.EMAIL }}
         GH_NAME: ${{ github.repository_owner }}
