@@ -42,22 +42,108 @@ The following functionality is currently available:
 
 ### Listing Models
 
+To see all models provided, any of the following commands:
+- ``list``
+_ ``all``
+_ ``see``
+- ``l``
+- ``ls``
+
 ### Loading Models
+
+To load a model present (see: [listing models](#listing-models)), any of the following commands:
+- ``load``
+- ``import``
+- ``start``
+- ``graph``
+
+followed by the name of a model. Models are currently stored as **JSON**; if the model given does not end with ``.json``, it will be automatically appended.
+
+#### Examples
+
+The following are examples of valid inputs for loading models:
+
+```
+load causal_graph_2
+```
+
+```
+import fumigant_model.json
+```
+
+```
+start model_42
+```
 
 ### Computing Probabilities
 
+To compute a probability, any of the following commands:
+- ``probability``
+- ``p``
+- ``compute``
+- ``query``
+
+followed by a query of the form "Y | X", where:
+- ``Y`` is any number of observations possible in the model
+- ``X`` is any number of outcomes and/or interventions/treatments in the model
+- if there are no observations or interventions, the ``|`` can also be omitted
+
+Observations and interventions are formatted as ``NAME=OUTCOME``, where:
+- ``NAME`` is the name of the variable; this must be defined in the loaded model
+- ``OUTCOME`` is some outcome of the variable; this must be defined as a valid outcome for this variable.
+- both ``NAME`` and ``OUTCOME`` are **case-sensitive**
+- interventions are wrapped with "do()"; **do(NAME=OUTCOME)**
+
+If interventions are present, it is possible for the query to not be completed in the presence of un-blockable backdoor paths.
+
+#### Examples
+
+The following are examples of valid inputs for some hypothetical models:
+
+```
+p Y=y | X=x
+```
+
+```
+compute Y=y, X=x
+```
+
+```
+query Y=~y | do(X=x)
+```
+
+```
+p Y=y | do(X=~x), Z=z
+```
+
 ### Deconfounding Sets
 
-To see deconfounding sets, any of the follows commands:
+To see deconfounding sets, any of the following commands:
 - ``dcs``
 - ``dcf``
 - ``deconfound``
 - ``deconfounding``
+
 followed by the appropriate sets of the form ``src -> dst``, where:
 - each respective set is a comma-separated set of vertices in the loaded model
 - ``src`` corresponds to the **source vertices** to search for backdoor paths from
 - ``dst`` corresponds to **destination vertices** reachable by vertices in ``src`` through traditional paths
 
+#### Examples
+
+The following are examples of valid inputs for some hypothetical model:
+
+```
+dcs Y -> X
+```
+
+```
+dcf Y, Z -> W
+```
+
+```
+deconfound W, X -> Y, Z
+```
 
 ### Backdoor Paths
 
