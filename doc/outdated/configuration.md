@@ -16,7 +16,7 @@ Control whether or not to have the regression suite run on launch.
 
 #### Output Regression Results
 
-If regression tests are enabled, control whether or not to output the results of the tests. Results are of the form (success_boolean, success_message).
+If regression tests are enabled, control whether to output the results of the tests. Results are of the form (success_boolean, success_message).
 
 ``always`` and ``never`` are self-explanatory; ``failure`` will only print the results if there are errors.
 

@@ -25,6 +25,8 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #             Parse Input             #
 #######################################
 
+# TODO - cleaner way of integrating tests with workflow
+
 if len(argv) > 1 and argv[1].lower() == "inference":
     inference_bool, inference_msg = inference_tests(graph_location)
     assert inference_bool, f"Inference module has failed: {inference_msg}"

@@ -11,7 +11,7 @@ This assumes the steps in [[Getting Started]] have been followed, and the projec
 
 ## Running
 
-Assuming one's current working directory is the root of the project, the following will start the software
+Assuming one's current working directory is the root of the project, the following will start the software:
 
 ```shell
 python main.py
@@ -44,8 +44,8 @@ The following functionality is currently available:
 
 To see all models provided, any of the following commands:
 - ``list``
-_ ``all``
-_ ``see``
+- ``all``
+- ``see``
 - ``l``
 - ``ls``
 
