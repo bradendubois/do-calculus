@@ -32,12 +32,12 @@ class ConditionalProbabilityTable:
 
         self.table_rows = []
 
-        # Clean up the rows; Each is formatted as: [outcome of variable, list of outcomes of parents, probability]
+        # Clean up the rows; Each is formatted as: [outcome of variable, parent_1, parent_2, ..., probability]
         for row in table_rows:
-            outcomes = []
-            for i, x in enumerate(self.given):
-                outcomes.append(Outcome(x, row[1][i]))
-            self.table_rows.append([Outcome(variable.name, row[0]), outcomes, float(row[2])])
+            outcome = Outcome(variable.name, row[0])
+            parents = row[1:-1]
+
+            self.table_rows.append([outcome, [Outcome(v, x) for v, x in zip(given, parents)], row[-1]])
 
     def __str__(self) -> str:
         """

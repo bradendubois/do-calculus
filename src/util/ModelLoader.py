@@ -9,7 +9,9 @@
 
 # Here, we can simply take a graph file and load it, isolating this code and reducing the Causal Graph filesize
 
-from json import load
+from json import load as json_load
+from yaml import safe_load as yaml_load
+
 from os import path
 
 from src.probability.structures.ConditionalProbabilityTable import *
@@ -120,6 +122,79 @@ def parse_graph_file_data(filename: str or dict) -> dict:
         "functions": functions,
         "v": v,
         "e": e,
+        "graph": graph,
+        "latent": latent
+    }
+
+    return parsed
+
+
+def parse_new_model(file: dict or str):
+
+    if isinstance(file, dict):
+        data = file
+
+    elif not path.isfile(file):
+        print("ERROR: Can't find:", file)
+        raise FileNotFoundError
+
+    else:
+        load = json_load if file.lower().endswith(".json") else yaml_load
+
+        with open(file,  "r") as f:
+            data = load(f)
+
+    # Maps string name to the Variable object instantiated
+    variables = dict()
+
+    # Maps string name *and* corresponding Variable to a list of outcome values
+    outcomes = dict()
+
+    # Maps to corresponding tables
+    tables = dict()
+
+    # Set of latent variables
+    latent = set()
+
+    for name, detail in data["model"].items():
+
+        # Load the relevant data to construct a Variable
+        v_outcomes = detail["outcomes"] if "outcomes" in detail else []
+        v_parents = detail["parents"] if "parents" in detail else []
+
+        # Create a Variable object
+        variable = Variable(name, v_outcomes, v_parents)
+
+        # Lookup the object by its name
+        variables[name] = variable
+
+        # Store by both the Variable object as well as its name, for ease of access
+        outcomes[name] = v_outcomes
+        outcomes[variable] = v_outcomes
+
+        if "latent" in detail and detail["latent"]:
+            latent.add(name)
+            latent.add(variable)
+
+        # Load in the table and construct a CPT
+        table = detail["table"]
+        cpt = ConditionalProbabilityTable(variable, v_parents, table)
+
+        # Map the name/variable to the table
+        tables[name] = cpt
+        tables[variable] = cpt
+
+    v = set(variables.keys())
+    e = set()
+    for child in variables.keys():
+        e.update(list(map(lambda parent: (parent, child), variables[child].parents)))
+    graph = Graph(v, e)
+
+    # Store all the different dictionaries of data as one large dictionary
+    parsed = {
+        "variables": variables,
+        "outcomes": outcomes,
+        "tables": tables,
         "graph": graph,
         "latent": latent
     }
