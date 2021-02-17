@@ -1,5 +1,5 @@
 {
-  "graph_filename": "causal_graph_5.json",
+  "graph_filename": "pearl-3.4.yml",
   "tests": [{
     "src": ["Xi"],
     "dst":  ["Xj"],

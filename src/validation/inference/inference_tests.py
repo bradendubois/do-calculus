@@ -1,4 +1,4 @@
-from json import load
+from yaml import load
 from os import listdir
 
 from src.probability.structures.CausalGraph import *
@@ -54,7 +54,7 @@ def inference_tests(graph_location: str) -> (bool, str):
     @return: True if all tests are successful, False otherwise, along with a string summary message.
     """
 
-    files = sorted(list(filter(lambda x: x.endswith(".json"), listdir(graph_location))))
+    files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(graph_location))))
     all_successful = True
 
     # TODO - Threading to handle all the tests
@@ -62,9 +62,9 @@ def inference_tests(graph_location: str) -> (bool, str):
     for test_file in files:
 
         with open(graph_location + "/" + test_file) as f:
-            json_model = load(f)
+            yml_model = load(f)
 
-        parsed_model = parse_graph_file_data(json_model)
+        parsed_model = parse_graph_file_data(yml_model)
         causal_graph = CausalGraph(**parsed_model)
 
         success, msg = model_inference_validation(causal_graph)
