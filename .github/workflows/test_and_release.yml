@@ -1,7 +1,7 @@
 name: Test and Release
 
 on:
-  workflow_deployed:
+  workflow_dispatch:
   push:
     branches: [ main, beta, develop ]
   pull_request:
