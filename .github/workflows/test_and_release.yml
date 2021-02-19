@@ -47,9 +47,10 @@ jobs:
     - name: Run inference tests (basic models)
       run: |
         python main.py inference
-    - name: Run backdoor tests
-      run: |
-        python main.py backdoor
+
+    #- name: Run backdoor tests
+    #  run: |
+    #    python main.py backdoor
 
     #- name: Create Release
     #  env:
