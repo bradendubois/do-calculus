@@ -113,5 +113,5 @@ class ConditionalProbabilityTable:
                 return row_p       # We have our answer
 
         # Iterated over all the rows and didn't find the correct one
-        print("Couldn't find row:", str([str(i) for i in outcome]), "|", str([str(i) for i in given]))
+        print(f"Couldn't find row: {outcome} | {', '.join(map(str, given))}")
         raise MissingTableRow
