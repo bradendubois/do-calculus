@@ -1,6 +1,8 @@
 # probability-code
 
-[![Coverage Status](https://coveralls.io/repos/github/bradendubois/probability-code/badge.svg?branch=main)](https://coveralls.io/github/bradendubois/probability-code?branch=develop)
+[![Coverage Status | Main](https://coveralls.io/repos/github/bradendubois/probability-code/badge.svg?branch=main)](https://coveralls.io/github/bradendubois/probability-code?branch=main)
+
+[![Coverage Status | Develop](https://coveralls.io/repos/github/bradendubois/probability-code/badge.svg?branch=develop)](https://coveralls.io/github/bradendubois/probability-code?branch=develop)
 
 A Bayesian net written in Python, supporting the do-calculus of Judea Pearl.
 
