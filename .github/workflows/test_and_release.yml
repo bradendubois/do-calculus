@@ -38,7 +38,7 @@ jobs:
 
     - name: Run inference tests (basic models)
       run: |
-        coverage run -m main.py inference
+        coverage run -m pytest
 
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop

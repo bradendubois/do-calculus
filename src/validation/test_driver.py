@@ -36,3 +36,7 @@ def run_all_tests(extreme=False) -> bool:
         inference_bool = inference_bool and extreme_inference_bool
 
     return all([inference_bool, backdoor_bool, shpitser_bool])
+
+
+if __name__ == "main":
+    run_all_tests()
