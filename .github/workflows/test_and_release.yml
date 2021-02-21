@@ -38,7 +38,7 @@ jobs:
 
     - name: Test with pytest / coverage
       run: |
-        coverage run -m main.py validation
+        coverage run -m pytest
 
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop
