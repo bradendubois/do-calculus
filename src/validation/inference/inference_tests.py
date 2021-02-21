@@ -1,10 +1,11 @@
-from yaml import load
+from yaml import safe_load as load
 from os import listdir
 
-from src.probability.structures.CausalGraph import *
-from src.probability.structures.VariableStructures import *
+from src.config.config_manager import access
+from src.probability.structures.CausalGraph import CausalGraph, Outcome
+
 from src.util.ProbabilityExceptions import *
-from src.util.ModelLoader import parse_graph_file_data, parse_new_model
+from src.util.ModelLoader import parse_new_model
 from src.validation.test_util import print_test_result
 
 

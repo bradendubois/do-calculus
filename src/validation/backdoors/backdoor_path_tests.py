@@ -1,11 +1,12 @@
 import itertools
 from os import listdir
 from os.path import dirname, abspath
-from yaml import load
+from yaml import safe_load as load
+
+from src.validation.test_util import print_test_result
 
 from src.probability.structures.BackdoorController import BackdoorController
 from src.util.ModelLoader import parse_graph_file_data
-from src.validation.test_util import print_test_result
 
 test_file_directory = dirname(abspath(__file__)) + "/test_files"
 

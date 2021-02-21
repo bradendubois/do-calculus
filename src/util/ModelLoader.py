@@ -14,9 +14,9 @@ from yaml import safe_load as yaml_load
 
 from os import path
 
-from src.probability.structures.ConditionalProbabilityTable import *
-from src.probability.structures.Graph import Graph
-from src.probability.structures.VariableStructures import *
+from ..probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from ..probability.structures.Graph import Graph
+from ..probability.structures.VariableStructures import *
 
 
 def parse_graph_file_data(filename: str or dict) -> dict:

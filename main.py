@@ -16,7 +16,7 @@ from sys import argv
 from src.REPL import run_repl
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
 from src.validation.inference.inference_tests import inference_tests
-from src.validation.test_driver import graph_location
+from test_driver import graph_location
 
 # TODO - Examine if necessary after re-works; should always set cwd to root of file itself
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -44,7 +44,7 @@ run_debug = len(argv) >= 2 and argv[1].lower() == "debug"
 #######################################
 
 if run_debug:
-    from src.validation.test_driver import run_all_tests
+    from test_driver import run_all_tests
     from src.validation.test_util import print_test_result
 
     index = argv.index("debug")
