@@ -36,23 +36,12 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Run inference tests (basic models)
+    - name: Test with pytest / coverage
       run: |
         coverage run -m main.py validation
 
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop
-
-    #- name: Test with pytest / coverage
-    #  run: |
-    #    coverage run pytest
-    #    coveralls
-
-
-
-    #- name: Run backdoor tests
-    #  run: |
-    #    python main.py backdoor
 
     #- name: Create Release
     #  env:
