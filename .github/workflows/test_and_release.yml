@@ -48,4 +48,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release
-      if: {{ github.ref == 'ref/head/main' || github.ref == 'ref/head/beta' }}
+      if: ${{ github.ref == 'ref/head/main' || github.ref == 'ref/head/beta' }}
