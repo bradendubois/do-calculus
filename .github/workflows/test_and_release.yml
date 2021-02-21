@@ -5,7 +5,7 @@ on:
   push:
     branches: [ main, beta, develop ]
   pull_request:
-    branches: [ main, beta, develop ]
+    branches: [ main  ]
 
 jobs:
   build:
@@ -43,7 +43,9 @@ jobs:
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop
 
-    #- name: Create Release
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #  run: npx semantic-release
+    # Main only - create tagged release
+    - name: Create Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npx semantic-release
+      if: {{ github.ref == 'ref/head/main' || github.ref == 'ref/head/beta' }}

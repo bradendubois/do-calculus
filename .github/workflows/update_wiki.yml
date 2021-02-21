@@ -1,16 +1,14 @@
 name: Deploy Wiki
 
 on:
+  workflow_dispatch:
   push:
     # Trigger only when wiki directory changes
     paths:
       - 'doc/**'
 
     # Trigger only on main/beta
-    branches:
-      - main
-      - beta
-      - develop # enabled only while setting up workflow
+    branches: [ main ]
 
 jobs:
   deploy-wiki:
@@ -21,8 +19,6 @@ jobs:
     - name: Push Wiki Changes
       uses: Andrew-Chen-Wang/github-wiki-action@v2
       env:
-        # Make sure you have that / at the end. We use rsync
-        # WIKI_DIR's default is wiki/
         WIKI_DIR: doc/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_MAIL: ${{ secrets.EMAIL }}

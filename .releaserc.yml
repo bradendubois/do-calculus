@@ -1,5 +1,5 @@
 # .releaserc file
-# Configure the semantic-release workflow used to automatically tag / release on commits to certain branches
+# Configures the test-and-release workflow used to automatically tag / release on commits to certain branches
 
 # Only trigger proper release on
 branches:
