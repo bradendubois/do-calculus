@@ -1,5 +1,15 @@
 # TODO - Run all the tests involved in the entire testing suite - implement threading for that
 
+# api
+from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
+from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
+from src.api.joint_distribution_table import api_joint_distribution_table
+from src.api.probability_query import api_probability_query, api_probability_query_parse
+
+from src.probability.structures.Graph import Graph
+
+from src.util.helpers import power_set, disjoint
+
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
 from src.validation.inference.inference_tests import inference_tests
 from src.validation.shpitser.shpitser_tests import shpitser_tests
@@ -65,7 +75,6 @@ def test_randomized_latent_variables():
 
 # probability/structures
 
-
 # probability/structures/BackdoorController
 
 def test_backdoor_paths():
@@ -102,24 +111,49 @@ def test_probability_lookup():
 
 # probability/structures/Graph
 
+# TODO - Add graph
+graph = Graph(set(), set())
+
+
 def test_roots():
-    ...
+    assert sum(map(lambda v: graph.parents(v), graph.roots())) == 0
 
 
 def test_parents():
-    ...
+    roots = graph.roots()
+    for vertex in graph.v:
+        parents = graph.parents(vertex)
+        for parent in parents:
+            assert (parent, vertex) in graph.e
+
+        if vertex in roots:
+            assert len(parents) == 0
+        else:
+            assert len(parents) > 0
 
 
 def test_children():
-    ...
+    for vertex in graph.v:
+        children = graph.children(vertex)
+        for child in children:
+            assert (vertex, child) in graph.e
+
+        for child in children:
+            assert vertex in graph.parents(child)
 
 
 def test_ancestors():
-    ...
+    for vertex in graph.v:
+        ancestors = graph.ancestors(vertex)
+        for ancestor in ancestors:
+            assert vertex in graph.reach(ancestor)
 
 
 def test_reach():
-    ...
+    for vertex in graph.v:
+        descendants = graph.reach(vertex)
+        for descendant in descendants:
+            assert vertex in graph.reach(descendant)
 
 
 def test_disable_outgoing():
@@ -139,7 +173,19 @@ def test_get_topology():
 
 
 def test_graph_copy():
-    ...
+    graph_2 = graph.copy()
+    assert len(graph.v) == len(graph_2.v)
+    assert len(graph.e) == len(graph_2.e)
+    assert graph.v is not graph_2.v
+    assert graph.e is not graph_2.e
+    for v in graph.v:
+        assert v in graph_2.v
+    for v in graph_2.v:
+        assert v in graph.v
+    for e in graph.e:
+        assert e in graph_2.e
+    for e in graph_2.e:
+        assert e in graph.e
 
 
 def test_topological_variable_sort():
@@ -181,7 +227,11 @@ def test_parse_outcomes_and_interventions():
 # util/
 
 def test_power_set():
-    ...
+    data = [1, 2, 3, 4]
+    with_empty = power_set(data, allow_empty_set=True)
+    without_empty = power_set(data, allow_empty_set=False)
+    assert len(set(with_empty)) == 2 ** len(data)
+    assert len(set(without_empty)) == 2 ** len(data) - 1
 
 
 def test_minimal_sets():
@@ -189,7 +239,13 @@ def test_minimal_sets():
 
 
 def test_disjoint():
-    ...
+    d1 = {0, 1, 2, 3, 4}
+    d2 = {3, 4, 5, 6, 7}
+    d3 = {6, 7, 8, 9, 10}
+    assert not disjoint(d1, d2)
+    assert not disjoint(d2, d3)
+    assert not disjoint(d1, d2, d3)
+    assert disjoint(d1, d3)
 
 
 def test_p_str():
