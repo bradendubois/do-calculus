@@ -7,7 +7,7 @@ from random import randrange
 
 from src.probability.structures.CausalGraph import CausalGraph
 from src.validation.inference.inference_tests import model_inference_validation
-from src.util.ModelLoader import parse_new_model
+from src.util.ModelLoader import parse_model
 
 from graph_generator import generate_graph, randomized_latent_variables
 from distribution_generation import generate_distribution
@@ -43,7 +43,7 @@ while N:
         g = generate_graph(num_vertices, max_path_length, num_edges)
         distribution = generate_distribution(g)
 
-        cg = CausalGraph(**parse_new_model({"variables": list(distribution.values())}))
+        cg = CausalGraph(**parse_model({"variables": list(distribution.values())}))
 
         success, message = model_inference_validation(cg)
         if success:

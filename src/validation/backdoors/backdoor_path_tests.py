@@ -6,7 +6,7 @@ from yaml import safe_load as load
 from src.validation.test_util import print_test_result
 
 from src.probability.structures.BackdoorController import BackdoorController
-from src.util.ModelLoader import parse_new_model
+from src.util.ModelLoader import parse_model
 
 test_file_directory = dirname(abspath(__file__)) + "/test_files"
 
@@ -70,7 +70,7 @@ def backdoor_tests(graph_location: str) -> (bool, str):
         with open(f"{graph_location}/{graph_filename}") as f:
             graph_data = load(f)
 
-        bc = BackdoorController(parse_new_model(graph_data)["graph"])
+        bc = BackdoorController(parse_model(graph_data)["graph"])
 
         success, msg = model_backdoor_validation(bc, yml_test_data)
         print_test_result(success, msg if not success else f"All tests in {test_file}, {graph_filename} passed")

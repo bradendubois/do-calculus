@@ -1,149 +1,44 @@
-#########################################################
-#                                                       #
-#   Graph Loader                                        #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
-# Here, we can simply take a graph file and load it, isolating this code and reducing the Causal Graph filesize
-
 from json import load as json_load
-from yaml import safe_load as yaml_load
-
 from os import path
+from yaml import safe_load as yaml_load
 
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import *
 
 
-# TODO - refactor out string/dict interpretation, remove otherwise
-def parse_graph_file_data(filename: str or dict) -> dict:
+def parse_model(file: dict or str):
     """
-    Load, read, and parse a graph file for use in Causal Graphs, etc.
-    :param filename: The exact path to the file
-    :return: A dictionary of all data needed to construct a Causal Graph
+    Parse a given model for use within the project, such as to create a CausalGraph
+    @param file: a string path to either a JSON or YML file containing a valid model, or a dictionary
+        containing a model
+    @raises FileNotFoundError if a string is provided that does not lead to a file
+    @raises Exception if a string given does not end in .yml, .yaml, or .json
+    @return a dictionary of the parsed model, with keys "variables", "outcomes", "tables", "graph", "latent"
     """
 
-    # Ensure the file exists
-    if isinstance(filename, str) and not path.isfile(filename):
-        print("ERROR: Can't find:", filename)
-        raise Exception
+    # str: path to a file
+    if isinstance(file, str):
+        if not path.isfile(file):
+            print(f"ERROR: Can't find {file}")
+            raise FileNotFoundError
 
-    # Load the file, then we parse it
-    if isinstance(filename, str):
-        with open(filename) as json_file:
-            loaded_file = load(json_file)
-    else:
-        loaded_file = filename
+        if file.lower().endswith(".yml") or file.lower().endswith(".yaml"):
+            loader = yaml_load
 
-    # Maps string name to the Variable object instantiated
-    variables = dict()
-
-    # Maps string name *and* corresponding variable to a list of outcome values
-    outcomes = dict()
-
-    # Maps to "table" or "function", indicating how it is calculated
-    variable_determination = dict()
-
-    # Maps to corresponding tables
-    tables = dict()
-
-    # Maps to corresponding functions
-    functions = dict()
-
-    # Set of latent variables
-    latent = set()
-
-    for v in loaded_file["variables"]:
-
-        # Load the relevant data to construct a Variable
-        name = v["name"]
-        variable_outcomes = v["outcomes"] if "outcomes" in v else []
-        variable_parents = v["parents"] if "parents" in v else []
-
-        # Create a fancy Variable object
-        variable = Variable(name, variable_outcomes, variable_parents)
-
-        # Lookup the object by its name
-        variables[name] = variable
-
-        # Store by both the Variable object as well as its name, for ease of access
-        outcomes[name] = variable_outcomes
-        outcomes[variable] = variable_outcomes
-
-        # Is the variable determined by a function or direct tables?
-        determination = v["determination"]
-        determination_type = determination["type"]
-
-        if "latent" in v and v["latent"]:
-            latent.add(name)
-            latent.add(variable)
-
-        if determination["type"] == "table":
-
-            # Save that this variable is determined by a table
-            variable_determination[name] = "table"
-            variable_determination[variable] = "table"
-
-            # Load in the table and construct a CPT
-            table = determination["table"]
-            cpt = ConditionalProbabilityTable(variable, variable_parents, table)
-
-            # Map the name/variable to the table
-            tables[name] = cpt
-            tables[variable] = cpt
-
-        elif determination_type == "function":
-
-            # Save that this variable is determined by a function
-            variable_determination[name] = "function"
-            variable_determination[variable] = "function"
-
-            # Map the name/variable to the function
-            functions[name] = determination["function"]
-            functions[variable] = determination["function"]
+        elif file.lower().endswith(".json"):
+            loader = json_load
 
         else:
-            print("ERROR; Variable", name, "determination cannot be found.")
-            exit(-1)
+            print(f"Unknown extension for file: {file}, needs to end with .yml, .yaml, or .json")
+            raise Exception
 
-    v = set([v for v in variables])
-    e = set().union(*[[(parent, child) for parent in variables[child].parents] for child in variables])
-    graph = Graph(v, e)
+        with open(file) as f:
+            data = loader(f)
 
-    # Store all the different dictionaries of data as one large dictionary
-    parsed = {
-        "variables": variables,
-        "outcomes": outcomes,
-        "determination": variable_determination,
-        "tables": tables,
-        "functions": functions,
-        "v": v,
-        "e": e,
-        "graph": graph,
-        "latent": latent
-    }
-
-    return parsed
-
-
-def parse_new_model(file: dict or str):
-
-    if isinstance(file, dict):
-        data = file
-
-    elif not path.isfile(file):
-        print("ERROR: Can't find:", file)
-        raise FileNotFoundError
-
+    # dict: assume valid model
     else:
-        load = json_load if file.lower().endswith(".json") else yaml_load
-
-        with open(file,  "r") as f:
-            data = load(f)
+        data = file
 
     # Maps string name to the Variable object instantiated
     variables = dict()

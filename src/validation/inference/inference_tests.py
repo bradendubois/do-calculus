@@ -5,7 +5,7 @@ from src.config.config_manager import access
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
 
 from src.util.ProbabilityExceptions import *
-from src.util.ModelLoader import parse_new_model
+from src.util.ModelLoader import parse_model
 from src.validation.test_util import print_test_result
 
 
@@ -65,7 +65,7 @@ def inference_tests(graph_location: str) -> (bool, str):
         with open(graph_location + "/" + test_file) as f:
             yml_model = load(f)
 
-        parsed_model = parse_new_model(yml_model)
+        parsed_model = parse_model(yml_model)
         causal_graph = CausalGraph(**parsed_model)
 
         success, msg = model_inference_validation(causal_graph)
