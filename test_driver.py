@@ -9,6 +9,202 @@ from src.validation.test_util import print_test_result
 graph_location = "src/graphs/full"
 generated_location = "src/graphs/generated"
 
+# api
+
+def test_api_backdoor_paths():
+    ...
+
+
+def test_api_deconfounding_sets():
+    ...
+
+
+def test_api_joint_distribution_table():
+    ...
+
+
+def test_api_probability_query():
+    ...
+
+
+# config - TODO
+
+
+# graphs
+
+def test_sum_to():
+    ...
+
+
+def test_generate_distribution():
+    ...
+
+
+def test_cycle():
+    ...
+
+
+def test_longest():
+    ...
+
+
+def test_generate_graph():
+    ...
+
+
+def test_randomized_latent_variables():
+    ...
+
+# TODO make model_generator into runnable function
+
+# probability/
+
+# probability/do_calculus - TODO
+
+# probability/shpitser - TODO
+
+# probability/structures
+
+
+# probability/structures/BackdoorController
+
+def test_backdoor_paths():
+    ...
+
+
+def test_backdoor_paths_pair():
+    ...
+
+
+def test_all_dcf_sets():
+    ...
+
+
+def test_all_paths_cumulative():
+    ...
+
+
+def test_independent():
+    ...
+
+
+# probability/structures/CausalGraph
+
+def test_probability_query():
+    ...
+
+
+# probability/structures/ConditionalProbabilityTable
+
+def test_probability_lookup():
+    ...
+
+
+# probability/structures/Graph
+
+def test_roots():
+    ...
+
+
+def test_parents():
+    ...
+
+
+def test_children():
+    ...
+
+
+def test_ancestors():
+    ...
+
+
+def test_reach():
+    ...
+
+
+def test_disable_outgoing():
+    ...
+
+
+def test_disable_incoming():
+    ...
+
+
+def test_reset_disabled():
+    ...
+
+
+def test_get_topology():
+    ...
+
+
+def test_graph_copy():
+    ...
+
+
+def test_topological_variable_sort():
+    ...
+
+
+def test_descendant_first_sort():
+    ...
+
+
+def test_to_label():
+    ...
+
+
+# probability/structures/Probability_Engine
+
+def test_probability():
+    ...
+
+
+# probability/structures/VariableStructures
+
+def test_outcome():
+    ...
+
+
+def test_variable():
+    ...
+
+
+def test_intervention():
+    ...
+
+
+def test_parse_outcomes_and_interventions():
+    ...
+
+
+# util/
+
+def test_power_set():
+    ...
+
+
+def test_minimal_sets():
+    ...
+
+
+def test_disjoint():
+    ...
+
+
+def test_p_str():
+    ...
+
+
+def test_parse_model():
+    ...
+
+
+def test_output_logger():
+    ...
+
+
+# validation
 
 def test_inference_module() -> bool:
     inference_bool, inference_msg = inference_tests(graph_location)
@@ -31,6 +227,8 @@ def test_shpitser_module() -> bool:
     return shpitser_bool
 
 
+
+# TODO - Incorporate into above tests
 def run_all_tests(extreme=False) -> bool:
     """
     Run all the tests for each of the individual components of the software (the basic inference engine, backdoor paths,
