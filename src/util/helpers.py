@@ -35,7 +35,7 @@ def disjoint(*sets) -> bool:
     @param sets: Any number of sets.
     @return: True if all sets are disjoint, False otherwise
     """
-    return len(set().intersection(*sets)) == 0
+    return len(set().union(*sets)) == sum(map(lambda iterable: len(iterable), sets))
 
 
 def p_str(lhs: list, rhs: list) -> str:
