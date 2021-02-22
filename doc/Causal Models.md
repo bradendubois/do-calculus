@@ -2,62 +2,53 @@
 
 This document outlines the structure of how to create a causal model.
 
-**TODO** - This layout of files is likely to change in the near future.
+Models are inherently **DAGs**, where each variable in a model is also represented as a vertex in the DAG.
 
-- The file must be a valid ``JSON`` file.
-- The default folder is at "src/graphs/full".
+Models can be stored in ``json`` and ``yml`` files, and must have either ``.json``, ``.yml``, or ``.yaml`` file extensions.
+- The default graph folder is ``src/graphs/full``.
 
-## Graph File Structure
+## Model Structure
 
-The graph file must be structured as follows:
-
-```json
-{
-  "name": "NAME_OF_MODEL",
-  "variables": [
+The graph file must be structured such that a key with value ``model`` is present, and corresponds to a list, where each item is itself a dictionary, representing one variable in the model.
+- Each variable in the model is represented by a unique key representing the variable's name, and corresponds to the following key-value pairs:
+  - ``outcomes``: all discrete outcomes the variable may take, represented as a list.
+  - ``parents``: parent variables (also defined in the model) of the current variable, represented as a list.
+    - If the variable is a root - that is, there are no parents - the list can be left empty, or this key can be absent from this variable entirely.
+  - ``table``: a list of lists, representing the probability distribution of the variable. Each sub-list is one unique combination of outcomes of the given variable and each of its parents, along with a probability between 0 and 1.
+    - The order of the parent variables must correspond to the order given in the ``parents`` entry, if there are any.
+  - ``latent``: a boolean representing whether the variable is unobservable in the given model. 
+    - If this key is absent, it will be assumed ``False`` - that is, assumed observable.
   
-  ]
-}
+Additionally, a key ``model`` can be given, corresponding to an arbitrary name for the model.
+
+### Example
+
+Here is an example of a very simple model in **yml**:
+
+```yaml
+name: Simple Model
+model:
+  Y:
+    outcomes:
+      - y
+      - ~y
+    table: [
+     [ y, 0.7 ],
+     [ ~y, 0.3 ]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    parents: [ Y ]
+    table: [
+      [ x, y, 0.9 ],
+      [ x, ~y, 0.75 ],
+      [ ~x, y, 0.1 ],
+      [ ~x, ~y, 0.25 ]
+    ]
 ```
 
-Where ``name`` is an *optional* parameter and ``variables`` is a list of variables in the graph.
- 
-### Variables
-
-Variables all require the following:
-
-- **"name"**: The actual label of the variable itself, "X", "WEATHER", etc. Generally, it may be helpful to make this name uppercase. **Must be unique**.
-- **"determination"**: How the given variable is calculated/evaluated. Consists of the following:
-    - **"type"**: "table"
-    - **table**: a table, see below.
-
-#### Table-Based
-
-```json
-{
-  "name": "VARIABLE_NAME",
-  "outcomes": ["OUTCOME_1,", "OUTCOME_2", "..."],
-  "parents": ["PARENT_1", "PARENT_2", "..."],
-  "determination": {
-    "type": "table",
-    "table": [
-      ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_1", "..."], 0.0],
-      ["OUTCOME_1", ["PARENT_1_OUTCOME_1", "PARENT_2_OUTCOME_2", "..."], 0.0],
-      ["OUTCOME_1", ["PARENT_1_OUTCOME_2", "PARENT_2_OUTCOME_1", "..."], 0.0],
-      ["..."]
-     ]
-  }
-}
-```
-
-If the ``type`` is "table", the following attributes are necessary:
-
-- **"outcomes"**: A list of strings, representing all possible outcomes for the given variable. Cannot have the same outcome twice in one variable, but two separate variables could have the same outcome.
-- **"parents"**: A list of strings, representing the "parents" of the given variable. Leave empty to represent zero parents.
-- **"table"**: A list of lists, each list representing one "row" in the table, with each sublist formatted as follows:
-    - \["outcome", \["parent_1_outcome_1", "parent_2_outcome_1"\], probability\]
-    - "outcome" is a specific outcome of the given variable.
-    - The inner list is a specific combination of given outcomes, and they must be given in the same order as specified in "given", and a probability as a float.
-    - The table must be complete.
-
-- **Note**: "parents" is not necessary for variables such as "roots" without parents, and can be omitted. It will be assumed to be empty.
+This represents the basic graph of a single edge, (Y, X).
+- In the absence of any ``latent`` attributes, both variables are observable.
+- ``Y`` has no parents, it is a root.
