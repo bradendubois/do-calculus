@@ -9,17 +9,16 @@ on:
 
 jobs:
   test:
-    runs-on:
+    runs-on: [ ubuntu-latest, macos-latest ]
     - ubuntu-latest
     - ubuntu-18.04
     - ubuntu-16.04
     - macos-latest
-    - macos-11.0
     - windows-latest
 
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10]
+        python-version: [ 3.8, 3.9 ]
 
     steps:
     - uses: actions/checkout@v2
