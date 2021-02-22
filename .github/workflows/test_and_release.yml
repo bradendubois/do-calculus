@@ -47,6 +47,7 @@ jobs:
 
     - name: Report Coverage w/Coveralls
       uses: AndreMiras/coveralls-python-action@develop
+      if: ${{ runner.os == 'Linux' }}
 
   release:
     runs-on: [ ubuntu-latest ]
