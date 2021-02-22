@@ -1,5 +1,4 @@
 # TODO - Run all the tests involved in the entire testing suite - implement threading for that
-import os
 
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
 from src.validation.inference.inference_tests import inference_tests

@@ -5,7 +5,8 @@ from string import ascii_uppercase
 import random
 import itertools
 
-from probability.structures.Graph import Graph
+from src.probability.structures.Graph import Graph
+
 
 def cycle(v, e):
 

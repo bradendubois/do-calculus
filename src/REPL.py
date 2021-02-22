@@ -23,14 +23,14 @@ def run_repl(graph_location="src/graphs/full"):
 
     """
     This is a mapping that will connect user-inputting strings to the respective functionality requested.
-    
+
     This behaves as a tuple -> list dictionary, where the tuple contains two arbitrary functions, and the
     list contains all lowercase strings which, if given as input, should result in the respective tuple's
     functions being called.
-    
+
     The tuple contains two functions that behave as follows:
     - The first function must take exactly one string as an argument, and it is responsible for parsing this
-    string into any arbitrary type(s) required by the second function. 
+    string into any arbitrary type(s) required by the second function.
     - The second function is the "real" function, where the first function always behaves as a parser/cleaner.
     - The first function should always return a dictionary, where the keys of the dictionary match the parameters
     of the second function, to allow the results of the parsing to always be unpacked into the second function
@@ -94,7 +94,7 @@ def run_repl(graph_location="src/graphs/full"):
         parse, func = lookup[f]
 
         # Parse input, call api function
-        #try:
+        # try:
         func(**parse(arg))
         # except Exception as e:
         #    print("EXCEPTION:", str(e))

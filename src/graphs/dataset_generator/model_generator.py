@@ -5,11 +5,13 @@ from os import path, listdir
 from json import dump
 from random import randrange
 
+from src.probability.structures.CausalGraph import CausalGraph
+from src.validation.inference.inference_tests import model_inference_validation
+from src.util.ModelLoader import parse_graph_file_data
+
 from graph_generator import generate_graph, randomized_latent_variables
 from distribution_generation import generate_distribution
-from probability.structures.CausalGraph import CausalGraph
-from tests.RegressionTesting import basic_validation
-from util.parsers.GraphLoader import parse_graph_file_data
+
 
 # Default number of graphs to create
 N = 10
@@ -41,7 +43,7 @@ while N:
         g = generate_graph(num_vertices, max_path_length, num_edges)
         distribution = generate_distribution(g)
 
-        cg = CausalGraph(**parse_graph_file_data({"variables": list(distribution.values())}))
+        cg = CausalGraph(**parse_new_model({"variables": list(distribution.values())}))
 
         success, message = basic_validation(cg, "N/A")
         if success:
