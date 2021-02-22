@@ -55,6 +55,8 @@ def backdoor_tests(graph_location: str) -> (bool, str):
     """
 
     files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(test_file_directory))))
+    assert len(files) > 0, f"Found no backdoor module tests"
+
     all_successful = True
 
     # TODO - Threading ? Good for inference tests but shouldn't take too long here
