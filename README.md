@@ -14,10 +14,10 @@
 
 ## Resources
 
-* **Documentation / Wiki**: [[https://github.com/bradendubois/probability-code/wiki]]
-* **Source code**: [[https://github.com/bradendubois/probability-code]]
-* **Releases**: [[https://github.com/bradendubois/probability-code/releases]]
-* **Bug reports**: [[https://github.com/bradendubois/probability-code/issues]]
+* **Documentation / Wiki**: https://github.com/bradendubois/probability-code/wiki
+* **Source code**: https://github.com/bradendubois/probability-code
+* **Releases**: https://github.com/bradendubois/probability-code/releases
+* **Bug reports**: https://github.com/bradendubois/probability-code/issues
 * **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
 
 See the [wiki](https://github.com/bradendubois/probability-code/wiki) to get started.
