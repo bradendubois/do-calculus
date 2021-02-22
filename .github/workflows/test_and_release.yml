@@ -23,11 +23,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: test
-      run: |
-        echo ${{ github.ref }}
-
-
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
@@ -59,7 +54,8 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
     steps:
-    - name: Create Release
+      - uses: actions/checkout@v2
+      - name: Create Release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release
