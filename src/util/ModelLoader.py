@@ -40,16 +40,16 @@ def parse_model(file: dict or str):
     else:
         data = file
 
-    # Maps string name to the Variable object instantiated
+    """
+    variables: maps string name to the Variable object instantiated
+    outcomes: maps string name *and* corresponding Variable to a list of outcome values
+    tables: maps strings/Variables to corresponding ConditionalProbabilityTables
+    """
     variables = dict()
-
-    # Maps string name *and* corresponding Variable to a list of outcome values
     outcomes = dict()
-
-    # Maps to corresponding tables
     tables = dict()
 
-    # Set of latent variables
+    # set of latent variables
     latent = set()
 
     for name, detail in data["model"].items():
