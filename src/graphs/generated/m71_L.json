@@ -1,0 +1,372 @@
+{
+    "latent-model": true,
+    "name": "m71_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eud",
+                        [
+                            "pqa"
+                        ],
+                        0.1509
+                    ],
+                    [
+                        "~eud",
+                        [
+                            "pqa"
+                        ],
+                        0.8491
+                    ],
+                    [
+                        "eud",
+                        [
+                            "~pqa"
+                        ],
+                        0.0635
+                    ],
+                    [
+                        "~eud",
+                        [
+                            "~pqa"
+                        ],
+                        0.9365
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EUD",
+            "outcomes": [
+                "eud",
+                "~eud"
+            ],
+            "parents": [
+                "PQA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "axr",
+                        [],
+                        0.008
+                    ],
+                    [
+                        "~axr",
+                        [],
+                        0.992
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AXR",
+            "outcomes": [
+                "axr",
+                "~axr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bqd",
+                        [
+                            "tfl",
+                            "zvb"
+                        ],
+                        0.4524
+                    ],
+                    [
+                        "~bqd",
+                        [
+                            "tfl",
+                            "zvb"
+                        ],
+                        0.5476
+                    ],
+                    [
+                        "bqd",
+                        [
+                            "tfl",
+                            "~zvb"
+                        ],
+                        0.746
+                    ],
+                    [
+                        "~bqd",
+                        [
+                            "tfl",
+                            "~zvb"
+                        ],
+                        0.254
+                    ],
+                    [
+                        "bqd",
+                        [
+                            "~tfl",
+                            "zvb"
+                        ],
+                        0.0063
+                    ],
+                    [
+                        "~bqd",
+                        [
+                            "~tfl",
+                            "zvb"
+                        ],
+                        0.9937
+                    ],
+                    [
+                        "bqd",
+                        [
+                            "~tfl",
+                            "~zvb"
+                        ],
+                        0.5692
+                    ],
+                    [
+                        "~bqd",
+                        [
+                            "~tfl",
+                            "~zvb"
+                        ],
+                        0.4308
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BQD",
+            "outcomes": [
+                "bqd",
+                "~bqd"
+            ],
+            "parents": [
+                "TFL",
+                "ZVB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zvb",
+                        [],
+                        0.9331
+                    ],
+                    [
+                        "~zvb",
+                        [],
+                        0.0669
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ZVB",
+            "outcomes": [
+                "zvb",
+                "~zvb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lvd",
+                        [
+                            "tfl"
+                        ],
+                        0.4036
+                    ],
+                    [
+                        "~lvd",
+                        [
+                            "tfl"
+                        ],
+                        0.5964
+                    ],
+                    [
+                        "lvd",
+                        [
+                            "~tfl"
+                        ],
+                        0.9452
+                    ],
+                    [
+                        "~lvd",
+                        [
+                            "~tfl"
+                        ],
+                        0.0548
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LVD",
+            "outcomes": [
+                "lvd",
+                "~lvd"
+            ],
+            "parents": [
+                "TFL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wch",
+                        [
+                            "zvb"
+                        ],
+                        0.8897
+                    ],
+                    [
+                        "~wch",
+                        [
+                            "zvb"
+                        ],
+                        0.1103
+                    ],
+                    [
+                        "wch",
+                        [
+                            "~zvb"
+                        ],
+                        0.6167
+                    ],
+                    [
+                        "~wch",
+                        [
+                            "~zvb"
+                        ],
+                        0.3833
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WCH",
+            "outcomes": [
+                "wch",
+                "~wch"
+            ],
+            "parents": [
+                "ZVB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "opl",
+                        [
+                            "axr"
+                        ],
+                        0.9788
+                    ],
+                    [
+                        "~opl",
+                        [
+                            "axr"
+                        ],
+                        0.0212
+                    ],
+                    [
+                        "opl",
+                        [
+                            "~axr"
+                        ],
+                        0.0526
+                    ],
+                    [
+                        "~opl",
+                        [
+                            "~axr"
+                        ],
+                        0.9474
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OPL",
+            "outcomes": [
+                "opl",
+                "~opl"
+            ],
+            "parents": [
+                "AXR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tfl",
+                        [],
+                        0.5038
+                    ],
+                    [
+                        "~tfl",
+                        [],
+                        0.4962
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TFL",
+            "outcomes": [
+                "tfl",
+                "~tfl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pqa",
+                        [
+                            "zvb"
+                        ],
+                        0.2374
+                    ],
+                    [
+                        "~pqa",
+                        [
+                            "zvb"
+                        ],
+                        0.7626
+                    ],
+                    [
+                        "pqa",
+                        [
+                            "~zvb"
+                        ],
+                        0.7789
+                    ],
+                    [
+                        "~pqa",
+                        [
+                            "~zvb"
+                        ],
+                        0.2211
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PQA",
+            "outcomes": [
+                "pqa",
+                "~pqa"
+            ],
+            "parents": [
+                "ZVB"
+            ]
+        }
+    ]
+}

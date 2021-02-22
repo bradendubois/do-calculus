@@ -1,0 +1,616 @@
+{
+    "latent-model": true,
+    "name": "m239_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "geo",
+                        [
+                            "ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.2897
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.7103
+                    ],
+                    [
+                        "geo",
+                        [
+                            "ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.7212
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.2788
+                    ],
+                    [
+                        "geo",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.9767
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.0233
+                    ],
+                    [
+                        "geo",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.3057
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.6943
+                    ],
+                    [
+                        "geo",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.2917
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.7083
+                    ],
+                    [
+                        "geo",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.5318
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.4682
+                    ],
+                    [
+                        "geo",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.0141
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.9859
+                    ],
+                    [
+                        "geo",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.6109
+                    ],
+                    [
+                        "~geo",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.3891
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GEO",
+            "outcomes": [
+                "geo",
+                "~geo"
+            ],
+            "parents": [
+                "ILC",
+                "OVJ",
+                "OVQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rcg",
+                        [
+                            "grf"
+                        ],
+                        0.5733
+                    ],
+                    [
+                        "~rcg",
+                        [
+                            "grf"
+                        ],
+                        0.4267
+                    ],
+                    [
+                        "rcg",
+                        [
+                            "~grf"
+                        ],
+                        0.866
+                    ],
+                    [
+                        "~rcg",
+                        [
+                            "~grf"
+                        ],
+                        0.134
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RCG",
+            "outcomes": [
+                "rcg",
+                "~rcg"
+            ],
+            "parents": [
+                "GRF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rig",
+                        [
+                            "ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.0126
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.9874
+                    ],
+                    [
+                        "rig",
+                        [
+                            "ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.3504
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.6496
+                    ],
+                    [
+                        "rig",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.3518
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.6482
+                    ],
+                    [
+                        "rig",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.8996
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.1004
+                    ],
+                    [
+                        "rig",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.3227
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "ovq"
+                        ],
+                        0.6773
+                    ],
+                    [
+                        "rig",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.3692
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "~ilc",
+                            "ovj",
+                            "~ovq"
+                        ],
+                        0.6308
+                    ],
+                    [
+                        "rig",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.9488
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "ovq"
+                        ],
+                        0.0512
+                    ],
+                    [
+                        "rig",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.2929
+                    ],
+                    [
+                        "~rig",
+                        [
+                            "~ilc",
+                            "~ovj",
+                            "~ovq"
+                        ],
+                        0.7071
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RIG",
+            "outcomes": [
+                "rig",
+                "~rig"
+            ],
+            "parents": [
+                "ILC",
+                "OVJ",
+                "OVQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ovq",
+                        [],
+                        0.7161
+                    ],
+                    [
+                        "~ovq",
+                        [],
+                        0.2839
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "OVQ",
+            "outcomes": [
+                "ovq",
+                "~ovq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pmz",
+                        [
+                            "tqi"
+                        ],
+                        0.4439
+                    ],
+                    [
+                        "~pmz",
+                        [
+                            "tqi"
+                        ],
+                        0.5561
+                    ],
+                    [
+                        "pmz",
+                        [
+                            "~tqi"
+                        ],
+                        0.4047
+                    ],
+                    [
+                        "~pmz",
+                        [
+                            "~tqi"
+                        ],
+                        0.5953
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PMZ",
+            "outcomes": [
+                "pmz",
+                "~pmz"
+            ],
+            "parents": [
+                "TQI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tqi",
+                        [],
+                        0.0068
+                    ],
+                    [
+                        "~tqi",
+                        [],
+                        0.9932
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TQI",
+            "outcomes": [
+                "tqi",
+                "~tqi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hno",
+                        [
+                            "grf"
+                        ],
+                        0.9708
+                    ],
+                    [
+                        "~hno",
+                        [
+                            "grf"
+                        ],
+                        0.0292
+                    ],
+                    [
+                        "hno",
+                        [
+                            "~grf"
+                        ],
+                        0.2806
+                    ],
+                    [
+                        "~hno",
+                        [
+                            "~grf"
+                        ],
+                        0.7194
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HNO",
+            "outcomes": [
+                "hno",
+                "~hno"
+            ],
+            "parents": [
+                "GRF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "grf",
+                        [],
+                        0.4467
+                    ],
+                    [
+                        "~grf",
+                        [],
+                        0.5533
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GRF",
+            "outcomes": [
+                "grf",
+                "~grf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ilc",
+                        [],
+                        0.1375
+                    ],
+                    [
+                        "~ilc",
+                        [],
+                        0.8625
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ILC",
+            "outcomes": [
+                "ilc",
+                "~ilc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ovj",
+                        [],
+                        0.3733
+                    ],
+                    [
+                        "~ovj",
+                        [],
+                        0.6267
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OVJ",
+            "outcomes": [
+                "ovj",
+                "~ovj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "brn",
+                        [
+                            "ovj"
+                        ],
+                        0.0327
+                    ],
+                    [
+                        "~brn",
+                        [
+                            "ovj"
+                        ],
+                        0.9673
+                    ],
+                    [
+                        "brn",
+                        [
+                            "~ovj"
+                        ],
+                        0.1577
+                    ],
+                    [
+                        "~brn",
+                        [
+                            "~ovj"
+                        ],
+                        0.8423
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BRN",
+            "outcomes": [
+                "brn",
+                "~brn"
+            ],
+            "parents": [
+                "OVJ"
+            ]
+        }
+    ]
+}

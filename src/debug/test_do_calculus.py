@@ -1,6 +1,6 @@
-from probability_structures.do_calculus.application.rules.DoCalculusRules import *
-from probability_structures.do_calculus.application.rules.StandardInferenceRules import *
-from probability_structures.do_calculus.ids_ai.IDS_Solver import IDSSolver
+from probability.do_calculus.application.rules.DoCalculusRules import *
+from probability.do_calculus.application.rules.StandardInferenceRules import *
+from probability.do_calculus.ids_ai.IDS_Solver import IDSSolver
 from util.parsers.GraphLoader import parse_graph_file_data
 
 # Testing the first 3 tasks page ~88 of Causality

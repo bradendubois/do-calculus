@@ -1,0 +1,425 @@
+{
+    "latent-model": false,
+    "name": "m468",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ugk",
+                        [
+                            "orb",
+                            "wbk",
+                            "zys"
+                        ],
+                        0.3918
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "orb",
+                            "wbk",
+                            "zys"
+                        ],
+                        0.6082
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "orb",
+                            "wbk",
+                            "~zys"
+                        ],
+                        0.2817
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "orb",
+                            "wbk",
+                            "~zys"
+                        ],
+                        0.7183
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "orb",
+                            "~wbk",
+                            "zys"
+                        ],
+                        0.2597
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "orb",
+                            "~wbk",
+                            "zys"
+                        ],
+                        0.7403
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "orb",
+                            "~wbk",
+                            "~zys"
+                        ],
+                        0.1584
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "orb",
+                            "~wbk",
+                            "~zys"
+                        ],
+                        0.8416
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "~orb",
+                            "wbk",
+                            "zys"
+                        ],
+                        0.9378
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "~orb",
+                            "wbk",
+                            "zys"
+                        ],
+                        0.0622
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "~orb",
+                            "wbk",
+                            "~zys"
+                        ],
+                        0.9085
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "~orb",
+                            "wbk",
+                            "~zys"
+                        ],
+                        0.0915
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "~orb",
+                            "~wbk",
+                            "zys"
+                        ],
+                        0.7378
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "~orb",
+                            "~wbk",
+                            "zys"
+                        ],
+                        0.2622
+                    ],
+                    [
+                        "ugk",
+                        [
+                            "~orb",
+                            "~wbk",
+                            "~zys"
+                        ],
+                        0.2603
+                    ],
+                    [
+                        "~ugk",
+                        [
+                            "~orb",
+                            "~wbk",
+                            "~zys"
+                        ],
+                        0.7397
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UGK",
+            "outcomes": [
+                "ugk",
+                "~ugk"
+            ],
+            "parents": [
+                "ORB",
+                "WBK",
+                "ZYS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wbk",
+                        [
+                            "big",
+                            "prf"
+                        ],
+                        0.7369
+                    ],
+                    [
+                        "~wbk",
+                        [
+                            "big",
+                            "prf"
+                        ],
+                        0.2631
+                    ],
+                    [
+                        "wbk",
+                        [
+                            "big",
+                            "~prf"
+                        ],
+                        0.6115
+                    ],
+                    [
+                        "~wbk",
+                        [
+                            "big",
+                            "~prf"
+                        ],
+                        0.3885
+                    ],
+                    [
+                        "wbk",
+                        [
+                            "~big",
+                            "prf"
+                        ],
+                        0.2346
+                    ],
+                    [
+                        "~wbk",
+                        [
+                            "~big",
+                            "prf"
+                        ],
+                        0.7654
+                    ],
+                    [
+                        "wbk",
+                        [
+                            "~big",
+                            "~prf"
+                        ],
+                        0.9015
+                    ],
+                    [
+                        "~wbk",
+                        [
+                            "~big",
+                            "~prf"
+                        ],
+                        0.0985
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WBK",
+            "outcomes": [
+                "wbk",
+                "~wbk"
+            ],
+            "parents": [
+                "BIG",
+                "PRF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "big",
+                        [
+                            "fet"
+                        ],
+                        0.3613
+                    ],
+                    [
+                        "~big",
+                        [
+                            "fet"
+                        ],
+                        0.6387
+                    ],
+                    [
+                        "big",
+                        [
+                            "~fet"
+                        ],
+                        0.3319
+                    ],
+                    [
+                        "~big",
+                        [
+                            "~fet"
+                        ],
+                        0.6681
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BIG",
+            "outcomes": [
+                "big",
+                "~big"
+            ],
+            "parents": [
+                "FET"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "orb",
+                        [
+                            "zys"
+                        ],
+                        0.4458
+                    ],
+                    [
+                        "~orb",
+                        [
+                            "zys"
+                        ],
+                        0.5542
+                    ],
+                    [
+                        "orb",
+                        [
+                            "~zys"
+                        ],
+                        0.1883
+                    ],
+                    [
+                        "~orb",
+                        [
+                            "~zys"
+                        ],
+                        0.8117
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ORB",
+            "outcomes": [
+                "orb",
+                "~orb"
+            ],
+            "parents": [
+                "ZYS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fet",
+                        [],
+                        0.8772
+                    ],
+                    [
+                        "~fet",
+                        [],
+                        0.1228
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FET",
+            "outcomes": [
+                "fet",
+                "~fet"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "prf",
+                        [],
+                        0.369
+                    ],
+                    [
+                        "~prf",
+                        [],
+                        0.631
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PRF",
+            "outcomes": [
+                "prf",
+                "~prf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fzx",
+                        [],
+                        0.7125
+                    ],
+                    [
+                        "~fzx",
+                        [],
+                        0.2875
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FZX",
+            "outcomes": [
+                "fzx",
+                "~fzx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zys",
+                        [],
+                        0.2632
+                    ],
+                    [
+                        "~zys",
+                        [],
+                        0.7368
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZYS",
+            "outcomes": [
+                "zys",
+                "~zys"
+            ],
+            "parents": []
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 
-from probability_structures.do_calculus.application.rules.DoCalculusRules import *
-from probability_structures.Graph import Graph
+from probability.do_calculus.application.rules.DoCalculusRules import *
+from probability.structures.Graph import Graph
 from util.helpers.PowerSet import power_set
 
 from sys import argv
@@ -49,7 +49,8 @@ for y in power_set(v, False):
                 r2 = rule_2_applicable(g, y, x, z, w)
                 r3 = rule_3_applicable(g, y, x, z, w)
 
-                applies.append((y, x, z, w, str(r1), str(r2), str(r3)))
+                if r1 or r2 or r3:
+                    applies.append((y, x, z, w, str(r1), str(r2), str(r3)))
 
 print("| Y | X | Z | W | Rule 1 | Rule 2 | Rule 3 |")
 print("| :-: | :-: | :-: | :-: | :-: | :-: | :-: |")

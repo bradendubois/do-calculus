@@ -1,0 +1,561 @@
+{
+    "latent-model": true,
+    "name": "m24_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xyh",
+                        [],
+                        0.4015
+                    ],
+                    [
+                        "~xyh",
+                        [],
+                        0.5985
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XYH",
+            "outcomes": [
+                "xyh",
+                "~xyh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jck",
+                        [
+                            "pnu"
+                        ],
+                        0.2298
+                    ],
+                    [
+                        "~jck",
+                        [
+                            "pnu"
+                        ],
+                        0.7702
+                    ],
+                    [
+                        "jck",
+                        [
+                            "~pnu"
+                        ],
+                        0.4415
+                    ],
+                    [
+                        "~jck",
+                        [
+                            "~pnu"
+                        ],
+                        0.5585
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JCK",
+            "outcomes": [
+                "jck",
+                "~jck"
+            ],
+            "parents": [
+                "PNU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bbg",
+                        [],
+                        0.9995
+                    ],
+                    [
+                        "~bbg",
+                        [],
+                        0.0005
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "BBG",
+            "outcomes": [
+                "bbg",
+                "~bbg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gzy",
+                        [
+                            "ary",
+                            "bbg"
+                        ],
+                        0.7286
+                    ],
+                    [
+                        "~gzy",
+                        [
+                            "ary",
+                            "bbg"
+                        ],
+                        0.2714
+                    ],
+                    [
+                        "gzy",
+                        [
+                            "ary",
+                            "~bbg"
+                        ],
+                        0.2503
+                    ],
+                    [
+                        "~gzy",
+                        [
+                            "ary",
+                            "~bbg"
+                        ],
+                        0.7497
+                    ],
+                    [
+                        "gzy",
+                        [
+                            "~ary",
+                            "bbg"
+                        ],
+                        0.3248
+                    ],
+                    [
+                        "~gzy",
+                        [
+                            "~ary",
+                            "bbg"
+                        ],
+                        0.6752
+                    ],
+                    [
+                        "gzy",
+                        [
+                            "~ary",
+                            "~bbg"
+                        ],
+                        0.6607
+                    ],
+                    [
+                        "~gzy",
+                        [
+                            "~ary",
+                            "~bbg"
+                        ],
+                        0.3393
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GZY",
+            "outcomes": [
+                "gzy",
+                "~gzy"
+            ],
+            "parents": [
+                "ARY",
+                "BBG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pnu",
+                        [
+                            "xyh"
+                        ],
+                        0.2836
+                    ],
+                    [
+                        "~pnu",
+                        [
+                            "xyh"
+                        ],
+                        0.7164
+                    ],
+                    [
+                        "pnu",
+                        [
+                            "~xyh"
+                        ],
+                        0.9159
+                    ],
+                    [
+                        "~pnu",
+                        [
+                            "~xyh"
+                        ],
+                        0.0841
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PNU",
+            "outcomes": [
+                "pnu",
+                "~pnu"
+            ],
+            "parents": [
+                "XYH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dit",
+                        [
+                            "lmd"
+                        ],
+                        0.7994
+                    ],
+                    [
+                        "~dit",
+                        [
+                            "lmd"
+                        ],
+                        0.2006
+                    ],
+                    [
+                        "dit",
+                        [
+                            "~lmd"
+                        ],
+                        0.7391
+                    ],
+                    [
+                        "~dit",
+                        [
+                            "~lmd"
+                        ],
+                        0.2609
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DIT",
+            "outcomes": [
+                "dit",
+                "~dit"
+            ],
+            "parents": [
+                "LMD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qgf",
+                        [
+                            "ary"
+                        ],
+                        0.6183
+                    ],
+                    [
+                        "~qgf",
+                        [
+                            "ary"
+                        ],
+                        0.3817
+                    ],
+                    [
+                        "qgf",
+                        [
+                            "~ary"
+                        ],
+                        0.8042
+                    ],
+                    [
+                        "~qgf",
+                        [
+                            "~ary"
+                        ],
+                        0.1958
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QGF",
+            "outcomes": [
+                "qgf",
+                "~qgf"
+            ],
+            "parents": [
+                "ARY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rxp",
+                        [
+                            "ary"
+                        ],
+                        0.5345
+                    ],
+                    [
+                        "~rxp",
+                        [
+                            "ary"
+                        ],
+                        0.4655
+                    ],
+                    [
+                        "rxp",
+                        [
+                            "~ary"
+                        ],
+                        0.6459
+                    ],
+                    [
+                        "~rxp",
+                        [
+                            "~ary"
+                        ],
+                        0.3541
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RXP",
+            "outcomes": [
+                "rxp",
+                "~rxp"
+            ],
+            "parents": [
+                "ARY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ary",
+                        [],
+                        0.8322
+                    ],
+                    [
+                        "~ary",
+                        [],
+                        0.1678
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ARY",
+            "outcomes": [
+                "ary",
+                "~ary"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lmd",
+                        [
+                            "iaf",
+                            "qgf"
+                        ],
+                        0.5821
+                    ],
+                    [
+                        "~lmd",
+                        [
+                            "iaf",
+                            "qgf"
+                        ],
+                        0.4179
+                    ],
+                    [
+                        "lmd",
+                        [
+                            "iaf",
+                            "~qgf"
+                        ],
+                        0.6181
+                    ],
+                    [
+                        "~lmd",
+                        [
+                            "iaf",
+                            "~qgf"
+                        ],
+                        0.3819
+                    ],
+                    [
+                        "lmd",
+                        [
+                            "~iaf",
+                            "qgf"
+                        ],
+                        0.7517
+                    ],
+                    [
+                        "~lmd",
+                        [
+                            "~iaf",
+                            "qgf"
+                        ],
+                        0.2483
+                    ],
+                    [
+                        "lmd",
+                        [
+                            "~iaf",
+                            "~qgf"
+                        ],
+                        0.6038
+                    ],
+                    [
+                        "~lmd",
+                        [
+                            "~iaf",
+                            "~qgf"
+                        ],
+                        0.3962
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LMD",
+            "outcomes": [
+                "lmd",
+                "~lmd"
+            ],
+            "parents": [
+                "IAF",
+                "QGF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iaf",
+                        [
+                            "jck"
+                        ],
+                        0.7278
+                    ],
+                    [
+                        "~iaf",
+                        [
+                            "jck"
+                        ],
+                        0.2722
+                    ],
+                    [
+                        "iaf",
+                        [
+                            "~jck"
+                        ],
+                        0.0061
+                    ],
+                    [
+                        "~iaf",
+                        [
+                            "~jck"
+                        ],
+                        0.9939
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IAF",
+            "outcomes": [
+                "iaf",
+                "~iaf"
+            ],
+            "parents": [
+                "JCK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ouh",
+                        [],
+                        0.0498
+                    ],
+                    [
+                        "~ouh",
+                        [],
+                        0.9502
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "OUH",
+            "outcomes": [
+                "ouh",
+                "~ouh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uqc",
+                        [
+                            "gzy"
+                        ],
+                        0.9912
+                    ],
+                    [
+                        "~uqc",
+                        [
+                            "gzy"
+                        ],
+                        0.0088
+                    ],
+                    [
+                        "uqc",
+                        [
+                            "~gzy"
+                        ],
+                        0.7065
+                    ],
+                    [
+                        "~uqc",
+                        [
+                            "~gzy"
+                        ],
+                        0.2935
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UQC",
+            "outcomes": [
+                "uqc",
+                "~uqc"
+            ],
+            "parents": [
+                "GZY"
+            ]
+        }
+    ]
+}

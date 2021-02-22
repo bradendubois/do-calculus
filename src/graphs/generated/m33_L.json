@@ -1,0 +1,591 @@
+{
+    "latent-model": true,
+    "name": "m33_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mji",
+                        [
+                            "lyw"
+                        ],
+                        0.5476
+                    ],
+                    [
+                        "~mji",
+                        [
+                            "lyw"
+                        ],
+                        0.4524
+                    ],
+                    [
+                        "mji",
+                        [
+                            "~lyw"
+                        ],
+                        0.5611
+                    ],
+                    [
+                        "~mji",
+                        [
+                            "~lyw"
+                        ],
+                        0.4389
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MJI",
+            "outcomes": [
+                "mji",
+                "~mji"
+            ],
+            "parents": [
+                "LYW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sts",
+                        [
+                            "gjh"
+                        ],
+                        0.9417
+                    ],
+                    [
+                        "~sts",
+                        [
+                            "gjh"
+                        ],
+                        0.0583
+                    ],
+                    [
+                        "sts",
+                        [
+                            "~gjh"
+                        ],
+                        0.1938
+                    ],
+                    [
+                        "~sts",
+                        [
+                            "~gjh"
+                        ],
+                        0.8062
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "STS",
+            "outcomes": [
+                "sts",
+                "~sts"
+            ],
+            "parents": [
+                "GJH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ure",
+                        [
+                            "wmy"
+                        ],
+                        0.3354
+                    ],
+                    [
+                        "~ure",
+                        [
+                            "wmy"
+                        ],
+                        0.6646
+                    ],
+                    [
+                        "ure",
+                        [
+                            "~wmy"
+                        ],
+                        0.0558
+                    ],
+                    [
+                        "~ure",
+                        [
+                            "~wmy"
+                        ],
+                        0.9442
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "URE",
+            "outcomes": [
+                "ure",
+                "~ure"
+            ],
+            "parents": [
+                "WMY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gjh",
+                        [],
+                        0.1377
+                    ],
+                    [
+                        "~gjh",
+                        [],
+                        0.8623
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "GJH",
+            "outcomes": [
+                "gjh",
+                "~gjh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wmy",
+                        [],
+                        0.0361
+                    ],
+                    [
+                        "~wmy",
+                        [],
+                        0.9639
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WMY",
+            "outcomes": [
+                "wmy",
+                "~wmy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dam",
+                        [
+                            "wmy"
+                        ],
+                        0.1215
+                    ],
+                    [
+                        "~dam",
+                        [
+                            "wmy"
+                        ],
+                        0.8785
+                    ],
+                    [
+                        "dam",
+                        [
+                            "~wmy"
+                        ],
+                        0.2432
+                    ],
+                    [
+                        "~dam",
+                        [
+                            "~wmy"
+                        ],
+                        0.7568
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DAM",
+            "outcomes": [
+                "dam",
+                "~dam"
+            ],
+            "parents": [
+                "WMY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lyw",
+                        [
+                            "gjh",
+                            "sts",
+                            "wmy"
+                        ],
+                        0.5134
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "gjh",
+                            "sts",
+                            "wmy"
+                        ],
+                        0.4866
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "gjh",
+                            "sts",
+                            "~wmy"
+                        ],
+                        0.7784
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "gjh",
+                            "sts",
+                            "~wmy"
+                        ],
+                        0.2216
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "gjh",
+                            "~sts",
+                            "wmy"
+                        ],
+                        0.2948
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "gjh",
+                            "~sts",
+                            "wmy"
+                        ],
+                        0.7052
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "gjh",
+                            "~sts",
+                            "~wmy"
+                        ],
+                        0.1546
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "gjh",
+                            "~sts",
+                            "~wmy"
+                        ],
+                        0.8454
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "~gjh",
+                            "sts",
+                            "wmy"
+                        ],
+                        0.3848
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "~gjh",
+                            "sts",
+                            "wmy"
+                        ],
+                        0.6152
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "~gjh",
+                            "sts",
+                            "~wmy"
+                        ],
+                        0.6096
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "~gjh",
+                            "sts",
+                            "~wmy"
+                        ],
+                        0.3904
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "~gjh",
+                            "~sts",
+                            "wmy"
+                        ],
+                        0.6682
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "~gjh",
+                            "~sts",
+                            "wmy"
+                        ],
+                        0.3318
+                    ],
+                    [
+                        "lyw",
+                        [
+                            "~gjh",
+                            "~sts",
+                            "~wmy"
+                        ],
+                        0.7581
+                    ],
+                    [
+                        "~lyw",
+                        [
+                            "~gjh",
+                            "~sts",
+                            "~wmy"
+                        ],
+                        0.2419
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LYW",
+            "outcomes": [
+                "lyw",
+                "~lyw"
+            ],
+            "parents": [
+                "GJH",
+                "STS",
+                "WMY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vim",
+                        [
+                            "mji",
+                            "sts",
+                            "ure"
+                        ],
+                        0.0083
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "mji",
+                            "sts",
+                            "ure"
+                        ],
+                        0.9917
+                    ],
+                    [
+                        "vim",
+                        [
+                            "mji",
+                            "sts",
+                            "~ure"
+                        ],
+                        0.2604
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "mji",
+                            "sts",
+                            "~ure"
+                        ],
+                        0.7396
+                    ],
+                    [
+                        "vim",
+                        [
+                            "mji",
+                            "~sts",
+                            "ure"
+                        ],
+                        0.0659
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "mji",
+                            "~sts",
+                            "ure"
+                        ],
+                        0.9341
+                    ],
+                    [
+                        "vim",
+                        [
+                            "mji",
+                            "~sts",
+                            "~ure"
+                        ],
+                        0.8533
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "mji",
+                            "~sts",
+                            "~ure"
+                        ],
+                        0.1467
+                    ],
+                    [
+                        "vim",
+                        [
+                            "~mji",
+                            "sts",
+                            "ure"
+                        ],
+                        0.656
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "~mji",
+                            "sts",
+                            "ure"
+                        ],
+                        0.344
+                    ],
+                    [
+                        "vim",
+                        [
+                            "~mji",
+                            "sts",
+                            "~ure"
+                        ],
+                        0.0746
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "~mji",
+                            "sts",
+                            "~ure"
+                        ],
+                        0.9254
+                    ],
+                    [
+                        "vim",
+                        [
+                            "~mji",
+                            "~sts",
+                            "ure"
+                        ],
+                        0.013
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "~mji",
+                            "~sts",
+                            "ure"
+                        ],
+                        0.987
+                    ],
+                    [
+                        "vim",
+                        [
+                            "~mji",
+                            "~sts",
+                            "~ure"
+                        ],
+                        0.8941
+                    ],
+                    [
+                        "~vim",
+                        [
+                            "~mji",
+                            "~sts",
+                            "~ure"
+                        ],
+                        0.1059
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VIM",
+            "outcomes": [
+                "vim",
+                "~vim"
+            ],
+            "parents": [
+                "MJI",
+                "STS",
+                "URE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dzu",
+                        [
+                            "ure"
+                        ],
+                        0.3464
+                    ],
+                    [
+                        "~dzu",
+                        [
+                            "ure"
+                        ],
+                        0.6536
+                    ],
+                    [
+                        "dzu",
+                        [
+                            "~ure"
+                        ],
+                        0.8542
+                    ],
+                    [
+                        "~dzu",
+                        [
+                            "~ure"
+                        ],
+                        0.1458
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DZU",
+            "outcomes": [
+                "dzu",
+                "~dzu"
+            ],
+            "parents": [
+                "URE"
+            ]
+        }
+    ]
+}

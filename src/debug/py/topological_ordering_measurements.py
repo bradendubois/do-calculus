@@ -1,5 +1,5 @@
-from probability_structures.CausalGraph import CausalGraph
-from probability_structures.VariableStructures import *
+from probability.structures.CausalGraph import CausalGraph
+from probability.structures.VariableStructures import *
 from config.config_manager import *
 from datetime import *
 

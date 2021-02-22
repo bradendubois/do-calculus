@@ -1,0 +1,440 @@
+{
+    "latent-model": true,
+    "name": "m344_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "quf",
+                        [
+                            "vjp"
+                        ],
+                        0.9821
+                    ],
+                    [
+                        "~quf",
+                        [
+                            "vjp"
+                        ],
+                        0.0179
+                    ],
+                    [
+                        "quf",
+                        [
+                            "~vjp"
+                        ],
+                        0.2321
+                    ],
+                    [
+                        "~quf",
+                        [
+                            "~vjp"
+                        ],
+                        0.7679
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QUF",
+            "outcomes": [
+                "quf",
+                "~quf"
+            ],
+            "parents": [
+                "VJP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cqs",
+                        [
+                            "vnp"
+                        ],
+                        0.3805
+                    ],
+                    [
+                        "~cqs",
+                        [
+                            "vnp"
+                        ],
+                        0.6195
+                    ],
+                    [
+                        "cqs",
+                        [
+                            "~vnp"
+                        ],
+                        0.0649
+                    ],
+                    [
+                        "~cqs",
+                        [
+                            "~vnp"
+                        ],
+                        0.9351
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CQS",
+            "outcomes": [
+                "cqs",
+                "~cqs"
+            ],
+            "parents": [
+                "VNP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ufk",
+                        [
+                            "quf"
+                        ],
+                        0.4388
+                    ],
+                    [
+                        "~ufk",
+                        [
+                            "quf"
+                        ],
+                        0.5612
+                    ],
+                    [
+                        "ufk",
+                        [
+                            "~quf"
+                        ],
+                        0.9936
+                    ],
+                    [
+                        "~ufk",
+                        [
+                            "~quf"
+                        ],
+                        0.0064
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UFK",
+            "outcomes": [
+                "ufk",
+                "~ufk"
+            ],
+            "parents": [
+                "QUF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cjo",
+                        [
+                            "itj"
+                        ],
+                        0.7118
+                    ],
+                    [
+                        "~cjo",
+                        [
+                            "itj"
+                        ],
+                        0.2882
+                    ],
+                    [
+                        "cjo",
+                        [
+                            "~itj"
+                        ],
+                        0.3002
+                    ],
+                    [
+                        "~cjo",
+                        [
+                            "~itj"
+                        ],
+                        0.6998
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CJO",
+            "outcomes": [
+                "cjo",
+                "~cjo"
+            ],
+            "parents": [
+                "ITJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "itj",
+                        [
+                            "xty"
+                        ],
+                        0.2503
+                    ],
+                    [
+                        "~itj",
+                        [
+                            "xty"
+                        ],
+                        0.7497
+                    ],
+                    [
+                        "itj",
+                        [
+                            "~xty"
+                        ],
+                        0.4099
+                    ],
+                    [
+                        "~itj",
+                        [
+                            "~xty"
+                        ],
+                        0.5901
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ITJ",
+            "outcomes": [
+                "itj",
+                "~itj"
+            ],
+            "parents": [
+                "XTY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qir",
+                        [
+                            "cqs"
+                        ],
+                        0.8268
+                    ],
+                    [
+                        "~qir",
+                        [
+                            "cqs"
+                        ],
+                        0.1732
+                    ],
+                    [
+                        "qir",
+                        [
+                            "~cqs"
+                        ],
+                        0.6937
+                    ],
+                    [
+                        "~qir",
+                        [
+                            "~cqs"
+                        ],
+                        0.3063
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QIR",
+            "outcomes": [
+                "qir",
+                "~qir"
+            ],
+            "parents": [
+                "CQS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tni",
+                        [
+                            "quf"
+                        ],
+                        0.1562
+                    ],
+                    [
+                        "~tni",
+                        [
+                            "quf"
+                        ],
+                        0.8438
+                    ],
+                    [
+                        "tni",
+                        [
+                            "~quf"
+                        ],
+                        0.1891
+                    ],
+                    [
+                        "~tni",
+                        [
+                            "~quf"
+                        ],
+                        0.8109
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TNI",
+            "outcomes": [
+                "tni",
+                "~tni"
+            ],
+            "parents": [
+                "QUF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jtr",
+                        [
+                            "vnp"
+                        ],
+                        0.976
+                    ],
+                    [
+                        "~jtr",
+                        [
+                            "vnp"
+                        ],
+                        0.024
+                    ],
+                    [
+                        "jtr",
+                        [
+                            "~vnp"
+                        ],
+                        0.0343
+                    ],
+                    [
+                        "~jtr",
+                        [
+                            "~vnp"
+                        ],
+                        0.9657
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JTR",
+            "outcomes": [
+                "jtr",
+                "~jtr"
+            ],
+            "parents": [
+                "VNP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vnp",
+                        [],
+                        0.0071
+                    ],
+                    [
+                        "~vnp",
+                        [],
+                        0.9929
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VNP",
+            "outcomes": [
+                "vnp",
+                "~vnp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xty",
+                        [],
+                        0.1477
+                    ],
+                    [
+                        "~xty",
+                        [],
+                        0.8523
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "XTY",
+            "outcomes": [
+                "xty",
+                "~xty"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vjp",
+                        [
+                            "jtr"
+                        ],
+                        0.4393
+                    ],
+                    [
+                        "~vjp",
+                        [
+                            "jtr"
+                        ],
+                        0.5607
+                    ],
+                    [
+                        "vjp",
+                        [
+                            "~jtr"
+                        ],
+                        0.1116
+                    ],
+                    [
+                        "~vjp",
+                        [
+                            "~jtr"
+                        ],
+                        0.8884
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VJP",
+            "outcomes": [
+                "vjp",
+                "~vjp"
+            ],
+            "parents": [
+                "JTR"
+            ]
+        }
+    ]
+}

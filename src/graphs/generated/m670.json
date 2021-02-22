@@ -1,0 +1,488 @@
+{
+    "latent-model": false,
+    "name": "m670",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rfp",
+                        [],
+                        0.1733
+                    ],
+                    [
+                        "~rfp",
+                        [],
+                        0.8267
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RFP",
+            "outcomes": [
+                "rfp",
+                "~rfp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qti",
+                        [
+                            "ovl"
+                        ],
+                        0.2411
+                    ],
+                    [
+                        "~qti",
+                        [
+                            "ovl"
+                        ],
+                        0.7589
+                    ],
+                    [
+                        "qti",
+                        [
+                            "~ovl"
+                        ],
+                        0.2346
+                    ],
+                    [
+                        "~qti",
+                        [
+                            "~ovl"
+                        ],
+                        0.7654
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QTI",
+            "outcomes": [
+                "qti",
+                "~qti"
+            ],
+            "parents": [
+                "OVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ovl",
+                        [],
+                        0.8336
+                    ],
+                    [
+                        "~ovl",
+                        [],
+                        0.1664
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OVL",
+            "outcomes": [
+                "ovl",
+                "~ovl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uyp",
+                        [
+                            "cjr",
+                            "ovl"
+                        ],
+                        0.088
+                    ],
+                    [
+                        "~uyp",
+                        [
+                            "cjr",
+                            "ovl"
+                        ],
+                        0.912
+                    ],
+                    [
+                        "uyp",
+                        [
+                            "cjr",
+                            "~ovl"
+                        ],
+                        0.6974
+                    ],
+                    [
+                        "~uyp",
+                        [
+                            "cjr",
+                            "~ovl"
+                        ],
+                        0.3026
+                    ],
+                    [
+                        "uyp",
+                        [
+                            "~cjr",
+                            "ovl"
+                        ],
+                        0.1126
+                    ],
+                    [
+                        "~uyp",
+                        [
+                            "~cjr",
+                            "ovl"
+                        ],
+                        0.8874
+                    ],
+                    [
+                        "uyp",
+                        [
+                            "~cjr",
+                            "~ovl"
+                        ],
+                        0.1862
+                    ],
+                    [
+                        "~uyp",
+                        [
+                            "~cjr",
+                            "~ovl"
+                        ],
+                        0.8138
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UYP",
+            "outcomes": [
+                "uyp",
+                "~uyp"
+            ],
+            "parents": [
+                "CJR",
+                "OVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lck",
+                        [
+                            "uyp"
+                        ],
+                        0.8373
+                    ],
+                    [
+                        "~lck",
+                        [
+                            "uyp"
+                        ],
+                        0.1627
+                    ],
+                    [
+                        "lck",
+                        [
+                            "~uyp"
+                        ],
+                        0.7405
+                    ],
+                    [
+                        "~lck",
+                        [
+                            "~uyp"
+                        ],
+                        0.2595
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LCK",
+            "outcomes": [
+                "lck",
+                "~lck"
+            ],
+            "parents": [
+                "UYP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cjr",
+                        [],
+                        0.777
+                    ],
+                    [
+                        "~cjr",
+                        [],
+                        0.223
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CJR",
+            "outcomes": [
+                "cjr",
+                "~cjr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zwt",
+                        [
+                            "cjr",
+                            "gob",
+                            "rfp"
+                        ],
+                        0.9323
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "cjr",
+                            "gob",
+                            "rfp"
+                        ],
+                        0.0677
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "cjr",
+                            "gob",
+                            "~rfp"
+                        ],
+                        0.0162
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "cjr",
+                            "gob",
+                            "~rfp"
+                        ],
+                        0.9838
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "cjr",
+                            "~gob",
+                            "rfp"
+                        ],
+                        0.4057
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "cjr",
+                            "~gob",
+                            "rfp"
+                        ],
+                        0.5943
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "cjr",
+                            "~gob",
+                            "~rfp"
+                        ],
+                        0.8256
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "cjr",
+                            "~gob",
+                            "~rfp"
+                        ],
+                        0.1744
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "~cjr",
+                            "gob",
+                            "rfp"
+                        ],
+                        0.2524
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "~cjr",
+                            "gob",
+                            "rfp"
+                        ],
+                        0.7476
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "~cjr",
+                            "gob",
+                            "~rfp"
+                        ],
+                        0.5482
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "~cjr",
+                            "gob",
+                            "~rfp"
+                        ],
+                        0.4518
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "~cjr",
+                            "~gob",
+                            "rfp"
+                        ],
+                        0.3166
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "~cjr",
+                            "~gob",
+                            "rfp"
+                        ],
+                        0.6834
+                    ],
+                    [
+                        "zwt",
+                        [
+                            "~cjr",
+                            "~gob",
+                            "~rfp"
+                        ],
+                        0.774
+                    ],
+                    [
+                        "~zwt",
+                        [
+                            "~cjr",
+                            "~gob",
+                            "~rfp"
+                        ],
+                        0.226
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZWT",
+            "outcomes": [
+                "zwt",
+                "~zwt"
+            ],
+            "parents": [
+                "CJR",
+                "GOB",
+                "RFP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gob",
+                        [
+                            "qti"
+                        ],
+                        0.2406
+                    ],
+                    [
+                        "~gob",
+                        [
+                            "qti"
+                        ],
+                        0.7594
+                    ],
+                    [
+                        "gob",
+                        [
+                            "~qti"
+                        ],
+                        0.8968
+                    ],
+                    [
+                        "~gob",
+                        [
+                            "~qti"
+                        ],
+                        0.1032
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GOB",
+            "outcomes": [
+                "gob",
+                "~gob"
+            ],
+            "parents": [
+                "QTI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nir",
+                        [
+                            "uyp"
+                        ],
+                        0.8064
+                    ],
+                    [
+                        "~nir",
+                        [
+                            "uyp"
+                        ],
+                        0.1936
+                    ],
+                    [
+                        "nir",
+                        [
+                            "~uyp"
+                        ],
+                        0.1091
+                    ],
+                    [
+                        "~nir",
+                        [
+                            "~uyp"
+                        ],
+                        0.8909
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NIR",
+            "outcomes": [
+                "nir",
+                "~nir"
+            ],
+            "parents": [
+                "UYP"
+            ]
+        }
+    ]
+}

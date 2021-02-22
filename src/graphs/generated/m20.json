@@ -1,0 +1,447 @@
+{
+    "latent-model": false,
+    "name": "m20",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dhj",
+                        [],
+                        0.7898
+                    ],
+                    [
+                        "~dhj",
+                        [],
+                        0.2102
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DHJ",
+            "outcomes": [
+                "dhj",
+                "~dhj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mdz",
+                        [],
+                        0.6628
+                    ],
+                    [
+                        "~mdz",
+                        [],
+                        0.3372
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MDZ",
+            "outcomes": [
+                "mdz",
+                "~mdz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kwo",
+                        [
+                            "thc",
+                            "uhd"
+                        ],
+                        0.3309
+                    ],
+                    [
+                        "~kwo",
+                        [
+                            "thc",
+                            "uhd"
+                        ],
+                        0.6691
+                    ],
+                    [
+                        "kwo",
+                        [
+                            "thc",
+                            "~uhd"
+                        ],
+                        0.3885
+                    ],
+                    [
+                        "~kwo",
+                        [
+                            "thc",
+                            "~uhd"
+                        ],
+                        0.6115
+                    ],
+                    [
+                        "kwo",
+                        [
+                            "~thc",
+                            "uhd"
+                        ],
+                        0.8392
+                    ],
+                    [
+                        "~kwo",
+                        [
+                            "~thc",
+                            "uhd"
+                        ],
+                        0.1608
+                    ],
+                    [
+                        "kwo",
+                        [
+                            "~thc",
+                            "~uhd"
+                        ],
+                        0.2403
+                    ],
+                    [
+                        "~kwo",
+                        [
+                            "~thc",
+                            "~uhd"
+                        ],
+                        0.7597
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KWO",
+            "outcomes": [
+                "kwo",
+                "~kwo"
+            ],
+            "parents": [
+                "THC",
+                "UHD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bjh",
+                        [
+                            "dhj",
+                            "mdz"
+                        ],
+                        0.398
+                    ],
+                    [
+                        "~bjh",
+                        [
+                            "dhj",
+                            "mdz"
+                        ],
+                        0.602
+                    ],
+                    [
+                        "bjh",
+                        [
+                            "dhj",
+                            "~mdz"
+                        ],
+                        0.0282
+                    ],
+                    [
+                        "~bjh",
+                        [
+                            "dhj",
+                            "~mdz"
+                        ],
+                        0.9718
+                    ],
+                    [
+                        "bjh",
+                        [
+                            "~dhj",
+                            "mdz"
+                        ],
+                        0.1297
+                    ],
+                    [
+                        "~bjh",
+                        [
+                            "~dhj",
+                            "mdz"
+                        ],
+                        0.8703
+                    ],
+                    [
+                        "bjh",
+                        [
+                            "~dhj",
+                            "~mdz"
+                        ],
+                        0.2064
+                    ],
+                    [
+                        "~bjh",
+                        [
+                            "~dhj",
+                            "~mdz"
+                        ],
+                        0.7936
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BJH",
+            "outcomes": [
+                "bjh",
+                "~bjh"
+            ],
+            "parents": [
+                "DHJ",
+                "MDZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "htn",
+                        [
+                            "dhj",
+                            "uhd"
+                        ],
+                        0.7503
+                    ],
+                    [
+                        "~htn",
+                        [
+                            "dhj",
+                            "uhd"
+                        ],
+                        0.2497
+                    ],
+                    [
+                        "htn",
+                        [
+                            "dhj",
+                            "~uhd"
+                        ],
+                        0.0515
+                    ],
+                    [
+                        "~htn",
+                        [
+                            "dhj",
+                            "~uhd"
+                        ],
+                        0.9485
+                    ],
+                    [
+                        "htn",
+                        [
+                            "~dhj",
+                            "uhd"
+                        ],
+                        0.2977
+                    ],
+                    [
+                        "~htn",
+                        [
+                            "~dhj",
+                            "uhd"
+                        ],
+                        0.7023
+                    ],
+                    [
+                        "htn",
+                        [
+                            "~dhj",
+                            "~uhd"
+                        ],
+                        0.5163
+                    ],
+                    [
+                        "~htn",
+                        [
+                            "~dhj",
+                            "~uhd"
+                        ],
+                        0.4837
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HTN",
+            "outcomes": [
+                "htn",
+                "~htn"
+            ],
+            "parents": [
+                "DHJ",
+                "UHD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jog",
+                        [],
+                        0.2806
+                    ],
+                    [
+                        "~jog",
+                        [],
+                        0.7194
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JOG",
+            "outcomes": [
+                "jog",
+                "~jog"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "inp",
+                        [],
+                        0.9662
+                    ],
+                    [
+                        "~inp",
+                        [],
+                        0.0338
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "INP",
+            "outcomes": [
+                "inp",
+                "~inp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "thc",
+                        [],
+                        0.6354
+                    ],
+                    [
+                        "~thc",
+                        [],
+                        0.3646
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "THC",
+            "outcomes": [
+                "thc",
+                "~thc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hfa",
+                        [
+                            "htn"
+                        ],
+                        0.1105
+                    ],
+                    [
+                        "~hfa",
+                        [
+                            "htn"
+                        ],
+                        0.8895
+                    ],
+                    [
+                        "hfa",
+                        [
+                            "~htn"
+                        ],
+                        0.9552
+                    ],
+                    [
+                        "~hfa",
+                        [
+                            "~htn"
+                        ],
+                        0.0448
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HFA",
+            "outcomes": [
+                "hfa",
+                "~hfa"
+            ],
+            "parents": [
+                "HTN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uhd",
+                        [
+                            "jog"
+                        ],
+                        0.6293
+                    ],
+                    [
+                        "~uhd",
+                        [
+                            "jog"
+                        ],
+                        0.3707
+                    ],
+                    [
+                        "uhd",
+                        [
+                            "~jog"
+                        ],
+                        0.2342
+                    ],
+                    [
+                        "~uhd",
+                        [
+                            "~jog"
+                        ],
+                        0.7658
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UHD",
+            "outcomes": [
+                "uhd",
+                "~uhd"
+            ],
+            "parents": [
+                "JOG"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,463 @@
+{
+    "latent-model": true,
+    "name": "m337_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sng",
+                        [],
+                        0.5362
+                    ],
+                    [
+                        "~sng",
+                        [],
+                        0.4638
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SNG",
+            "outcomes": [
+                "sng",
+                "~sng"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lra",
+                        [
+                            "rkt",
+                            "zjf"
+                        ],
+                        0.155
+                    ],
+                    [
+                        "~lra",
+                        [
+                            "rkt",
+                            "zjf"
+                        ],
+                        0.845
+                    ],
+                    [
+                        "lra",
+                        [
+                            "rkt",
+                            "~zjf"
+                        ],
+                        0.2663
+                    ],
+                    [
+                        "~lra",
+                        [
+                            "rkt",
+                            "~zjf"
+                        ],
+                        0.7337
+                    ],
+                    [
+                        "lra",
+                        [
+                            "~rkt",
+                            "zjf"
+                        ],
+                        0.5378
+                    ],
+                    [
+                        "~lra",
+                        [
+                            "~rkt",
+                            "zjf"
+                        ],
+                        0.4622
+                    ],
+                    [
+                        "lra",
+                        [
+                            "~rkt",
+                            "~zjf"
+                        ],
+                        0.057
+                    ],
+                    [
+                        "~lra",
+                        [
+                            "~rkt",
+                            "~zjf"
+                        ],
+                        0.943
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LRA",
+            "outcomes": [
+                "lra",
+                "~lra"
+            ],
+            "parents": [
+                "RKT",
+                "ZJF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fad",
+                        [],
+                        0.068
+                    ],
+                    [
+                        "~fad",
+                        [],
+                        0.932
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FAD",
+            "outcomes": [
+                "fad",
+                "~fad"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kjk",
+                        [
+                            "hph",
+                            "sng",
+                            "zjf"
+                        ],
+                        0.6787
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "hph",
+                            "sng",
+                            "zjf"
+                        ],
+                        0.3213
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "hph",
+                            "sng",
+                            "~zjf"
+                        ],
+                        0.5654
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "hph",
+                            "sng",
+                            "~zjf"
+                        ],
+                        0.4346
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "hph",
+                            "~sng",
+                            "zjf"
+                        ],
+                        0.3101
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "hph",
+                            "~sng",
+                            "zjf"
+                        ],
+                        0.6899
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "hph",
+                            "~sng",
+                            "~zjf"
+                        ],
+                        0.6123
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "hph",
+                            "~sng",
+                            "~zjf"
+                        ],
+                        0.3877
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "~hph",
+                            "sng",
+                            "zjf"
+                        ],
+                        0.5377
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "~hph",
+                            "sng",
+                            "zjf"
+                        ],
+                        0.4623
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "~hph",
+                            "sng",
+                            "~zjf"
+                        ],
+                        0.943
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "~hph",
+                            "sng",
+                            "~zjf"
+                        ],
+                        0.057
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "~hph",
+                            "~sng",
+                            "zjf"
+                        ],
+                        0.0392
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "~hph",
+                            "~sng",
+                            "zjf"
+                        ],
+                        0.9608
+                    ],
+                    [
+                        "kjk",
+                        [
+                            "~hph",
+                            "~sng",
+                            "~zjf"
+                        ],
+                        0.3217
+                    ],
+                    [
+                        "~kjk",
+                        [
+                            "~hph",
+                            "~sng",
+                            "~zjf"
+                        ],
+                        0.6783
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KJK",
+            "outcomes": [
+                "kjk",
+                "~kjk"
+            ],
+            "parents": [
+                "HPH",
+                "SNG",
+                "ZJF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zjf",
+                        [
+                            "hph",
+                            "omk"
+                        ],
+                        0.2933
+                    ],
+                    [
+                        "~zjf",
+                        [
+                            "hph",
+                            "omk"
+                        ],
+                        0.7067
+                    ],
+                    [
+                        "zjf",
+                        [
+                            "hph",
+                            "~omk"
+                        ],
+                        0.4252
+                    ],
+                    [
+                        "~zjf",
+                        [
+                            "hph",
+                            "~omk"
+                        ],
+                        0.5748
+                    ],
+                    [
+                        "zjf",
+                        [
+                            "~hph",
+                            "omk"
+                        ],
+                        0.7292
+                    ],
+                    [
+                        "~zjf",
+                        [
+                            "~hph",
+                            "omk"
+                        ],
+                        0.2708
+                    ],
+                    [
+                        "zjf",
+                        [
+                            "~hph",
+                            "~omk"
+                        ],
+                        0.1144
+                    ],
+                    [
+                        "~zjf",
+                        [
+                            "~hph",
+                            "~omk"
+                        ],
+                        0.8856
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZJF",
+            "outcomes": [
+                "zjf",
+                "~zjf"
+            ],
+            "parents": [
+                "HPH",
+                "OMK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hph",
+                        [
+                            "sng"
+                        ],
+                        0.335
+                    ],
+                    [
+                        "~hph",
+                        [
+                            "sng"
+                        ],
+                        0.665
+                    ],
+                    [
+                        "hph",
+                        [
+                            "~sng"
+                        ],
+                        0.1305
+                    ],
+                    [
+                        "~hph",
+                        [
+                            "~sng"
+                        ],
+                        0.8695
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HPH",
+            "outcomes": [
+                "hph",
+                "~hph"
+            ],
+            "parents": [
+                "SNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rkt",
+                        [],
+                        0.03
+                    ],
+                    [
+                        "~rkt",
+                        [],
+                        0.97
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RKT",
+            "outcomes": [
+                "rkt",
+                "~rkt"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "omk",
+                        [],
+                        0.35
+                    ],
+                    [
+                        "~omk",
+                        [],
+                        0.65
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "OMK",
+            "outcomes": [
+                "omk",
+                "~omk"
+            ],
+            "parents": []
+        }
+    ]
+}

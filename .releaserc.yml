@@ -1,0 +1,19 @@
+# .releaserc file
+# Configures the test-and-release workflow used to automatically tag / release on commits to certain branches
+
+# Only trigger proper release on
+branches:
+
+  # "main" branch is not prerelease
+  - name: main
+    prerelease: false
+
+  # "beta" branch is prerelease
+  - name: beta
+    prerelease: true
+
+# Plugins; Omit the npm plugin entirely, as we are not publishing on npm
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/github'

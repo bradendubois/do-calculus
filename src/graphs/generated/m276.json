@@ -1,0 +1,709 @@
+{
+    "latent-model": false,
+    "name": "m276",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pra",
+                        [
+                            "qhh",
+                            "rft",
+                            "snz"
+                        ],
+                        0.2416
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "qhh",
+                            "rft",
+                            "snz"
+                        ],
+                        0.7584
+                    ],
+                    [
+                        "pra",
+                        [
+                            "qhh",
+                            "rft",
+                            "~snz"
+                        ],
+                        0.234
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "qhh",
+                            "rft",
+                            "~snz"
+                        ],
+                        0.766
+                    ],
+                    [
+                        "pra",
+                        [
+                            "qhh",
+                            "~rft",
+                            "snz"
+                        ],
+                        0.8993
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "qhh",
+                            "~rft",
+                            "snz"
+                        ],
+                        0.1007
+                    ],
+                    [
+                        "pra",
+                        [
+                            "qhh",
+                            "~rft",
+                            "~snz"
+                        ],
+                        0.9506
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "qhh",
+                            "~rft",
+                            "~snz"
+                        ],
+                        0.0494
+                    ],
+                    [
+                        "pra",
+                        [
+                            "~qhh",
+                            "rft",
+                            "snz"
+                        ],
+                        0.7949
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "~qhh",
+                            "rft",
+                            "snz"
+                        ],
+                        0.2051
+                    ],
+                    [
+                        "pra",
+                        [
+                            "~qhh",
+                            "rft",
+                            "~snz"
+                        ],
+                        0.9169
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "~qhh",
+                            "rft",
+                            "~snz"
+                        ],
+                        0.0831
+                    ],
+                    [
+                        "pra",
+                        [
+                            "~qhh",
+                            "~rft",
+                            "snz"
+                        ],
+                        0.6224
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "~qhh",
+                            "~rft",
+                            "snz"
+                        ],
+                        0.3776
+                    ],
+                    [
+                        "pra",
+                        [
+                            "~qhh",
+                            "~rft",
+                            "~snz"
+                        ],
+                        0.0049
+                    ],
+                    [
+                        "~pra",
+                        [
+                            "~qhh",
+                            "~rft",
+                            "~snz"
+                        ],
+                        0.9951
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PRA",
+            "outcomes": [
+                "pra",
+                "~pra"
+            ],
+            "parents": [
+                "QHH",
+                "RFT",
+                "SNZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pxv",
+                        [
+                            "qhh"
+                        ],
+                        0.8563
+                    ],
+                    [
+                        "~pxv",
+                        [
+                            "qhh"
+                        ],
+                        0.1437
+                    ],
+                    [
+                        "pxv",
+                        [
+                            "~qhh"
+                        ],
+                        0.84
+                    ],
+                    [
+                        "~pxv",
+                        [
+                            "~qhh"
+                        ],
+                        0.16
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PXV",
+            "outcomes": [
+                "pxv",
+                "~pxv"
+            ],
+            "parents": [
+                "QHH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yqe",
+                        [
+                            "qhh",
+                            "snz"
+                        ],
+                        0.6003
+                    ],
+                    [
+                        "~yqe",
+                        [
+                            "qhh",
+                            "snz"
+                        ],
+                        0.3997
+                    ],
+                    [
+                        "yqe",
+                        [
+                            "qhh",
+                            "~snz"
+                        ],
+                        0.9658
+                    ],
+                    [
+                        "~yqe",
+                        [
+                            "qhh",
+                            "~snz"
+                        ],
+                        0.0342
+                    ],
+                    [
+                        "yqe",
+                        [
+                            "~qhh",
+                            "snz"
+                        ],
+                        0.5318
+                    ],
+                    [
+                        "~yqe",
+                        [
+                            "~qhh",
+                            "snz"
+                        ],
+                        0.4682
+                    ],
+                    [
+                        "yqe",
+                        [
+                            "~qhh",
+                            "~snz"
+                        ],
+                        0.0032
+                    ],
+                    [
+                        "~yqe",
+                        [
+                            "~qhh",
+                            "~snz"
+                        ],
+                        0.9968
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YQE",
+            "outcomes": [
+                "yqe",
+                "~yqe"
+            ],
+            "parents": [
+                "QHH",
+                "SNZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cfw",
+                        [],
+                        0.3597
+                    ],
+                    [
+                        "~cfw",
+                        [],
+                        0.6403
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CFW",
+            "outcomes": [
+                "cfw",
+                "~cfw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nnf",
+                        [
+                            "pxv"
+                        ],
+                        0.894
+                    ],
+                    [
+                        "~nnf",
+                        [
+                            "pxv"
+                        ],
+                        0.106
+                    ],
+                    [
+                        "nnf",
+                        [
+                            "~pxv"
+                        ],
+                        0.1232
+                    ],
+                    [
+                        "~nnf",
+                        [
+                            "~pxv"
+                        ],
+                        0.8768
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NNF",
+            "outcomes": [
+                "nnf",
+                "~nnf"
+            ],
+            "parents": [
+                "PXV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "snz",
+                        [],
+                        0.8941
+                    ],
+                    [
+                        "~snz",
+                        [],
+                        0.1059
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SNZ",
+            "outcomes": [
+                "snz",
+                "~snz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pjh",
+                        [
+                            "qhh",
+                            "snz",
+                            "yqe"
+                        ],
+                        0.032
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "qhh",
+                            "snz",
+                            "yqe"
+                        ],
+                        0.968
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "qhh",
+                            "snz",
+                            "~yqe"
+                        ],
+                        0.3101
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "qhh",
+                            "snz",
+                            "~yqe"
+                        ],
+                        0.6899
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "qhh",
+                            "~snz",
+                            "yqe"
+                        ],
+                        0.787
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "qhh",
+                            "~snz",
+                            "yqe"
+                        ],
+                        0.213
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "qhh",
+                            "~snz",
+                            "~yqe"
+                        ],
+                        0.18
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "qhh",
+                            "~snz",
+                            "~yqe"
+                        ],
+                        0.82
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "~qhh",
+                            "snz",
+                            "yqe"
+                        ],
+                        0.185
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "~qhh",
+                            "snz",
+                            "yqe"
+                        ],
+                        0.815
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "~qhh",
+                            "snz",
+                            "~yqe"
+                        ],
+                        0.3382
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "~qhh",
+                            "snz",
+                            "~yqe"
+                        ],
+                        0.6618
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "~qhh",
+                            "~snz",
+                            "yqe"
+                        ],
+                        0.9208
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "~qhh",
+                            "~snz",
+                            "yqe"
+                        ],
+                        0.0792
+                    ],
+                    [
+                        "pjh",
+                        [
+                            "~qhh",
+                            "~snz",
+                            "~yqe"
+                        ],
+                        0.5145
+                    ],
+                    [
+                        "~pjh",
+                        [
+                            "~qhh",
+                            "~snz",
+                            "~yqe"
+                        ],
+                        0.4855
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PJH",
+            "outcomes": [
+                "pjh",
+                "~pjh"
+            ],
+            "parents": [
+                "QHH",
+                "SNZ",
+                "YQE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qhh",
+                        [],
+                        0.5348
+                    ],
+                    [
+                        "~qhh",
+                        [],
+                        0.4652
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QHH",
+            "outcomes": [
+                "qhh",
+                "~qhh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rft",
+                        [
+                            "pjh",
+                            "tgq"
+                        ],
+                        0.2169
+                    ],
+                    [
+                        "~rft",
+                        [
+                            "pjh",
+                            "tgq"
+                        ],
+                        0.7831
+                    ],
+                    [
+                        "rft",
+                        [
+                            "pjh",
+                            "~tgq"
+                        ],
+                        0.687
+                    ],
+                    [
+                        "~rft",
+                        [
+                            "pjh",
+                            "~tgq"
+                        ],
+                        0.313
+                    ],
+                    [
+                        "rft",
+                        [
+                            "~pjh",
+                            "tgq"
+                        ],
+                        0.5428
+                    ],
+                    [
+                        "~rft",
+                        [
+                            "~pjh",
+                            "tgq"
+                        ],
+                        0.4572
+                    ],
+                    [
+                        "rft",
+                        [
+                            "~pjh",
+                            "~tgq"
+                        ],
+                        0.0301
+                    ],
+                    [
+                        "~rft",
+                        [
+                            "~pjh",
+                            "~tgq"
+                        ],
+                        0.9699
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RFT",
+            "outcomes": [
+                "rft",
+                "~rft"
+            ],
+            "parents": [
+                "PJH",
+                "TGQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tgq",
+                        [],
+                        0.837
+                    ],
+                    [
+                        "~tgq",
+                        [],
+                        0.163
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TGQ",
+            "outcomes": [
+                "tgq",
+                "~tgq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mqd",
+                        [
+                            "nnf"
+                        ],
+                        0.3301
+                    ],
+                    [
+                        "~mqd",
+                        [
+                            "nnf"
+                        ],
+                        0.6699
+                    ],
+                    [
+                        "mqd",
+                        [
+                            "~nnf"
+                        ],
+                        0.4911
+                    ],
+                    [
+                        "~mqd",
+                        [
+                            "~nnf"
+                        ],
+                        0.5089
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MQD",
+            "outcomes": [
+                "mqd",
+                "~mqd"
+            ],
+            "parents": [
+                "NNF"
+            ]
+        }
+    ]
+}

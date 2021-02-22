@@ -1,0 +1,662 @@
+{
+    "latent-model": false,
+    "name": "m907",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "snt",
+                        [
+                            "zvq"
+                        ],
+                        0.3076
+                    ],
+                    [
+                        "~snt",
+                        [
+                            "zvq"
+                        ],
+                        0.6924
+                    ],
+                    [
+                        "snt",
+                        [
+                            "~zvq"
+                        ],
+                        0.7256
+                    ],
+                    [
+                        "~snt",
+                        [
+                            "~zvq"
+                        ],
+                        0.2744
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SNT",
+            "outcomes": [
+                "snt",
+                "~snt"
+            ],
+            "parents": [
+                "ZVQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xea",
+                        [
+                            "jew",
+                            "qng"
+                        ],
+                        0.06
+                    ],
+                    [
+                        "~xea",
+                        [
+                            "jew",
+                            "qng"
+                        ],
+                        0.94
+                    ],
+                    [
+                        "xea",
+                        [
+                            "jew",
+                            "~qng"
+                        ],
+                        0.1732
+                    ],
+                    [
+                        "~xea",
+                        [
+                            "jew",
+                            "~qng"
+                        ],
+                        0.8268
+                    ],
+                    [
+                        "xea",
+                        [
+                            "~jew",
+                            "qng"
+                        ],
+                        0.5965
+                    ],
+                    [
+                        "~xea",
+                        [
+                            "~jew",
+                            "qng"
+                        ],
+                        0.4035
+                    ],
+                    [
+                        "xea",
+                        [
+                            "~jew",
+                            "~qng"
+                        ],
+                        0.8032
+                    ],
+                    [
+                        "~xea",
+                        [
+                            "~jew",
+                            "~qng"
+                        ],
+                        0.1968
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XEA",
+            "outcomes": [
+                "xea",
+                "~xea"
+            ],
+            "parents": [
+                "JEW",
+                "QNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cyu",
+                        [
+                            "snt",
+                            "zvq"
+                        ],
+                        0.5944
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "snt",
+                            "zvq"
+                        ],
+                        0.4056
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "snt",
+                            "~zvq"
+                        ],
+                        0.6715
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "snt",
+                            "~zvq"
+                        ],
+                        0.3285
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~snt",
+                            "zvq"
+                        ],
+                        0.8359
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~snt",
+                            "zvq"
+                        ],
+                        0.1641
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~snt",
+                            "~zvq"
+                        ],
+                        0.449
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~snt",
+                            "~zvq"
+                        ],
+                        0.551
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CYU",
+            "outcomes": [
+                "cyu",
+                "~cyu"
+            ],
+            "parents": [
+                "SNT",
+                "ZVQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "erx",
+                        [],
+                        0.791
+                    ],
+                    [
+                        "~erx",
+                        [],
+                        0.209
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ERX",
+            "outcomes": [
+                "erx",
+                "~erx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qng",
+                        [
+                            "cxe"
+                        ],
+                        0.7893
+                    ],
+                    [
+                        "~qng",
+                        [
+                            "cxe"
+                        ],
+                        0.2107
+                    ],
+                    [
+                        "qng",
+                        [
+                            "~cxe"
+                        ],
+                        0.9318
+                    ],
+                    [
+                        "~qng",
+                        [
+                            "~cxe"
+                        ],
+                        0.0682
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QNG",
+            "outcomes": [
+                "qng",
+                "~qng"
+            ],
+            "parents": [
+                "CXE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ycc",
+                        [
+                            "cxe",
+                            "jew",
+                            "zvq"
+                        ],
+                        0.9757
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "cxe",
+                            "jew",
+                            "zvq"
+                        ],
+                        0.0243
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "cxe",
+                            "jew",
+                            "~zvq"
+                        ],
+                        0.6471
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "cxe",
+                            "jew",
+                            "~zvq"
+                        ],
+                        0.3529
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "cxe",
+                            "~jew",
+                            "zvq"
+                        ],
+                        0.3845
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "cxe",
+                            "~jew",
+                            "zvq"
+                        ],
+                        0.6155
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "cxe",
+                            "~jew",
+                            "~zvq"
+                        ],
+                        0.4695
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "cxe",
+                            "~jew",
+                            "~zvq"
+                        ],
+                        0.5305
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "~cxe",
+                            "jew",
+                            "zvq"
+                        ],
+                        0.0485
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "~cxe",
+                            "jew",
+                            "zvq"
+                        ],
+                        0.9515
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "~cxe",
+                            "jew",
+                            "~zvq"
+                        ],
+                        0.6796
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "~cxe",
+                            "jew",
+                            "~zvq"
+                        ],
+                        0.3204
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "~cxe",
+                            "~jew",
+                            "zvq"
+                        ],
+                        0.1284
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "~cxe",
+                            "~jew",
+                            "zvq"
+                        ],
+                        0.8716
+                    ],
+                    [
+                        "ycc",
+                        [
+                            "~cxe",
+                            "~jew",
+                            "~zvq"
+                        ],
+                        0.1803
+                    ],
+                    [
+                        "~ycc",
+                        [
+                            "~cxe",
+                            "~jew",
+                            "~zvq"
+                        ],
+                        0.8197
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YCC",
+            "outcomes": [
+                "ycc",
+                "~ycc"
+            ],
+            "parents": [
+                "CXE",
+                "JEW",
+                "ZVQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bne",
+                        [
+                            "cyu",
+                            "qng"
+                        ],
+                        0.2761
+                    ],
+                    [
+                        "~bne",
+                        [
+                            "cyu",
+                            "qng"
+                        ],
+                        0.7239
+                    ],
+                    [
+                        "bne",
+                        [
+                            "cyu",
+                            "~qng"
+                        ],
+                        0.4163
+                    ],
+                    [
+                        "~bne",
+                        [
+                            "cyu",
+                            "~qng"
+                        ],
+                        0.5837
+                    ],
+                    [
+                        "bne",
+                        [
+                            "~cyu",
+                            "qng"
+                        ],
+                        0.0136
+                    ],
+                    [
+                        "~bne",
+                        [
+                            "~cyu",
+                            "qng"
+                        ],
+                        0.9864
+                    ],
+                    [
+                        "bne",
+                        [
+                            "~cyu",
+                            "~qng"
+                        ],
+                        0.524
+                    ],
+                    [
+                        "~bne",
+                        [
+                            "~cyu",
+                            "~qng"
+                        ],
+                        0.476
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BNE",
+            "outcomes": [
+                "bne",
+                "~bne"
+            ],
+            "parents": [
+                "CYU",
+                "QNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jew",
+                        [
+                            "cxe",
+                            "snt"
+                        ],
+                        0.4331
+                    ],
+                    [
+                        "~jew",
+                        [
+                            "cxe",
+                            "snt"
+                        ],
+                        0.5669
+                    ],
+                    [
+                        "jew",
+                        [
+                            "cxe",
+                            "~snt"
+                        ],
+                        0.219
+                    ],
+                    [
+                        "~jew",
+                        [
+                            "cxe",
+                            "~snt"
+                        ],
+                        0.781
+                    ],
+                    [
+                        "jew",
+                        [
+                            "~cxe",
+                            "snt"
+                        ],
+                        0.9476
+                    ],
+                    [
+                        "~jew",
+                        [
+                            "~cxe",
+                            "snt"
+                        ],
+                        0.0524
+                    ],
+                    [
+                        "jew",
+                        [
+                            "~cxe",
+                            "~snt"
+                        ],
+                        0.1731
+                    ],
+                    [
+                        "~jew",
+                        [
+                            "~cxe",
+                            "~snt"
+                        ],
+                        0.8269
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JEW",
+            "outcomes": [
+                "jew",
+                "~jew"
+            ],
+            "parents": [
+                "CXE",
+                "SNT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zvq",
+                        [],
+                        0.1967
+                    ],
+                    [
+                        "~zvq",
+                        [],
+                        0.8033
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZVQ",
+            "outcomes": [
+                "zvq",
+                "~zvq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cxe",
+                        [
+                            "erx"
+                        ],
+                        0.1193
+                    ],
+                    [
+                        "~cxe",
+                        [
+                            "erx"
+                        ],
+                        0.8807
+                    ],
+                    [
+                        "cxe",
+                        [
+                            "~erx"
+                        ],
+                        0.8384
+                    ],
+                    [
+                        "~cxe",
+                        [
+                            "~erx"
+                        ],
+                        0.1616
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CXE",
+            "outcomes": [
+                "cxe",
+                "~cxe"
+            ],
+            "parents": [
+                "ERX"
+            ]
+        }
+    ]
+}

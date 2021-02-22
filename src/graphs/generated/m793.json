@@ -1,0 +1,690 @@
+{
+    "latent-model": false,
+    "name": "m793",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ost",
+                        [],
+                        0.3457
+                    ],
+                    [
+                        "~ost",
+                        [],
+                        0.6543
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OST",
+            "outcomes": [
+                "ost",
+                "~ost"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "obu",
+                        [
+                            "lok"
+                        ],
+                        0.4203
+                    ],
+                    [
+                        "~obu",
+                        [
+                            "lok"
+                        ],
+                        0.5797
+                    ],
+                    [
+                        "obu",
+                        [
+                            "~lok"
+                        ],
+                        0.8821
+                    ],
+                    [
+                        "~obu",
+                        [
+                            "~lok"
+                        ],
+                        0.1179
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OBU",
+            "outcomes": [
+                "obu",
+                "~obu"
+            ],
+            "parents": [
+                "LOK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yte",
+                        [
+                            "ost"
+                        ],
+                        0.9952
+                    ],
+                    [
+                        "~yte",
+                        [
+                            "ost"
+                        ],
+                        0.0048
+                    ],
+                    [
+                        "yte",
+                        [
+                            "~ost"
+                        ],
+                        0.531
+                    ],
+                    [
+                        "~yte",
+                        [
+                            "~ost"
+                        ],
+                        0.469
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YTE",
+            "outcomes": [
+                "yte",
+                "~yte"
+            ],
+            "parents": [
+                "OST"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nzr",
+                        [
+                            "qgt"
+                        ],
+                        0.8705
+                    ],
+                    [
+                        "~nzr",
+                        [
+                            "qgt"
+                        ],
+                        0.1295
+                    ],
+                    [
+                        "nzr",
+                        [
+                            "~qgt"
+                        ],
+                        0.2784
+                    ],
+                    [
+                        "~nzr",
+                        [
+                            "~qgt"
+                        ],
+                        0.7216
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NZR",
+            "outcomes": [
+                "nzr",
+                "~nzr"
+            ],
+            "parents": [
+                "QGT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lok",
+                        [
+                            "qgt",
+                            "yte"
+                        ],
+                        0.6887
+                    ],
+                    [
+                        "~lok",
+                        [
+                            "qgt",
+                            "yte"
+                        ],
+                        0.3113
+                    ],
+                    [
+                        "lok",
+                        [
+                            "qgt",
+                            "~yte"
+                        ],
+                        0.3042
+                    ],
+                    [
+                        "~lok",
+                        [
+                            "qgt",
+                            "~yte"
+                        ],
+                        0.6958
+                    ],
+                    [
+                        "lok",
+                        [
+                            "~qgt",
+                            "yte"
+                        ],
+                        0.6652
+                    ],
+                    [
+                        "~lok",
+                        [
+                            "~qgt",
+                            "yte"
+                        ],
+                        0.3348
+                    ],
+                    [
+                        "lok",
+                        [
+                            "~qgt",
+                            "~yte"
+                        ],
+                        0.195
+                    ],
+                    [
+                        "~lok",
+                        [
+                            "~qgt",
+                            "~yte"
+                        ],
+                        0.805
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LOK",
+            "outcomes": [
+                "lok",
+                "~lok"
+            ],
+            "parents": [
+                "QGT",
+                "YTE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aze",
+                        [
+                            "nzr",
+                            "rjh"
+                        ],
+                        0.5625
+                    ],
+                    [
+                        "~aze",
+                        [
+                            "nzr",
+                            "rjh"
+                        ],
+                        0.4375
+                    ],
+                    [
+                        "aze",
+                        [
+                            "nzr",
+                            "~rjh"
+                        ],
+                        0.3421
+                    ],
+                    [
+                        "~aze",
+                        [
+                            "nzr",
+                            "~rjh"
+                        ],
+                        0.6579
+                    ],
+                    [
+                        "aze",
+                        [
+                            "~nzr",
+                            "rjh"
+                        ],
+                        0.499
+                    ],
+                    [
+                        "~aze",
+                        [
+                            "~nzr",
+                            "rjh"
+                        ],
+                        0.501
+                    ],
+                    [
+                        "aze",
+                        [
+                            "~nzr",
+                            "~rjh"
+                        ],
+                        0.7623
+                    ],
+                    [
+                        "~aze",
+                        [
+                            "~nzr",
+                            "~rjh"
+                        ],
+                        0.2377
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AZE",
+            "outcomes": [
+                "aze",
+                "~aze"
+            ],
+            "parents": [
+                "NZR",
+                "RJH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "riq",
+                        [],
+                        0.1957
+                    ],
+                    [
+                        "~riq",
+                        [],
+                        0.8043
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RIQ",
+            "outcomes": [
+                "riq",
+                "~riq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tol",
+                        [
+                            "lum",
+                            "nzr"
+                        ],
+                        0.4529
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "lum",
+                            "nzr"
+                        ],
+                        0.5471
+                    ],
+                    [
+                        "tol",
+                        [
+                            "lum",
+                            "~nzr"
+                        ],
+                        0.1602
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "lum",
+                            "~nzr"
+                        ],
+                        0.8398
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~lum",
+                            "nzr"
+                        ],
+                        0.7823
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~lum",
+                            "nzr"
+                        ],
+                        0.2177
+                    ],
+                    [
+                        "tol",
+                        [
+                            "~lum",
+                            "~nzr"
+                        ],
+                        0.9335
+                    ],
+                    [
+                        "~tol",
+                        [
+                            "~lum",
+                            "~nzr"
+                        ],
+                        0.0665
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TOL",
+            "outcomes": [
+                "tol",
+                "~tol"
+            ],
+            "parents": [
+                "LUM",
+                "NZR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gck",
+                        [
+                            "lum",
+                            "riq"
+                        ],
+                        0.9634
+                    ],
+                    [
+                        "~gck",
+                        [
+                            "lum",
+                            "riq"
+                        ],
+                        0.0366
+                    ],
+                    [
+                        "gck",
+                        [
+                            "lum",
+                            "~riq"
+                        ],
+                        0.4935
+                    ],
+                    [
+                        "~gck",
+                        [
+                            "lum",
+                            "~riq"
+                        ],
+                        0.5065
+                    ],
+                    [
+                        "gck",
+                        [
+                            "~lum",
+                            "riq"
+                        ],
+                        0.501
+                    ],
+                    [
+                        "~gck",
+                        [
+                            "~lum",
+                            "riq"
+                        ],
+                        0.499
+                    ],
+                    [
+                        "gck",
+                        [
+                            "~lum",
+                            "~riq"
+                        ],
+                        0.6794
+                    ],
+                    [
+                        "~gck",
+                        [
+                            "~lum",
+                            "~riq"
+                        ],
+                        0.3206
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GCK",
+            "outcomes": [
+                "gck",
+                "~gck"
+            ],
+            "parents": [
+                "LUM",
+                "RIQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jim",
+                        [
+                            "lum"
+                        ],
+                        0.3023
+                    ],
+                    [
+                        "~jim",
+                        [
+                            "lum"
+                        ],
+                        0.6977
+                    ],
+                    [
+                        "jim",
+                        [
+                            "~lum"
+                        ],
+                        0.7193
+                    ],
+                    [
+                        "~jim",
+                        [
+                            "~lum"
+                        ],
+                        0.2807
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JIM",
+            "outcomes": [
+                "jim",
+                "~jim"
+            ],
+            "parents": [
+                "LUM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rjh",
+                        [],
+                        0.7791
+                    ],
+                    [
+                        "~rjh",
+                        [],
+                        0.2209
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RJH",
+            "outcomes": [
+                "rjh",
+                "~rjh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lum",
+                        [
+                            "ost"
+                        ],
+                        0.6759
+                    ],
+                    [
+                        "~lum",
+                        [
+                            "ost"
+                        ],
+                        0.3241
+                    ],
+                    [
+                        "lum",
+                        [
+                            "~ost"
+                        ],
+                        0.3375
+                    ],
+                    [
+                        "~lum",
+                        [
+                            "~ost"
+                        ],
+                        0.6625
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LUM",
+            "outcomes": [
+                "lum",
+                "~lum"
+            ],
+            "parents": [
+                "OST"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qgt",
+                        [
+                            "jim",
+                            "rjh"
+                        ],
+                        0.0856
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "jim",
+                            "rjh"
+                        ],
+                        0.9144
+                    ],
+                    [
+                        "qgt",
+                        [
+                            "jim",
+                            "~rjh"
+                        ],
+                        0.7145
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "jim",
+                            "~rjh"
+                        ],
+                        0.2855
+                    ],
+                    [
+                        "qgt",
+                        [
+                            "~jim",
+                            "rjh"
+                        ],
+                        0.5518
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "~jim",
+                            "rjh"
+                        ],
+                        0.4482
+                    ],
+                    [
+                        "qgt",
+                        [
+                            "~jim",
+                            "~rjh"
+                        ],
+                        0.8909
+                    ],
+                    [
+                        "~qgt",
+                        [
+                            "~jim",
+                            "~rjh"
+                        ],
+                        0.1091
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QGT",
+            "outcomes": [
+                "qgt",
+                "~qgt"
+            ],
+            "parents": [
+                "JIM",
+                "RJH"
+            ]
+        }
+    ]
+}

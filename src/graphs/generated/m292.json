@@ -1,0 +1,717 @@
+{
+    "latent-model": false,
+    "name": "m292",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wrx",
+                        [
+                            "bzf"
+                        ],
+                        0.4382
+                    ],
+                    [
+                        "~wrx",
+                        [
+                            "bzf"
+                        ],
+                        0.5618
+                    ],
+                    [
+                        "wrx",
+                        [
+                            "~bzf"
+                        ],
+                        0.4722
+                    ],
+                    [
+                        "~wrx",
+                        [
+                            "~bzf"
+                        ],
+                        0.5278
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WRX",
+            "outcomes": [
+                "wrx",
+                "~wrx"
+            ],
+            "parents": [
+                "BZF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tyt",
+                        [
+                            "kcz"
+                        ],
+                        0.615
+                    ],
+                    [
+                        "~tyt",
+                        [
+                            "kcz"
+                        ],
+                        0.385
+                    ],
+                    [
+                        "tyt",
+                        [
+                            "~kcz"
+                        ],
+                        0.5629
+                    ],
+                    [
+                        "~tyt",
+                        [
+                            "~kcz"
+                        ],
+                        0.4371
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TYT",
+            "outcomes": [
+                "tyt",
+                "~tyt"
+            ],
+            "parents": [
+                "KCZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nct",
+                        [],
+                        0.1216
+                    ],
+                    [
+                        "~nct",
+                        [],
+                        0.8784
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NCT",
+            "outcomes": [
+                "nct",
+                "~nct"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xsu",
+                        [],
+                        0.2151
+                    ],
+                    [
+                        "~xsu",
+                        [],
+                        0.7849
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XSU",
+            "outcomes": [
+                "xsu",
+                "~xsu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kcz",
+                        [],
+                        0.9253
+                    ],
+                    [
+                        "~kcz",
+                        [],
+                        0.0747
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KCZ",
+            "outcomes": [
+                "kcz",
+                "~kcz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gzw",
+                        [
+                            "fos",
+                            "qxc"
+                        ],
+                        0.2011
+                    ],
+                    [
+                        "~gzw",
+                        [
+                            "fos",
+                            "qxc"
+                        ],
+                        0.7989
+                    ],
+                    [
+                        "gzw",
+                        [
+                            "fos",
+                            "~qxc"
+                        ],
+                        0.257
+                    ],
+                    [
+                        "~gzw",
+                        [
+                            "fos",
+                            "~qxc"
+                        ],
+                        0.743
+                    ],
+                    [
+                        "gzw",
+                        [
+                            "~fos",
+                            "qxc"
+                        ],
+                        0.6759
+                    ],
+                    [
+                        "~gzw",
+                        [
+                            "~fos",
+                            "qxc"
+                        ],
+                        0.3241
+                    ],
+                    [
+                        "gzw",
+                        [
+                            "~fos",
+                            "~qxc"
+                        ],
+                        0.0597
+                    ],
+                    [
+                        "~gzw",
+                        [
+                            "~fos",
+                            "~qxc"
+                        ],
+                        0.9403
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GZW",
+            "outcomes": [
+                "gzw",
+                "~gzw"
+            ],
+            "parents": [
+                "FOS",
+                "QXC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qxc",
+                        [],
+                        0.8343
+                    ],
+                    [
+                        "~qxc",
+                        [],
+                        0.1657
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QXC",
+            "outcomes": [
+                "qxc",
+                "~qxc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jcd",
+                        [
+                            "xsu"
+                        ],
+                        0.3069
+                    ],
+                    [
+                        "~jcd",
+                        [
+                            "xsu"
+                        ],
+                        0.6931
+                    ],
+                    [
+                        "jcd",
+                        [
+                            "~xsu"
+                        ],
+                        0.8287
+                    ],
+                    [
+                        "~jcd",
+                        [
+                            "~xsu"
+                        ],
+                        0.1713
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JCD",
+            "outcomes": [
+                "jcd",
+                "~jcd"
+            ],
+            "parents": [
+                "XSU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bzf",
+                        [
+                            "jcd"
+                        ],
+                        0.7741
+                    ],
+                    [
+                        "~bzf",
+                        [
+                            "jcd"
+                        ],
+                        0.2259
+                    ],
+                    [
+                        "bzf",
+                        [
+                            "~jcd"
+                        ],
+                        0.4334
+                    ],
+                    [
+                        "~bzf",
+                        [
+                            "~jcd"
+                        ],
+                        0.5666
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BZF",
+            "outcomes": [
+                "bzf",
+                "~bzf"
+            ],
+            "parents": [
+                "JCD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fos",
+                        [
+                            "kcz",
+                            "zbw"
+                        ],
+                        0.8611
+                    ],
+                    [
+                        "~fos",
+                        [
+                            "kcz",
+                            "zbw"
+                        ],
+                        0.1389
+                    ],
+                    [
+                        "fos",
+                        [
+                            "kcz",
+                            "~zbw"
+                        ],
+                        0.597
+                    ],
+                    [
+                        "~fos",
+                        [
+                            "kcz",
+                            "~zbw"
+                        ],
+                        0.403
+                    ],
+                    [
+                        "fos",
+                        [
+                            "~kcz",
+                            "zbw"
+                        ],
+                        0.7834
+                    ],
+                    [
+                        "~fos",
+                        [
+                            "~kcz",
+                            "zbw"
+                        ],
+                        0.2166
+                    ],
+                    [
+                        "fos",
+                        [
+                            "~kcz",
+                            "~zbw"
+                        ],
+                        0.7762
+                    ],
+                    [
+                        "~fos",
+                        [
+                            "~kcz",
+                            "~zbw"
+                        ],
+                        0.2238
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FOS",
+            "outcomes": [
+                "fos",
+                "~fos"
+            ],
+            "parents": [
+                "KCZ",
+                "ZBW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zbw",
+                        [],
+                        0.6644
+                    ],
+                    [
+                        "~zbw",
+                        [],
+                        0.3356
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZBW",
+            "outcomes": [
+                "zbw",
+                "~zbw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bml",
+                        [
+                            "bzf",
+                            "gzw",
+                            "nct"
+                        ],
+                        0.3302
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "bzf",
+                            "gzw",
+                            "nct"
+                        ],
+                        0.6698
+                    ],
+                    [
+                        "bml",
+                        [
+                            "bzf",
+                            "gzw",
+                            "~nct"
+                        ],
+                        0.2208
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "bzf",
+                            "gzw",
+                            "~nct"
+                        ],
+                        0.7792
+                    ],
+                    [
+                        "bml",
+                        [
+                            "bzf",
+                            "~gzw",
+                            "nct"
+                        ],
+                        0.7207
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "bzf",
+                            "~gzw",
+                            "nct"
+                        ],
+                        0.2793
+                    ],
+                    [
+                        "bml",
+                        [
+                            "bzf",
+                            "~gzw",
+                            "~nct"
+                        ],
+                        0.102
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "bzf",
+                            "~gzw",
+                            "~nct"
+                        ],
+                        0.898
+                    ],
+                    [
+                        "bml",
+                        [
+                            "~bzf",
+                            "gzw",
+                            "nct"
+                        ],
+                        0.7094
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "~bzf",
+                            "gzw",
+                            "nct"
+                        ],
+                        0.2906
+                    ],
+                    [
+                        "bml",
+                        [
+                            "~bzf",
+                            "gzw",
+                            "~nct"
+                        ],
+                        0.7476
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "~bzf",
+                            "gzw",
+                            "~nct"
+                        ],
+                        0.2524
+                    ],
+                    [
+                        "bml",
+                        [
+                            "~bzf",
+                            "~gzw",
+                            "nct"
+                        ],
+                        0.2194
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "~bzf",
+                            "~gzw",
+                            "nct"
+                        ],
+                        0.7806
+                    ],
+                    [
+                        "bml",
+                        [
+                            "~bzf",
+                            "~gzw",
+                            "~nct"
+                        ],
+                        0.709
+                    ],
+                    [
+                        "~bml",
+                        [
+                            "~bzf",
+                            "~gzw",
+                            "~nct"
+                        ],
+                        0.291
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BML",
+            "outcomes": [
+                "bml",
+                "~bml"
+            ],
+            "parents": [
+                "BZF",
+                "GZW",
+                "NCT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kbr",
+                        [
+                            "bml",
+                            "tyt"
+                        ],
+                        0.0507
+                    ],
+                    [
+                        "~kbr",
+                        [
+                            "bml",
+                            "tyt"
+                        ],
+                        0.9493
+                    ],
+                    [
+                        "kbr",
+                        [
+                            "bml",
+                            "~tyt"
+                        ],
+                        0.231
+                    ],
+                    [
+                        "~kbr",
+                        [
+                            "bml",
+                            "~tyt"
+                        ],
+                        0.769
+                    ],
+                    [
+                        "kbr",
+                        [
+                            "~bml",
+                            "tyt"
+                        ],
+                        0.6218
+                    ],
+                    [
+                        "~kbr",
+                        [
+                            "~bml",
+                            "tyt"
+                        ],
+                        0.3782
+                    ],
+                    [
+                        "kbr",
+                        [
+                            "~bml",
+                            "~tyt"
+                        ],
+                        0.0987
+                    ],
+                    [
+                        "~kbr",
+                        [
+                            "~bml",
+                            "~tyt"
+                        ],
+                        0.9013
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KBR",
+            "outcomes": [
+                "kbr",
+                "~kbr"
+            ],
+            "parents": [
+                "BML",
+                "TYT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wnt",
+                        [],
+                        0.0912
+                    ],
+                    [
+                        "~wnt",
+                        [],
+                        0.9088
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WNT",
+            "outcomes": [
+                "wnt",
+                "~wnt"
+            ],
+            "parents": []
+        }
+    ]
+}

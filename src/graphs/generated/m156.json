@@ -1,0 +1,439 @@
+{
+    "latent-model": false,
+    "name": "m156",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kbn",
+                        [
+                            "oft"
+                        ],
+                        0.5125
+                    ],
+                    [
+                        "~kbn",
+                        [
+                            "oft"
+                        ],
+                        0.4875
+                    ],
+                    [
+                        "kbn",
+                        [
+                            "~oft"
+                        ],
+                        0.2415
+                    ],
+                    [
+                        "~kbn",
+                        [
+                            "~oft"
+                        ],
+                        0.7585
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KBN",
+            "outcomes": [
+                "kbn",
+                "~kbn"
+            ],
+            "parents": [
+                "OFT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kpg",
+                        [],
+                        0.8136
+                    ],
+                    [
+                        "~kpg",
+                        [],
+                        0.1864
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KPG",
+            "outcomes": [
+                "kpg",
+                "~kpg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tdp",
+                        [
+                            "bfv",
+                            "kgf"
+                        ],
+                        0.2712
+                    ],
+                    [
+                        "~tdp",
+                        [
+                            "bfv",
+                            "kgf"
+                        ],
+                        0.7288
+                    ],
+                    [
+                        "tdp",
+                        [
+                            "bfv",
+                            "~kgf"
+                        ],
+                        0.6361
+                    ],
+                    [
+                        "~tdp",
+                        [
+                            "bfv",
+                            "~kgf"
+                        ],
+                        0.3639
+                    ],
+                    [
+                        "tdp",
+                        [
+                            "~bfv",
+                            "kgf"
+                        ],
+                        0.8687
+                    ],
+                    [
+                        "~tdp",
+                        [
+                            "~bfv",
+                            "kgf"
+                        ],
+                        0.1313
+                    ],
+                    [
+                        "tdp",
+                        [
+                            "~bfv",
+                            "~kgf"
+                        ],
+                        0.2746
+                    ],
+                    [
+                        "~tdp",
+                        [
+                            "~bfv",
+                            "~kgf"
+                        ],
+                        0.7254
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TDP",
+            "outcomes": [
+                "tdp",
+                "~tdp"
+            ],
+            "parents": [
+                "BFV",
+                "KGF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oft",
+                        [
+                            "kgf",
+                            "kpg",
+                            "wmc"
+                        ],
+                        0.5124
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "kgf",
+                            "kpg",
+                            "wmc"
+                        ],
+                        0.4876
+                    ],
+                    [
+                        "oft",
+                        [
+                            "kgf",
+                            "kpg",
+                            "~wmc"
+                        ],
+                        0.0424
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "kgf",
+                            "kpg",
+                            "~wmc"
+                        ],
+                        0.9576
+                    ],
+                    [
+                        "oft",
+                        [
+                            "kgf",
+                            "~kpg",
+                            "wmc"
+                        ],
+                        0.5532
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "kgf",
+                            "~kpg",
+                            "wmc"
+                        ],
+                        0.4468
+                    ],
+                    [
+                        "oft",
+                        [
+                            "kgf",
+                            "~kpg",
+                            "~wmc"
+                        ],
+                        0.0699
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "kgf",
+                            "~kpg",
+                            "~wmc"
+                        ],
+                        0.9301
+                    ],
+                    [
+                        "oft",
+                        [
+                            "~kgf",
+                            "kpg",
+                            "wmc"
+                        ],
+                        0.9449
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "~kgf",
+                            "kpg",
+                            "wmc"
+                        ],
+                        0.0551
+                    ],
+                    [
+                        "oft",
+                        [
+                            "~kgf",
+                            "kpg",
+                            "~wmc"
+                        ],
+                        0.8749
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "~kgf",
+                            "kpg",
+                            "~wmc"
+                        ],
+                        0.1251
+                    ],
+                    [
+                        "oft",
+                        [
+                            "~kgf",
+                            "~kpg",
+                            "wmc"
+                        ],
+                        0.1879
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "~kgf",
+                            "~kpg",
+                            "wmc"
+                        ],
+                        0.8121
+                    ],
+                    [
+                        "oft",
+                        [
+                            "~kgf",
+                            "~kpg",
+                            "~wmc"
+                        ],
+                        0.983
+                    ],
+                    [
+                        "~oft",
+                        [
+                            "~kgf",
+                            "~kpg",
+                            "~wmc"
+                        ],
+                        0.017
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OFT",
+            "outcomes": [
+                "oft",
+                "~oft"
+            ],
+            "parents": [
+                "KGF",
+                "KPG",
+                "WMC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bfv",
+                        [
+                            "kbn",
+                            "kpg"
+                        ],
+                        0.8044
+                    ],
+                    [
+                        "~bfv",
+                        [
+                            "kbn",
+                            "kpg"
+                        ],
+                        0.1956
+                    ],
+                    [
+                        "bfv",
+                        [
+                            "kbn",
+                            "~kpg"
+                        ],
+                        0.4475
+                    ],
+                    [
+                        "~bfv",
+                        [
+                            "kbn",
+                            "~kpg"
+                        ],
+                        0.5525
+                    ],
+                    [
+                        "bfv",
+                        [
+                            "~kbn",
+                            "kpg"
+                        ],
+                        0.4963
+                    ],
+                    [
+                        "~bfv",
+                        [
+                            "~kbn",
+                            "kpg"
+                        ],
+                        0.5037
+                    ],
+                    [
+                        "bfv",
+                        [
+                            "~kbn",
+                            "~kpg"
+                        ],
+                        0.5907
+                    ],
+                    [
+                        "~bfv",
+                        [
+                            "~kbn",
+                            "~kpg"
+                        ],
+                        0.4093
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BFV",
+            "outcomes": [
+                "bfv",
+                "~bfv"
+            ],
+            "parents": [
+                "KBN",
+                "KPG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wmc",
+                        [],
+                        0.4096
+                    ],
+                    [
+                        "~wmc",
+                        [],
+                        0.5904
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WMC",
+            "outcomes": [
+                "wmc",
+                "~wmc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kgf",
+                        [],
+                        0.6257
+                    ],
+                    [
+                        "~kgf",
+                        [],
+                        0.3743
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KGF",
+            "outcomes": [
+                "kgf",
+                "~kgf"
+            ],
+            "parents": []
+        }
+    ]
+}

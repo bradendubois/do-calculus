@@ -1,0 +1,314 @@
+# TODO - Run all the tests involved in the entire testing suite - implement threading for that
+
+# api
+from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
+from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
+from src.api.joint_distribution_table import api_joint_distribution_table
+from src.api.probability_query import api_probability_query, api_probability_query_parse
+
+from src.probability.structures.Graph import Graph
+
+from src.util.helpers import power_set, disjoint
+
+from src.validation.backdoors.backdoor_path_tests import backdoor_tests
+from src.validation.inference.inference_tests import inference_tests
+from src.validation.shpitser.shpitser_tests import shpitser_tests
+
+from src.validation.test_util import print_test_result
+
+graph_location = "src/graphs/full"
+generated_location = "src/graphs/generated"
+
+# api
+
+def test_api_backdoor_paths():
+    ...
+
+
+def test_api_deconfounding_sets():
+    ...
+
+
+def test_api_joint_distribution_table():
+    ...
+
+
+def test_api_probability_query():
+    ...
+
+
+# config - TODO
+
+
+# graphs
+
+def test_sum_to():
+    ...
+
+
+def test_generate_distribution():
+    ...
+
+
+def test_cycle():
+    ...
+
+
+def test_longest():
+    ...
+
+
+def test_generate_graph():
+    ...
+
+
+def test_randomized_latent_variables():
+    ...
+
+# TODO make model_generator into runnable function
+
+# probability/
+
+# probability/do_calculus - TODO
+
+# probability/shpitser - TODO
+
+# probability/structures
+
+# probability/structures/BackdoorController
+
+def test_backdoor_paths():
+    ...
+
+
+def test_backdoor_paths_pair():
+    ...
+
+
+def test_all_dcf_sets():
+    ...
+
+
+def test_all_paths_cumulative():
+    ...
+
+
+def test_independent():
+    ...
+
+
+# probability/structures/CausalGraph
+
+def test_probability_query():
+    ...
+
+
+# probability/structures/ConditionalProbabilityTable
+
+def test_probability_lookup():
+    ...
+
+
+# probability/structures/Graph
+
+# TODO - Add graph
+graph = Graph(set(), set())
+
+
+def test_roots():
+    assert sum(map(lambda v: graph.parents(v), graph.roots())) == 0
+
+
+def test_parents():
+    roots = graph.roots()
+    for vertex in graph.v:
+        parents = graph.parents(vertex)
+        for parent in parents:
+            assert (parent, vertex) in graph.e
+
+        if vertex in roots:
+            assert len(parents) == 0
+        else:
+            assert len(parents) > 0
+
+
+def test_children():
+    for vertex in graph.v:
+        children = graph.children(vertex)
+        for child in children:
+            assert (vertex, child) in graph.e
+
+        for child in children:
+            assert vertex in graph.parents(child)
+
+
+def test_ancestors():
+    for vertex in graph.v:
+        ancestors = graph.ancestors(vertex)
+        for ancestor in ancestors:
+            assert vertex in graph.reach(ancestor)
+
+
+def test_reach():
+    for vertex in graph.v:
+        descendants = graph.reach(vertex)
+        for descendant in descendants:
+            assert vertex in graph.reach(descendant)
+
+
+def test_disable_outgoing():
+    ...
+
+
+def test_disable_incoming():
+    ...
+
+
+def test_reset_disabled():
+    ...
+
+
+def test_get_topology():
+    ...
+
+
+def test_graph_copy():
+    graph_2 = graph.copy()
+    assert len(graph.v) == len(graph_2.v)
+    assert len(graph.e) == len(graph_2.e)
+    assert graph.v is not graph_2.v
+    assert graph.e is not graph_2.e
+    for v in graph.v:
+        assert v in graph_2.v
+    for v in graph_2.v:
+        assert v in graph.v
+    for e in graph.e:
+        assert e in graph_2.e
+    for e in graph_2.e:
+        assert e in graph.e
+
+
+def test_topological_variable_sort():
+    ...
+
+
+def test_descendant_first_sort():
+    ...
+
+
+def test_to_label():
+    ...
+
+
+# probability/structures/Probability_Engine
+
+def test_probability():
+    ...
+
+
+# probability/structures/VariableStructures
+
+def test_outcome():
+    ...
+
+
+def test_variable():
+    ...
+
+
+def test_intervention():
+    ...
+
+
+def test_parse_outcomes_and_interventions():
+    ...
+
+
+# util/
+
+def test_power_set():
+    data = [1, 2, 3, 4]
+    with_empty = power_set(data, allow_empty_set=True)
+    without_empty = power_set(data, allow_empty_set=False)
+    assert len(set(with_empty)) == 2 ** len(data)
+    assert len(set(without_empty)) == 2 ** len(data) - 1
+
+
+def test_minimal_sets():
+    ...
+
+
+def test_disjoint():
+    d1 = {0, 1, 2, 3, 4}
+    d2 = {3, 4, 5, 6, 7}
+    d3 = {6, 7, 8, 9, 10}
+    assert not disjoint(d1, d2)
+    assert not disjoint(d2, d3)
+    assert not disjoint(d1, d2, d3)
+    assert disjoint(d1, d3)
+
+
+def test_p_str():
+    ...
+
+
+def test_parse_model():
+    ...
+
+
+def test_output_logger():
+    ...
+
+
+# validation
+
+def test_inference_module() -> bool:
+    inference_bool, inference_msg = inference_tests(graph_location)
+    assert inference_bool, inference_msg
+    print_test_result(inference_bool, inference_msg)
+    return inference_bool
+
+
+def test_backdoor_module() -> bool:
+    backdoor_bool, backdoor_msg = backdoor_tests(graph_location)
+    assert backdoor_bool, backdoor_msg
+    print_test_result(backdoor_bool, backdoor_msg)
+    return backdoor_bool
+
+
+def test_shpitser_module() -> bool:
+    shpitser_bool, shpitser_msg = shpitser_tests(graph_location)
+    assert shpitser_bool, shpitser_msg
+    print_test_result(shpitser_bool, shpitser_msg)
+    return shpitser_bool
+
+
+
+# TODO - Incorporate into above tests
+def run_all_tests(extreme=False) -> bool:
+    """
+    Run all the tests for each of the individual components of the software (the basic inference engine, backdoor paths,
+    as well as shpitser).
+    @param extreme: bool; whether or not to run additional tests on generated models; this may increase testing time
+        substantially.
+    @postcondition Output of all tests is printed to standard output
+    @return: True if all tests are successful, False otherwise
+    """
+
+    inference_bool, inference_msg = inference_tests(graph_location)
+    backdoor_bool, backdoor_msg = backdoor_tests(graph_location)
+    shpitser_bool, shpitser_msg = shpitser_tests(graph_location)
+
+    print_test_result(inference_bool, inference_msg)
+    print_test_result(backdoor_bool, backdoor_msg)
+    print_test_result(shpitser_bool, shpitser_msg)
+
+    if extreme:
+
+        print("Additional tests beginning...")
+
+        extreme_inference_bool, extreme_inference_msg = inference_tests(generated_location)
+        print_test_result(extreme_inference_bool, extreme_inference_msg)
+        inference_bool = inference_bool and extreme_inference_bool
+
+    return all([inference_bool, backdoor_bool, shpitser_bool])

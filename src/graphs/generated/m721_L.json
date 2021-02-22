@@ -1,0 +1,546 @@
+{
+    "latent-model": true,
+    "name": "m721_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hff",
+                        [
+                            "awr",
+                            "tws",
+                            "yyc"
+                        ],
+                        0.8348
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "awr",
+                            "tws",
+                            "yyc"
+                        ],
+                        0.1652
+                    ],
+                    [
+                        "hff",
+                        [
+                            "awr",
+                            "tws",
+                            "~yyc"
+                        ],
+                        0.7714
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "awr",
+                            "tws",
+                            "~yyc"
+                        ],
+                        0.2286
+                    ],
+                    [
+                        "hff",
+                        [
+                            "awr",
+                            "~tws",
+                            "yyc"
+                        ],
+                        0.0942
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "awr",
+                            "~tws",
+                            "yyc"
+                        ],
+                        0.9058
+                    ],
+                    [
+                        "hff",
+                        [
+                            "awr",
+                            "~tws",
+                            "~yyc"
+                        ],
+                        0.314
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "awr",
+                            "~tws",
+                            "~yyc"
+                        ],
+                        0.686
+                    ],
+                    [
+                        "hff",
+                        [
+                            "~awr",
+                            "tws",
+                            "yyc"
+                        ],
+                        0.2649
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "~awr",
+                            "tws",
+                            "yyc"
+                        ],
+                        0.7351
+                    ],
+                    [
+                        "hff",
+                        [
+                            "~awr",
+                            "tws",
+                            "~yyc"
+                        ],
+                        0.0595
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "~awr",
+                            "tws",
+                            "~yyc"
+                        ],
+                        0.9405
+                    ],
+                    [
+                        "hff",
+                        [
+                            "~awr",
+                            "~tws",
+                            "yyc"
+                        ],
+                        0.6342
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "~awr",
+                            "~tws",
+                            "yyc"
+                        ],
+                        0.3658
+                    ],
+                    [
+                        "hff",
+                        [
+                            "~awr",
+                            "~tws",
+                            "~yyc"
+                        ],
+                        0.6485
+                    ],
+                    [
+                        "~hff",
+                        [
+                            "~awr",
+                            "~tws",
+                            "~yyc"
+                        ],
+                        0.3515
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HFF",
+            "outcomes": [
+                "hff",
+                "~hff"
+            ],
+            "parents": [
+                "AWR",
+                "TWS",
+                "YYC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "awr",
+                        [
+                            "lee"
+                        ],
+                        0.6736
+                    ],
+                    [
+                        "~awr",
+                        [
+                            "lee"
+                        ],
+                        0.3264
+                    ],
+                    [
+                        "awr",
+                        [
+                            "~lee"
+                        ],
+                        0.2567
+                    ],
+                    [
+                        "~awr",
+                        [
+                            "~lee"
+                        ],
+                        0.7433
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AWR",
+            "outcomes": [
+                "awr",
+                "~awr"
+            ],
+            "parents": [
+                "LEE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wkz",
+                        [
+                            "awr"
+                        ],
+                        0.7739
+                    ],
+                    [
+                        "~wkz",
+                        [
+                            "awr"
+                        ],
+                        0.2261
+                    ],
+                    [
+                        "wkz",
+                        [
+                            "~awr"
+                        ],
+                        0.2984
+                    ],
+                    [
+                        "~wkz",
+                        [
+                            "~awr"
+                        ],
+                        0.7016
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WKZ",
+            "outcomes": [
+                "wkz",
+                "~wkz"
+            ],
+            "parents": [
+                "AWR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tws",
+                        [
+                            "npe"
+                        ],
+                        0.9933
+                    ],
+                    [
+                        "~tws",
+                        [
+                            "npe"
+                        ],
+                        0.0067
+                    ],
+                    [
+                        "tws",
+                        [
+                            "~npe"
+                        ],
+                        0.3768
+                    ],
+                    [
+                        "~tws",
+                        [
+                            "~npe"
+                        ],
+                        0.6232
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TWS",
+            "outcomes": [
+                "tws",
+                "~tws"
+            ],
+            "parents": [
+                "NPE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lee",
+                        [],
+                        0.1497
+                    ],
+                    [
+                        "~lee",
+                        [],
+                        0.8503
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LEE",
+            "outcomes": [
+                "lee",
+                "~lee"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "npe",
+                        [
+                            "ppo",
+                            "wkz"
+                        ],
+                        0.067
+                    ],
+                    [
+                        "~npe",
+                        [
+                            "ppo",
+                            "wkz"
+                        ],
+                        0.933
+                    ],
+                    [
+                        "npe",
+                        [
+                            "ppo",
+                            "~wkz"
+                        ],
+                        0.6445
+                    ],
+                    [
+                        "~npe",
+                        [
+                            "ppo",
+                            "~wkz"
+                        ],
+                        0.3555
+                    ],
+                    [
+                        "npe",
+                        [
+                            "~ppo",
+                            "wkz"
+                        ],
+                        0.7682
+                    ],
+                    [
+                        "~npe",
+                        [
+                            "~ppo",
+                            "wkz"
+                        ],
+                        0.2318
+                    ],
+                    [
+                        "npe",
+                        [
+                            "~ppo",
+                            "~wkz"
+                        ],
+                        0.9165
+                    ],
+                    [
+                        "~npe",
+                        [
+                            "~ppo",
+                            "~wkz"
+                        ],
+                        0.0835
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NPE",
+            "outcomes": [
+                "npe",
+                "~npe"
+            ],
+            "parents": [
+                "PPO",
+                "WKZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hje",
+                        [
+                            "npe"
+                        ],
+                        0.7655
+                    ],
+                    [
+                        "~hje",
+                        [
+                            "npe"
+                        ],
+                        0.2345
+                    ],
+                    [
+                        "hje",
+                        [
+                            "~npe"
+                        ],
+                        0.3794
+                    ],
+                    [
+                        "~hje",
+                        [
+                            "~npe"
+                        ],
+                        0.6206
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HJE",
+            "outcomes": [
+                "hje",
+                "~hje"
+            ],
+            "parents": [
+                "NPE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ppo",
+                        [
+                            "awr",
+                            "lee"
+                        ],
+                        0.5938
+                    ],
+                    [
+                        "~ppo",
+                        [
+                            "awr",
+                            "lee"
+                        ],
+                        0.4062
+                    ],
+                    [
+                        "ppo",
+                        [
+                            "awr",
+                            "~lee"
+                        ],
+                        0.3588
+                    ],
+                    [
+                        "~ppo",
+                        [
+                            "awr",
+                            "~lee"
+                        ],
+                        0.6412
+                    ],
+                    [
+                        "ppo",
+                        [
+                            "~awr",
+                            "lee"
+                        ],
+                        0.2189
+                    ],
+                    [
+                        "~ppo",
+                        [
+                            "~awr",
+                            "lee"
+                        ],
+                        0.7811
+                    ],
+                    [
+                        "ppo",
+                        [
+                            "~awr",
+                            "~lee"
+                        ],
+                        0.4627
+                    ],
+                    [
+                        "~ppo",
+                        [
+                            "~awr",
+                            "~lee"
+                        ],
+                        0.5373
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PPO",
+            "outcomes": [
+                "ppo",
+                "~ppo"
+            ],
+            "parents": [
+                "AWR",
+                "LEE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yyc",
+                        [],
+                        0.382
+                    ],
+                    [
+                        "~yyc",
+                        [],
+                        0.618
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "YYC",
+            "outcomes": [
+                "yyc",
+                "~yyc"
+            ],
+            "parents": []
+        }
+    ]
+}

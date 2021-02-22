@@ -1,0 +1,261 @@
+{
+    "latent-model": false,
+    "name": "m953",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kns",
+                        [],
+                        0.3696
+                    ],
+                    [
+                        "~kns",
+                        [],
+                        0.6304
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KNS",
+            "outcomes": [
+                "kns",
+                "~kns"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "phl",
+                        [
+                            "anu",
+                            "hfq"
+                        ],
+                        0.0483
+                    ],
+                    [
+                        "~phl",
+                        [
+                            "anu",
+                            "hfq"
+                        ],
+                        0.9517
+                    ],
+                    [
+                        "phl",
+                        [
+                            "anu",
+                            "~hfq"
+                        ],
+                        0.9703
+                    ],
+                    [
+                        "~phl",
+                        [
+                            "anu",
+                            "~hfq"
+                        ],
+                        0.0297
+                    ],
+                    [
+                        "phl",
+                        [
+                            "~anu",
+                            "hfq"
+                        ],
+                        0.9017
+                    ],
+                    [
+                        "~phl",
+                        [
+                            "~anu",
+                            "hfq"
+                        ],
+                        0.0983
+                    ],
+                    [
+                        "phl",
+                        [
+                            "~anu",
+                            "~hfq"
+                        ],
+                        0.7991
+                    ],
+                    [
+                        "~phl",
+                        [
+                            "~anu",
+                            "~hfq"
+                        ],
+                        0.2009
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PHL",
+            "outcomes": [
+                "phl",
+                "~phl"
+            ],
+            "parents": [
+                "ANU",
+                "HFQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "anu",
+                        [
+                            "roo"
+                        ],
+                        0.5937
+                    ],
+                    [
+                        "~anu",
+                        [
+                            "roo"
+                        ],
+                        0.4063
+                    ],
+                    [
+                        "anu",
+                        [
+                            "~roo"
+                        ],
+                        0.0414
+                    ],
+                    [
+                        "~anu",
+                        [
+                            "~roo"
+                        ],
+                        0.9586
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ANU",
+            "outcomes": [
+                "anu",
+                "~anu"
+            ],
+            "parents": [
+                "ROO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "roo",
+                        [],
+                        0.0568
+                    ],
+                    [
+                        "~roo",
+                        [],
+                        0.9432
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ROO",
+            "outcomes": [
+                "roo",
+                "~roo"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "key",
+                        [
+                            "kns"
+                        ],
+                        0.9314
+                    ],
+                    [
+                        "~key",
+                        [
+                            "kns"
+                        ],
+                        0.0686
+                    ],
+                    [
+                        "key",
+                        [
+                            "~kns"
+                        ],
+                        0.6014
+                    ],
+                    [
+                        "~key",
+                        [
+                            "~kns"
+                        ],
+                        0.3986
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KEY",
+            "outcomes": [
+                "key",
+                "~key"
+            ],
+            "parents": [
+                "KNS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hfq",
+                        [
+                            "key"
+                        ],
+                        0.57
+                    ],
+                    [
+                        "~hfq",
+                        [
+                            "key"
+                        ],
+                        0.43
+                    ],
+                    [
+                        "hfq",
+                        [
+                            "~key"
+                        ],
+                        0.3112
+                    ],
+                    [
+                        "~hfq",
+                        [
+                            "~key"
+                        ],
+                        0.6888
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HFQ",
+            "outcomes": [
+                "hfq",
+                "~hfq"
+            ],
+            "parents": [
+                "KEY"
+            ]
+        }
+    ]
+}

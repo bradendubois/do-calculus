@@ -1,0 +1,552 @@
+{
+    "latent-model": true,
+    "name": "m826_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tvg",
+                        [
+                            "mol"
+                        ],
+                        0.6683
+                    ],
+                    [
+                        "~tvg",
+                        [
+                            "mol"
+                        ],
+                        0.3317
+                    ],
+                    [
+                        "tvg",
+                        [
+                            "~mol"
+                        ],
+                        0.8873
+                    ],
+                    [
+                        "~tvg",
+                        [
+                            "~mol"
+                        ],
+                        0.1127
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TVG",
+            "outcomes": [
+                "tvg",
+                "~tvg"
+            ],
+            "parents": [
+                "MOL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mol",
+                        [
+                            "eju"
+                        ],
+                        0.205
+                    ],
+                    [
+                        "~mol",
+                        [
+                            "eju"
+                        ],
+                        0.795
+                    ],
+                    [
+                        "mol",
+                        [
+                            "~eju"
+                        ],
+                        0.6026
+                    ],
+                    [
+                        "~mol",
+                        [
+                            "~eju"
+                        ],
+                        0.3974
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MOL",
+            "outcomes": [
+                "mol",
+                "~mol"
+            ],
+            "parents": [
+                "EJU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pjp",
+                        [
+                            "hgp",
+                            "jax"
+                        ],
+                        0.6642
+                    ],
+                    [
+                        "~pjp",
+                        [
+                            "hgp",
+                            "jax"
+                        ],
+                        0.3358
+                    ],
+                    [
+                        "pjp",
+                        [
+                            "hgp",
+                            "~jax"
+                        ],
+                        0.9354
+                    ],
+                    [
+                        "~pjp",
+                        [
+                            "hgp",
+                            "~jax"
+                        ],
+                        0.0646
+                    ],
+                    [
+                        "pjp",
+                        [
+                            "~hgp",
+                            "jax"
+                        ],
+                        0.6035
+                    ],
+                    [
+                        "~pjp",
+                        [
+                            "~hgp",
+                            "jax"
+                        ],
+                        0.3965
+                    ],
+                    [
+                        "pjp",
+                        [
+                            "~hgp",
+                            "~jax"
+                        ],
+                        0.5069
+                    ],
+                    [
+                        "~pjp",
+                        [
+                            "~hgp",
+                            "~jax"
+                        ],
+                        0.4931
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PJP",
+            "outcomes": [
+                "pjp",
+                "~pjp"
+            ],
+            "parents": [
+                "HGP",
+                "JAX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nro",
+                        [
+                            "eju",
+                            "mol",
+                            "tvg"
+                        ],
+                        0.6243
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "eju",
+                            "mol",
+                            "tvg"
+                        ],
+                        0.3757
+                    ],
+                    [
+                        "nro",
+                        [
+                            "eju",
+                            "mol",
+                            "~tvg"
+                        ],
+                        0.3331
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "eju",
+                            "mol",
+                            "~tvg"
+                        ],
+                        0.6669
+                    ],
+                    [
+                        "nro",
+                        [
+                            "eju",
+                            "~mol",
+                            "tvg"
+                        ],
+                        0.8187
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "eju",
+                            "~mol",
+                            "tvg"
+                        ],
+                        0.1813
+                    ],
+                    [
+                        "nro",
+                        [
+                            "eju",
+                            "~mol",
+                            "~tvg"
+                        ],
+                        0.8661
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "eju",
+                            "~mol",
+                            "~tvg"
+                        ],
+                        0.1339
+                    ],
+                    [
+                        "nro",
+                        [
+                            "~eju",
+                            "mol",
+                            "tvg"
+                        ],
+                        0.3872
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "~eju",
+                            "mol",
+                            "tvg"
+                        ],
+                        0.6128
+                    ],
+                    [
+                        "nro",
+                        [
+                            "~eju",
+                            "mol",
+                            "~tvg"
+                        ],
+                        0.0195
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "~eju",
+                            "mol",
+                            "~tvg"
+                        ],
+                        0.9805
+                    ],
+                    [
+                        "nro",
+                        [
+                            "~eju",
+                            "~mol",
+                            "tvg"
+                        ],
+                        0.628
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "~eju",
+                            "~mol",
+                            "tvg"
+                        ],
+                        0.372
+                    ],
+                    [
+                        "nro",
+                        [
+                            "~eju",
+                            "~mol",
+                            "~tvg"
+                        ],
+                        0.1853
+                    ],
+                    [
+                        "~nro",
+                        [
+                            "~eju",
+                            "~mol",
+                            "~tvg"
+                        ],
+                        0.8147
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NRO",
+            "outcomes": [
+                "nro",
+                "~nro"
+            ],
+            "parents": [
+                "EJU",
+                "MOL",
+                "TVG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kvq",
+                        [
+                            "hgp"
+                        ],
+                        0.9055
+                    ],
+                    [
+                        "~kvq",
+                        [
+                            "hgp"
+                        ],
+                        0.0945
+                    ],
+                    [
+                        "kvq",
+                        [
+                            "~hgp"
+                        ],
+                        0.1182
+                    ],
+                    [
+                        "~kvq",
+                        [
+                            "~hgp"
+                        ],
+                        0.8818
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KVQ",
+            "outcomes": [
+                "kvq",
+                "~kvq"
+            ],
+            "parents": [
+                "HGP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jax",
+                        [],
+                        0.3674
+                    ],
+                    [
+                        "~jax",
+                        [],
+                        0.6326
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "JAX",
+            "outcomes": [
+                "jax",
+                "~jax"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hgp",
+                        [
+                            "eju"
+                        ],
+                        0.4046
+                    ],
+                    [
+                        "~hgp",
+                        [
+                            "eju"
+                        ],
+                        0.5954
+                    ],
+                    [
+                        "hgp",
+                        [
+                            "~eju"
+                        ],
+                        0.87
+                    ],
+                    [
+                        "~hgp",
+                        [
+                            "~eju"
+                        ],
+                        0.13
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HGP",
+            "outcomes": [
+                "hgp",
+                "~hgp"
+            ],
+            "parents": [
+                "EJU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eju",
+                        [],
+                        0.044
+                    ],
+                    [
+                        "~eju",
+                        [],
+                        0.956
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EJU",
+            "outcomes": [
+                "eju",
+                "~eju"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ycr",
+                        [
+                            "xzd"
+                        ],
+                        0.5319
+                    ],
+                    [
+                        "~ycr",
+                        [
+                            "xzd"
+                        ],
+                        0.4681
+                    ],
+                    [
+                        "ycr",
+                        [
+                            "~xzd"
+                        ],
+                        0.5798
+                    ],
+                    [
+                        "~ycr",
+                        [
+                            "~xzd"
+                        ],
+                        0.4202
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YCR",
+            "outcomes": [
+                "ycr",
+                "~ycr"
+            ],
+            "parents": [
+                "XZD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xzd",
+                        [
+                            "pjp"
+                        ],
+                        0.2802
+                    ],
+                    [
+                        "~xzd",
+                        [
+                            "pjp"
+                        ],
+                        0.7198
+                    ],
+                    [
+                        "xzd",
+                        [
+                            "~pjp"
+                        ],
+                        0.885
+                    ],
+                    [
+                        "~xzd",
+                        [
+                            "~pjp"
+                        ],
+                        0.115
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XZD",
+            "outcomes": [
+                "xzd",
+                "~xzd"
+            ],
+            "parents": [
+                "PJP"
+            ]
+        }
+    ]
+}

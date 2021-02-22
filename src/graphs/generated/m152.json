@@ -1,0 +1,496 @@
+{
+    "latent-model": false,
+    "name": "m152",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mvg",
+                        [
+                            "rak"
+                        ],
+                        0.8363
+                    ],
+                    [
+                        "~mvg",
+                        [
+                            "rak"
+                        ],
+                        0.1637
+                    ],
+                    [
+                        "mvg",
+                        [
+                            "~rak"
+                        ],
+                        0.3493
+                    ],
+                    [
+                        "~mvg",
+                        [
+                            "~rak"
+                        ],
+                        0.6507
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MVG",
+            "outcomes": [
+                "mvg",
+                "~mvg"
+            ],
+            "parents": [
+                "RAK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xvw",
+                        [
+                            "zpq"
+                        ],
+                        0.7736
+                    ],
+                    [
+                        "~xvw",
+                        [
+                            "zpq"
+                        ],
+                        0.2264
+                    ],
+                    [
+                        "xvw",
+                        [
+                            "~zpq"
+                        ],
+                        0.6934
+                    ],
+                    [
+                        "~xvw",
+                        [
+                            "~zpq"
+                        ],
+                        0.3066
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XVW",
+            "outcomes": [
+                "xvw",
+                "~xvw"
+            ],
+            "parents": [
+                "ZPQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zit",
+                        [
+                            "qir"
+                        ],
+                        0.7563
+                    ],
+                    [
+                        "~zit",
+                        [
+                            "qir"
+                        ],
+                        0.2437
+                    ],
+                    [
+                        "zit",
+                        [
+                            "~qir"
+                        ],
+                        0.8309
+                    ],
+                    [
+                        "~zit",
+                        [
+                            "~qir"
+                        ],
+                        0.1691
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZIT",
+            "outcomes": [
+                "zit",
+                "~zit"
+            ],
+            "parents": [
+                "QIR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qir",
+                        [],
+                        0.259
+                    ],
+                    [
+                        "~qir",
+                        [],
+                        0.741
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QIR",
+            "outcomes": [
+                "qir",
+                "~qir"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gfh",
+                        [
+                            "qir"
+                        ],
+                        0.5108
+                    ],
+                    [
+                        "~gfh",
+                        [
+                            "qir"
+                        ],
+                        0.4892
+                    ],
+                    [
+                        "gfh",
+                        [
+                            "~qir"
+                        ],
+                        0.3804
+                    ],
+                    [
+                        "~gfh",
+                        [
+                            "~qir"
+                        ],
+                        0.6196
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GFH",
+            "outcomes": [
+                "gfh",
+                "~gfh"
+            ],
+            "parents": [
+                "QIR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rud",
+                        [
+                            "rak"
+                        ],
+                        0.9448
+                    ],
+                    [
+                        "~rud",
+                        [
+                            "rak"
+                        ],
+                        0.0552
+                    ],
+                    [
+                        "rud",
+                        [
+                            "~rak"
+                        ],
+                        0.7262
+                    ],
+                    [
+                        "~rud",
+                        [
+                            "~rak"
+                        ],
+                        0.2738
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RUD",
+            "outcomes": [
+                "rud",
+                "~rud"
+            ],
+            "parents": [
+                "RAK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jzv",
+                        [
+                            "xvw"
+                        ],
+                        0.4159
+                    ],
+                    [
+                        "~jzv",
+                        [
+                            "xvw"
+                        ],
+                        0.5841
+                    ],
+                    [
+                        "jzv",
+                        [
+                            "~xvw"
+                        ],
+                        0.5865
+                    ],
+                    [
+                        "~jzv",
+                        [
+                            "~xvw"
+                        ],
+                        0.4135
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JZV",
+            "outcomes": [
+                "jzv",
+                "~jzv"
+            ],
+            "parents": [
+                "XVW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yhp",
+                        [
+                            "jzv",
+                            "qir"
+                        ],
+                        0.1592
+                    ],
+                    [
+                        "~yhp",
+                        [
+                            "jzv",
+                            "qir"
+                        ],
+                        0.8408
+                    ],
+                    [
+                        "yhp",
+                        [
+                            "jzv",
+                            "~qir"
+                        ],
+                        0.6595
+                    ],
+                    [
+                        "~yhp",
+                        [
+                            "jzv",
+                            "~qir"
+                        ],
+                        0.3405
+                    ],
+                    [
+                        "yhp",
+                        [
+                            "~jzv",
+                            "qir"
+                        ],
+                        0.6433
+                    ],
+                    [
+                        "~yhp",
+                        [
+                            "~jzv",
+                            "qir"
+                        ],
+                        0.3567
+                    ],
+                    [
+                        "yhp",
+                        [
+                            "~jzv",
+                            "~qir"
+                        ],
+                        0.0956
+                    ],
+                    [
+                        "~yhp",
+                        [
+                            "~jzv",
+                            "~qir"
+                        ],
+                        0.9044
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YHP",
+            "outcomes": [
+                "yhp",
+                "~yhp"
+            ],
+            "parents": [
+                "JZV",
+                "QIR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rov",
+                        [
+                            "zit"
+                        ],
+                        0.178
+                    ],
+                    [
+                        "~rov",
+                        [
+                            "zit"
+                        ],
+                        0.822
+                    ],
+                    [
+                        "rov",
+                        [
+                            "~zit"
+                        ],
+                        0.1975
+                    ],
+                    [
+                        "~rov",
+                        [
+                            "~zit"
+                        ],
+                        0.8025
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ROV",
+            "outcomes": [
+                "rov",
+                "~rov"
+            ],
+            "parents": [
+                "ZIT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rak",
+                        [
+                            "gfh"
+                        ],
+                        0.6845
+                    ],
+                    [
+                        "~rak",
+                        [
+                            "gfh"
+                        ],
+                        0.3155
+                    ],
+                    [
+                        "rak",
+                        [
+                            "~gfh"
+                        ],
+                        0.1672
+                    ],
+                    [
+                        "~rak",
+                        [
+                            "~gfh"
+                        ],
+                        0.8328
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RAK",
+            "outcomes": [
+                "rak",
+                "~rak"
+            ],
+            "parents": [
+                "GFH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zpq",
+                        [
+                            "qir"
+                        ],
+                        0.9482
+                    ],
+                    [
+                        "~zpq",
+                        [
+                            "qir"
+                        ],
+                        0.0518
+                    ],
+                    [
+                        "zpq",
+                        [
+                            "~qir"
+                        ],
+                        0.7831
+                    ],
+                    [
+                        "~zpq",
+                        [
+                            "~qir"
+                        ],
+                        0.2169
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZPQ",
+            "outcomes": [
+                "zpq",
+                "~zpq"
+            ],
+            "parents": [
+                "QIR"
+            ]
+        }
+    ]
+}

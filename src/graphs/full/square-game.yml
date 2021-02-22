@@ -1,0 +1,52 @@
+name: Square-Game
+model:
+  T:
+    outcomes:
+    - t
+    - ~t
+    parents: []
+    table: [
+      [t, 0.3],
+      [~t, 0.7]
+    ]
+  W:
+    outcomes:
+    - w
+    - ~w
+    parents:
+    - T
+    table: [
+      [w, t, 0.2],
+      [w, ~t, 0.1],
+      [~w, t, 0.8],
+      [~w, ~t, 0.9]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    parents:
+    - W
+    table: [
+      [x, w, 0.4],
+      [x, ~w, 0.8],
+      [~x, w, 0.6],
+      [~x, ~w, 0.2]
+    ]
+  Y:
+    outcomes:
+    - y
+    - ~y
+    parents:
+    - X
+    - T
+    table: [
+      [y, x, t, 0.3],
+      [y, x, ~t, 0.6],
+      [y, ~x, t, 0.5],
+      [y, ~x, ~t, 0.8],
+      [~y, x, t, 0.7],
+      [~y, x, ~t, 0.4],
+      [~y, ~x, t, 0.5],
+      [~y, ~x, ~t, 0.2]
+    ]

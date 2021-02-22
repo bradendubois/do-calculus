@@ -1,0 +1,554 @@
+{
+    "latent-model": false,
+    "name": "m163",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nsf",
+                        [
+                            "xqf"
+                        ],
+                        0.5372
+                    ],
+                    [
+                        "~nsf",
+                        [
+                            "xqf"
+                        ],
+                        0.4628
+                    ],
+                    [
+                        "nsf",
+                        [
+                            "~xqf"
+                        ],
+                        0.1392
+                    ],
+                    [
+                        "~nsf",
+                        [
+                            "~xqf"
+                        ],
+                        0.8608
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NSF",
+            "outcomes": [
+                "nsf",
+                "~nsf"
+            ],
+            "parents": [
+                "XQF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oey",
+                        [],
+                        0.1836
+                    ],
+                    [
+                        "~oey",
+                        [],
+                        0.8164
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OEY",
+            "outcomes": [
+                "oey",
+                "~oey"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "trr",
+                        [
+                            "nsf"
+                        ],
+                        0.3305
+                    ],
+                    [
+                        "~trr",
+                        [
+                            "nsf"
+                        ],
+                        0.6695
+                    ],
+                    [
+                        "trr",
+                        [
+                            "~nsf"
+                        ],
+                        0.5909
+                    ],
+                    [
+                        "~trr",
+                        [
+                            "~nsf"
+                        ],
+                        0.4091
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TRR",
+            "outcomes": [
+                "trr",
+                "~trr"
+            ],
+            "parents": [
+                "NSF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uab",
+                        [],
+                        0.1149
+                    ],
+                    [
+                        "~uab",
+                        [],
+                        0.8851
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UAB",
+            "outcomes": [
+                "uab",
+                "~uab"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xqf",
+                        [
+                            "uab"
+                        ],
+                        0.0489
+                    ],
+                    [
+                        "~xqf",
+                        [
+                            "uab"
+                        ],
+                        0.9511
+                    ],
+                    [
+                        "xqf",
+                        [
+                            "~uab"
+                        ],
+                        0.7641
+                    ],
+                    [
+                        "~xqf",
+                        [
+                            "~uab"
+                        ],
+                        0.2359
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XQF",
+            "outcomes": [
+                "xqf",
+                "~xqf"
+            ],
+            "parents": [
+                "UAB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ego",
+                        [
+                            "xqf"
+                        ],
+                        0.5093
+                    ],
+                    [
+                        "~ego",
+                        [
+                            "xqf"
+                        ],
+                        0.4907
+                    ],
+                    [
+                        "ego",
+                        [
+                            "~xqf"
+                        ],
+                        0.589
+                    ],
+                    [
+                        "~ego",
+                        [
+                            "~xqf"
+                        ],
+                        0.411
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EGO",
+            "outcomes": [
+                "ego",
+                "~ego"
+            ],
+            "parents": [
+                "XQF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ocw",
+                        [],
+                        0.5787
+                    ],
+                    [
+                        "~ocw",
+                        [],
+                        0.4213
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OCW",
+            "outcomes": [
+                "ocw",
+                "~ocw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tbp",
+                        [
+                            "ego",
+                            "ocw",
+                            "zev"
+                        ],
+                        0.1415
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "ego",
+                            "ocw",
+                            "zev"
+                        ],
+                        0.8585
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "ego",
+                            "ocw",
+                            "~zev"
+                        ],
+                        0.5749
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "ego",
+                            "ocw",
+                            "~zev"
+                        ],
+                        0.4251
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "ego",
+                            "~ocw",
+                            "zev"
+                        ],
+                        0.5396
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "ego",
+                            "~ocw",
+                            "zev"
+                        ],
+                        0.4604
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "ego",
+                            "~ocw",
+                            "~zev"
+                        ],
+                        0.9901
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "ego",
+                            "~ocw",
+                            "~zev"
+                        ],
+                        0.0099
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "~ego",
+                            "ocw",
+                            "zev"
+                        ],
+                        0.0008
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "~ego",
+                            "ocw",
+                            "zev"
+                        ],
+                        0.9992
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "~ego",
+                            "ocw",
+                            "~zev"
+                        ],
+                        0.7373
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "~ego",
+                            "ocw",
+                            "~zev"
+                        ],
+                        0.2627
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "~ego",
+                            "~ocw",
+                            "zev"
+                        ],
+                        0.643
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "~ego",
+                            "~ocw",
+                            "zev"
+                        ],
+                        0.357
+                    ],
+                    [
+                        "tbp",
+                        [
+                            "~ego",
+                            "~ocw",
+                            "~zev"
+                        ],
+                        0.5187
+                    ],
+                    [
+                        "~tbp",
+                        [
+                            "~ego",
+                            "~ocw",
+                            "~zev"
+                        ],
+                        0.4813
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TBP",
+            "outcomes": [
+                "tbp",
+                "~tbp"
+            ],
+            "parents": [
+                "EGO",
+                "OCW",
+                "ZEV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kwl",
+                        [
+                            "ocw",
+                            "xqf"
+                        ],
+                        0.2628
+                    ],
+                    [
+                        "~kwl",
+                        [
+                            "ocw",
+                            "xqf"
+                        ],
+                        0.7372
+                    ],
+                    [
+                        "kwl",
+                        [
+                            "ocw",
+                            "~xqf"
+                        ],
+                        0.2144
+                    ],
+                    [
+                        "~kwl",
+                        [
+                            "ocw",
+                            "~xqf"
+                        ],
+                        0.7856
+                    ],
+                    [
+                        "kwl",
+                        [
+                            "~ocw",
+                            "xqf"
+                        ],
+                        0.8757
+                    ],
+                    [
+                        "~kwl",
+                        [
+                            "~ocw",
+                            "xqf"
+                        ],
+                        0.1243
+                    ],
+                    [
+                        "kwl",
+                        [
+                            "~ocw",
+                            "~xqf"
+                        ],
+                        0.4027
+                    ],
+                    [
+                        "~kwl",
+                        [
+                            "~ocw",
+                            "~xqf"
+                        ],
+                        0.5973
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KWL",
+            "outcomes": [
+                "kwl",
+                "~kwl"
+            ],
+            "parents": [
+                "OCW",
+                "XQF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zyg",
+                        [],
+                        0.1776
+                    ],
+                    [
+                        "~zyg",
+                        [],
+                        0.8224
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZYG",
+            "outcomes": [
+                "zyg",
+                "~zyg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zev",
+                        [
+                            "kwl"
+                        ],
+                        0.9556
+                    ],
+                    [
+                        "~zev",
+                        [
+                            "kwl"
+                        ],
+                        0.0444
+                    ],
+                    [
+                        "zev",
+                        [
+                            "~kwl"
+                        ],
+                        0.3171
+                    ],
+                    [
+                        "~zev",
+                        [
+                            "~kwl"
+                        ],
+                        0.6829
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZEV",
+            "outcomes": [
+                "zev",
+                "~zev"
+            ],
+            "parents": [
+                "KWL"
+            ]
+        }
+    ]
+}

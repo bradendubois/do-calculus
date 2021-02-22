@@ -1,0 +1,476 @@
+{
+    "latent-model": false,
+    "name": "m132",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "czi",
+                        [],
+                        0.6828
+                    ],
+                    [
+                        "~czi",
+                        [],
+                        0.3172
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CZI",
+            "outcomes": [
+                "czi",
+                "~czi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hxe",
+                        [
+                            "czi",
+                            "rdi",
+                            "slm"
+                        ],
+                        0.1642
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "czi",
+                            "rdi",
+                            "slm"
+                        ],
+                        0.8358
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "czi",
+                            "rdi",
+                            "~slm"
+                        ],
+                        0.1417
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "czi",
+                            "rdi",
+                            "~slm"
+                        ],
+                        0.8583
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "czi",
+                            "~rdi",
+                            "slm"
+                        ],
+                        0.2921
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "czi",
+                            "~rdi",
+                            "slm"
+                        ],
+                        0.7079
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "czi",
+                            "~rdi",
+                            "~slm"
+                        ],
+                        0.2708
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "czi",
+                            "~rdi",
+                            "~slm"
+                        ],
+                        0.7292
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "~czi",
+                            "rdi",
+                            "slm"
+                        ],
+                        0.3132
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "~czi",
+                            "rdi",
+                            "slm"
+                        ],
+                        0.6868
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "~czi",
+                            "rdi",
+                            "~slm"
+                        ],
+                        0.6518
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "~czi",
+                            "rdi",
+                            "~slm"
+                        ],
+                        0.3482
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "~czi",
+                            "~rdi",
+                            "slm"
+                        ],
+                        0.7576
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "~czi",
+                            "~rdi",
+                            "slm"
+                        ],
+                        0.2424
+                    ],
+                    [
+                        "hxe",
+                        [
+                            "~czi",
+                            "~rdi",
+                            "~slm"
+                        ],
+                        0.8062
+                    ],
+                    [
+                        "~hxe",
+                        [
+                            "~czi",
+                            "~rdi",
+                            "~slm"
+                        ],
+                        0.1938
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HXE",
+            "outcomes": [
+                "hxe",
+                "~hxe"
+            ],
+            "parents": [
+                "CZI",
+                "RDI",
+                "SLM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rdi",
+                        [
+                            "czi",
+                            "kiw"
+                        ],
+                        0.3057
+                    ],
+                    [
+                        "~rdi",
+                        [
+                            "czi",
+                            "kiw"
+                        ],
+                        0.6943
+                    ],
+                    [
+                        "rdi",
+                        [
+                            "czi",
+                            "~kiw"
+                        ],
+                        0.5032
+                    ],
+                    [
+                        "~rdi",
+                        [
+                            "czi",
+                            "~kiw"
+                        ],
+                        0.4968
+                    ],
+                    [
+                        "rdi",
+                        [
+                            "~czi",
+                            "kiw"
+                        ],
+                        0.6503
+                    ],
+                    [
+                        "~rdi",
+                        [
+                            "~czi",
+                            "kiw"
+                        ],
+                        0.3497
+                    ],
+                    [
+                        "rdi",
+                        [
+                            "~czi",
+                            "~kiw"
+                        ],
+                        0.7244
+                    ],
+                    [
+                        "~rdi",
+                        [
+                            "~czi",
+                            "~kiw"
+                        ],
+                        0.2756
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RDI",
+            "outcomes": [
+                "rdi",
+                "~rdi"
+            ],
+            "parents": [
+                "CZI",
+                "KIW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "slm",
+                        [
+                            "cjp",
+                            "kiw"
+                        ],
+                        0.1888
+                    ],
+                    [
+                        "~slm",
+                        [
+                            "cjp",
+                            "kiw"
+                        ],
+                        0.8112
+                    ],
+                    [
+                        "slm",
+                        [
+                            "cjp",
+                            "~kiw"
+                        ],
+                        0.5595
+                    ],
+                    [
+                        "~slm",
+                        [
+                            "cjp",
+                            "~kiw"
+                        ],
+                        0.4405
+                    ],
+                    [
+                        "slm",
+                        [
+                            "~cjp",
+                            "kiw"
+                        ],
+                        0.3512
+                    ],
+                    [
+                        "~slm",
+                        [
+                            "~cjp",
+                            "kiw"
+                        ],
+                        0.6488
+                    ],
+                    [
+                        "slm",
+                        [
+                            "~cjp",
+                            "~kiw"
+                        ],
+                        0.5386
+                    ],
+                    [
+                        "~slm",
+                        [
+                            "~cjp",
+                            "~kiw"
+                        ],
+                        0.4614
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SLM",
+            "outcomes": [
+                "slm",
+                "~slm"
+            ],
+            "parents": [
+                "CJP",
+                "KIW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kiw",
+                        [],
+                        0.9525
+                    ],
+                    [
+                        "~kiw",
+                        [],
+                        0.0475
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KIW",
+            "outcomes": [
+                "kiw",
+                "~kiw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cjp",
+                        [],
+                        0.831
+                    ],
+                    [
+                        "~cjp",
+                        [],
+                        0.169
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CJP",
+            "outcomes": [
+                "cjp",
+                "~cjp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lyu",
+                        [
+                            "cjp",
+                            "slm"
+                        ],
+                        0.8344
+                    ],
+                    [
+                        "~lyu",
+                        [
+                            "cjp",
+                            "slm"
+                        ],
+                        0.1656
+                    ],
+                    [
+                        "lyu",
+                        [
+                            "cjp",
+                            "~slm"
+                        ],
+                        0.3075
+                    ],
+                    [
+                        "~lyu",
+                        [
+                            "cjp",
+                            "~slm"
+                        ],
+                        0.6925
+                    ],
+                    [
+                        "lyu",
+                        [
+                            "~cjp",
+                            "slm"
+                        ],
+                        0.8433
+                    ],
+                    [
+                        "~lyu",
+                        [
+                            "~cjp",
+                            "slm"
+                        ],
+                        0.1567
+                    ],
+                    [
+                        "lyu",
+                        [
+                            "~cjp",
+                            "~slm"
+                        ],
+                        0.5843
+                    ],
+                    [
+                        "~lyu",
+                        [
+                            "~cjp",
+                            "~slm"
+                        ],
+                        0.4157
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LYU",
+            "outcomes": [
+                "lyu",
+                "~lyu"
+            ],
+            "parents": [
+                "CJP",
+                "SLM"
+            ]
+        }
+    ]
+}

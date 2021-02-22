@@ -1,0 +1,305 @@
+{
+    "latent-model": true,
+    "name": "m101_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yvi",
+                        [
+                            "jmf",
+                            "qow"
+                        ],
+                        0.4925
+                    ],
+                    [
+                        "~yvi",
+                        [
+                            "jmf",
+                            "qow"
+                        ],
+                        0.5075
+                    ],
+                    [
+                        "yvi",
+                        [
+                            "jmf",
+                            "~qow"
+                        ],
+                        0.861
+                    ],
+                    [
+                        "~yvi",
+                        [
+                            "jmf",
+                            "~qow"
+                        ],
+                        0.139
+                    ],
+                    [
+                        "yvi",
+                        [
+                            "~jmf",
+                            "qow"
+                        ],
+                        0.7692
+                    ],
+                    [
+                        "~yvi",
+                        [
+                            "~jmf",
+                            "qow"
+                        ],
+                        0.2308
+                    ],
+                    [
+                        "yvi",
+                        [
+                            "~jmf",
+                            "~qow"
+                        ],
+                        0.442
+                    ],
+                    [
+                        "~yvi",
+                        [
+                            "~jmf",
+                            "~qow"
+                        ],
+                        0.558
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YVI",
+            "outcomes": [
+                "yvi",
+                "~yvi"
+            ],
+            "parents": [
+                "JMF",
+                "QOW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wdy",
+                        [
+                            "jmf"
+                        ],
+                        0.4191
+                    ],
+                    [
+                        "~wdy",
+                        [
+                            "jmf"
+                        ],
+                        0.5809
+                    ],
+                    [
+                        "wdy",
+                        [
+                            "~jmf"
+                        ],
+                        0.7149
+                    ],
+                    [
+                        "~wdy",
+                        [
+                            "~jmf"
+                        ],
+                        0.2851
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WDY",
+            "outcomes": [
+                "wdy",
+                "~wdy"
+            ],
+            "parents": [
+                "JMF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hrk",
+                        [
+                            "qow"
+                        ],
+                        0.0455
+                    ],
+                    [
+                        "~hrk",
+                        [
+                            "qow"
+                        ],
+                        0.9545
+                    ],
+                    [
+                        "hrk",
+                        [
+                            "~qow"
+                        ],
+                        0.4743
+                    ],
+                    [
+                        "~hrk",
+                        [
+                            "~qow"
+                        ],
+                        0.5257
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HRK",
+            "outcomes": [
+                "hrk",
+                "~hrk"
+            ],
+            "parents": [
+                "QOW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rfi",
+                        [],
+                        0.1436
+                    ],
+                    [
+                        "~rfi",
+                        [],
+                        0.8564
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "RFI",
+            "outcomes": [
+                "rfi",
+                "~rfi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qow",
+                        [],
+                        0.7941
+                    ],
+                    [
+                        "~qow",
+                        [],
+                        0.2059
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QOW",
+            "outcomes": [
+                "qow",
+                "~qow"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jmf",
+                        [
+                            "rfi"
+                        ],
+                        0.1945
+                    ],
+                    [
+                        "~jmf",
+                        [
+                            "rfi"
+                        ],
+                        0.8055
+                    ],
+                    [
+                        "jmf",
+                        [
+                            "~rfi"
+                        ],
+                        0.2106
+                    ],
+                    [
+                        "~jmf",
+                        [
+                            "~rfi"
+                        ],
+                        0.7894
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JMF",
+            "outcomes": [
+                "jmf",
+                "~jmf"
+            ],
+            "parents": [
+                "RFI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tgf",
+                        [
+                            "wdy"
+                        ],
+                        0.2796
+                    ],
+                    [
+                        "~tgf",
+                        [
+                            "wdy"
+                        ],
+                        0.7204
+                    ],
+                    [
+                        "tgf",
+                        [
+                            "~wdy"
+                        ],
+                        0.5361
+                    ],
+                    [
+                        "~tgf",
+                        [
+                            "~wdy"
+                        ],
+                        0.4639
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TGF",
+            "outcomes": [
+                "tgf",
+                "~tgf"
+            ],
+            "parents": [
+                "WDY"
+            ]
+        }
+    ]
+}

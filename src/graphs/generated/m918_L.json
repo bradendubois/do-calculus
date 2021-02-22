@@ -1,0 +1,741 @@
+{
+    "latent-model": true,
+    "name": "m918_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cgl",
+                        [
+                            "cqx",
+                            "num"
+                        ],
+                        0.9152
+                    ],
+                    [
+                        "~cgl",
+                        [
+                            "cqx",
+                            "num"
+                        ],
+                        0.0848
+                    ],
+                    [
+                        "cgl",
+                        [
+                            "cqx",
+                            "~num"
+                        ],
+                        0.8892
+                    ],
+                    [
+                        "~cgl",
+                        [
+                            "cqx",
+                            "~num"
+                        ],
+                        0.1108
+                    ],
+                    [
+                        "cgl",
+                        [
+                            "~cqx",
+                            "num"
+                        ],
+                        0.8091
+                    ],
+                    [
+                        "~cgl",
+                        [
+                            "~cqx",
+                            "num"
+                        ],
+                        0.1909
+                    ],
+                    [
+                        "cgl",
+                        [
+                            "~cqx",
+                            "~num"
+                        ],
+                        0.154
+                    ],
+                    [
+                        "~cgl",
+                        [
+                            "~cqx",
+                            "~num"
+                        ],
+                        0.846
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CGL",
+            "outcomes": [
+                "cgl",
+                "~cgl"
+            ],
+            "parents": [
+                "CQX",
+                "NUM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rvx",
+                        [],
+                        0.1508
+                    ],
+                    [
+                        "~rvx",
+                        [],
+                        0.8492
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "RVX",
+            "outcomes": [
+                "rvx",
+                "~rvx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gaa",
+                        [
+                            "ope"
+                        ],
+                        0.3632
+                    ],
+                    [
+                        "~gaa",
+                        [
+                            "ope"
+                        ],
+                        0.6368
+                    ],
+                    [
+                        "gaa",
+                        [
+                            "~ope"
+                        ],
+                        0.2565
+                    ],
+                    [
+                        "~gaa",
+                        [
+                            "~ope"
+                        ],
+                        0.7435
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GAA",
+            "outcomes": [
+                "gaa",
+                "~gaa"
+            ],
+            "parents": [
+                "OPE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ope",
+                        [
+                            "adg",
+                            "cqx",
+                            "rgl"
+                        ],
+                        0.4818
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "adg",
+                            "cqx",
+                            "rgl"
+                        ],
+                        0.5182
+                    ],
+                    [
+                        "ope",
+                        [
+                            "adg",
+                            "cqx",
+                            "~rgl"
+                        ],
+                        0.0426
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "adg",
+                            "cqx",
+                            "~rgl"
+                        ],
+                        0.9574
+                    ],
+                    [
+                        "ope",
+                        [
+                            "adg",
+                            "~cqx",
+                            "rgl"
+                        ],
+                        0.6844
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "adg",
+                            "~cqx",
+                            "rgl"
+                        ],
+                        0.3156
+                    ],
+                    [
+                        "ope",
+                        [
+                            "adg",
+                            "~cqx",
+                            "~rgl"
+                        ],
+                        0.9154
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "adg",
+                            "~cqx",
+                            "~rgl"
+                        ],
+                        0.0846
+                    ],
+                    [
+                        "ope",
+                        [
+                            "~adg",
+                            "cqx",
+                            "rgl"
+                        ],
+                        0.446
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "~adg",
+                            "cqx",
+                            "rgl"
+                        ],
+                        0.554
+                    ],
+                    [
+                        "ope",
+                        [
+                            "~adg",
+                            "cqx",
+                            "~rgl"
+                        ],
+                        0.9062
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "~adg",
+                            "cqx",
+                            "~rgl"
+                        ],
+                        0.0938
+                    ],
+                    [
+                        "ope",
+                        [
+                            "~adg",
+                            "~cqx",
+                            "rgl"
+                        ],
+                        0.1146
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "~adg",
+                            "~cqx",
+                            "rgl"
+                        ],
+                        0.8854
+                    ],
+                    [
+                        "ope",
+                        [
+                            "~adg",
+                            "~cqx",
+                            "~rgl"
+                        ],
+                        0.1189
+                    ],
+                    [
+                        "~ope",
+                        [
+                            "~adg",
+                            "~cqx",
+                            "~rgl"
+                        ],
+                        0.8811
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OPE",
+            "outcomes": [
+                "ope",
+                "~ope"
+            ],
+            "parents": [
+                "ADG",
+                "CQX",
+                "RGL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wnc",
+                        [
+                            "rvx"
+                        ],
+                        0.0196
+                    ],
+                    [
+                        "~wnc",
+                        [
+                            "rvx"
+                        ],
+                        0.9804
+                    ],
+                    [
+                        "wnc",
+                        [
+                            "~rvx"
+                        ],
+                        0.9581
+                    ],
+                    [
+                        "~wnc",
+                        [
+                            "~rvx"
+                        ],
+                        0.0419
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WNC",
+            "outcomes": [
+                "wnc",
+                "~wnc"
+            ],
+            "parents": [
+                "RVX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dbq",
+                        [],
+                        0.7755
+                    ],
+                    [
+                        "~dbq",
+                        [],
+                        0.2245
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "DBQ",
+            "outcomes": [
+                "dbq",
+                "~dbq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rgl",
+                        [
+                            "rva"
+                        ],
+                        0.5054
+                    ],
+                    [
+                        "~rgl",
+                        [
+                            "rva"
+                        ],
+                        0.4946
+                    ],
+                    [
+                        "rgl",
+                        [
+                            "~rva"
+                        ],
+                        0.6799
+                    ],
+                    [
+                        "~rgl",
+                        [
+                            "~rva"
+                        ],
+                        0.3201
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RGL",
+            "outcomes": [
+                "rgl",
+                "~rgl"
+            ],
+            "parents": [
+                "RVA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "adg",
+                        [],
+                        0.1533
+                    ],
+                    [
+                        "~adg",
+                        [],
+                        0.8467
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ADG",
+            "outcomes": [
+                "adg",
+                "~adg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "swv",
+                        [
+                            "cqx",
+                            "dbq",
+                            "gaa"
+                        ],
+                        0.5079
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "cqx",
+                            "dbq",
+                            "gaa"
+                        ],
+                        0.4921
+                    ],
+                    [
+                        "swv",
+                        [
+                            "cqx",
+                            "dbq",
+                            "~gaa"
+                        ],
+                        0.6604
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "cqx",
+                            "dbq",
+                            "~gaa"
+                        ],
+                        0.3396
+                    ],
+                    [
+                        "swv",
+                        [
+                            "cqx",
+                            "~dbq",
+                            "gaa"
+                        ],
+                        0.4865
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "cqx",
+                            "~dbq",
+                            "gaa"
+                        ],
+                        0.5135
+                    ],
+                    [
+                        "swv",
+                        [
+                            "cqx",
+                            "~dbq",
+                            "~gaa"
+                        ],
+                        0.8866
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "cqx",
+                            "~dbq",
+                            "~gaa"
+                        ],
+                        0.1134
+                    ],
+                    [
+                        "swv",
+                        [
+                            "~cqx",
+                            "dbq",
+                            "gaa"
+                        ],
+                        0.5213
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "~cqx",
+                            "dbq",
+                            "gaa"
+                        ],
+                        0.4787
+                    ],
+                    [
+                        "swv",
+                        [
+                            "~cqx",
+                            "dbq",
+                            "~gaa"
+                        ],
+                        0.2667
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "~cqx",
+                            "dbq",
+                            "~gaa"
+                        ],
+                        0.7333
+                    ],
+                    [
+                        "swv",
+                        [
+                            "~cqx",
+                            "~dbq",
+                            "gaa"
+                        ],
+                        0.7445
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "~cqx",
+                            "~dbq",
+                            "gaa"
+                        ],
+                        0.2555
+                    ],
+                    [
+                        "swv",
+                        [
+                            "~cqx",
+                            "~dbq",
+                            "~gaa"
+                        ],
+                        0.781
+                    ],
+                    [
+                        "~swv",
+                        [
+                            "~cqx",
+                            "~dbq",
+                            "~gaa"
+                        ],
+                        0.219
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SWV",
+            "outcomes": [
+                "swv",
+                "~swv"
+            ],
+            "parents": [
+                "CQX",
+                "DBQ",
+                "GAA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cqx",
+                        [],
+                        0.7735
+                    ],
+                    [
+                        "~cqx",
+                        [],
+                        0.2265
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "CQX",
+            "outcomes": [
+                "cqx",
+                "~cqx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rva",
+                        [
+                            "wnc"
+                        ],
+                        0.8269
+                    ],
+                    [
+                        "~rva",
+                        [
+                            "wnc"
+                        ],
+                        0.1731
+                    ],
+                    [
+                        "rva",
+                        [
+                            "~wnc"
+                        ],
+                        0.0077
+                    ],
+                    [
+                        "~rva",
+                        [
+                            "~wnc"
+                        ],
+                        0.9923
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RVA",
+            "outcomes": [
+                "rva",
+                "~rva"
+            ],
+            "parents": [
+                "WNC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mnb",
+                        [],
+                        0.6844
+                    ],
+                    [
+                        "~mnb",
+                        [],
+                        0.3156
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MNB",
+            "outcomes": [
+                "mnb",
+                "~mnb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "num",
+                        [
+                            "wnc"
+                        ],
+                        0.572
+                    ],
+                    [
+                        "~num",
+                        [
+                            "wnc"
+                        ],
+                        0.428
+                    ],
+                    [
+                        "num",
+                        [
+                            "~wnc"
+                        ],
+                        0.9388
+                    ],
+                    [
+                        "~num",
+                        [
+                            "~wnc"
+                        ],
+                        0.0612
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NUM",
+            "outcomes": [
+                "num",
+                "~num"
+            ],
+            "parents": [
+                "WNC"
+            ]
+        }
+    ]
+}

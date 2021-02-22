@@ -12,8 +12,7 @@ import os           # Used to create a directory/config file if not found
 import argparse     # Allow command-line flag parsing
 
 try:
-    from config.primary_configuration import *
-    from util.parsers.UserIndexSelection import *
+    from src.config.primary_configuration import *
 
 except ModuleNotFoundError:
     print("Uh-oh: Can't import some project modules. Try running this directly in PyCharm.")
@@ -244,25 +243,3 @@ def access(param: str) -> any:
 
     return value
 
-
-# This file is being run directly
-if __name__ == "__main__":
-
-    print("Opened the configuration file manager.\n")
-
-    options = [
-        [initialize_configuration_file, "Initialize a configuration file if it doesn't exist"],
-        [delete_configuration_file, "Delete the current configuration file"],
-        [repair_configuration_file, "Repair missing/invalid configuration options without affecting other options."],
-        [exit, "Exit"]
-    ]
-
-    while True:
-
-        # Get a selection from the above options
-        selection = user_index_selection("Select an option:", options)
-
-        print()     # Aesthetic spacing
-
-        # Run selected option
-        options[selection][0]()

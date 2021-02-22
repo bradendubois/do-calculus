@@ -1,0 +1,312 @@
+{
+    "latent-model": false,
+    "name": "m51",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wqt",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.0211
+                    ],
+                    [
+                        "~wqt",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.9789
+                    ],
+                    [
+                        "wqt",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.9426
+                    ],
+                    [
+                        "~wqt",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.0574
+                    ],
+                    [
+                        "wqt",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.5669
+                    ],
+                    [
+                        "~wqt",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.4331
+                    ],
+                    [
+                        "wqt",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.9856
+                    ],
+                    [
+                        "~wqt",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.0144
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WQT",
+            "outcomes": [
+                "wqt",
+                "~wqt"
+            ],
+            "parents": [
+                "KTE",
+                "SQZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tnr",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.3243
+                    ],
+                    [
+                        "~tnr",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.6757
+                    ],
+                    [
+                        "tnr",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.1073
+                    ],
+                    [
+                        "~tnr",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.8927
+                    ],
+                    [
+                        "tnr",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.1772
+                    ],
+                    [
+                        "~tnr",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.8228
+                    ],
+                    [
+                        "tnr",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.4703
+                    ],
+                    [
+                        "~tnr",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.5297
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TNR",
+            "outcomes": [
+                "tnr",
+                "~tnr"
+            ],
+            "parents": [
+                "KTE",
+                "SQZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kte",
+                        [
+                            "sqz"
+                        ],
+                        0.1159
+                    ],
+                    [
+                        "~kte",
+                        [
+                            "sqz"
+                        ],
+                        0.8841
+                    ],
+                    [
+                        "kte",
+                        [
+                            "~sqz"
+                        ],
+                        0.8414
+                    ],
+                    [
+                        "~kte",
+                        [
+                            "~sqz"
+                        ],
+                        0.1586
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KTE",
+            "outcomes": [
+                "kte",
+                "~kte"
+            ],
+            "parents": [
+                "SQZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vww",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.7229
+                    ],
+                    [
+                        "~vww",
+                        [
+                            "kte",
+                            "sqz"
+                        ],
+                        0.2771
+                    ],
+                    [
+                        "vww",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.2214
+                    ],
+                    [
+                        "~vww",
+                        [
+                            "kte",
+                            "~sqz"
+                        ],
+                        0.7786
+                    ],
+                    [
+                        "vww",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.6434
+                    ],
+                    [
+                        "~vww",
+                        [
+                            "~kte",
+                            "sqz"
+                        ],
+                        0.3566
+                    ],
+                    [
+                        "vww",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.6698
+                    ],
+                    [
+                        "~vww",
+                        [
+                            "~kte",
+                            "~sqz"
+                        ],
+                        0.3302
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VWW",
+            "outcomes": [
+                "vww",
+                "~vww"
+            ],
+            "parents": [
+                "KTE",
+                "SQZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sqz",
+                        [],
+                        0.9444
+                    ],
+                    [
+                        "~sqz",
+                        [],
+                        0.0556
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SQZ",
+            "outcomes": [
+                "sqz",
+                "~sqz"
+            ],
+            "parents": []
+        }
+    ]
+}

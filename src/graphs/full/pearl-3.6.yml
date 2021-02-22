@@ -1,0 +1,52 @@
+model:
+  U:
+    outcomes:
+    - u
+    - ~u
+    parents: []
+    table: [
+      [u, 0.3],
+      [~u, 0.7]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    parents:
+    - U
+    table: [
+      [x, u, 0.2],
+      [x, ~u, 0.1],
+      [~x, u, 0.8],
+      [~x, ~u, 0.9]
+    ]
+  Y:
+    outcomes:
+    - y
+    - ~y
+    parents:
+    - U
+    - Z
+    table: [
+      [y, u, z, 0.3],
+      [y, u, ~z, 0.6],
+      [y, ~u, z, 0.5],
+      [y, ~u, ~z, 0.8],
+      [~y, u, z, 0.7],
+      [~y, u, ~z, 0.4],
+      [~y, ~u, z, 0.5],
+      [~y, ~u, ~z, 0.2]
+    ]
+  Z:
+    outcomes:
+    - z
+    - ~z
+    parents:
+    - X
+    table: [
+      [z, x, 0.4],
+      [z, ~x, 0.8],
+      [~z, x, 0.6],
+      [~z, ~x, 0.2]
+    ]
+name: 'Pearl: Figure 3.6'

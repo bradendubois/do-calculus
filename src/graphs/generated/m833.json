@@ -1,0 +1,451 @@
+{
+    "latent-model": false,
+    "name": "m833",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kxf",
+                        [],
+                        0.8384
+                    ],
+                    [
+                        "~kxf",
+                        [],
+                        0.1616
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KXF",
+            "outcomes": [
+                "kxf",
+                "~kxf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "axw",
+                        [
+                            "dmf",
+                            "kxf",
+                            "wxf"
+                        ],
+                        0.7204
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "dmf",
+                            "kxf",
+                            "wxf"
+                        ],
+                        0.2796
+                    ],
+                    [
+                        "axw",
+                        [
+                            "dmf",
+                            "kxf",
+                            "~wxf"
+                        ],
+                        0.2274
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "dmf",
+                            "kxf",
+                            "~wxf"
+                        ],
+                        0.7726
+                    ],
+                    [
+                        "axw",
+                        [
+                            "dmf",
+                            "~kxf",
+                            "wxf"
+                        ],
+                        0.2923
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "dmf",
+                            "~kxf",
+                            "wxf"
+                        ],
+                        0.7077
+                    ],
+                    [
+                        "axw",
+                        [
+                            "dmf",
+                            "~kxf",
+                            "~wxf"
+                        ],
+                        0.1353
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "dmf",
+                            "~kxf",
+                            "~wxf"
+                        ],
+                        0.8647
+                    ],
+                    [
+                        "axw",
+                        [
+                            "~dmf",
+                            "kxf",
+                            "wxf"
+                        ],
+                        0.6374
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "~dmf",
+                            "kxf",
+                            "wxf"
+                        ],
+                        0.3626
+                    ],
+                    [
+                        "axw",
+                        [
+                            "~dmf",
+                            "kxf",
+                            "~wxf"
+                        ],
+                        0.9319
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "~dmf",
+                            "kxf",
+                            "~wxf"
+                        ],
+                        0.0681
+                    ],
+                    [
+                        "axw",
+                        [
+                            "~dmf",
+                            "~kxf",
+                            "wxf"
+                        ],
+                        0.903
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "~dmf",
+                            "~kxf",
+                            "wxf"
+                        ],
+                        0.097
+                    ],
+                    [
+                        "axw",
+                        [
+                            "~dmf",
+                            "~kxf",
+                            "~wxf"
+                        ],
+                        0.733
+                    ],
+                    [
+                        "~axw",
+                        [
+                            "~dmf",
+                            "~kxf",
+                            "~wxf"
+                        ],
+                        0.267
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AXW",
+            "outcomes": [
+                "axw",
+                "~axw"
+            ],
+            "parents": [
+                "DMF",
+                "KXF",
+                "WXF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "exl",
+                        [
+                            "pdl"
+                        ],
+                        0.1402
+                    ],
+                    [
+                        "~exl",
+                        [
+                            "pdl"
+                        ],
+                        0.8598
+                    ],
+                    [
+                        "exl",
+                        [
+                            "~pdl"
+                        ],
+                        0.0337
+                    ],
+                    [
+                        "~exl",
+                        [
+                            "~pdl"
+                        ],
+                        0.9663
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EXL",
+            "outcomes": [
+                "exl",
+                "~exl"
+            ],
+            "parents": [
+                "PDL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wxf",
+                        [
+                            "exl"
+                        ],
+                        0.3563
+                    ],
+                    [
+                        "~wxf",
+                        [
+                            "exl"
+                        ],
+                        0.6437
+                    ],
+                    [
+                        "wxf",
+                        [
+                            "~exl"
+                        ],
+                        0.465
+                    ],
+                    [
+                        "~wxf",
+                        [
+                            "~exl"
+                        ],
+                        0.535
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WXF",
+            "outcomes": [
+                "wxf",
+                "~wxf"
+            ],
+            "parents": [
+                "EXL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iva",
+                        [
+                            "wxf"
+                        ],
+                        0.5664
+                    ],
+                    [
+                        "~iva",
+                        [
+                            "wxf"
+                        ],
+                        0.4336
+                    ],
+                    [
+                        "iva",
+                        [
+                            "~wxf"
+                        ],
+                        0.3142
+                    ],
+                    [
+                        "~iva",
+                        [
+                            "~wxf"
+                        ],
+                        0.6858
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IVA",
+            "outcomes": [
+                "iva",
+                "~iva"
+            ],
+            "parents": [
+                "WXF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wtd",
+                        [
+                            "xyd"
+                        ],
+                        0.947
+                    ],
+                    [
+                        "~wtd",
+                        [
+                            "xyd"
+                        ],
+                        0.053
+                    ],
+                    [
+                        "wtd",
+                        [
+                            "~xyd"
+                        ],
+                        0.777
+                    ],
+                    [
+                        "~wtd",
+                        [
+                            "~xyd"
+                        ],
+                        0.223
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WTD",
+            "outcomes": [
+                "wtd",
+                "~wtd"
+            ],
+            "parents": [
+                "XYD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xyd",
+                        [
+                            "exl"
+                        ],
+                        0.3042
+                    ],
+                    [
+                        "~xyd",
+                        [
+                            "exl"
+                        ],
+                        0.6958
+                    ],
+                    [
+                        "xyd",
+                        [
+                            "~exl"
+                        ],
+                        0.1063
+                    ],
+                    [
+                        "~xyd",
+                        [
+                            "~exl"
+                        ],
+                        0.8937
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XYD",
+            "outcomes": [
+                "xyd",
+                "~xyd"
+            ],
+            "parents": [
+                "EXL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dmf",
+                        [],
+                        0.2217
+                    ],
+                    [
+                        "~dmf",
+                        [],
+                        0.7783
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DMF",
+            "outcomes": [
+                "dmf",
+                "~dmf"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pdl",
+                        [],
+                        0.4942
+                    ],
+                    [
+                        "~pdl",
+                        [],
+                        0.5058
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PDL",
+            "outcomes": [
+                "pdl",
+                "~pdl"
+            ],
+            "parents": []
+        }
+    ]
+}

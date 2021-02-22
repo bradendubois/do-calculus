@@ -1,0 +1,573 @@
+{
+    "latent-model": false,
+    "name": "m927",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fmu",
+                        [
+                            "vqt"
+                        ],
+                        0.2512
+                    ],
+                    [
+                        "~fmu",
+                        [
+                            "vqt"
+                        ],
+                        0.7488
+                    ],
+                    [
+                        "fmu",
+                        [
+                            "~vqt"
+                        ],
+                        0.3199
+                    ],
+                    [
+                        "~fmu",
+                        [
+                            "~vqt"
+                        ],
+                        0.6801
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FMU",
+            "outcomes": [
+                "fmu",
+                "~fmu"
+            ],
+            "parents": [
+                "VQT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vqx",
+                        [
+                            "ral",
+                            "tjj"
+                        ],
+                        0.0283
+                    ],
+                    [
+                        "~vqx",
+                        [
+                            "ral",
+                            "tjj"
+                        ],
+                        0.9717
+                    ],
+                    [
+                        "vqx",
+                        [
+                            "ral",
+                            "~tjj"
+                        ],
+                        0.1179
+                    ],
+                    [
+                        "~vqx",
+                        [
+                            "ral",
+                            "~tjj"
+                        ],
+                        0.8821
+                    ],
+                    [
+                        "vqx",
+                        [
+                            "~ral",
+                            "tjj"
+                        ],
+                        0.3132
+                    ],
+                    [
+                        "~vqx",
+                        [
+                            "~ral",
+                            "tjj"
+                        ],
+                        0.6868
+                    ],
+                    [
+                        "vqx",
+                        [
+                            "~ral",
+                            "~tjj"
+                        ],
+                        0.9695
+                    ],
+                    [
+                        "~vqx",
+                        [
+                            "~ral",
+                            "~tjj"
+                        ],
+                        0.0305
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VQX",
+            "outcomes": [
+                "vqx",
+                "~vqx"
+            ],
+            "parents": [
+                "RAL",
+                "TJJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pyj",
+                        [
+                            "vqt"
+                        ],
+                        0.9498
+                    ],
+                    [
+                        "~pyj",
+                        [
+                            "vqt"
+                        ],
+                        0.0502
+                    ],
+                    [
+                        "pyj",
+                        [
+                            "~vqt"
+                        ],
+                        0.5753
+                    ],
+                    [
+                        "~pyj",
+                        [
+                            "~vqt"
+                        ],
+                        0.4247
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PYJ",
+            "outcomes": [
+                "pyj",
+                "~pyj"
+            ],
+            "parents": [
+                "VQT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mza",
+                        [
+                            "ljo",
+                            "uuj"
+                        ],
+                        0.5272
+                    ],
+                    [
+                        "~mza",
+                        [
+                            "ljo",
+                            "uuj"
+                        ],
+                        0.4728
+                    ],
+                    [
+                        "mza",
+                        [
+                            "ljo",
+                            "~uuj"
+                        ],
+                        0.7999
+                    ],
+                    [
+                        "~mza",
+                        [
+                            "ljo",
+                            "~uuj"
+                        ],
+                        0.2001
+                    ],
+                    [
+                        "mza",
+                        [
+                            "~ljo",
+                            "uuj"
+                        ],
+                        0.1796
+                    ],
+                    [
+                        "~mza",
+                        [
+                            "~ljo",
+                            "uuj"
+                        ],
+                        0.8204
+                    ],
+                    [
+                        "mza",
+                        [
+                            "~ljo",
+                            "~uuj"
+                        ],
+                        0.6993
+                    ],
+                    [
+                        "~mza",
+                        [
+                            "~ljo",
+                            "~uuj"
+                        ],
+                        0.3007
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MZA",
+            "outcomes": [
+                "mza",
+                "~mza"
+            ],
+            "parents": [
+                "LJO",
+                "UUJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ljo",
+                        [
+                            "oab"
+                        ],
+                        0.7156
+                    ],
+                    [
+                        "~ljo",
+                        [
+                            "oab"
+                        ],
+                        0.2844
+                    ],
+                    [
+                        "ljo",
+                        [
+                            "~oab"
+                        ],
+                        0.3393
+                    ],
+                    [
+                        "~ljo",
+                        [
+                            "~oab"
+                        ],
+                        0.6607
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LJO",
+            "outcomes": [
+                "ljo",
+                "~ljo"
+            ],
+            "parents": [
+                "OAB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ral",
+                        [],
+                        0.256
+                    ],
+                    [
+                        "~ral",
+                        [],
+                        0.744
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RAL",
+            "outcomes": [
+                "ral",
+                "~ral"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oab",
+                        [
+                            "bme"
+                        ],
+                        0.2194
+                    ],
+                    [
+                        "~oab",
+                        [
+                            "bme"
+                        ],
+                        0.7806
+                    ],
+                    [
+                        "oab",
+                        [
+                            "~bme"
+                        ],
+                        0.6746
+                    ],
+                    [
+                        "~oab",
+                        [
+                            "~bme"
+                        ],
+                        0.3254
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OAB",
+            "outcomes": [
+                "oab",
+                "~oab"
+            ],
+            "parents": [
+                "BME"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vqt",
+                        [
+                            "bme",
+                            "vqx"
+                        ],
+                        0.1291
+                    ],
+                    [
+                        "~vqt",
+                        [
+                            "bme",
+                            "vqx"
+                        ],
+                        0.8709
+                    ],
+                    [
+                        "vqt",
+                        [
+                            "bme",
+                            "~vqx"
+                        ],
+                        0.1516
+                    ],
+                    [
+                        "~vqt",
+                        [
+                            "bme",
+                            "~vqx"
+                        ],
+                        0.8484
+                    ],
+                    [
+                        "vqt",
+                        [
+                            "~bme",
+                            "vqx"
+                        ],
+                        0.8953
+                    ],
+                    [
+                        "~vqt",
+                        [
+                            "~bme",
+                            "vqx"
+                        ],
+                        0.1047
+                    ],
+                    [
+                        "vqt",
+                        [
+                            "~bme",
+                            "~vqx"
+                        ],
+                        0.2868
+                    ],
+                    [
+                        "~vqt",
+                        [
+                            "~bme",
+                            "~vqx"
+                        ],
+                        0.7132
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VQT",
+            "outcomes": [
+                "vqt",
+                "~vqt"
+            ],
+            "parents": [
+                "BME",
+                "VQX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bme",
+                        [],
+                        0.0695
+                    ],
+                    [
+                        "~bme",
+                        [],
+                        0.9305
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BME",
+            "outcomes": [
+                "bme",
+                "~bme"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tjj",
+                        [],
+                        0.0721
+                    ],
+                    [
+                        "~tjj",
+                        [],
+                        0.9279
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TJJ",
+            "outcomes": [
+                "tjj",
+                "~tjj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qts",
+                        [
+                            "vqx"
+                        ],
+                        0.937
+                    ],
+                    [
+                        "~qts",
+                        [
+                            "vqx"
+                        ],
+                        0.063
+                    ],
+                    [
+                        "qts",
+                        [
+                            "~vqx"
+                        ],
+                        0.7305
+                    ],
+                    [
+                        "~qts",
+                        [
+                            "~vqx"
+                        ],
+                        0.2695
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QTS",
+            "outcomes": [
+                "qts",
+                "~qts"
+            ],
+            "parents": [
+                "VQX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uuj",
+                        [
+                            "vqx"
+                        ],
+                        0.6965
+                    ],
+                    [
+                        "~uuj",
+                        [
+                            "vqx"
+                        ],
+                        0.3035
+                    ],
+                    [
+                        "uuj",
+                        [
+                            "~vqx"
+                        ],
+                        0.4015
+                    ],
+                    [
+                        "~uuj",
+                        [
+                            "~vqx"
+                        ],
+                        0.5985
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UUJ",
+            "outcomes": [
+                "uuj",
+                "~uuj"
+            ],
+            "parents": [
+                "VQX"
+            ]
+        }
+    ]
+}

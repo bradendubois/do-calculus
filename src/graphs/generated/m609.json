@@ -1,0 +1,645 @@
+{
+    "latent-model": false,
+    "name": "m609",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jgc",
+                        [],
+                        0.2311
+                    ],
+                    [
+                        "~jgc",
+                        [],
+                        0.7689
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JGC",
+            "outcomes": [
+                "jgc",
+                "~jgc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "siw",
+                        [
+                            "gmy",
+                            "qda"
+                        ],
+                        0.1187
+                    ],
+                    [
+                        "~siw",
+                        [
+                            "gmy",
+                            "qda"
+                        ],
+                        0.8813
+                    ],
+                    [
+                        "siw",
+                        [
+                            "gmy",
+                            "~qda"
+                        ],
+                        0.6984
+                    ],
+                    [
+                        "~siw",
+                        [
+                            "gmy",
+                            "~qda"
+                        ],
+                        0.3016
+                    ],
+                    [
+                        "siw",
+                        [
+                            "~gmy",
+                            "qda"
+                        ],
+                        0.1951
+                    ],
+                    [
+                        "~siw",
+                        [
+                            "~gmy",
+                            "qda"
+                        ],
+                        0.8049
+                    ],
+                    [
+                        "siw",
+                        [
+                            "~gmy",
+                            "~qda"
+                        ],
+                        0.8523
+                    ],
+                    [
+                        "~siw",
+                        [
+                            "~gmy",
+                            "~qda"
+                        ],
+                        0.1477
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SIW",
+            "outcomes": [
+                "siw",
+                "~siw"
+            ],
+            "parents": [
+                "GMY",
+                "QDA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gmy",
+                        [],
+                        0.1448
+                    ],
+                    [
+                        "~gmy",
+                        [],
+                        0.8552
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GMY",
+            "outcomes": [
+                "gmy",
+                "~gmy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tvm",
+                        [
+                            "aun",
+                            "yyc"
+                        ],
+                        0.4339
+                    ],
+                    [
+                        "~tvm",
+                        [
+                            "aun",
+                            "yyc"
+                        ],
+                        0.5661
+                    ],
+                    [
+                        "tvm",
+                        [
+                            "aun",
+                            "~yyc"
+                        ],
+                        0.717
+                    ],
+                    [
+                        "~tvm",
+                        [
+                            "aun",
+                            "~yyc"
+                        ],
+                        0.283
+                    ],
+                    [
+                        "tvm",
+                        [
+                            "~aun",
+                            "yyc"
+                        ],
+                        0.6924
+                    ],
+                    [
+                        "~tvm",
+                        [
+                            "~aun",
+                            "yyc"
+                        ],
+                        0.3076
+                    ],
+                    [
+                        "tvm",
+                        [
+                            "~aun",
+                            "~yyc"
+                        ],
+                        0.7102
+                    ],
+                    [
+                        "~tvm",
+                        [
+                            "~aun",
+                            "~yyc"
+                        ],
+                        0.2898
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TVM",
+            "outcomes": [
+                "tvm",
+                "~tvm"
+            ],
+            "parents": [
+                "AUN",
+                "YYC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fkj",
+                        [],
+                        0.4005
+                    ],
+                    [
+                        "~fkj",
+                        [],
+                        0.5995
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FKJ",
+            "outcomes": [
+                "fkj",
+                "~fkj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aun",
+                        [
+                            "bwa",
+                            "gmy"
+                        ],
+                        0.7076
+                    ],
+                    [
+                        "~aun",
+                        [
+                            "bwa",
+                            "gmy"
+                        ],
+                        0.2924
+                    ],
+                    [
+                        "aun",
+                        [
+                            "bwa",
+                            "~gmy"
+                        ],
+                        0.0069
+                    ],
+                    [
+                        "~aun",
+                        [
+                            "bwa",
+                            "~gmy"
+                        ],
+                        0.9931
+                    ],
+                    [
+                        "aun",
+                        [
+                            "~bwa",
+                            "gmy"
+                        ],
+                        0.1752
+                    ],
+                    [
+                        "~aun",
+                        [
+                            "~bwa",
+                            "gmy"
+                        ],
+                        0.8248
+                    ],
+                    [
+                        "aun",
+                        [
+                            "~bwa",
+                            "~gmy"
+                        ],
+                        0.7101
+                    ],
+                    [
+                        "~aun",
+                        [
+                            "~bwa",
+                            "~gmy"
+                        ],
+                        0.2899
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AUN",
+            "outcomes": [
+                "aun",
+                "~aun"
+            ],
+            "parents": [
+                "BWA",
+                "GMY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qda",
+                        [],
+                        0.5092
+                    ],
+                    [
+                        "~qda",
+                        [],
+                        0.4908
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QDA",
+            "outcomes": [
+                "qda",
+                "~qda"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fbr",
+                        [
+                            "bwa"
+                        ],
+                        0.3861
+                    ],
+                    [
+                        "~fbr",
+                        [
+                            "bwa"
+                        ],
+                        0.6139
+                    ],
+                    [
+                        "fbr",
+                        [
+                            "~bwa"
+                        ],
+                        0.3815
+                    ],
+                    [
+                        "~fbr",
+                        [
+                            "~bwa"
+                        ],
+                        0.6185
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FBR",
+            "outcomes": [
+                "fbr",
+                "~fbr"
+            ],
+            "parents": [
+                "BWA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bwa",
+                        [],
+                        0.1106
+                    ],
+                    [
+                        "~bwa",
+                        [],
+                        0.8894
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BWA",
+            "outcomes": [
+                "bwa",
+                "~bwa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cfi",
+                        [
+                            "bwa",
+                            "fbr",
+                            "siw"
+                        ],
+                        0.523
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "bwa",
+                            "fbr",
+                            "siw"
+                        ],
+                        0.477
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "bwa",
+                            "fbr",
+                            "~siw"
+                        ],
+                        0.0598
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "bwa",
+                            "fbr",
+                            "~siw"
+                        ],
+                        0.9402
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "bwa",
+                            "~fbr",
+                            "siw"
+                        ],
+                        0.8793
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "bwa",
+                            "~fbr",
+                            "siw"
+                        ],
+                        0.1207
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "bwa",
+                            "~fbr",
+                            "~siw"
+                        ],
+                        0.453
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "bwa",
+                            "~fbr",
+                            "~siw"
+                        ],
+                        0.547
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "~bwa",
+                            "fbr",
+                            "siw"
+                        ],
+                        0.8912
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "~bwa",
+                            "fbr",
+                            "siw"
+                        ],
+                        0.1088
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "~bwa",
+                            "fbr",
+                            "~siw"
+                        ],
+                        0.0154
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "~bwa",
+                            "fbr",
+                            "~siw"
+                        ],
+                        0.9846
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "~bwa",
+                            "~fbr",
+                            "siw"
+                        ],
+                        0.9452
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "~bwa",
+                            "~fbr",
+                            "siw"
+                        ],
+                        0.0548
+                    ],
+                    [
+                        "cfi",
+                        [
+                            "~bwa",
+                            "~fbr",
+                            "~siw"
+                        ],
+                        0.473
+                    ],
+                    [
+                        "~cfi",
+                        [
+                            "~bwa",
+                            "~fbr",
+                            "~siw"
+                        ],
+                        0.527
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CFI",
+            "outcomes": [
+                "cfi",
+                "~cfi"
+            ],
+            "parents": [
+                "BWA",
+                "FBR",
+                "SIW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yyc",
+                        [
+                            "bwa",
+                            "gmy"
+                        ],
+                        0.439
+                    ],
+                    [
+                        "~yyc",
+                        [
+                            "bwa",
+                            "gmy"
+                        ],
+                        0.561
+                    ],
+                    [
+                        "yyc",
+                        [
+                            "bwa",
+                            "~gmy"
+                        ],
+                        0.5975
+                    ],
+                    [
+                        "~yyc",
+                        [
+                            "bwa",
+                            "~gmy"
+                        ],
+                        0.4025
+                    ],
+                    [
+                        "yyc",
+                        [
+                            "~bwa",
+                            "gmy"
+                        ],
+                        0.8309
+                    ],
+                    [
+                        "~yyc",
+                        [
+                            "~bwa",
+                            "gmy"
+                        ],
+                        0.1691
+                    ],
+                    [
+                        "yyc",
+                        [
+                            "~bwa",
+                            "~gmy"
+                        ],
+                        0.3662
+                    ],
+                    [
+                        "~yyc",
+                        [
+                            "~bwa",
+                            "~gmy"
+                        ],
+                        0.6338
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YYC",
+            "outcomes": [
+                "yyc",
+                "~yyc"
+            ],
+            "parents": [
+                "BWA",
+                "GMY"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,737 @@
+{
+    "latent-model": false,
+    "name": "m787",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ble",
+                        [
+                            "dfg"
+                        ],
+                        0.3195
+                    ],
+                    [
+                        "~ble",
+                        [
+                            "dfg"
+                        ],
+                        0.6805
+                    ],
+                    [
+                        "ble",
+                        [
+                            "~dfg"
+                        ],
+                        0.3552
+                    ],
+                    [
+                        "~ble",
+                        [
+                            "~dfg"
+                        ],
+                        0.6448
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BLE",
+            "outcomes": [
+                "ble",
+                "~ble"
+            ],
+            "parents": [
+                "DFG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dcs",
+                        [
+                            "sat"
+                        ],
+                        0.6233
+                    ],
+                    [
+                        "~dcs",
+                        [
+                            "sat"
+                        ],
+                        0.3767
+                    ],
+                    [
+                        "dcs",
+                        [
+                            "~sat"
+                        ],
+                        0.5316
+                    ],
+                    [
+                        "~dcs",
+                        [
+                            "~sat"
+                        ],
+                        0.4684
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DCS",
+            "outcomes": [
+                "dcs",
+                "~dcs"
+            ],
+            "parents": [
+                "SAT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xei",
+                        [
+                            "ble",
+                            "dcs"
+                        ],
+                        0.8571
+                    ],
+                    [
+                        "~xei",
+                        [
+                            "ble",
+                            "dcs"
+                        ],
+                        0.1429
+                    ],
+                    [
+                        "xei",
+                        [
+                            "ble",
+                            "~dcs"
+                        ],
+                        0.8589
+                    ],
+                    [
+                        "~xei",
+                        [
+                            "ble",
+                            "~dcs"
+                        ],
+                        0.1411
+                    ],
+                    [
+                        "xei",
+                        [
+                            "~ble",
+                            "dcs"
+                        ],
+                        0.94
+                    ],
+                    [
+                        "~xei",
+                        [
+                            "~ble",
+                            "dcs"
+                        ],
+                        0.06
+                    ],
+                    [
+                        "xei",
+                        [
+                            "~ble",
+                            "~dcs"
+                        ],
+                        0.9533
+                    ],
+                    [
+                        "~xei",
+                        [
+                            "~ble",
+                            "~dcs"
+                        ],
+                        0.0467
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XEI",
+            "outcomes": [
+                "xei",
+                "~xei"
+            ],
+            "parents": [
+                "BLE",
+                "DCS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kee",
+                        [
+                            "iam",
+                            "wna"
+                        ],
+                        0.5527
+                    ],
+                    [
+                        "~kee",
+                        [
+                            "iam",
+                            "wna"
+                        ],
+                        0.4473
+                    ],
+                    [
+                        "kee",
+                        [
+                            "iam",
+                            "~wna"
+                        ],
+                        0.917
+                    ],
+                    [
+                        "~kee",
+                        [
+                            "iam",
+                            "~wna"
+                        ],
+                        0.083
+                    ],
+                    [
+                        "kee",
+                        [
+                            "~iam",
+                            "wna"
+                        ],
+                        0.2137
+                    ],
+                    [
+                        "~kee",
+                        [
+                            "~iam",
+                            "wna"
+                        ],
+                        0.7863
+                    ],
+                    [
+                        "kee",
+                        [
+                            "~iam",
+                            "~wna"
+                        ],
+                        0.3838
+                    ],
+                    [
+                        "~kee",
+                        [
+                            "~iam",
+                            "~wna"
+                        ],
+                        0.6162
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KEE",
+            "outcomes": [
+                "kee",
+                "~kee"
+            ],
+            "parents": [
+                "IAM",
+                "WNA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sat",
+                        [],
+                        0.4918
+                    ],
+                    [
+                        "~sat",
+                        [],
+                        0.5082
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SAT",
+            "outcomes": [
+                "sat",
+                "~sat"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ets",
+                        [
+                            "dcs",
+                            "kee",
+                            "sat"
+                        ],
+                        0.7012
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "dcs",
+                            "kee",
+                            "sat"
+                        ],
+                        0.2988
+                    ],
+                    [
+                        "ets",
+                        [
+                            "dcs",
+                            "kee",
+                            "~sat"
+                        ],
+                        0.9304
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "dcs",
+                            "kee",
+                            "~sat"
+                        ],
+                        0.0696
+                    ],
+                    [
+                        "ets",
+                        [
+                            "dcs",
+                            "~kee",
+                            "sat"
+                        ],
+                        0.0923
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "dcs",
+                            "~kee",
+                            "sat"
+                        ],
+                        0.9077
+                    ],
+                    [
+                        "ets",
+                        [
+                            "dcs",
+                            "~kee",
+                            "~sat"
+                        ],
+                        0.2464
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "dcs",
+                            "~kee",
+                            "~sat"
+                        ],
+                        0.7536
+                    ],
+                    [
+                        "ets",
+                        [
+                            "~dcs",
+                            "kee",
+                            "sat"
+                        ],
+                        0.3935
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "~dcs",
+                            "kee",
+                            "sat"
+                        ],
+                        0.6065
+                    ],
+                    [
+                        "ets",
+                        [
+                            "~dcs",
+                            "kee",
+                            "~sat"
+                        ],
+                        0.7165
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "~dcs",
+                            "kee",
+                            "~sat"
+                        ],
+                        0.2835
+                    ],
+                    [
+                        "ets",
+                        [
+                            "~dcs",
+                            "~kee",
+                            "sat"
+                        ],
+                        0.5721
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "~dcs",
+                            "~kee",
+                            "sat"
+                        ],
+                        0.4279
+                    ],
+                    [
+                        "ets",
+                        [
+                            "~dcs",
+                            "~kee",
+                            "~sat"
+                        ],
+                        0.0678
+                    ],
+                    [
+                        "~ets",
+                        [
+                            "~dcs",
+                            "~kee",
+                            "~sat"
+                        ],
+                        0.9322
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ETS",
+            "outcomes": [
+                "ets",
+                "~ets"
+            ],
+            "parents": [
+                "DCS",
+                "KEE",
+                "SAT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dfg",
+                        [
+                            "iam",
+                            "zyq"
+                        ],
+                        0.5942
+                    ],
+                    [
+                        "~dfg",
+                        [
+                            "iam",
+                            "zyq"
+                        ],
+                        0.4058
+                    ],
+                    [
+                        "dfg",
+                        [
+                            "iam",
+                            "~zyq"
+                        ],
+                        0.045
+                    ],
+                    [
+                        "~dfg",
+                        [
+                            "iam",
+                            "~zyq"
+                        ],
+                        0.955
+                    ],
+                    [
+                        "dfg",
+                        [
+                            "~iam",
+                            "zyq"
+                        ],
+                        0.8336
+                    ],
+                    [
+                        "~dfg",
+                        [
+                            "~iam",
+                            "zyq"
+                        ],
+                        0.1664
+                    ],
+                    [
+                        "dfg",
+                        [
+                            "~iam",
+                            "~zyq"
+                        ],
+                        0.7514
+                    ],
+                    [
+                        "~dfg",
+                        [
+                            "~iam",
+                            "~zyq"
+                        ],
+                        0.2486
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DFG",
+            "outcomes": [
+                "dfg",
+                "~dfg"
+            ],
+            "parents": [
+                "IAM",
+                "ZYQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fyc",
+                        [
+                            "xei"
+                        ],
+                        0.5497
+                    ],
+                    [
+                        "~fyc",
+                        [
+                            "xei"
+                        ],
+                        0.4503
+                    ],
+                    [
+                        "fyc",
+                        [
+                            "~xei"
+                        ],
+                        0.6641
+                    ],
+                    [
+                        "~fyc",
+                        [
+                            "~xei"
+                        ],
+                        0.3359
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FYC",
+            "outcomes": [
+                "fyc",
+                "~fyc"
+            ],
+            "parents": [
+                "XEI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bsz",
+                        [],
+                        0.2483
+                    ],
+                    [
+                        "~bsz",
+                        [],
+                        0.7517
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BSZ",
+            "outcomes": [
+                "bsz",
+                "~bsz"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ltu",
+                        [],
+                        0.4154
+                    ],
+                    [
+                        "~ltu",
+                        [],
+                        0.5846
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LTU",
+            "outcomes": [
+                "ltu",
+                "~ltu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wna",
+                        [],
+                        0.0882
+                    ],
+                    [
+                        "~wna",
+                        [],
+                        0.9118
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WNA",
+            "outcomes": [
+                "wna",
+                "~wna"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iam",
+                        [
+                            "bsz"
+                        ],
+                        0.1888
+                    ],
+                    [
+                        "~iam",
+                        [
+                            "bsz"
+                        ],
+                        0.8112
+                    ],
+                    [
+                        "iam",
+                        [
+                            "~bsz"
+                        ],
+                        0.2954
+                    ],
+                    [
+                        "~iam",
+                        [
+                            "~bsz"
+                        ],
+                        0.7046
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IAM",
+            "outcomes": [
+                "iam",
+                "~iam"
+            ],
+            "parents": [
+                "BSZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zyq",
+                        [],
+                        0.2203
+                    ],
+                    [
+                        "~zyq",
+                        [],
+                        0.7797
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZYQ",
+            "outcomes": [
+                "zyq",
+                "~zyq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fva",
+                        [
+                            "ltu"
+                        ],
+                        0.1905
+                    ],
+                    [
+                        "~fva",
+                        [
+                            "ltu"
+                        ],
+                        0.8095
+                    ],
+                    [
+                        "fva",
+                        [
+                            "~ltu"
+                        ],
+                        0.7987
+                    ],
+                    [
+                        "~fva",
+                        [
+                            "~ltu"
+                        ],
+                        0.2013
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FVA",
+            "outcomes": [
+                "fva",
+                "~fva"
+            ],
+            "parents": [
+                "LTU"
+            ]
+        }
+    ]
+}

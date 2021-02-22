@@ -1,0 +1,362 @@
+{
+    "latent-model": true,
+    "name": "m275_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lxs",
+                        [
+                            "ybc"
+                        ],
+                        0.5792
+                    ],
+                    [
+                        "~lxs",
+                        [
+                            "ybc"
+                        ],
+                        0.4208
+                    ],
+                    [
+                        "lxs",
+                        [
+                            "~ybc"
+                        ],
+                        0.115
+                    ],
+                    [
+                        "~lxs",
+                        [
+                            "~ybc"
+                        ],
+                        0.885
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LXS",
+            "outcomes": [
+                "lxs",
+                "~lxs"
+            ],
+            "parents": [
+                "YBC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nho",
+                        [
+                            "lxs",
+                            "xht"
+                        ],
+                        0.7298
+                    ],
+                    [
+                        "~nho",
+                        [
+                            "lxs",
+                            "xht"
+                        ],
+                        0.2702
+                    ],
+                    [
+                        "nho",
+                        [
+                            "lxs",
+                            "~xht"
+                        ],
+                        0.7029
+                    ],
+                    [
+                        "~nho",
+                        [
+                            "lxs",
+                            "~xht"
+                        ],
+                        0.2971
+                    ],
+                    [
+                        "nho",
+                        [
+                            "~lxs",
+                            "xht"
+                        ],
+                        0.8628
+                    ],
+                    [
+                        "~nho",
+                        [
+                            "~lxs",
+                            "xht"
+                        ],
+                        0.1372
+                    ],
+                    [
+                        "nho",
+                        [
+                            "~lxs",
+                            "~xht"
+                        ],
+                        0.9821
+                    ],
+                    [
+                        "~nho",
+                        [
+                            "~lxs",
+                            "~xht"
+                        ],
+                        0.0179
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NHO",
+            "outcomes": [
+                "nho",
+                "~nho"
+            ],
+            "parents": [
+                "LXS",
+                "XHT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ikl",
+                        [
+                            "xht"
+                        ],
+                        0.1097
+                    ],
+                    [
+                        "~ikl",
+                        [
+                            "xht"
+                        ],
+                        0.8903
+                    ],
+                    [
+                        "ikl",
+                        [
+                            "~xht"
+                        ],
+                        0.5841
+                    ],
+                    [
+                        "~ikl",
+                        [
+                            "~xht"
+                        ],
+                        0.4159
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IKL",
+            "outcomes": [
+                "ikl",
+                "~ikl"
+            ],
+            "parents": [
+                "XHT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zmh",
+                        [
+                            "lxs"
+                        ],
+                        0.7453
+                    ],
+                    [
+                        "~zmh",
+                        [
+                            "lxs"
+                        ],
+                        0.2547
+                    ],
+                    [
+                        "zmh",
+                        [
+                            "~lxs"
+                        ],
+                        0.9488
+                    ],
+                    [
+                        "~zmh",
+                        [
+                            "~lxs"
+                        ],
+                        0.0512
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZMH",
+            "outcomes": [
+                "zmh",
+                "~zmh"
+            ],
+            "parents": [
+                "LXS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ybc",
+                        [],
+                        0.0653
+                    ],
+                    [
+                        "~ybc",
+                        [],
+                        0.9347
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "YBC",
+            "outcomes": [
+                "ybc",
+                "~ybc"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nzb",
+                        [
+                            "ikl",
+                            "lxs"
+                        ],
+                        0.0307
+                    ],
+                    [
+                        "~nzb",
+                        [
+                            "ikl",
+                            "lxs"
+                        ],
+                        0.9693
+                    ],
+                    [
+                        "nzb",
+                        [
+                            "ikl",
+                            "~lxs"
+                        ],
+                        0.8216
+                    ],
+                    [
+                        "~nzb",
+                        [
+                            "ikl",
+                            "~lxs"
+                        ],
+                        0.1784
+                    ],
+                    [
+                        "nzb",
+                        [
+                            "~ikl",
+                            "lxs"
+                        ],
+                        0.7897
+                    ],
+                    [
+                        "~nzb",
+                        [
+                            "~ikl",
+                            "lxs"
+                        ],
+                        0.2103
+                    ],
+                    [
+                        "nzb",
+                        [
+                            "~ikl",
+                            "~lxs"
+                        ],
+                        0.4272
+                    ],
+                    [
+                        "~nzb",
+                        [
+                            "~ikl",
+                            "~lxs"
+                        ],
+                        0.5728
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NZB",
+            "outcomes": [
+                "nzb",
+                "~nzb"
+            ],
+            "parents": [
+                "IKL",
+                "LXS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xht",
+                        [
+                            "lxs"
+                        ],
+                        0.4909
+                    ],
+                    [
+                        "~xht",
+                        [
+                            "lxs"
+                        ],
+                        0.5091
+                    ],
+                    [
+                        "xht",
+                        [
+                            "~lxs"
+                        ],
+                        0.5041
+                    ],
+                    [
+                        "~xht",
+                        [
+                            "~lxs"
+                        ],
+                        0.4959
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XHT",
+            "outcomes": [
+                "xht",
+                "~xht"
+            ],
+            "parents": [
+                "LXS"
+            ]
+        }
+    ]
+}

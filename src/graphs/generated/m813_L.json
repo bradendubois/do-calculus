@@ -1,0 +1,767 @@
+{
+    "latent-model": true,
+    "name": "m813_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wxo",
+                        [
+                            "gnk",
+                            "lwo"
+                        ],
+                        0.1072
+                    ],
+                    [
+                        "~wxo",
+                        [
+                            "gnk",
+                            "lwo"
+                        ],
+                        0.8928
+                    ],
+                    [
+                        "wxo",
+                        [
+                            "gnk",
+                            "~lwo"
+                        ],
+                        0.2891
+                    ],
+                    [
+                        "~wxo",
+                        [
+                            "gnk",
+                            "~lwo"
+                        ],
+                        0.7109
+                    ],
+                    [
+                        "wxo",
+                        [
+                            "~gnk",
+                            "lwo"
+                        ],
+                        0.6388
+                    ],
+                    [
+                        "~wxo",
+                        [
+                            "~gnk",
+                            "lwo"
+                        ],
+                        0.3612
+                    ],
+                    [
+                        "wxo",
+                        [
+                            "~gnk",
+                            "~lwo"
+                        ],
+                        0.3449
+                    ],
+                    [
+                        "~wxo",
+                        [
+                            "~gnk",
+                            "~lwo"
+                        ],
+                        0.6551
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WXO",
+            "outcomes": [
+                "wxo",
+                "~wxo"
+            ],
+            "parents": [
+                "GNK",
+                "LWO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ipz",
+                        [
+                            "ntd",
+                            "wvl"
+                        ],
+                        0.1638
+                    ],
+                    [
+                        "~ipz",
+                        [
+                            "ntd",
+                            "wvl"
+                        ],
+                        0.8362
+                    ],
+                    [
+                        "ipz",
+                        [
+                            "ntd",
+                            "~wvl"
+                        ],
+                        0.5029
+                    ],
+                    [
+                        "~ipz",
+                        [
+                            "ntd",
+                            "~wvl"
+                        ],
+                        0.4971
+                    ],
+                    [
+                        "ipz",
+                        [
+                            "~ntd",
+                            "wvl"
+                        ],
+                        0.4783
+                    ],
+                    [
+                        "~ipz",
+                        [
+                            "~ntd",
+                            "wvl"
+                        ],
+                        0.5217
+                    ],
+                    [
+                        "ipz",
+                        [
+                            "~ntd",
+                            "~wvl"
+                        ],
+                        0.6427
+                    ],
+                    [
+                        "~ipz",
+                        [
+                            "~ntd",
+                            "~wvl"
+                        ],
+                        0.3573
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IPZ",
+            "outcomes": [
+                "ipz",
+                "~ipz"
+            ],
+            "parents": [
+                "NTD",
+                "WVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qhe",
+                        [
+                            "gyg"
+                        ],
+                        0.5099
+                    ],
+                    [
+                        "~qhe",
+                        [
+                            "gyg"
+                        ],
+                        0.4901
+                    ],
+                    [
+                        "qhe",
+                        [
+                            "~gyg"
+                        ],
+                        0.2017
+                    ],
+                    [
+                        "~qhe",
+                        [
+                            "~gyg"
+                        ],
+                        0.7983
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QHE",
+            "outcomes": [
+                "qhe",
+                "~qhe"
+            ],
+            "parents": [
+                "GYG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wvl",
+                        [],
+                        0.5931
+                    ],
+                    [
+                        "~wvl",
+                        [],
+                        0.4069
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WVL",
+            "outcomes": [
+                "wvl",
+                "~wvl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gnk",
+                        [],
+                        0.0432
+                    ],
+                    [
+                        "~gnk",
+                        [],
+                        0.9568
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "GNK",
+            "outcomes": [
+                "gnk",
+                "~gnk"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tdv",
+                        [
+                            "nnb",
+                            "wxo"
+                        ],
+                        0.4553
+                    ],
+                    [
+                        "~tdv",
+                        [
+                            "nnb",
+                            "wxo"
+                        ],
+                        0.5447
+                    ],
+                    [
+                        "tdv",
+                        [
+                            "nnb",
+                            "~wxo"
+                        ],
+                        0.9849
+                    ],
+                    [
+                        "~tdv",
+                        [
+                            "nnb",
+                            "~wxo"
+                        ],
+                        0.0151
+                    ],
+                    [
+                        "tdv",
+                        [
+                            "~nnb",
+                            "wxo"
+                        ],
+                        0.9017
+                    ],
+                    [
+                        "~tdv",
+                        [
+                            "~nnb",
+                            "wxo"
+                        ],
+                        0.0983
+                    ],
+                    [
+                        "tdv",
+                        [
+                            "~nnb",
+                            "~wxo"
+                        ],
+                        0.6895
+                    ],
+                    [
+                        "~tdv",
+                        [
+                            "~nnb",
+                            "~wxo"
+                        ],
+                        0.3105
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TDV",
+            "outcomes": [
+                "tdv",
+                "~tdv"
+            ],
+            "parents": [
+                "NNB",
+                "WXO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ntd",
+                        [
+                            "nnb",
+                            "wvl"
+                        ],
+                        0.5051
+                    ],
+                    [
+                        "~ntd",
+                        [
+                            "nnb",
+                            "wvl"
+                        ],
+                        0.4949
+                    ],
+                    [
+                        "ntd",
+                        [
+                            "nnb",
+                            "~wvl"
+                        ],
+                        0.1974
+                    ],
+                    [
+                        "~ntd",
+                        [
+                            "nnb",
+                            "~wvl"
+                        ],
+                        0.8026
+                    ],
+                    [
+                        "ntd",
+                        [
+                            "~nnb",
+                            "wvl"
+                        ],
+                        0.5522
+                    ],
+                    [
+                        "~ntd",
+                        [
+                            "~nnb",
+                            "wvl"
+                        ],
+                        0.4478
+                    ],
+                    [
+                        "ntd",
+                        [
+                            "~nnb",
+                            "~wvl"
+                        ],
+                        0.5797
+                    ],
+                    [
+                        "~ntd",
+                        [
+                            "~nnb",
+                            "~wvl"
+                        ],
+                        0.4203
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NTD",
+            "outcomes": [
+                "ntd",
+                "~ntd"
+            ],
+            "parents": [
+                "NNB",
+                "WVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lwo",
+                        [
+                            "wvl"
+                        ],
+                        0.7706
+                    ],
+                    [
+                        "~lwo",
+                        [
+                            "wvl"
+                        ],
+                        0.2294
+                    ],
+                    [
+                        "lwo",
+                        [
+                            "~wvl"
+                        ],
+                        0.0829
+                    ],
+                    [
+                        "~lwo",
+                        [
+                            "~wvl"
+                        ],
+                        0.9171
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LWO",
+            "outcomes": [
+                "lwo",
+                "~lwo"
+            ],
+            "parents": [
+                "WVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iyn",
+                        [
+                            "qhe",
+                            "tdv",
+                            "wvl"
+                        ],
+                        0.736
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "qhe",
+                            "tdv",
+                            "wvl"
+                        ],
+                        0.264
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "qhe",
+                            "tdv",
+                            "~wvl"
+                        ],
+                        0.5932
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "qhe",
+                            "tdv",
+                            "~wvl"
+                        ],
+                        0.4068
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "qhe",
+                            "~tdv",
+                            "wvl"
+                        ],
+                        0.3619
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "qhe",
+                            "~tdv",
+                            "wvl"
+                        ],
+                        0.6381
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "qhe",
+                            "~tdv",
+                            "~wvl"
+                        ],
+                        0.0782
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "qhe",
+                            "~tdv",
+                            "~wvl"
+                        ],
+                        0.9218
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "~qhe",
+                            "tdv",
+                            "wvl"
+                        ],
+                        0.678
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "~qhe",
+                            "tdv",
+                            "wvl"
+                        ],
+                        0.322
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "~qhe",
+                            "tdv",
+                            "~wvl"
+                        ],
+                        0.2241
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "~qhe",
+                            "tdv",
+                            "~wvl"
+                        ],
+                        0.7759
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "~qhe",
+                            "~tdv",
+                            "wvl"
+                        ],
+                        0.2811
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "~qhe",
+                            "~tdv",
+                            "wvl"
+                        ],
+                        0.7189
+                    ],
+                    [
+                        "iyn",
+                        [
+                            "~qhe",
+                            "~tdv",
+                            "~wvl"
+                        ],
+                        0.6972
+                    ],
+                    [
+                        "~iyn",
+                        [
+                            "~qhe",
+                            "~tdv",
+                            "~wvl"
+                        ],
+                        0.3028
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IYN",
+            "outcomes": [
+                "iyn",
+                "~iyn"
+            ],
+            "parents": [
+                "QHE",
+                "TDV",
+                "WVL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nnb",
+                        [
+                            "gnk",
+                            "qhe"
+                        ],
+                        0.2716
+                    ],
+                    [
+                        "~nnb",
+                        [
+                            "gnk",
+                            "qhe"
+                        ],
+                        0.7284
+                    ],
+                    [
+                        "nnb",
+                        [
+                            "gnk",
+                            "~qhe"
+                        ],
+                        0.7444
+                    ],
+                    [
+                        "~nnb",
+                        [
+                            "gnk",
+                            "~qhe"
+                        ],
+                        0.2556
+                    ],
+                    [
+                        "nnb",
+                        [
+                            "~gnk",
+                            "qhe"
+                        ],
+                        0.8693
+                    ],
+                    [
+                        "~nnb",
+                        [
+                            "~gnk",
+                            "qhe"
+                        ],
+                        0.1307
+                    ],
+                    [
+                        "nnb",
+                        [
+                            "~gnk",
+                            "~qhe"
+                        ],
+                        0.3388
+                    ],
+                    [
+                        "~nnb",
+                        [
+                            "~gnk",
+                            "~qhe"
+                        ],
+                        0.6612
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NNB",
+            "outcomes": [
+                "nnb",
+                "~nnb"
+            ],
+            "parents": [
+                "GNK",
+                "QHE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gyg",
+                        [],
+                        0.8233
+                    ],
+                    [
+                        "~gyg",
+                        [],
+                        0.1767
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GYG",
+            "outcomes": [
+                "gyg",
+                "~gyg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fwd",
+                        [
+                            "wxo"
+                        ],
+                        0.2504
+                    ],
+                    [
+                        "~fwd",
+                        [
+                            "wxo"
+                        ],
+                        0.7496
+                    ],
+                    [
+                        "fwd",
+                        [
+                            "~wxo"
+                        ],
+                        0.9234
+                    ],
+                    [
+                        "~fwd",
+                        [
+                            "~wxo"
+                        ],
+                        0.0766
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FWD",
+            "outcomes": [
+                "fwd",
+                "~fwd"
+            ],
+            "parents": [
+                "WXO"
+            ]
+        }
+    ]
+}
