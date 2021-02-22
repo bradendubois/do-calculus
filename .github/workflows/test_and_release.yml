@@ -9,16 +9,16 @@ on:
 
 jobs:
   test:
-    #- ubuntu-latest
-    #- ubuntu-18.04
-    #- ubuntu-16.04
-    #- macos-latest
-    #- windows-latest
 
     strategy:
       matrix:
-        os: [ ubuntu-latest, ubuntu-18.04 ]
         python-version: [ 3.8, 3.9 ]
+        os:
+        - ubuntu-latest
+        - ubuntu-18.04
+        - ubuntu-16.04
+        - macos-latest
+        - windows-latest
 
     runs-on: ${{ matrix.os }}
 
