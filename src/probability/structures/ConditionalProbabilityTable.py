@@ -6,8 +6,8 @@
 #                                                       #
 #########################################################
 
-import numpy as np      # Used in table->str formatting
-import math             # Used in table->str formatting
+import numpy as np              # Used in table->str formatting
+from math import floor, ceil    # Used in table->str formatting
 
 from src.config.config_manager import access
 from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
@@ -78,8 +78,8 @@ class ConditionalProbabilityTable:
             widest_element = max([len(cell) for cell in table[:, column_index]])
             for row_index in range(1 + len(self.table_rows)):
                 cell_value = table[row_index][column_index]
-                l_padding = math.ceil(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
-                r_padding = math.floor(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
+                l_padding = ceil(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
+                r_padding = floor(((widest_element - len(cell_value)) / 2)) * " " + " " * self.padding
                 table[row_index][column_index] = l_padding + cell_value + r_padding
 
         # Convert to fancy string

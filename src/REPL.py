@@ -1,4 +1,4 @@
-import json
+from json import load
 from os import path, listdir
 
 from src.api.backdoor_paths import api_backdoor_paths_parse
@@ -78,7 +78,7 @@ def run_repl(graph_location="src/graphs/full"):
                 "File: {} does not exist!".format(s)
 
             with open(full_path) as f:
-                api.load_model(json.load(f))
+                api.load_model(load(f))
             continue
 
         # Quit / Close

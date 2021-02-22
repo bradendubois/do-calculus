@@ -14,11 +14,12 @@ from yaml import safe_load as yaml_load
 
 from os import path
 
-from ..probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from ..probability.structures.Graph import Graph
-from ..probability.structures.VariableStructures import *
+from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from src.probability.structures.Graph import Graph
+from src.probability.structures.VariableStructures import *
 
 
+# TODO - refactor out string/dict interpretation, remove otherwise
 def parse_graph_file_data(filename: str or dict) -> dict:
     """
     Load, read, and parse a graph file for use in Causal Graphs, etc.

@@ -207,7 +207,7 @@ class Graph:
         return self.topological_variable_sort(variables)[::-1]
 
 
-def to_label(item: str or Variable or Outcome or Intervention) -> str:
+def to_label(item: CG_Types) -> str:
     """
     Convert a variable to its string name, if not already provided as such
     @param item: The item to convert, either a string (done) or some Variable

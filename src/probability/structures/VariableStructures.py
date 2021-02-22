@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-import re       # Used to parse a line of text into respective Outcomes and Interventions
+from re import findall, sub    # Used to parse a line of text into respective Outcomes and Interventions
 
 
 class Outcome:
@@ -110,14 +110,14 @@ def parse_outcomes_and_interventions(line: str) -> set:
     @return: A list, of Outcomes and/or Interventions
     """
     # "do(X=x)", "do(X=x, Y=y)", "do(X-x), do(Y=y)" are all valid ways to write interventions
-    interventions_preprocessed = re.findall(r'do\([^do]*\)', line)
+    interventions_preprocessed = findall(r'do\([^do]*\)', line)
     interventions_preprocessed = [item.strip("do(), ") for item in interventions_preprocessed]
     interventions = []
     for string in interventions_preprocessed:
         interventions.extend([item.strip(", ") for item in string.split(", ")])
 
     # Remove all the interventions, leaving only specific Outcomes
-    outcomes_preprocessed = re.sub(r'do\([^do]*\)', '', line).strip(", ").split(",")
+    outcomes_preprocessed = sub(r'do\([^do]*\)', '', line).strip(", ").split(",")
     outcomes_preprocessed = [item.strip(", ") for item in outcomes_preprocessed]
     outcomes = [string for string in outcomes_preprocessed if string]
 

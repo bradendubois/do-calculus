@@ -14,13 +14,10 @@ from src.config.config_manager import access
 from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.Graph import Graph
 from src.probability.structures.Probability_Engine import ProbabilityEngine
-from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
+from src.probability.structures.VariableStructures import Outcome, Intervention
 
 from src.util.OutputLogger import OutputLogger
 from src.util.helpers import p_str
-
-# Union all Variable types with string for functions that can take any of these
-CG_Types = str or Variable or Outcome or Intervention
 
 
 class CausalGraph:
