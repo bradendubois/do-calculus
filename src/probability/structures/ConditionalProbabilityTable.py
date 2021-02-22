@@ -89,17 +89,6 @@ class ConditionalProbabilityTable:
 
         return top_bottom_wrap + "\n" + "\n".join(string_list) + "\n" + top_bottom_wrap
 
-    def __eq__(self, other) -> bool:
-        """
-        Equality builtin for a ConditionalProbabilityTable
-        @param other: Another ConditionalProbabilityTable to compare to
-        @return:
-        """
-        if isinstance(other, ConditionalProbabilityTable):
-            return self.variable == other.variable and set(self.given) == set(other.given)
-        else:
-            return False
-
     def probability_lookup(self, outcome: Outcome or Intervention, given: list) -> float:
         """
         Directly lookup the probability for the row corresponding to the queried outcome and given data
