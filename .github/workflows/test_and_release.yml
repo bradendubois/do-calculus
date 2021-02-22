@@ -45,12 +45,8 @@ jobs:
       run: |
         coverage run -m pytest
 
-  report-coverage:
-    runs-on: [ ubuntu-latest ]
-    needs: test
-    steps:
-      - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
+    - name: Report Coverage w/Coveralls
+      uses: AndreMiras/coveralls-python-action@develop
 
   release:
     runs-on: [ ubuntu-latest ]
