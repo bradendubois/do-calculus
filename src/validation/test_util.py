@@ -1,13 +1,6 @@
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+GREEN = '\033[92m'
+FAIL = '\033[91m'
+END = '\033[0m'
 
 
 def print_test_result(success: bool, msg: str):
@@ -16,5 +9,5 @@ def print_test_result(success: bool, msg: str):
     @param success: bool; True if the test was successful, False otherwise
     @param msg: string; Any arbitrary message returned by the test
     """
-    color = bcolors.OKGREEN if success else bcolors.FAIL
-    print(f"[{color}{'OK' if success else 'ERROR'}{bcolors.ENDC}]: {msg}")
+    color = GREEN if success else FAIL
+    print(f"[{color}{'OK' if success else 'ERROR'}{END}]: {msg}")
