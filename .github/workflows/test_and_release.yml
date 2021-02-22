@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
+        uses: AndreMiras/coveralls-python-action@develop
 
   release:
     runs-on: [ ubuntu-latest ]
