@@ -1,0 +1,426 @@
+{
+    "latent-model": true,
+    "name": "m123_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nqj",
+                        [],
+                        0.2967
+                    ],
+                    [
+                        "~nqj",
+                        [],
+                        0.7033
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "NQJ",
+            "outcomes": [
+                "nqj",
+                "~nqj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "loq",
+                        [
+                            "vym",
+                            "wgm"
+                        ],
+                        0.7537
+                    ],
+                    [
+                        "~loq",
+                        [
+                            "vym",
+                            "wgm"
+                        ],
+                        0.2463
+                    ],
+                    [
+                        "loq",
+                        [
+                            "vym",
+                            "~wgm"
+                        ],
+                        0.0731
+                    ],
+                    [
+                        "~loq",
+                        [
+                            "vym",
+                            "~wgm"
+                        ],
+                        0.9269
+                    ],
+                    [
+                        "loq",
+                        [
+                            "~vym",
+                            "wgm"
+                        ],
+                        0.0955
+                    ],
+                    [
+                        "~loq",
+                        [
+                            "~vym",
+                            "wgm"
+                        ],
+                        0.9045
+                    ],
+                    [
+                        "loq",
+                        [
+                            "~vym",
+                            "~wgm"
+                        ],
+                        0.6884
+                    ],
+                    [
+                        "~loq",
+                        [
+                            "~vym",
+                            "~wgm"
+                        ],
+                        0.3116
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LOQ",
+            "outcomes": [
+                "loq",
+                "~loq"
+            ],
+            "parents": [
+                "VYM",
+                "WGM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "abl",
+                        [
+                            "suh"
+                        ],
+                        0.6026
+                    ],
+                    [
+                        "~abl",
+                        [
+                            "suh"
+                        ],
+                        0.3974
+                    ],
+                    [
+                        "abl",
+                        [
+                            "~suh"
+                        ],
+                        0.9473
+                    ],
+                    [
+                        "~abl",
+                        [
+                            "~suh"
+                        ],
+                        0.0527
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ABL",
+            "outcomes": [
+                "abl",
+                "~abl"
+            ],
+            "parents": [
+                "SUH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fhx",
+                        [
+                            "aop"
+                        ],
+                        0.653
+                    ],
+                    [
+                        "~fhx",
+                        [
+                            "aop"
+                        ],
+                        0.347
+                    ],
+                    [
+                        "fhx",
+                        [
+                            "~aop"
+                        ],
+                        0.9422
+                    ],
+                    [
+                        "~fhx",
+                        [
+                            "~aop"
+                        ],
+                        0.0578
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FHX",
+            "outcomes": [
+                "fhx",
+                "~fhx"
+            ],
+            "parents": [
+                "AOP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wgm",
+                        [
+                            "abl",
+                            "suh"
+                        ],
+                        0.3215
+                    ],
+                    [
+                        "~wgm",
+                        [
+                            "abl",
+                            "suh"
+                        ],
+                        0.6785
+                    ],
+                    [
+                        "wgm",
+                        [
+                            "abl",
+                            "~suh"
+                        ],
+                        0.1363
+                    ],
+                    [
+                        "~wgm",
+                        [
+                            "abl",
+                            "~suh"
+                        ],
+                        0.8637
+                    ],
+                    [
+                        "wgm",
+                        [
+                            "~abl",
+                            "suh"
+                        ],
+                        0.2643
+                    ],
+                    [
+                        "~wgm",
+                        [
+                            "~abl",
+                            "suh"
+                        ],
+                        0.7357
+                    ],
+                    [
+                        "wgm",
+                        [
+                            "~abl",
+                            "~suh"
+                        ],
+                        0.4439
+                    ],
+                    [
+                        "~wgm",
+                        [
+                            "~abl",
+                            "~suh"
+                        ],
+                        0.5561
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WGM",
+            "outcomes": [
+                "wgm",
+                "~wgm"
+            ],
+            "parents": [
+                "ABL",
+                "SUH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "suh",
+                        [],
+                        0.4798
+                    ],
+                    [
+                        "~suh",
+                        [],
+                        0.5202
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SUH",
+            "outcomes": [
+                "suh",
+                "~suh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vym",
+                        [],
+                        0.5599
+                    ],
+                    [
+                        "~vym",
+                        [],
+                        0.4401
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VYM",
+            "outcomes": [
+                "vym",
+                "~vym"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sid",
+                        [
+                            "nqj",
+                            "vym"
+                        ],
+                        0.6619
+                    ],
+                    [
+                        "~sid",
+                        [
+                            "nqj",
+                            "vym"
+                        ],
+                        0.3381
+                    ],
+                    [
+                        "sid",
+                        [
+                            "nqj",
+                            "~vym"
+                        ],
+                        0.4035
+                    ],
+                    [
+                        "~sid",
+                        [
+                            "nqj",
+                            "~vym"
+                        ],
+                        0.5965
+                    ],
+                    [
+                        "sid",
+                        [
+                            "~nqj",
+                            "vym"
+                        ],
+                        0.665
+                    ],
+                    [
+                        "~sid",
+                        [
+                            "~nqj",
+                            "vym"
+                        ],
+                        0.335
+                    ],
+                    [
+                        "sid",
+                        [
+                            "~nqj",
+                            "~vym"
+                        ],
+                        0.8199
+                    ],
+                    [
+                        "~sid",
+                        [
+                            "~nqj",
+                            "~vym"
+                        ],
+                        0.1801
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SID",
+            "outcomes": [
+                "sid",
+                "~sid"
+            ],
+            "parents": [
+                "NQJ",
+                "VYM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aop",
+                        [],
+                        0.3119
+                    ],
+                    [
+                        "~aop",
+                        [],
+                        0.6881
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "AOP",
+            "outcomes": [
+                "aop",
+                "~aop"
+            ],
+            "parents": []
+        }
+    ]
+}

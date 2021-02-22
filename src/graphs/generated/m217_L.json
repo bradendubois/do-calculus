@@ -1,0 +1,629 @@
+{
+    "latent-model": true,
+    "name": "m217_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zjb",
+                        [],
+                        0.3836
+                    ],
+                    [
+                        "~zjb",
+                        [],
+                        0.6164
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZJB",
+            "outcomes": [
+                "zjb",
+                "~zjb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sfh",
+                        [
+                            "qjy",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.7563
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "qjy",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.2437
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "qjy",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.1866
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "qjy",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.8134
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "qjy",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.2781
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "qjy",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.7219
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "qjy",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.4334
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "qjy",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.5666
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "~qjy",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.6018
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "~qjy",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.3982
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "~qjy",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.0873
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "~qjy",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.9127
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "~qjy",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.8232
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "~qjy",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.1768
+                    ],
+                    [
+                        "sfh",
+                        [
+                            "~qjy",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.3847
+                    ],
+                    [
+                        "~sfh",
+                        [
+                            "~qjy",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.6153
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SFH",
+            "outcomes": [
+                "sfh",
+                "~sfh"
+            ],
+            "parents": [
+                "QJY",
+                "TRL",
+                "ZJB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qjy",
+                        [],
+                        0.3237
+                    ],
+                    [
+                        "~qjy",
+                        [],
+                        0.6763
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "QJY",
+            "outcomes": [
+                "qjy",
+                "~qjy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "trl",
+                        [],
+                        0.6903
+                    ],
+                    [
+                        "~trl",
+                        [],
+                        0.3097
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TRL",
+            "outcomes": [
+                "trl",
+                "~trl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "apa",
+                        [],
+                        0.7745
+                    ],
+                    [
+                        "~apa",
+                        [],
+                        0.2255
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "APA",
+            "outcomes": [
+                "apa",
+                "~apa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nzc",
+                        [
+                            "uqt",
+                            "zjb"
+                        ],
+                        0.2937
+                    ],
+                    [
+                        "~nzc",
+                        [
+                            "uqt",
+                            "zjb"
+                        ],
+                        0.7063
+                    ],
+                    [
+                        "nzc",
+                        [
+                            "uqt",
+                            "~zjb"
+                        ],
+                        0.196
+                    ],
+                    [
+                        "~nzc",
+                        [
+                            "uqt",
+                            "~zjb"
+                        ],
+                        0.804
+                    ],
+                    [
+                        "nzc",
+                        [
+                            "~uqt",
+                            "zjb"
+                        ],
+                        0.0738
+                    ],
+                    [
+                        "~nzc",
+                        [
+                            "~uqt",
+                            "zjb"
+                        ],
+                        0.9262
+                    ],
+                    [
+                        "nzc",
+                        [
+                            "~uqt",
+                            "~zjb"
+                        ],
+                        0.8272
+                    ],
+                    [
+                        "~nzc",
+                        [
+                            "~uqt",
+                            "~zjb"
+                        ],
+                        0.1728
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NZC",
+            "outcomes": [
+                "nzc",
+                "~nzc"
+            ],
+            "parents": [
+                "UQT",
+                "ZJB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ata",
+                        [
+                            "gcw",
+                            "qjy"
+                        ],
+                        0.0278
+                    ],
+                    [
+                        "~ata",
+                        [
+                            "gcw",
+                            "qjy"
+                        ],
+                        0.9722
+                    ],
+                    [
+                        "ata",
+                        [
+                            "gcw",
+                            "~qjy"
+                        ],
+                        0.07
+                    ],
+                    [
+                        "~ata",
+                        [
+                            "gcw",
+                            "~qjy"
+                        ],
+                        0.93
+                    ],
+                    [
+                        "ata",
+                        [
+                            "~gcw",
+                            "qjy"
+                        ],
+                        0.0309
+                    ],
+                    [
+                        "~ata",
+                        [
+                            "~gcw",
+                            "qjy"
+                        ],
+                        0.9691
+                    ],
+                    [
+                        "ata",
+                        [
+                            "~gcw",
+                            "~qjy"
+                        ],
+                        0.7257
+                    ],
+                    [
+                        "~ata",
+                        [
+                            "~gcw",
+                            "~qjy"
+                        ],
+                        0.2743
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ATA",
+            "outcomes": [
+                "ata",
+                "~ata"
+            ],
+            "parents": [
+                "GCW",
+                "QJY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gcw",
+                        [],
+                        0.4365
+                    ],
+                    [
+                        "~gcw",
+                        [],
+                        0.5635
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GCW",
+            "outcomes": [
+                "gcw",
+                "~gcw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uqt",
+                        [],
+                        0.5303
+                    ],
+                    [
+                        "~uqt",
+                        [],
+                        0.4697
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UQT",
+            "outcomes": [
+                "uqt",
+                "~uqt"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pqg",
+                        [
+                            "gcw",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.4162
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "gcw",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.5838
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "gcw",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.1659
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "gcw",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.8341
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "gcw",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.1915
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "gcw",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.8085
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "gcw",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.2026
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "gcw",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.7974
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "~gcw",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.8866
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "~gcw",
+                            "trl",
+                            "zjb"
+                        ],
+                        0.1134
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "~gcw",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.0212
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "~gcw",
+                            "trl",
+                            "~zjb"
+                        ],
+                        0.9788
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "~gcw",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.1351
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "~gcw",
+                            "~trl",
+                            "zjb"
+                        ],
+                        0.8649
+                    ],
+                    [
+                        "pqg",
+                        [
+                            "~gcw",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.7841
+                    ],
+                    [
+                        "~pqg",
+                        [
+                            "~gcw",
+                            "~trl",
+                            "~zjb"
+                        ],
+                        0.2159
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PQG",
+            "outcomes": [
+                "pqg",
+                "~pqg"
+            ],
+            "parents": [
+                "GCW",
+                "TRL",
+                "ZJB"
+            ]
+        }
+    ]
+}

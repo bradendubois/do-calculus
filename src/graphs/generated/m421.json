@@ -1,0 +1,728 @@
+{
+    "latent-model": false,
+    "name": "m421",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mqs",
+                        [
+                            "ovh",
+                            "puk",
+                            "sco"
+                        ],
+                        0.6287
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "ovh",
+                            "puk",
+                            "sco"
+                        ],
+                        0.3713
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "ovh",
+                            "puk",
+                            "~sco"
+                        ],
+                        0.9224
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "ovh",
+                            "puk",
+                            "~sco"
+                        ],
+                        0.0776
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "ovh",
+                            "~puk",
+                            "sco"
+                        ],
+                        0.3048
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "ovh",
+                            "~puk",
+                            "sco"
+                        ],
+                        0.6952
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "ovh",
+                            "~puk",
+                            "~sco"
+                        ],
+                        0.5778
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "ovh",
+                            "~puk",
+                            "~sco"
+                        ],
+                        0.4222
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "~ovh",
+                            "puk",
+                            "sco"
+                        ],
+                        0.0695
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "~ovh",
+                            "puk",
+                            "sco"
+                        ],
+                        0.9305
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "~ovh",
+                            "puk",
+                            "~sco"
+                        ],
+                        0.6693
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "~ovh",
+                            "puk",
+                            "~sco"
+                        ],
+                        0.3307
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "~ovh",
+                            "~puk",
+                            "sco"
+                        ],
+                        0.5039
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "~ovh",
+                            "~puk",
+                            "sco"
+                        ],
+                        0.4961
+                    ],
+                    [
+                        "mqs",
+                        [
+                            "~ovh",
+                            "~puk",
+                            "~sco"
+                        ],
+                        0.6831
+                    ],
+                    [
+                        "~mqs",
+                        [
+                            "~ovh",
+                            "~puk",
+                            "~sco"
+                        ],
+                        0.3169
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MQS",
+            "outcomes": [
+                "mqs",
+                "~mqs"
+            ],
+            "parents": [
+                "OVH",
+                "PUK",
+                "SCO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yvd",
+                        [
+                            "wfm",
+                            "yve"
+                        ],
+                        0.2942
+                    ],
+                    [
+                        "~yvd",
+                        [
+                            "wfm",
+                            "yve"
+                        ],
+                        0.7058
+                    ],
+                    [
+                        "yvd",
+                        [
+                            "wfm",
+                            "~yve"
+                        ],
+                        0.6104
+                    ],
+                    [
+                        "~yvd",
+                        [
+                            "wfm",
+                            "~yve"
+                        ],
+                        0.3896
+                    ],
+                    [
+                        "yvd",
+                        [
+                            "~wfm",
+                            "yve"
+                        ],
+                        0.2457
+                    ],
+                    [
+                        "~yvd",
+                        [
+                            "~wfm",
+                            "yve"
+                        ],
+                        0.7543
+                    ],
+                    [
+                        "yvd",
+                        [
+                            "~wfm",
+                            "~yve"
+                        ],
+                        0.1725
+                    ],
+                    [
+                        "~yvd",
+                        [
+                            "~wfm",
+                            "~yve"
+                        ],
+                        0.8275
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YVD",
+            "outcomes": [
+                "yvd",
+                "~yvd"
+            ],
+            "parents": [
+                "WFM",
+                "YVE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fny",
+                        [
+                            "ovh"
+                        ],
+                        0.3663
+                    ],
+                    [
+                        "~fny",
+                        [
+                            "ovh"
+                        ],
+                        0.6337
+                    ],
+                    [
+                        "fny",
+                        [
+                            "~ovh"
+                        ],
+                        0.0522
+                    ],
+                    [
+                        "~fny",
+                        [
+                            "~ovh"
+                        ],
+                        0.9478
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FNY",
+            "outcomes": [
+                "fny",
+                "~fny"
+            ],
+            "parents": [
+                "OVH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ovh",
+                        [
+                            "wfm",
+                            "yve"
+                        ],
+                        0.5057
+                    ],
+                    [
+                        "~ovh",
+                        [
+                            "wfm",
+                            "yve"
+                        ],
+                        0.4943
+                    ],
+                    [
+                        "ovh",
+                        [
+                            "wfm",
+                            "~yve"
+                        ],
+                        0.0193
+                    ],
+                    [
+                        "~ovh",
+                        [
+                            "wfm",
+                            "~yve"
+                        ],
+                        0.9807
+                    ],
+                    [
+                        "ovh",
+                        [
+                            "~wfm",
+                            "yve"
+                        ],
+                        0.4038
+                    ],
+                    [
+                        "~ovh",
+                        [
+                            "~wfm",
+                            "yve"
+                        ],
+                        0.5962
+                    ],
+                    [
+                        "ovh",
+                        [
+                            "~wfm",
+                            "~yve"
+                        ],
+                        0.9704
+                    ],
+                    [
+                        "~ovh",
+                        [
+                            "~wfm",
+                            "~yve"
+                        ],
+                        0.0296
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OVH",
+            "outcomes": [
+                "ovh",
+                "~ovh"
+            ],
+            "parents": [
+                "WFM",
+                "YVE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ubs",
+                        [
+                            "ovh",
+                            "yve"
+                        ],
+                        0.5255
+                    ],
+                    [
+                        "~ubs",
+                        [
+                            "ovh",
+                            "yve"
+                        ],
+                        0.4745
+                    ],
+                    [
+                        "ubs",
+                        [
+                            "ovh",
+                            "~yve"
+                        ],
+                        0.6038
+                    ],
+                    [
+                        "~ubs",
+                        [
+                            "ovh",
+                            "~yve"
+                        ],
+                        0.3962
+                    ],
+                    [
+                        "ubs",
+                        [
+                            "~ovh",
+                            "yve"
+                        ],
+                        0.4748
+                    ],
+                    [
+                        "~ubs",
+                        [
+                            "~ovh",
+                            "yve"
+                        ],
+                        0.5252
+                    ],
+                    [
+                        "ubs",
+                        [
+                            "~ovh",
+                            "~yve"
+                        ],
+                        0.9504
+                    ],
+                    [
+                        "~ubs",
+                        [
+                            "~ovh",
+                            "~yve"
+                        ],
+                        0.0496
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UBS",
+            "outcomes": [
+                "ubs",
+                "~ubs"
+            ],
+            "parents": [
+                "OVH",
+                "YVE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jvf",
+                        [
+                            "puk",
+                            "yvd"
+                        ],
+                        0.9782
+                    ],
+                    [
+                        "~jvf",
+                        [
+                            "puk",
+                            "yvd"
+                        ],
+                        0.0218
+                    ],
+                    [
+                        "jvf",
+                        [
+                            "puk",
+                            "~yvd"
+                        ],
+                        0.3177
+                    ],
+                    [
+                        "~jvf",
+                        [
+                            "puk",
+                            "~yvd"
+                        ],
+                        0.6823
+                    ],
+                    [
+                        "jvf",
+                        [
+                            "~puk",
+                            "yvd"
+                        ],
+                        0.7997
+                    ],
+                    [
+                        "~jvf",
+                        [
+                            "~puk",
+                            "yvd"
+                        ],
+                        0.2003
+                    ],
+                    [
+                        "jvf",
+                        [
+                            "~puk",
+                            "~yvd"
+                        ],
+                        0.4999
+                    ],
+                    [
+                        "~jvf",
+                        [
+                            "~puk",
+                            "~yvd"
+                        ],
+                        0.5001
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JVF",
+            "outcomes": [
+                "jvf",
+                "~jvf"
+            ],
+            "parents": [
+                "PUK",
+                "YVD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "puk",
+                        [
+                            "sco"
+                        ],
+                        0.7057
+                    ],
+                    [
+                        "~puk",
+                        [
+                            "sco"
+                        ],
+                        0.2943
+                    ],
+                    [
+                        "puk",
+                        [
+                            "~sco"
+                        ],
+                        0.9377
+                    ],
+                    [
+                        "~puk",
+                        [
+                            "~sco"
+                        ],
+                        0.0623
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PUK",
+            "outcomes": [
+                "puk",
+                "~puk"
+            ],
+            "parents": [
+                "SCO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wfm",
+                        [],
+                        0.2843
+                    ],
+                    [
+                        "~wfm",
+                        [],
+                        0.7157
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WFM",
+            "outcomes": [
+                "wfm",
+                "~wfm"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "sco",
+                        [],
+                        0.0679
+                    ],
+                    [
+                        "~sco",
+                        [],
+                        0.9321
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SCO",
+            "outcomes": [
+                "sco",
+                "~sco"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ywi",
+                        [
+                            "ovh"
+                        ],
+                        0.1245
+                    ],
+                    [
+                        "~ywi",
+                        [
+                            "ovh"
+                        ],
+                        0.8755
+                    ],
+                    [
+                        "ywi",
+                        [
+                            "~ovh"
+                        ],
+                        0.5651
+                    ],
+                    [
+                        "~ywi",
+                        [
+                            "~ovh"
+                        ],
+                        0.4349
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YWI",
+            "outcomes": [
+                "ywi",
+                "~ywi"
+            ],
+            "parents": [
+                "OVH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yve",
+                        [],
+                        0.0864
+                    ],
+                    [
+                        "~yve",
+                        [],
+                        0.9136
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YVE",
+            "outcomes": [
+                "yve",
+                "~yve"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qro",
+                        [
+                            "yvd"
+                        ],
+                        0.62
+                    ],
+                    [
+                        "~qro",
+                        [
+                            "yvd"
+                        ],
+                        0.38
+                    ],
+                    [
+                        "qro",
+                        [
+                            "~yvd"
+                        ],
+                        0.0303
+                    ],
+                    [
+                        "~qro",
+                        [
+                            "~yvd"
+                        ],
+                        0.9697
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QRO",
+            "outcomes": [
+                "qro",
+                "~qro"
+            ],
+            "parents": [
+                "YVD"
+            ]
+        }
+    ]
+}

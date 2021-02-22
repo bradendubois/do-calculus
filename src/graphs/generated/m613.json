@@ -1,0 +1,561 @@
+{
+    "latent-model": false,
+    "name": "m613",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hoe",
+                        [],
+                        0.3194
+                    ],
+                    [
+                        "~hoe",
+                        [],
+                        0.6806
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HOE",
+            "outcomes": [
+                "hoe",
+                "~hoe"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bqt",
+                        [
+                            "lju",
+                            "nkm"
+                        ],
+                        0.7342
+                    ],
+                    [
+                        "~bqt",
+                        [
+                            "lju",
+                            "nkm"
+                        ],
+                        0.2658
+                    ],
+                    [
+                        "bqt",
+                        [
+                            "lju",
+                            "~nkm"
+                        ],
+                        0.6012
+                    ],
+                    [
+                        "~bqt",
+                        [
+                            "lju",
+                            "~nkm"
+                        ],
+                        0.3988
+                    ],
+                    [
+                        "bqt",
+                        [
+                            "~lju",
+                            "nkm"
+                        ],
+                        0.2119
+                    ],
+                    [
+                        "~bqt",
+                        [
+                            "~lju",
+                            "nkm"
+                        ],
+                        0.7881
+                    ],
+                    [
+                        "bqt",
+                        [
+                            "~lju",
+                            "~nkm"
+                        ],
+                        0.8663
+                    ],
+                    [
+                        "~bqt",
+                        [
+                            "~lju",
+                            "~nkm"
+                        ],
+                        0.1337
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BQT",
+            "outcomes": [
+                "bqt",
+                "~bqt"
+            ],
+            "parents": [
+                "LJU",
+                "NKM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wqj",
+                        [],
+                        0.5452
+                    ],
+                    [
+                        "~wqj",
+                        [],
+                        0.4548
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WQJ",
+            "outcomes": [
+                "wqj",
+                "~wqj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iyd",
+                        [
+                            "rys"
+                        ],
+                        0.8932
+                    ],
+                    [
+                        "~iyd",
+                        [
+                            "rys"
+                        ],
+                        0.1068
+                    ],
+                    [
+                        "iyd",
+                        [
+                            "~rys"
+                        ],
+                        0.158
+                    ],
+                    [
+                        "~iyd",
+                        [
+                            "~rys"
+                        ],
+                        0.842
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IYD",
+            "outcomes": [
+                "iyd",
+                "~iyd"
+            ],
+            "parents": [
+                "RYS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nkm",
+                        [
+                            "lju",
+                            "zha"
+                        ],
+                        0.5706
+                    ],
+                    [
+                        "~nkm",
+                        [
+                            "lju",
+                            "zha"
+                        ],
+                        0.4294
+                    ],
+                    [
+                        "nkm",
+                        [
+                            "lju",
+                            "~zha"
+                        ],
+                        0.7007
+                    ],
+                    [
+                        "~nkm",
+                        [
+                            "lju",
+                            "~zha"
+                        ],
+                        0.2993
+                    ],
+                    [
+                        "nkm",
+                        [
+                            "~lju",
+                            "zha"
+                        ],
+                        0.4139
+                    ],
+                    [
+                        "~nkm",
+                        [
+                            "~lju",
+                            "zha"
+                        ],
+                        0.5861
+                    ],
+                    [
+                        "nkm",
+                        [
+                            "~lju",
+                            "~zha"
+                        ],
+                        0.0729
+                    ],
+                    [
+                        "~nkm",
+                        [
+                            "~lju",
+                            "~zha"
+                        ],
+                        0.9271
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NKM",
+            "outcomes": [
+                "nkm",
+                "~nkm"
+            ],
+            "parents": [
+                "LJU",
+                "ZHA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "srs",
+                        [
+                            "bqt",
+                            "iyd"
+                        ],
+                        0.1453
+                    ],
+                    [
+                        "~srs",
+                        [
+                            "bqt",
+                            "iyd"
+                        ],
+                        0.8547
+                    ],
+                    [
+                        "srs",
+                        [
+                            "bqt",
+                            "~iyd"
+                        ],
+                        0.7612
+                    ],
+                    [
+                        "~srs",
+                        [
+                            "bqt",
+                            "~iyd"
+                        ],
+                        0.2388
+                    ],
+                    [
+                        "srs",
+                        [
+                            "~bqt",
+                            "iyd"
+                        ],
+                        0.2306
+                    ],
+                    [
+                        "~srs",
+                        [
+                            "~bqt",
+                            "iyd"
+                        ],
+                        0.7694
+                    ],
+                    [
+                        "srs",
+                        [
+                            "~bqt",
+                            "~iyd"
+                        ],
+                        0.7018
+                    ],
+                    [
+                        "~srs",
+                        [
+                            "~bqt",
+                            "~iyd"
+                        ],
+                        0.2982
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SRS",
+            "outcomes": [
+                "srs",
+                "~srs"
+            ],
+            "parents": [
+                "BQT",
+                "IYD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xnx",
+                        [
+                            "nkm",
+                            "wqj"
+                        ],
+                        0.3969
+                    ],
+                    [
+                        "~xnx",
+                        [
+                            "nkm",
+                            "wqj"
+                        ],
+                        0.6031
+                    ],
+                    [
+                        "xnx",
+                        [
+                            "nkm",
+                            "~wqj"
+                        ],
+                        0.2524
+                    ],
+                    [
+                        "~xnx",
+                        [
+                            "nkm",
+                            "~wqj"
+                        ],
+                        0.7476
+                    ],
+                    [
+                        "xnx",
+                        [
+                            "~nkm",
+                            "wqj"
+                        ],
+                        0.9074
+                    ],
+                    [
+                        "~xnx",
+                        [
+                            "~nkm",
+                            "wqj"
+                        ],
+                        0.0926
+                    ],
+                    [
+                        "xnx",
+                        [
+                            "~nkm",
+                            "~wqj"
+                        ],
+                        0.6375
+                    ],
+                    [
+                        "~xnx",
+                        [
+                            "~nkm",
+                            "~wqj"
+                        ],
+                        0.3625
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XNX",
+            "outcomes": [
+                "xnx",
+                "~xnx"
+            ],
+            "parents": [
+                "NKM",
+                "WQJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zha",
+                        [
+                            "hoe",
+                            "iyd"
+                        ],
+                        0.6754
+                    ],
+                    [
+                        "~zha",
+                        [
+                            "hoe",
+                            "iyd"
+                        ],
+                        0.3246
+                    ],
+                    [
+                        "zha",
+                        [
+                            "hoe",
+                            "~iyd"
+                        ],
+                        0.4089
+                    ],
+                    [
+                        "~zha",
+                        [
+                            "hoe",
+                            "~iyd"
+                        ],
+                        0.5911
+                    ],
+                    [
+                        "zha",
+                        [
+                            "~hoe",
+                            "iyd"
+                        ],
+                        0.5644
+                    ],
+                    [
+                        "~zha",
+                        [
+                            "~hoe",
+                            "iyd"
+                        ],
+                        0.4356
+                    ],
+                    [
+                        "zha",
+                        [
+                            "~hoe",
+                            "~iyd"
+                        ],
+                        0.417
+                    ],
+                    [
+                        "~zha",
+                        [
+                            "~hoe",
+                            "~iyd"
+                        ],
+                        0.583
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZHA",
+            "outcomes": [
+                "zha",
+                "~zha"
+            ],
+            "parents": [
+                "HOE",
+                "IYD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lju",
+                        [
+                            "hoe"
+                        ],
+                        0.1343
+                    ],
+                    [
+                        "~lju",
+                        [
+                            "hoe"
+                        ],
+                        0.8657
+                    ],
+                    [
+                        "lju",
+                        [
+                            "~hoe"
+                        ],
+                        0.7492
+                    ],
+                    [
+                        "~lju",
+                        [
+                            "~hoe"
+                        ],
+                        0.2508
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LJU",
+            "outcomes": [
+                "lju",
+                "~lju"
+            ],
+            "parents": [
+                "HOE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rys",
+                        [],
+                        0.5844
+                    ],
+                    [
+                        "~rys",
+                        [],
+                        0.4156
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RYS",
+            "outcomes": [
+                "rys",
+                "~rys"
+            ],
+            "parents": []
+        }
+    ]
+}

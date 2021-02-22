@@ -1,0 +1,61 @@
+name: M-Game
+model:
+  A:
+    outcomes:
+    - a
+    - ~a
+    parents:
+    - X
+    table: [
+      [a, x, 0.3],
+      [a, ~x, 0.5],
+      [~a, x, 0.7],
+      [~a, ~x, 0.5]
+    ]
+  B:
+    outcomes:
+    - b
+    - ~b
+    parents:
+    - X
+    - Y
+    table: [
+      [b, x, y, 0.3],
+      [b, x, ~y, 0.6],
+      [b, ~x, y, 0.5],
+      [b, ~x, ~y, 0.8],
+      [~b, x, y, 0.7],
+      [~b, x, ~y, 0.4],
+      [~b, ~x, y, 0.5],
+      [~b, ~x, ~y, 0.2]
+    ]
+  C:
+    outcomes:
+    - c
+    - ~c
+    parents:
+    - Y
+    table: [
+      [c, y, 0.7],
+      [c, ~y, 0.25],
+      [~c, y, 0.3],
+      [~c, ~y, 0.75]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    parents: []
+    table: [
+      [x, 0.3],
+      [~x, 0.7]
+    ]
+  Y:
+    outcomes:
+    - y
+    - ~y
+    parents: []
+    table: [
+      [y, 0.2],
+      [~y, 0.8]
+    ]

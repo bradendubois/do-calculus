@@ -1,0 +1,500 @@
+{
+    "latent-model": true,
+    "name": "m729_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gfy",
+                        [
+                            "mbu",
+                            "tdj",
+                            "ydj"
+                        ],
+                        0.8359
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "mbu",
+                            "tdj",
+                            "ydj"
+                        ],
+                        0.1641
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "mbu",
+                            "tdj",
+                            "~ydj"
+                        ],
+                        0.6075
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "mbu",
+                            "tdj",
+                            "~ydj"
+                        ],
+                        0.3925
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "mbu",
+                            "~tdj",
+                            "ydj"
+                        ],
+                        0.5486
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "mbu",
+                            "~tdj",
+                            "ydj"
+                        ],
+                        0.4514
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "mbu",
+                            "~tdj",
+                            "~ydj"
+                        ],
+                        0.3174
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "mbu",
+                            "~tdj",
+                            "~ydj"
+                        ],
+                        0.6826
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "~mbu",
+                            "tdj",
+                            "ydj"
+                        ],
+                        0.9986
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "~mbu",
+                            "tdj",
+                            "ydj"
+                        ],
+                        0.0014
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "~mbu",
+                            "tdj",
+                            "~ydj"
+                        ],
+                        0.715
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "~mbu",
+                            "tdj",
+                            "~ydj"
+                        ],
+                        0.285
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "~mbu",
+                            "~tdj",
+                            "ydj"
+                        ],
+                        0.4322
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "~mbu",
+                            "~tdj",
+                            "ydj"
+                        ],
+                        0.5678
+                    ],
+                    [
+                        "gfy",
+                        [
+                            "~mbu",
+                            "~tdj",
+                            "~ydj"
+                        ],
+                        0.5187
+                    ],
+                    [
+                        "~gfy",
+                        [
+                            "~mbu",
+                            "~tdj",
+                            "~ydj"
+                        ],
+                        0.4813
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GFY",
+            "outcomes": [
+                "gfy",
+                "~gfy"
+            ],
+            "parents": [
+                "MBU",
+                "TDJ",
+                "YDJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ydj",
+                        [],
+                        0.9459
+                    ],
+                    [
+                        "~ydj",
+                        [],
+                        0.0541
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "YDJ",
+            "outcomes": [
+                "ydj",
+                "~ydj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ney",
+                        [
+                            "pqq",
+                            "ydj"
+                        ],
+                        0.2887
+                    ],
+                    [
+                        "~ney",
+                        [
+                            "pqq",
+                            "ydj"
+                        ],
+                        0.7113
+                    ],
+                    [
+                        "ney",
+                        [
+                            "pqq",
+                            "~ydj"
+                        ],
+                        0.9488
+                    ],
+                    [
+                        "~ney",
+                        [
+                            "pqq",
+                            "~ydj"
+                        ],
+                        0.0512
+                    ],
+                    [
+                        "ney",
+                        [
+                            "~pqq",
+                            "ydj"
+                        ],
+                        0.8757
+                    ],
+                    [
+                        "~ney",
+                        [
+                            "~pqq",
+                            "ydj"
+                        ],
+                        0.1243
+                    ],
+                    [
+                        "ney",
+                        [
+                            "~pqq",
+                            "~ydj"
+                        ],
+                        0.8954
+                    ],
+                    [
+                        "~ney",
+                        [
+                            "~pqq",
+                            "~ydj"
+                        ],
+                        0.1046
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NEY",
+            "outcomes": [
+                "ney",
+                "~ney"
+            ],
+            "parents": [
+                "PQQ",
+                "YDJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mbu",
+                        [],
+                        0.9404
+                    ],
+                    [
+                        "~mbu",
+                        [],
+                        0.0596
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MBU",
+            "outcomes": [
+                "mbu",
+                "~mbu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bzl",
+                        [
+                            "pqq",
+                            "ydj"
+                        ],
+                        0.1248
+                    ],
+                    [
+                        "~bzl",
+                        [
+                            "pqq",
+                            "ydj"
+                        ],
+                        0.8752
+                    ],
+                    [
+                        "bzl",
+                        [
+                            "pqq",
+                            "~ydj"
+                        ],
+                        0.8485
+                    ],
+                    [
+                        "~bzl",
+                        [
+                            "pqq",
+                            "~ydj"
+                        ],
+                        0.1515
+                    ],
+                    [
+                        "bzl",
+                        [
+                            "~pqq",
+                            "ydj"
+                        ],
+                        0.7115
+                    ],
+                    [
+                        "~bzl",
+                        [
+                            "~pqq",
+                            "ydj"
+                        ],
+                        0.2885
+                    ],
+                    [
+                        "bzl",
+                        [
+                            "~pqq",
+                            "~ydj"
+                        ],
+                        0.9065
+                    ],
+                    [
+                        "~bzl",
+                        [
+                            "~pqq",
+                            "~ydj"
+                        ],
+                        0.0935
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BZL",
+            "outcomes": [
+                "bzl",
+                "~bzl"
+            ],
+            "parents": [
+                "PQQ",
+                "YDJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tdj",
+                        [],
+                        0.7358
+                    ],
+                    [
+                        "~tdj",
+                        [],
+                        0.2642
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TDJ",
+            "outcomes": [
+                "tdj",
+                "~tdj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pqq",
+                        [],
+                        0.2827
+                    ],
+                    [
+                        "~pqq",
+                        [],
+                        0.7173
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PQQ",
+            "outcomes": [
+                "pqq",
+                "~pqq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vix",
+                        [
+                            "mbu",
+                            "tdj"
+                        ],
+                        0.5467
+                    ],
+                    [
+                        "~vix",
+                        [
+                            "mbu",
+                            "tdj"
+                        ],
+                        0.4533
+                    ],
+                    [
+                        "vix",
+                        [
+                            "mbu",
+                            "~tdj"
+                        ],
+                        0.6217
+                    ],
+                    [
+                        "~vix",
+                        [
+                            "mbu",
+                            "~tdj"
+                        ],
+                        0.3783
+                    ],
+                    [
+                        "vix",
+                        [
+                            "~mbu",
+                            "tdj"
+                        ],
+                        0.3298
+                    ],
+                    [
+                        "~vix",
+                        [
+                            "~mbu",
+                            "tdj"
+                        ],
+                        0.6702
+                    ],
+                    [
+                        "vix",
+                        [
+                            "~mbu",
+                            "~tdj"
+                        ],
+                        0.3697
+                    ],
+                    [
+                        "~vix",
+                        [
+                            "~mbu",
+                            "~tdj"
+                        ],
+                        0.6303
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VIX",
+            "outcomes": [
+                "vix",
+                "~vix"
+            ],
+            "parents": [
+                "MBU",
+                "TDJ"
+            ]
+        }
+    ]
+}

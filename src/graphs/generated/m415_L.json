@@ -1,0 +1,459 @@
+{
+    "latent-model": true,
+    "name": "m415_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tcn",
+                        [
+                            "cdv",
+                            "nse"
+                        ],
+                        0.1186
+                    ],
+                    [
+                        "~tcn",
+                        [
+                            "cdv",
+                            "nse"
+                        ],
+                        0.8814
+                    ],
+                    [
+                        "tcn",
+                        [
+                            "cdv",
+                            "~nse"
+                        ],
+                        0.2498
+                    ],
+                    [
+                        "~tcn",
+                        [
+                            "cdv",
+                            "~nse"
+                        ],
+                        0.7502
+                    ],
+                    [
+                        "tcn",
+                        [
+                            "~cdv",
+                            "nse"
+                        ],
+                        0.8165
+                    ],
+                    [
+                        "~tcn",
+                        [
+                            "~cdv",
+                            "nse"
+                        ],
+                        0.1835
+                    ],
+                    [
+                        "tcn",
+                        [
+                            "~cdv",
+                            "~nse"
+                        ],
+                        0.9851
+                    ],
+                    [
+                        "~tcn",
+                        [
+                            "~cdv",
+                            "~nse"
+                        ],
+                        0.0149
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TCN",
+            "outcomes": [
+                "tcn",
+                "~tcn"
+            ],
+            "parents": [
+                "CDV",
+                "NSE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cdv",
+                        [],
+                        0.8943
+                    ],
+                    [
+                        "~cdv",
+                        [],
+                        0.1057
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "CDV",
+            "outcomes": [
+                "cdv",
+                "~cdv"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nse",
+                        [
+                            "cdv",
+                            "hlz"
+                        ],
+                        0.1413
+                    ],
+                    [
+                        "~nse",
+                        [
+                            "cdv",
+                            "hlz"
+                        ],
+                        0.8587
+                    ],
+                    [
+                        "nse",
+                        [
+                            "cdv",
+                            "~hlz"
+                        ],
+                        0.5716
+                    ],
+                    [
+                        "~nse",
+                        [
+                            "cdv",
+                            "~hlz"
+                        ],
+                        0.4284
+                    ],
+                    [
+                        "nse",
+                        [
+                            "~cdv",
+                            "hlz"
+                        ],
+                        0.7075
+                    ],
+                    [
+                        "~nse",
+                        [
+                            "~cdv",
+                            "hlz"
+                        ],
+                        0.2925
+                    ],
+                    [
+                        "nse",
+                        [
+                            "~cdv",
+                            "~hlz"
+                        ],
+                        0.0277
+                    ],
+                    [
+                        "~nse",
+                        [
+                            "~cdv",
+                            "~hlz"
+                        ],
+                        0.9723
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NSE",
+            "outcomes": [
+                "nse",
+                "~nse"
+            ],
+            "parents": [
+                "CDV",
+                "HLZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vsd",
+                        [
+                            "cyc"
+                        ],
+                        0.707
+                    ],
+                    [
+                        "~vsd",
+                        [
+                            "cyc"
+                        ],
+                        0.293
+                    ],
+                    [
+                        "vsd",
+                        [
+                            "~cyc"
+                        ],
+                        0.4748
+                    ],
+                    [
+                        "~vsd",
+                        [
+                            "~cyc"
+                        ],
+                        0.5252
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VSD",
+            "outcomes": [
+                "vsd",
+                "~vsd"
+            ],
+            "parents": [
+                "CYC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gmr",
+                        [
+                            "hlz"
+                        ],
+                        0.8686
+                    ],
+                    [
+                        "~gmr",
+                        [
+                            "hlz"
+                        ],
+                        0.1314
+                    ],
+                    [
+                        "gmr",
+                        [
+                            "~hlz"
+                        ],
+                        0.5499
+                    ],
+                    [
+                        "~gmr",
+                        [
+                            "~hlz"
+                        ],
+                        0.4501
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GMR",
+            "outcomes": [
+                "gmr",
+                "~gmr"
+            ],
+            "parents": [
+                "HLZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yjw",
+                        [
+                            "hlz",
+                            "vsd"
+                        ],
+                        0.8315
+                    ],
+                    [
+                        "~yjw",
+                        [
+                            "hlz",
+                            "vsd"
+                        ],
+                        0.1685
+                    ],
+                    [
+                        "yjw",
+                        [
+                            "hlz",
+                            "~vsd"
+                        ],
+                        0.8963
+                    ],
+                    [
+                        "~yjw",
+                        [
+                            "hlz",
+                            "~vsd"
+                        ],
+                        0.1037
+                    ],
+                    [
+                        "yjw",
+                        [
+                            "~hlz",
+                            "vsd"
+                        ],
+                        0.9499
+                    ],
+                    [
+                        "~yjw",
+                        [
+                            "~hlz",
+                            "vsd"
+                        ],
+                        0.0501
+                    ],
+                    [
+                        "yjw",
+                        [
+                            "~hlz",
+                            "~vsd"
+                        ],
+                        0.2934
+                    ],
+                    [
+                        "~yjw",
+                        [
+                            "~hlz",
+                            "~vsd"
+                        ],
+                        0.7066
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YJW",
+            "outcomes": [
+                "yjw",
+                "~yjw"
+            ],
+            "parents": [
+                "HLZ",
+                "VSD"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cyc",
+                        [
+                            "gmr",
+                            "nse"
+                        ],
+                        0.513
+                    ],
+                    [
+                        "~cyc",
+                        [
+                            "gmr",
+                            "nse"
+                        ],
+                        0.487
+                    ],
+                    [
+                        "cyc",
+                        [
+                            "gmr",
+                            "~nse"
+                        ],
+                        0.2629
+                    ],
+                    [
+                        "~cyc",
+                        [
+                            "gmr",
+                            "~nse"
+                        ],
+                        0.7371
+                    ],
+                    [
+                        "cyc",
+                        [
+                            "~gmr",
+                            "nse"
+                        ],
+                        0.6552
+                    ],
+                    [
+                        "~cyc",
+                        [
+                            "~gmr",
+                            "nse"
+                        ],
+                        0.3448
+                    ],
+                    [
+                        "cyc",
+                        [
+                            "~gmr",
+                            "~nse"
+                        ],
+                        0.0865
+                    ],
+                    [
+                        "~cyc",
+                        [
+                            "~gmr",
+                            "~nse"
+                        ],
+                        0.9135
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CYC",
+            "outcomes": [
+                "cyc",
+                "~cyc"
+            ],
+            "parents": [
+                "GMR",
+                "NSE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hlz",
+                        [],
+                        0.0875
+                    ],
+                    [
+                        "~hlz",
+                        [],
+                        0.9125
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HLZ",
+            "outcomes": [
+                "hlz",
+                "~hlz"
+            ],
+            "parents": []
+        }
+    ]
+}

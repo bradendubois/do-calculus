@@ -1,0 +1,668 @@
+{
+    "latent-model": false,
+    "name": "m512",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rfl",
+                        [],
+                        0.8259
+                    ],
+                    [
+                        "~rfl",
+                        [],
+                        0.1741
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RFL",
+            "outcomes": [
+                "rfl",
+                "~rfl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ibb",
+                        [
+                            "rfl"
+                        ],
+                        0.439
+                    ],
+                    [
+                        "~ibb",
+                        [
+                            "rfl"
+                        ],
+                        0.561
+                    ],
+                    [
+                        "ibb",
+                        [
+                            "~rfl"
+                        ],
+                        0.3433
+                    ],
+                    [
+                        "~ibb",
+                        [
+                            "~rfl"
+                        ],
+                        0.6567
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IBB",
+            "outcomes": [
+                "ibb",
+                "~ibb"
+            ],
+            "parents": [
+                "RFL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kau",
+                        [
+                            "nji",
+                            "vkm"
+                        ],
+                        0.6317
+                    ],
+                    [
+                        "~kau",
+                        [
+                            "nji",
+                            "vkm"
+                        ],
+                        0.3683
+                    ],
+                    [
+                        "kau",
+                        [
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.8328
+                    ],
+                    [
+                        "~kau",
+                        [
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.1672
+                    ],
+                    [
+                        "kau",
+                        [
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.8109
+                    ],
+                    [
+                        "~kau",
+                        [
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.1891
+                    ],
+                    [
+                        "kau",
+                        [
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.5114
+                    ],
+                    [
+                        "~kau",
+                        [
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.4886
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KAU",
+            "outcomes": [
+                "kau",
+                "~kau"
+            ],
+            "parents": [
+                "NJI",
+                "VKM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cca",
+                        [
+                            "kau"
+                        ],
+                        0.5009
+                    ],
+                    [
+                        "~cca",
+                        [
+                            "kau"
+                        ],
+                        0.4991
+                    ],
+                    [
+                        "cca",
+                        [
+                            "~kau"
+                        ],
+                        0.68
+                    ],
+                    [
+                        "~cca",
+                        [
+                            "~kau"
+                        ],
+                        0.32
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CCA",
+            "outcomes": [
+                "cca",
+                "~cca"
+            ],
+            "parents": [
+                "KAU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vkm",
+                        [
+                            "rfl"
+                        ],
+                        0.2
+                    ],
+                    [
+                        "~vkm",
+                        [
+                            "rfl"
+                        ],
+                        0.8
+                    ],
+                    [
+                        "vkm",
+                        [
+                            "~rfl"
+                        ],
+                        0.3111
+                    ],
+                    [
+                        "~vkm",
+                        [
+                            "~rfl"
+                        ],
+                        0.6889
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VKM",
+            "outcomes": [
+                "vkm",
+                "~vkm"
+            ],
+            "parents": [
+                "RFL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uvq",
+                        [
+                            "ieb",
+                            "nji"
+                        ],
+                        0.5312
+                    ],
+                    [
+                        "~uvq",
+                        [
+                            "ieb",
+                            "nji"
+                        ],
+                        0.4688
+                    ],
+                    [
+                        "uvq",
+                        [
+                            "ieb",
+                            "~nji"
+                        ],
+                        0.6705
+                    ],
+                    [
+                        "~uvq",
+                        [
+                            "ieb",
+                            "~nji"
+                        ],
+                        0.3295
+                    ],
+                    [
+                        "uvq",
+                        [
+                            "~ieb",
+                            "nji"
+                        ],
+                        0.8101
+                    ],
+                    [
+                        "~uvq",
+                        [
+                            "~ieb",
+                            "nji"
+                        ],
+                        0.1899
+                    ],
+                    [
+                        "uvq",
+                        [
+                            "~ieb",
+                            "~nji"
+                        ],
+                        0.2338
+                    ],
+                    [
+                        "~uvq",
+                        [
+                            "~ieb",
+                            "~nji"
+                        ],
+                        0.7662
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UVQ",
+            "outcomes": [
+                "uvq",
+                "~uvq"
+            ],
+            "parents": [
+                "IEB",
+                "NJI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jyp",
+                        [
+                            "rfl"
+                        ],
+                        0.9005
+                    ],
+                    [
+                        "~jyp",
+                        [
+                            "rfl"
+                        ],
+                        0.0995
+                    ],
+                    [
+                        "jyp",
+                        [
+                            "~rfl"
+                        ],
+                        0.359
+                    ],
+                    [
+                        "~jyp",
+                        [
+                            "~rfl"
+                        ],
+                        0.641
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JYP",
+            "outcomes": [
+                "jyp",
+                "~jyp"
+            ],
+            "parents": [
+                "RFL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nbt",
+                        [
+                            "jyp",
+                            "nji",
+                            "vkm"
+                        ],
+                        0.1863
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "jyp",
+                            "nji",
+                            "vkm"
+                        ],
+                        0.8137
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "jyp",
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.493
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "jyp",
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.507
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "jyp",
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.2388
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "jyp",
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.7612
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "jyp",
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.6854
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "jyp",
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.3146
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "~jyp",
+                            "nji",
+                            "vkm"
+                        ],
+                        0.3085
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "~jyp",
+                            "nji",
+                            "vkm"
+                        ],
+                        0.6915
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "~jyp",
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.6413
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "~jyp",
+                            "nji",
+                            "~vkm"
+                        ],
+                        0.3587
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "~jyp",
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.8125
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "~jyp",
+                            "~nji",
+                            "vkm"
+                        ],
+                        0.1875
+                    ],
+                    [
+                        "nbt",
+                        [
+                            "~jyp",
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.816
+                    ],
+                    [
+                        "~nbt",
+                        [
+                            "~jyp",
+                            "~nji",
+                            "~vkm"
+                        ],
+                        0.184
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NBT",
+            "outcomes": [
+                "nbt",
+                "~nbt"
+            ],
+            "parents": [
+                "JYP",
+                "NJI",
+                "VKM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ieb",
+                        [
+                            "raa",
+                            "vkm"
+                        ],
+                        0.6695
+                    ],
+                    [
+                        "~ieb",
+                        [
+                            "raa",
+                            "vkm"
+                        ],
+                        0.3305
+                    ],
+                    [
+                        "ieb",
+                        [
+                            "raa",
+                            "~vkm"
+                        ],
+                        0.1719
+                    ],
+                    [
+                        "~ieb",
+                        [
+                            "raa",
+                            "~vkm"
+                        ],
+                        0.8281
+                    ],
+                    [
+                        "ieb",
+                        [
+                            "~raa",
+                            "vkm"
+                        ],
+                        0.9203
+                    ],
+                    [
+                        "~ieb",
+                        [
+                            "~raa",
+                            "vkm"
+                        ],
+                        0.0797
+                    ],
+                    [
+                        "ieb",
+                        [
+                            "~raa",
+                            "~vkm"
+                        ],
+                        0.2832
+                    ],
+                    [
+                        "~ieb",
+                        [
+                            "~raa",
+                            "~vkm"
+                        ],
+                        0.7168
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IEB",
+            "outcomes": [
+                "ieb",
+                "~ieb"
+            ],
+            "parents": [
+                "RAA",
+                "VKM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nji",
+                        [
+                            "jyp"
+                        ],
+                        0.0254
+                    ],
+                    [
+                        "~nji",
+                        [
+                            "jyp"
+                        ],
+                        0.9746
+                    ],
+                    [
+                        "nji",
+                        [
+                            "~jyp"
+                        ],
+                        0.4072
+                    ],
+                    [
+                        "~nji",
+                        [
+                            "~jyp"
+                        ],
+                        0.5928
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NJI",
+            "outcomes": [
+                "nji",
+                "~nji"
+            ],
+            "parents": [
+                "JYP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "raa",
+                        [],
+                        0.8078
+                    ],
+                    [
+                        "~raa",
+                        [],
+                        0.1922
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RAA",
+            "outcomes": [
+                "raa",
+                "~raa"
+            ],
+            "parents": []
+        }
+    ]
+}

@@ -1,0 +1,482 @@
+{
+    "latent-model": false,
+    "name": "m401",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yvw",
+                        [],
+                        0.2456
+                    ],
+                    [
+                        "~yvw",
+                        [],
+                        0.7544
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YVW",
+            "outcomes": [
+                "yvw",
+                "~yvw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zaf",
+                        [
+                            "ccw",
+                            "yvw"
+                        ],
+                        0.2395
+                    ],
+                    [
+                        "~zaf",
+                        [
+                            "ccw",
+                            "yvw"
+                        ],
+                        0.7605
+                    ],
+                    [
+                        "zaf",
+                        [
+                            "ccw",
+                            "~yvw"
+                        ],
+                        0.9636
+                    ],
+                    [
+                        "~zaf",
+                        [
+                            "ccw",
+                            "~yvw"
+                        ],
+                        0.0364
+                    ],
+                    [
+                        "zaf",
+                        [
+                            "~ccw",
+                            "yvw"
+                        ],
+                        0.2003
+                    ],
+                    [
+                        "~zaf",
+                        [
+                            "~ccw",
+                            "yvw"
+                        ],
+                        0.7997
+                    ],
+                    [
+                        "zaf",
+                        [
+                            "~ccw",
+                            "~yvw"
+                        ],
+                        0.5185
+                    ],
+                    [
+                        "~zaf",
+                        [
+                            "~ccw",
+                            "~yvw"
+                        ],
+                        0.4815
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZAF",
+            "outcomes": [
+                "zaf",
+                "~zaf"
+            ],
+            "parents": [
+                "CCW",
+                "YVW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "syr",
+                        [],
+                        0.1522
+                    ],
+                    [
+                        "~syr",
+                        [],
+                        0.8478
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SYR",
+            "outcomes": [
+                "syr",
+                "~syr"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eop",
+                        [
+                            "qgm",
+                            "syr"
+                        ],
+                        0.0603
+                    ],
+                    [
+                        "~eop",
+                        [
+                            "qgm",
+                            "syr"
+                        ],
+                        0.9397
+                    ],
+                    [
+                        "eop",
+                        [
+                            "qgm",
+                            "~syr"
+                        ],
+                        0.7039
+                    ],
+                    [
+                        "~eop",
+                        [
+                            "qgm",
+                            "~syr"
+                        ],
+                        0.2961
+                    ],
+                    [
+                        "eop",
+                        [
+                            "~qgm",
+                            "syr"
+                        ],
+                        0.6869
+                    ],
+                    [
+                        "~eop",
+                        [
+                            "~qgm",
+                            "syr"
+                        ],
+                        0.3131
+                    ],
+                    [
+                        "eop",
+                        [
+                            "~qgm",
+                            "~syr"
+                        ],
+                        0.2669
+                    ],
+                    [
+                        "~eop",
+                        [
+                            "~qgm",
+                            "~syr"
+                        ],
+                        0.7331
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EOP",
+            "outcomes": [
+                "eop",
+                "~eop"
+            ],
+            "parents": [
+                "QGM",
+                "SYR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ccw",
+                        [
+                            "eop"
+                        ],
+                        0.6552
+                    ],
+                    [
+                        "~ccw",
+                        [
+                            "eop"
+                        ],
+                        0.3448
+                    ],
+                    [
+                        "ccw",
+                        [
+                            "~eop"
+                        ],
+                        0.5939
+                    ],
+                    [
+                        "~ccw",
+                        [
+                            "~eop"
+                        ],
+                        0.4061
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CCW",
+            "outcomes": [
+                "ccw",
+                "~ccw"
+            ],
+            "parents": [
+                "EOP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jwq",
+                        [
+                            "eop",
+                            "htj",
+                            "syr"
+                        ],
+                        0.1558
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "eop",
+                            "htj",
+                            "syr"
+                        ],
+                        0.8442
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "eop",
+                            "htj",
+                            "~syr"
+                        ],
+                        0.7984
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "eop",
+                            "htj",
+                            "~syr"
+                        ],
+                        0.2016
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "eop",
+                            "~htj",
+                            "syr"
+                        ],
+                        0.6366
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "eop",
+                            "~htj",
+                            "syr"
+                        ],
+                        0.3634
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "eop",
+                            "~htj",
+                            "~syr"
+                        ],
+                        0.1938
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "eop",
+                            "~htj",
+                            "~syr"
+                        ],
+                        0.8062
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "~eop",
+                            "htj",
+                            "syr"
+                        ],
+                        0.4638
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "~eop",
+                            "htj",
+                            "syr"
+                        ],
+                        0.5362
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "~eop",
+                            "htj",
+                            "~syr"
+                        ],
+                        0.5064
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "~eop",
+                            "htj",
+                            "~syr"
+                        ],
+                        0.4936
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "~eop",
+                            "~htj",
+                            "syr"
+                        ],
+                        0.1854
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "~eop",
+                            "~htj",
+                            "syr"
+                        ],
+                        0.8146
+                    ],
+                    [
+                        "jwq",
+                        [
+                            "~eop",
+                            "~htj",
+                            "~syr"
+                        ],
+                        0.2711
+                    ],
+                    [
+                        "~jwq",
+                        [
+                            "~eop",
+                            "~htj",
+                            "~syr"
+                        ],
+                        0.7289
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JWQ",
+            "outcomes": [
+                "jwq",
+                "~jwq"
+            ],
+            "parents": [
+                "EOP",
+                "HTJ",
+                "SYR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qgm",
+                        [],
+                        0.858
+                    ],
+                    [
+                        "~qgm",
+                        [],
+                        0.142
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QGM",
+            "outcomes": [
+                "qgm",
+                "~qgm"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "htj",
+                        [
+                            "syr"
+                        ],
+                        0.8505
+                    ],
+                    [
+                        "~htj",
+                        [
+                            "syr"
+                        ],
+                        0.1495
+                    ],
+                    [
+                        "htj",
+                        [
+                            "~syr"
+                        ],
+                        0.3257
+                    ],
+                    [
+                        "~htj",
+                        [
+                            "~syr"
+                        ],
+                        0.6743
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HTJ",
+            "outcomes": [
+                "htj",
+                "~htj"
+            ],
+            "parents": [
+                "SYR"
+            ]
+        }
+    ]
+}

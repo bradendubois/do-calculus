@@ -1,0 +1,336 @@
+{
+    "latent-model": true,
+    "name": "m284_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gsa",
+                        [],
+                        0.788
+                    ],
+                    [
+                        "~gsa",
+                        [],
+                        0.212
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "GSA",
+            "outcomes": [
+                "gsa",
+                "~gsa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nyj",
+                        [
+                            "gsa"
+                        ],
+                        0.8337
+                    ],
+                    [
+                        "~nyj",
+                        [
+                            "gsa"
+                        ],
+                        0.1663
+                    ],
+                    [
+                        "nyj",
+                        [
+                            "~gsa"
+                        ],
+                        0.8222
+                    ],
+                    [
+                        "~nyj",
+                        [
+                            "~gsa"
+                        ],
+                        0.1778
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NYJ",
+            "outcomes": [
+                "nyj",
+                "~nyj"
+            ],
+            "parents": [
+                "GSA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aqs",
+                        [
+                            "clg",
+                            "gsa"
+                        ],
+                        0.1273
+                    ],
+                    [
+                        "~aqs",
+                        [
+                            "clg",
+                            "gsa"
+                        ],
+                        0.8727
+                    ],
+                    [
+                        "aqs",
+                        [
+                            "clg",
+                            "~gsa"
+                        ],
+                        0.683
+                    ],
+                    [
+                        "~aqs",
+                        [
+                            "clg",
+                            "~gsa"
+                        ],
+                        0.317
+                    ],
+                    [
+                        "aqs",
+                        [
+                            "~clg",
+                            "gsa"
+                        ],
+                        0.7478
+                    ],
+                    [
+                        "~aqs",
+                        [
+                            "~clg",
+                            "gsa"
+                        ],
+                        0.2522
+                    ],
+                    [
+                        "aqs",
+                        [
+                            "~clg",
+                            "~gsa"
+                        ],
+                        0.0685
+                    ],
+                    [
+                        "~aqs",
+                        [
+                            "~clg",
+                            "~gsa"
+                        ],
+                        0.9315
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AQS",
+            "outcomes": [
+                "aqs",
+                "~aqs"
+            ],
+            "parents": [
+                "CLG",
+                "GSA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "clg",
+                        [],
+                        0.3542
+                    ],
+                    [
+                        "~clg",
+                        [],
+                        0.6458
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CLG",
+            "outcomes": [
+                "clg",
+                "~clg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tru",
+                        [
+                            "gsa",
+                            "iwl"
+                        ],
+                        0.8136
+                    ],
+                    [
+                        "~tru",
+                        [
+                            "gsa",
+                            "iwl"
+                        ],
+                        0.1864
+                    ],
+                    [
+                        "tru",
+                        [
+                            "gsa",
+                            "~iwl"
+                        ],
+                        0.7639
+                    ],
+                    [
+                        "~tru",
+                        [
+                            "gsa",
+                            "~iwl"
+                        ],
+                        0.2361
+                    ],
+                    [
+                        "tru",
+                        [
+                            "~gsa",
+                            "iwl"
+                        ],
+                        0.6461
+                    ],
+                    [
+                        "~tru",
+                        [
+                            "~gsa",
+                            "iwl"
+                        ],
+                        0.3539
+                    ],
+                    [
+                        "tru",
+                        [
+                            "~gsa",
+                            "~iwl"
+                        ],
+                        0.2776
+                    ],
+                    [
+                        "~tru",
+                        [
+                            "~gsa",
+                            "~iwl"
+                        ],
+                        0.7224
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TRU",
+            "outcomes": [
+                "tru",
+                "~tru"
+            ],
+            "parents": [
+                "GSA",
+                "IWL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iwl",
+                        [
+                            "clg",
+                            "gsa"
+                        ],
+                        0.3651
+                    ],
+                    [
+                        "~iwl",
+                        [
+                            "clg",
+                            "gsa"
+                        ],
+                        0.6349
+                    ],
+                    [
+                        "iwl",
+                        [
+                            "clg",
+                            "~gsa"
+                        ],
+                        0.7142
+                    ],
+                    [
+                        "~iwl",
+                        [
+                            "clg",
+                            "~gsa"
+                        ],
+                        0.2858
+                    ],
+                    [
+                        "iwl",
+                        [
+                            "~clg",
+                            "gsa"
+                        ],
+                        0.9896
+                    ],
+                    [
+                        "~iwl",
+                        [
+                            "~clg",
+                            "gsa"
+                        ],
+                        0.0104
+                    ],
+                    [
+                        "iwl",
+                        [
+                            "~clg",
+                            "~gsa"
+                        ],
+                        0.9674
+                    ],
+                    [
+                        "~iwl",
+                        [
+                            "~clg",
+                            "~gsa"
+                        ],
+                        0.0326
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IWL",
+            "outcomes": [
+                "iwl",
+                "~iwl"
+            ],
+            "parents": [
+                "CLG",
+                "GSA"
+            ]
+        }
+    ]
+}

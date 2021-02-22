@@ -1,2 +1,2 @@
-setuptools
-numpy
+numpy~=1.19.4
+PyYAML~=5.3.1

@@ -1,0 +1,278 @@
+{
+    "latent-model": false,
+    "name": "m558",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kwx",
+                        [
+                            "fhs"
+                        ],
+                        0.1375
+                    ],
+                    [
+                        "~kwx",
+                        [
+                            "fhs"
+                        ],
+                        0.8625
+                    ],
+                    [
+                        "kwx",
+                        [
+                            "~fhs"
+                        ],
+                        0.7464
+                    ],
+                    [
+                        "~kwx",
+                        [
+                            "~fhs"
+                        ],
+                        0.2536
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KWX",
+            "outcomes": [
+                "kwx",
+                "~kwx"
+            ],
+            "parents": [
+                "FHS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zdo",
+                        [
+                            "fhs",
+                            "gbl"
+                        ],
+                        0.6738
+                    ],
+                    [
+                        "~zdo",
+                        [
+                            "fhs",
+                            "gbl"
+                        ],
+                        0.3262
+                    ],
+                    [
+                        "zdo",
+                        [
+                            "fhs",
+                            "~gbl"
+                        ],
+                        0.7438
+                    ],
+                    [
+                        "~zdo",
+                        [
+                            "fhs",
+                            "~gbl"
+                        ],
+                        0.2562
+                    ],
+                    [
+                        "zdo",
+                        [
+                            "~fhs",
+                            "gbl"
+                        ],
+                        0.7303
+                    ],
+                    [
+                        "~zdo",
+                        [
+                            "~fhs",
+                            "gbl"
+                        ],
+                        0.2697
+                    ],
+                    [
+                        "zdo",
+                        [
+                            "~fhs",
+                            "~gbl"
+                        ],
+                        0.7037
+                    ],
+                    [
+                        "~zdo",
+                        [
+                            "~fhs",
+                            "~gbl"
+                        ],
+                        0.2963
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZDO",
+            "outcomes": [
+                "zdo",
+                "~zdo"
+            ],
+            "parents": [
+                "FHS",
+                "GBL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gbl",
+                        [],
+                        0.8746
+                    ],
+                    [
+                        "~gbl",
+                        [],
+                        0.1254
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GBL",
+            "outcomes": [
+                "gbl",
+                "~gbl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pka",
+                        [
+                            "gbl",
+                            "nqp"
+                        ],
+                        0.8259
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "gbl",
+                            "nqp"
+                        ],
+                        0.1741
+                    ],
+                    [
+                        "pka",
+                        [
+                            "gbl",
+                            "~nqp"
+                        ],
+                        0.274
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "gbl",
+                            "~nqp"
+                        ],
+                        0.726
+                    ],
+                    [
+                        "pka",
+                        [
+                            "~gbl",
+                            "nqp"
+                        ],
+                        0.3368
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "~gbl",
+                            "nqp"
+                        ],
+                        0.6632
+                    ],
+                    [
+                        "pka",
+                        [
+                            "~gbl",
+                            "~nqp"
+                        ],
+                        0.5569
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "~gbl",
+                            "~nqp"
+                        ],
+                        0.4431
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PKA",
+            "outcomes": [
+                "pka",
+                "~pka"
+            ],
+            "parents": [
+                "GBL",
+                "NQP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nqp",
+                        [],
+                        0.1879
+                    ],
+                    [
+                        "~nqp",
+                        [],
+                        0.8121
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NQP",
+            "outcomes": [
+                "nqp",
+                "~nqp"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fhs",
+                        [],
+                        0.2508
+                    ],
+                    [
+                        "~fhs",
+                        [],
+                        0.7492
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FHS",
+            "outcomes": [
+                "fhs",
+                "~fhs"
+            ],
+            "parents": []
+        }
+    ]
+}

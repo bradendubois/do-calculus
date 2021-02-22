@@ -1,0 +1,453 @@
+{
+    "latent-model": true,
+    "name": "m814_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wwq",
+                        [],
+                        0.575
+                    ],
+                    [
+                        "~wwq",
+                        [],
+                        0.425
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WWQ",
+            "outcomes": [
+                "wwq",
+                "~wwq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "swr",
+                        [
+                            "pxo"
+                        ],
+                        0.1069
+                    ],
+                    [
+                        "~swr",
+                        [
+                            "pxo"
+                        ],
+                        0.8931
+                    ],
+                    [
+                        "swr",
+                        [
+                            "~pxo"
+                        ],
+                        0.2081
+                    ],
+                    [
+                        "~swr",
+                        [
+                            "~pxo"
+                        ],
+                        0.7919
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SWR",
+            "outcomes": [
+                "swr",
+                "~swr"
+            ],
+            "parents": [
+                "PXO"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "grf",
+                        [
+                            "elr"
+                        ],
+                        0.4045
+                    ],
+                    [
+                        "~grf",
+                        [
+                            "elr"
+                        ],
+                        0.5955
+                    ],
+                    [
+                        "grf",
+                        [
+                            "~elr"
+                        ],
+                        0.9758
+                    ],
+                    [
+                        "~grf",
+                        [
+                            "~elr"
+                        ],
+                        0.0242
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GRF",
+            "outcomes": [
+                "grf",
+                "~grf"
+            ],
+            "parents": [
+                "ELR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pxo",
+                        [],
+                        0.6249
+                    ],
+                    [
+                        "~pxo",
+                        [],
+                        0.3751
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PXO",
+            "outcomes": [
+                "pxo",
+                "~pxo"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zdi",
+                        [
+                            "wwq"
+                        ],
+                        0.0503
+                    ],
+                    [
+                        "~zdi",
+                        [
+                            "wwq"
+                        ],
+                        0.9497
+                    ],
+                    [
+                        "zdi",
+                        [
+                            "~wwq"
+                        ],
+                        0.4616
+                    ],
+                    [
+                        "~zdi",
+                        [
+                            "~wwq"
+                        ],
+                        0.5384
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZDI",
+            "outcomes": [
+                "zdi",
+                "~zdi"
+            ],
+            "parents": [
+                "WWQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bek",
+                        [
+                            "wwq"
+                        ],
+                        0.2546
+                    ],
+                    [
+                        "~bek",
+                        [
+                            "wwq"
+                        ],
+                        0.7454
+                    ],
+                    [
+                        "bek",
+                        [
+                            "~wwq"
+                        ],
+                        0.4119
+                    ],
+                    [
+                        "~bek",
+                        [
+                            "~wwq"
+                        ],
+                        0.5881
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BEK",
+            "outcomes": [
+                "bek",
+                "~bek"
+            ],
+            "parents": [
+                "WWQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "umb",
+                        [],
+                        0.2832
+                    ],
+                    [
+                        "~umb",
+                        [],
+                        0.7168
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "UMB",
+            "outcomes": [
+                "umb",
+                "~umb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "elr",
+                        [
+                            "umb"
+                        ],
+                        0.8419
+                    ],
+                    [
+                        "~elr",
+                        [
+                            "umb"
+                        ],
+                        0.1581
+                    ],
+                    [
+                        "elr",
+                        [
+                            "~umb"
+                        ],
+                        0.8974
+                    ],
+                    [
+                        "~elr",
+                        [
+                            "~umb"
+                        ],
+                        0.1026
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ELR",
+            "outcomes": [
+                "elr",
+                "~elr"
+            ],
+            "parents": [
+                "UMB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gmk",
+                        [
+                            "grf",
+                            "umb",
+                            "zdi"
+                        ],
+                        0.6776
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "grf",
+                            "umb",
+                            "zdi"
+                        ],
+                        0.3224
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "grf",
+                            "umb",
+                            "~zdi"
+                        ],
+                        0.1563
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "grf",
+                            "umb",
+                            "~zdi"
+                        ],
+                        0.8437
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "grf",
+                            "~umb",
+                            "zdi"
+                        ],
+                        0.0152
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "grf",
+                            "~umb",
+                            "zdi"
+                        ],
+                        0.9848
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "grf",
+                            "~umb",
+                            "~zdi"
+                        ],
+                        0.3316
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "grf",
+                            "~umb",
+                            "~zdi"
+                        ],
+                        0.6684
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "~grf",
+                            "umb",
+                            "zdi"
+                        ],
+                        0.6548
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "~grf",
+                            "umb",
+                            "zdi"
+                        ],
+                        0.3452
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "~grf",
+                            "umb",
+                            "~zdi"
+                        ],
+                        0.3401
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "~grf",
+                            "umb",
+                            "~zdi"
+                        ],
+                        0.6599
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "~grf",
+                            "~umb",
+                            "zdi"
+                        ],
+                        0.4487
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "~grf",
+                            "~umb",
+                            "zdi"
+                        ],
+                        0.5513
+                    ],
+                    [
+                        "gmk",
+                        [
+                            "~grf",
+                            "~umb",
+                            "~zdi"
+                        ],
+                        0.1946
+                    ],
+                    [
+                        "~gmk",
+                        [
+                            "~grf",
+                            "~umb",
+                            "~zdi"
+                        ],
+                        0.8054
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GMK",
+            "outcomes": [
+                "gmk",
+                "~gmk"
+            ],
+            "parents": [
+                "GRF",
+                "UMB",
+                "ZDI"
+            ]
+        }
+    ]
+}

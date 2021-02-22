@@ -1,0 +1,525 @@
+{
+    "latent-model": false,
+    "name": "m97",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fxv",
+                        [],
+                        0.9463
+                    ],
+                    [
+                        "~fxv",
+                        [],
+                        0.0537
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FXV",
+            "outcomes": [
+                "fxv",
+                "~fxv"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tyw",
+                        [
+                            "kjh"
+                        ],
+                        0.6046
+                    ],
+                    [
+                        "~tyw",
+                        [
+                            "kjh"
+                        ],
+                        0.3954
+                    ],
+                    [
+                        "tyw",
+                        [
+                            "~kjh"
+                        ],
+                        0.2837
+                    ],
+                    [
+                        "~tyw",
+                        [
+                            "~kjh"
+                        ],
+                        0.7163
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TYW",
+            "outcomes": [
+                "tyw",
+                "~tyw"
+            ],
+            "parents": [
+                "KJH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qms",
+                        [
+                            "fxv"
+                        ],
+                        0.1273
+                    ],
+                    [
+                        "~qms",
+                        [
+                            "fxv"
+                        ],
+                        0.8727
+                    ],
+                    [
+                        "qms",
+                        [
+                            "~fxv"
+                        ],
+                        0.1443
+                    ],
+                    [
+                        "~qms",
+                        [
+                            "~fxv"
+                        ],
+                        0.8557
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QMS",
+            "outcomes": [
+                "qms",
+                "~qms"
+            ],
+            "parents": [
+                "FXV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zic",
+                        [
+                            "lpd",
+                            "png"
+                        ],
+                        0.1564
+                    ],
+                    [
+                        "~zic",
+                        [
+                            "lpd",
+                            "png"
+                        ],
+                        0.8436
+                    ],
+                    [
+                        "zic",
+                        [
+                            "lpd",
+                            "~png"
+                        ],
+                        0.453
+                    ],
+                    [
+                        "~zic",
+                        [
+                            "lpd",
+                            "~png"
+                        ],
+                        0.547
+                    ],
+                    [
+                        "zic",
+                        [
+                            "~lpd",
+                            "png"
+                        ],
+                        0.127
+                    ],
+                    [
+                        "~zic",
+                        [
+                            "~lpd",
+                            "png"
+                        ],
+                        0.873
+                    ],
+                    [
+                        "zic",
+                        [
+                            "~lpd",
+                            "~png"
+                        ],
+                        0.5582
+                    ],
+                    [
+                        "~zic",
+                        [
+                            "~lpd",
+                            "~png"
+                        ],
+                        0.4418
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZIC",
+            "outcomes": [
+                "zic",
+                "~zic"
+            ],
+            "parents": [
+                "LPD",
+                "PNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jel",
+                        [
+                            "fxv",
+                            "qms",
+                            "tyw"
+                        ],
+                        0.9935
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "fxv",
+                            "qms",
+                            "tyw"
+                        ],
+                        0.0065
+                    ],
+                    [
+                        "jel",
+                        [
+                            "fxv",
+                            "qms",
+                            "~tyw"
+                        ],
+                        0.5796
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "fxv",
+                            "qms",
+                            "~tyw"
+                        ],
+                        0.4204
+                    ],
+                    [
+                        "jel",
+                        [
+                            "fxv",
+                            "~qms",
+                            "tyw"
+                        ],
+                        0.1307
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "fxv",
+                            "~qms",
+                            "tyw"
+                        ],
+                        0.8693
+                    ],
+                    [
+                        "jel",
+                        [
+                            "fxv",
+                            "~qms",
+                            "~tyw"
+                        ],
+                        0.773
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "fxv",
+                            "~qms",
+                            "~tyw"
+                        ],
+                        0.227
+                    ],
+                    [
+                        "jel",
+                        [
+                            "~fxv",
+                            "qms",
+                            "tyw"
+                        ],
+                        0.8257
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "~fxv",
+                            "qms",
+                            "tyw"
+                        ],
+                        0.1743
+                    ],
+                    [
+                        "jel",
+                        [
+                            "~fxv",
+                            "qms",
+                            "~tyw"
+                        ],
+                        0.1818
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "~fxv",
+                            "qms",
+                            "~tyw"
+                        ],
+                        0.8182
+                    ],
+                    [
+                        "jel",
+                        [
+                            "~fxv",
+                            "~qms",
+                            "tyw"
+                        ],
+                        0.162
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "~fxv",
+                            "~qms",
+                            "tyw"
+                        ],
+                        0.838
+                    ],
+                    [
+                        "jel",
+                        [
+                            "~fxv",
+                            "~qms",
+                            "~tyw"
+                        ],
+                        0.5853
+                    ],
+                    [
+                        "~jel",
+                        [
+                            "~fxv",
+                            "~qms",
+                            "~tyw"
+                        ],
+                        0.4147
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JEL",
+            "outcomes": [
+                "jel",
+                "~jel"
+            ],
+            "parents": [
+                "FXV",
+                "QMS",
+                "TYW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lpd",
+                        [
+                            "kjh"
+                        ],
+                        0.7266
+                    ],
+                    [
+                        "~lpd",
+                        [
+                            "kjh"
+                        ],
+                        0.2734
+                    ],
+                    [
+                        "lpd",
+                        [
+                            "~kjh"
+                        ],
+                        0.3425
+                    ],
+                    [
+                        "~lpd",
+                        [
+                            "~kjh"
+                        ],
+                        0.6575
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LPD",
+            "outcomes": [
+                "lpd",
+                "~lpd"
+            ],
+            "parents": [
+                "KJH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kjh",
+                        [],
+                        0.7588
+                    ],
+                    [
+                        "~kjh",
+                        [],
+                        0.2412
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KJH",
+            "outcomes": [
+                "kjh",
+                "~kjh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "png",
+                        [],
+                        0.5837
+                    ],
+                    [
+                        "~png",
+                        [],
+                        0.4163
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PNG",
+            "outcomes": [
+                "png",
+                "~png"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pka",
+                        [
+                            "lpd",
+                            "png"
+                        ],
+                        0.7712
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "lpd",
+                            "png"
+                        ],
+                        0.2288
+                    ],
+                    [
+                        "pka",
+                        [
+                            "lpd",
+                            "~png"
+                        ],
+                        0.5463
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "lpd",
+                            "~png"
+                        ],
+                        0.4537
+                    ],
+                    [
+                        "pka",
+                        [
+                            "~lpd",
+                            "png"
+                        ],
+                        0.6293
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "~lpd",
+                            "png"
+                        ],
+                        0.3707
+                    ],
+                    [
+                        "pka",
+                        [
+                            "~lpd",
+                            "~png"
+                        ],
+                        0.7808
+                    ],
+                    [
+                        "~pka",
+                        [
+                            "~lpd",
+                            "~png"
+                        ],
+                        0.2192
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PKA",
+            "outcomes": [
+                "pka",
+                "~pka"
+            ],
+            "parents": [
+                "LPD",
+                "PNG"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,385 @@
+{
+    "latent-model": false,
+    "name": "m463",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fhr",
+                        [
+                            "xkx"
+                        ],
+                        0.8663
+                    ],
+                    [
+                        "~fhr",
+                        [
+                            "xkx"
+                        ],
+                        0.1337
+                    ],
+                    [
+                        "fhr",
+                        [
+                            "~xkx"
+                        ],
+                        0.7622
+                    ],
+                    [
+                        "~fhr",
+                        [
+                            "~xkx"
+                        ],
+                        0.2378
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FHR",
+            "outcomes": [
+                "fhr",
+                "~fhr"
+            ],
+            "parents": [
+                "XKX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hij",
+                        [
+                            "tqm"
+                        ],
+                        0.3128
+                    ],
+                    [
+                        "~hij",
+                        [
+                            "tqm"
+                        ],
+                        0.6872
+                    ],
+                    [
+                        "hij",
+                        [
+                            "~tqm"
+                        ],
+                        0.7136
+                    ],
+                    [
+                        "~hij",
+                        [
+                            "~tqm"
+                        ],
+                        0.2864
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HIJ",
+            "outcomes": [
+                "hij",
+                "~hij"
+            ],
+            "parents": [
+                "TQM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tqm",
+                        [],
+                        0.7638
+                    ],
+                    [
+                        "~tqm",
+                        [],
+                        0.2362
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TQM",
+            "outcomes": [
+                "tqm",
+                "~tqm"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tok",
+                        [
+                            "tqm"
+                        ],
+                        0.3572
+                    ],
+                    [
+                        "~tok",
+                        [
+                            "tqm"
+                        ],
+                        0.6428
+                    ],
+                    [
+                        "tok",
+                        [
+                            "~tqm"
+                        ],
+                        0.4229
+                    ],
+                    [
+                        "~tok",
+                        [
+                            "~tqm"
+                        ],
+                        0.5771
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TOK",
+            "outcomes": [
+                "tok",
+                "~tok"
+            ],
+            "parents": [
+                "TQM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xkx",
+                        [
+                            "uhe"
+                        ],
+                        0.8803
+                    ],
+                    [
+                        "~xkx",
+                        [
+                            "uhe"
+                        ],
+                        0.1197
+                    ],
+                    [
+                        "xkx",
+                        [
+                            "~uhe"
+                        ],
+                        0.1913
+                    ],
+                    [
+                        "~xkx",
+                        [
+                            "~uhe"
+                        ],
+                        0.8087
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XKX",
+            "outcomes": [
+                "xkx",
+                "~xkx"
+            ],
+            "parents": [
+                "UHE"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uhe",
+                        [],
+                        0.2213
+                    ],
+                    [
+                        "~uhe",
+                        [],
+                        0.7787
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UHE",
+            "outcomes": [
+                "uhe",
+                "~uhe"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tgs",
+                        [
+                            "fhr",
+                            "hij",
+                            "tok"
+                        ],
+                        0.2302
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "fhr",
+                            "hij",
+                            "tok"
+                        ],
+                        0.7698
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "fhr",
+                            "hij",
+                            "~tok"
+                        ],
+                        0.4975
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "fhr",
+                            "hij",
+                            "~tok"
+                        ],
+                        0.5025
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "fhr",
+                            "~hij",
+                            "tok"
+                        ],
+                        0.1959
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "fhr",
+                            "~hij",
+                            "tok"
+                        ],
+                        0.8041
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "fhr",
+                            "~hij",
+                            "~tok"
+                        ],
+                        0.0129
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "fhr",
+                            "~hij",
+                            "~tok"
+                        ],
+                        0.9871
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "~fhr",
+                            "hij",
+                            "tok"
+                        ],
+                        0.5368
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "~fhr",
+                            "hij",
+                            "tok"
+                        ],
+                        0.4632
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "~fhr",
+                            "hij",
+                            "~tok"
+                        ],
+                        0.6463
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "~fhr",
+                            "hij",
+                            "~tok"
+                        ],
+                        0.3537
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "~fhr",
+                            "~hij",
+                            "tok"
+                        ],
+                        0.2517
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "~fhr",
+                            "~hij",
+                            "tok"
+                        ],
+                        0.7483
+                    ],
+                    [
+                        "tgs",
+                        [
+                            "~fhr",
+                            "~hij",
+                            "~tok"
+                        ],
+                        0.4175
+                    ],
+                    [
+                        "~tgs",
+                        [
+                            "~fhr",
+                            "~hij",
+                            "~tok"
+                        ],
+                        0.5825
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TGS",
+            "outcomes": [
+                "tgs",
+                "~tgs"
+            ],
+            "parents": [
+                "FHR",
+                "HIJ",
+                "TOK"
+            ]
+        }
+    ]
+}

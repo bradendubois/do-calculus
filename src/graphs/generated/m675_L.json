@@ -1,0 +1,816 @@
+{
+    "latent-model": true,
+    "name": "m675_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kzq",
+                        [
+                            "nmw",
+                            "vaa"
+                        ],
+                        0.8339
+                    ],
+                    [
+                        "~kzq",
+                        [
+                            "nmw",
+                            "vaa"
+                        ],
+                        0.1661
+                    ],
+                    [
+                        "kzq",
+                        [
+                            "nmw",
+                            "~vaa"
+                        ],
+                        0.3197
+                    ],
+                    [
+                        "~kzq",
+                        [
+                            "nmw",
+                            "~vaa"
+                        ],
+                        0.6803
+                    ],
+                    [
+                        "kzq",
+                        [
+                            "~nmw",
+                            "vaa"
+                        ],
+                        0.8516
+                    ],
+                    [
+                        "~kzq",
+                        [
+                            "~nmw",
+                            "vaa"
+                        ],
+                        0.1484
+                    ],
+                    [
+                        "kzq",
+                        [
+                            "~nmw",
+                            "~vaa"
+                        ],
+                        0.3296
+                    ],
+                    [
+                        "~kzq",
+                        [
+                            "~nmw",
+                            "~vaa"
+                        ],
+                        0.6704
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KZQ",
+            "outcomes": [
+                "kzq",
+                "~kzq"
+            ],
+            "parents": [
+                "NMW",
+                "VAA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tgb",
+                        [],
+                        0.0451
+                    ],
+                    [
+                        "~tgb",
+                        [],
+                        0.9549
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TGB",
+            "outcomes": [
+                "tgb",
+                "~tgb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zzv",
+                        [
+                            "xlq"
+                        ],
+                        0.9096
+                    ],
+                    [
+                        "~zzv",
+                        [
+                            "xlq"
+                        ],
+                        0.0904
+                    ],
+                    [
+                        "zzv",
+                        [
+                            "~xlq"
+                        ],
+                        0.7387
+                    ],
+                    [
+                        "~zzv",
+                        [
+                            "~xlq"
+                        ],
+                        0.2613
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZZV",
+            "outcomes": [
+                "zzv",
+                "~zzv"
+            ],
+            "parents": [
+                "XLQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dvf",
+                        [
+                            "pln",
+                            "vaa"
+                        ],
+                        0.0016
+                    ],
+                    [
+                        "~dvf",
+                        [
+                            "pln",
+                            "vaa"
+                        ],
+                        0.9984
+                    ],
+                    [
+                        "dvf",
+                        [
+                            "pln",
+                            "~vaa"
+                        ],
+                        0.6307
+                    ],
+                    [
+                        "~dvf",
+                        [
+                            "pln",
+                            "~vaa"
+                        ],
+                        0.3693
+                    ],
+                    [
+                        "dvf",
+                        [
+                            "~pln",
+                            "vaa"
+                        ],
+                        0.5925
+                    ],
+                    [
+                        "~dvf",
+                        [
+                            "~pln",
+                            "vaa"
+                        ],
+                        0.4075
+                    ],
+                    [
+                        "dvf",
+                        [
+                            "~pln",
+                            "~vaa"
+                        ],
+                        0.3775
+                    ],
+                    [
+                        "~dvf",
+                        [
+                            "~pln",
+                            "~vaa"
+                        ],
+                        0.6225
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DVF",
+            "outcomes": [
+                "dvf",
+                "~dvf"
+            ],
+            "parents": [
+                "PLN",
+                "VAA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aqf",
+                        [
+                            "kzq",
+                            "xlq"
+                        ],
+                        0.578
+                    ],
+                    [
+                        "~aqf",
+                        [
+                            "kzq",
+                            "xlq"
+                        ],
+                        0.422
+                    ],
+                    [
+                        "aqf",
+                        [
+                            "kzq",
+                            "~xlq"
+                        ],
+                        0.8439
+                    ],
+                    [
+                        "~aqf",
+                        [
+                            "kzq",
+                            "~xlq"
+                        ],
+                        0.1561
+                    ],
+                    [
+                        "aqf",
+                        [
+                            "~kzq",
+                            "xlq"
+                        ],
+                        0.7529
+                    ],
+                    [
+                        "~aqf",
+                        [
+                            "~kzq",
+                            "xlq"
+                        ],
+                        0.2471
+                    ],
+                    [
+                        "aqf",
+                        [
+                            "~kzq",
+                            "~xlq"
+                        ],
+                        0.3791
+                    ],
+                    [
+                        "~aqf",
+                        [
+                            "~kzq",
+                            "~xlq"
+                        ],
+                        0.6209
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AQF",
+            "outcomes": [
+                "aqf",
+                "~aqf"
+            ],
+            "parents": [
+                "KZQ",
+                "XLQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fyk",
+                        [
+                            "aqf",
+                            "dvf",
+                            "yga"
+                        ],
+                        0.8015
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "aqf",
+                            "dvf",
+                            "yga"
+                        ],
+                        0.1985
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "aqf",
+                            "dvf",
+                            "~yga"
+                        ],
+                        0.7998
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "aqf",
+                            "dvf",
+                            "~yga"
+                        ],
+                        0.2002
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "aqf",
+                            "~dvf",
+                            "yga"
+                        ],
+                        0.6997
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "aqf",
+                            "~dvf",
+                            "yga"
+                        ],
+                        0.3003
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "aqf",
+                            "~dvf",
+                            "~yga"
+                        ],
+                        0.0851
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "aqf",
+                            "~dvf",
+                            "~yga"
+                        ],
+                        0.9149
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "~aqf",
+                            "dvf",
+                            "yga"
+                        ],
+                        0.9722
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "~aqf",
+                            "dvf",
+                            "yga"
+                        ],
+                        0.0278
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "~aqf",
+                            "dvf",
+                            "~yga"
+                        ],
+                        0.2652
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "~aqf",
+                            "dvf",
+                            "~yga"
+                        ],
+                        0.7348
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "~aqf",
+                            "~dvf",
+                            "yga"
+                        ],
+                        0.4643
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "~aqf",
+                            "~dvf",
+                            "yga"
+                        ],
+                        0.5357
+                    ],
+                    [
+                        "fyk",
+                        [
+                            "~aqf",
+                            "~dvf",
+                            "~yga"
+                        ],
+                        0.4579
+                    ],
+                    [
+                        "~fyk",
+                        [
+                            "~aqf",
+                            "~dvf",
+                            "~yga"
+                        ],
+                        0.5421
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FYK",
+            "outcomes": [
+                "fyk",
+                "~fyk"
+            ],
+            "parents": [
+                "AQF",
+                "DVF",
+                "YGA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yga",
+                        [
+                            "zzv"
+                        ],
+                        0.019
+                    ],
+                    [
+                        "~yga",
+                        [
+                            "zzv"
+                        ],
+                        0.981
+                    ],
+                    [
+                        "yga",
+                        [
+                            "~zzv"
+                        ],
+                        0.7842
+                    ],
+                    [
+                        "~yga",
+                        [
+                            "~zzv"
+                        ],
+                        0.2158
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YGA",
+            "outcomes": [
+                "yga",
+                "~yga"
+            ],
+            "parents": [
+                "ZZV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nmw",
+                        [],
+                        0.135
+                    ],
+                    [
+                        "~nmw",
+                        [],
+                        0.865
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "NMW",
+            "outcomes": [
+                "nmw",
+                "~nmw"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vaa",
+                        [
+                            "ass"
+                        ],
+                        0.4919
+                    ],
+                    [
+                        "~vaa",
+                        [
+                            "ass"
+                        ],
+                        0.5081
+                    ],
+                    [
+                        "vaa",
+                        [
+                            "~ass"
+                        ],
+                        0.5054
+                    ],
+                    [
+                        "~vaa",
+                        [
+                            "~ass"
+                        ],
+                        0.4946
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VAA",
+            "outcomes": [
+                "vaa",
+                "~vaa"
+            ],
+            "parents": [
+                "ASS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dhp",
+                        [
+                            "tgb"
+                        ],
+                        0.4602
+                    ],
+                    [
+                        "~dhp",
+                        [
+                            "tgb"
+                        ],
+                        0.5398
+                    ],
+                    [
+                        "dhp",
+                        [
+                            "~tgb"
+                        ],
+                        0.1267
+                    ],
+                    [
+                        "~dhp",
+                        [
+                            "~tgb"
+                        ],
+                        0.8733
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DHP",
+            "outcomes": [
+                "dhp",
+                "~dhp"
+            ],
+            "parents": [
+                "TGB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zmi",
+                        [
+                            "aqf",
+                            "nmw"
+                        ],
+                        0.9431
+                    ],
+                    [
+                        "~zmi",
+                        [
+                            "aqf",
+                            "nmw"
+                        ],
+                        0.0569
+                    ],
+                    [
+                        "zmi",
+                        [
+                            "aqf",
+                            "~nmw"
+                        ],
+                        0.2115
+                    ],
+                    [
+                        "~zmi",
+                        [
+                            "aqf",
+                            "~nmw"
+                        ],
+                        0.7885
+                    ],
+                    [
+                        "zmi",
+                        [
+                            "~aqf",
+                            "nmw"
+                        ],
+                        0.0268
+                    ],
+                    [
+                        "~zmi",
+                        [
+                            "~aqf",
+                            "nmw"
+                        ],
+                        0.9732
+                    ],
+                    [
+                        "zmi",
+                        [
+                            "~aqf",
+                            "~nmw"
+                        ],
+                        0.6267
+                    ],
+                    [
+                        "~zmi",
+                        [
+                            "~aqf",
+                            "~nmw"
+                        ],
+                        0.3733
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZMI",
+            "outcomes": [
+                "zmi",
+                "~zmi"
+            ],
+            "parents": [
+                "AQF",
+                "NMW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ass",
+                        [],
+                        0.6369
+                    ],
+                    [
+                        "~ass",
+                        [],
+                        0.3631
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ASS",
+            "outcomes": [
+                "ass",
+                "~ass"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xlq",
+                        [
+                            "vaa"
+                        ],
+                        0.8834
+                    ],
+                    [
+                        "~xlq",
+                        [
+                            "vaa"
+                        ],
+                        0.1166
+                    ],
+                    [
+                        "xlq",
+                        [
+                            "~vaa"
+                        ],
+                        0.7303
+                    ],
+                    [
+                        "~xlq",
+                        [
+                            "~vaa"
+                        ],
+                        0.2697
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XLQ",
+            "outcomes": [
+                "xlq",
+                "~xlq"
+            ],
+            "parents": [
+                "VAA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pln",
+                        [
+                            "ass"
+                        ],
+                        0.6636
+                    ],
+                    [
+                        "~pln",
+                        [
+                            "ass"
+                        ],
+                        0.3364
+                    ],
+                    [
+                        "pln",
+                        [
+                            "~ass"
+                        ],
+                        0.0012
+                    ],
+                    [
+                        "~pln",
+                        [
+                            "~ass"
+                        ],
+                        0.9988
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PLN",
+            "outcomes": [
+                "pln",
+                "~pln"
+            ],
+            "parents": [
+                "ASS"
+            ]
+        }
+    ]
+}

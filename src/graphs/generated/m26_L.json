@@ -1,0 +1,502 @@
+{
+    "latent-model": true,
+    "name": "m26_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "apt",
+                        [],
+                        0.012
+                    ],
+                    [
+                        "~apt",
+                        [],
+                        0.988
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "APT",
+            "outcomes": [
+                "apt",
+                "~apt"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vmt",
+                        [
+                            "apt",
+                            "rsb"
+                        ],
+                        0.2761
+                    ],
+                    [
+                        "~vmt",
+                        [
+                            "apt",
+                            "rsb"
+                        ],
+                        0.7239
+                    ],
+                    [
+                        "vmt",
+                        [
+                            "apt",
+                            "~rsb"
+                        ],
+                        0.2674
+                    ],
+                    [
+                        "~vmt",
+                        [
+                            "apt",
+                            "~rsb"
+                        ],
+                        0.7326
+                    ],
+                    [
+                        "vmt",
+                        [
+                            "~apt",
+                            "rsb"
+                        ],
+                        0.0459
+                    ],
+                    [
+                        "~vmt",
+                        [
+                            "~apt",
+                            "rsb"
+                        ],
+                        0.9541
+                    ],
+                    [
+                        "vmt",
+                        [
+                            "~apt",
+                            "~rsb"
+                        ],
+                        0.6019
+                    ],
+                    [
+                        "~vmt",
+                        [
+                            "~apt",
+                            "~rsb"
+                        ],
+                        0.3981
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VMT",
+            "outcomes": [
+                "vmt",
+                "~vmt"
+            ],
+            "parents": [
+                "APT",
+                "RSB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eyb",
+                        [
+                            "apt"
+                        ],
+                        0.4763
+                    ],
+                    [
+                        "~eyb",
+                        [
+                            "apt"
+                        ],
+                        0.5237
+                    ],
+                    [
+                        "eyb",
+                        [
+                            "~apt"
+                        ],
+                        0.8739
+                    ],
+                    [
+                        "~eyb",
+                        [
+                            "~apt"
+                        ],
+                        0.1261
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EYB",
+            "outcomes": [
+                "eyb",
+                "~eyb"
+            ],
+            "parents": [
+                "APT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hrp",
+                        [
+                            "lxl",
+                            "wrs"
+                        ],
+                        0.6414
+                    ],
+                    [
+                        "~hrp",
+                        [
+                            "lxl",
+                            "wrs"
+                        ],
+                        0.3586
+                    ],
+                    [
+                        "hrp",
+                        [
+                            "lxl",
+                            "~wrs"
+                        ],
+                        0.376
+                    ],
+                    [
+                        "~hrp",
+                        [
+                            "lxl",
+                            "~wrs"
+                        ],
+                        0.624
+                    ],
+                    [
+                        "hrp",
+                        [
+                            "~lxl",
+                            "wrs"
+                        ],
+                        0.7501
+                    ],
+                    [
+                        "~hrp",
+                        [
+                            "~lxl",
+                            "wrs"
+                        ],
+                        0.2499
+                    ],
+                    [
+                        "hrp",
+                        [
+                            "~lxl",
+                            "~wrs"
+                        ],
+                        0.5107
+                    ],
+                    [
+                        "~hrp",
+                        [
+                            "~lxl",
+                            "~wrs"
+                        ],
+                        0.4893
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HRP",
+            "outcomes": [
+                "hrp",
+                "~hrp"
+            ],
+            "parents": [
+                "LXL",
+                "WRS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lxl",
+                        [
+                            "eyb",
+                            "wrs"
+                        ],
+                        0.7838
+                    ],
+                    [
+                        "~lxl",
+                        [
+                            "eyb",
+                            "wrs"
+                        ],
+                        0.2162
+                    ],
+                    [
+                        "lxl",
+                        [
+                            "eyb",
+                            "~wrs"
+                        ],
+                        0.616
+                    ],
+                    [
+                        "~lxl",
+                        [
+                            "eyb",
+                            "~wrs"
+                        ],
+                        0.384
+                    ],
+                    [
+                        "lxl",
+                        [
+                            "~eyb",
+                            "wrs"
+                        ],
+                        0.9305
+                    ],
+                    [
+                        "~lxl",
+                        [
+                            "~eyb",
+                            "wrs"
+                        ],
+                        0.0695
+                    ],
+                    [
+                        "lxl",
+                        [
+                            "~eyb",
+                            "~wrs"
+                        ],
+                        0.6533
+                    ],
+                    [
+                        "~lxl",
+                        [
+                            "~eyb",
+                            "~wrs"
+                        ],
+                        0.3467
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LXL",
+            "outcomes": [
+                "lxl",
+                "~lxl"
+            ],
+            "parents": [
+                "EYB",
+                "WRS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "khw",
+                        [
+                            "rsb"
+                        ],
+                        0.769
+                    ],
+                    [
+                        "~khw",
+                        [
+                            "rsb"
+                        ],
+                        0.231
+                    ],
+                    [
+                        "khw",
+                        [
+                            "~rsb"
+                        ],
+                        0.9969
+                    ],
+                    [
+                        "~khw",
+                        [
+                            "~rsb"
+                        ],
+                        0.0031
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KHW",
+            "outcomes": [
+                "khw",
+                "~khw"
+            ],
+            "parents": [
+                "RSB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "doi",
+                        [
+                            "apt",
+                            "wrs"
+                        ],
+                        0.9565
+                    ],
+                    [
+                        "~doi",
+                        [
+                            "apt",
+                            "wrs"
+                        ],
+                        0.0435
+                    ],
+                    [
+                        "doi",
+                        [
+                            "apt",
+                            "~wrs"
+                        ],
+                        0.3647
+                    ],
+                    [
+                        "~doi",
+                        [
+                            "apt",
+                            "~wrs"
+                        ],
+                        0.6353
+                    ],
+                    [
+                        "doi",
+                        [
+                            "~apt",
+                            "wrs"
+                        ],
+                        0.6688
+                    ],
+                    [
+                        "~doi",
+                        [
+                            "~apt",
+                            "wrs"
+                        ],
+                        0.3312
+                    ],
+                    [
+                        "doi",
+                        [
+                            "~apt",
+                            "~wrs"
+                        ],
+                        0.7466
+                    ],
+                    [
+                        "~doi",
+                        [
+                            "~apt",
+                            "~wrs"
+                        ],
+                        0.2534
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DOI",
+            "outcomes": [
+                "doi",
+                "~doi"
+            ],
+            "parents": [
+                "APT",
+                "WRS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wrs",
+                        [],
+                        0.613
+                    ],
+                    [
+                        "~wrs",
+                        [],
+                        0.387
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WRS",
+            "outcomes": [
+                "wrs",
+                "~wrs"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rsb",
+                        [
+                            "doi"
+                        ],
+                        0.1394
+                    ],
+                    [
+                        "~rsb",
+                        [
+                            "doi"
+                        ],
+                        0.8606
+                    ],
+                    [
+                        "rsb",
+                        [
+                            "~doi"
+                        ],
+                        0.2578
+                    ],
+                    [
+                        "~rsb",
+                        [
+                            "~doi"
+                        ],
+                        0.7422
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RSB",
+            "outcomes": [
+                "rsb",
+                "~rsb"
+            ],
+            "parents": [
+                "DOI"
+            ]
+        }
+    ]
+}

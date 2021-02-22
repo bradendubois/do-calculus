@@ -1,0 +1,420 @@
+{
+    "latent-model": false,
+    "name": "m700",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "non",
+                        [],
+                        0.7443
+                    ],
+                    [
+                        "~non",
+                        [],
+                        0.2557
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NON",
+            "outcomes": [
+                "non",
+                "~non"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fae",
+                        [],
+                        0.4286
+                    ],
+                    [
+                        "~fae",
+                        [],
+                        0.5714
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FAE",
+            "outcomes": [
+                "fae",
+                "~fae"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dpt",
+                        [
+                            "fae",
+                            "non",
+                            "wvp"
+                        ],
+                        0.3426
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "fae",
+                            "non",
+                            "wvp"
+                        ],
+                        0.6574
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "fae",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.8815
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "fae",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.1185
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "fae",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.9519
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "fae",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.0481
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "fae",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.3697
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "fae",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.6303
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "~fae",
+                            "non",
+                            "wvp"
+                        ],
+                        0.3784
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "~fae",
+                            "non",
+                            "wvp"
+                        ],
+                        0.6216
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "~fae",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.5776
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "~fae",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.4224
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "~fae",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.6906
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "~fae",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.3094
+                    ],
+                    [
+                        "dpt",
+                        [
+                            "~fae",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.6459
+                    ],
+                    [
+                        "~dpt",
+                        [
+                            "~fae",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.3541
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DPT",
+            "outcomes": [
+                "dpt",
+                "~dpt"
+            ],
+            "parents": [
+                "FAE",
+                "NON",
+                "WVP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uuk",
+                        [
+                            "gza",
+                            "non",
+                            "wvp"
+                        ],
+                        0.0689
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "gza",
+                            "non",
+                            "wvp"
+                        ],
+                        0.9311
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "gza",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.8364
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "gza",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.1636
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "gza",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.5051
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "gza",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.4949
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "gza",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.3326
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "gza",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.6674
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "~gza",
+                            "non",
+                            "wvp"
+                        ],
+                        0.3787
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "~gza",
+                            "non",
+                            "wvp"
+                        ],
+                        0.6213
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "~gza",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.8396
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "~gza",
+                            "non",
+                            "~wvp"
+                        ],
+                        0.1604
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "~gza",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.2659
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "~gza",
+                            "~non",
+                            "wvp"
+                        ],
+                        0.7341
+                    ],
+                    [
+                        "uuk",
+                        [
+                            "~gza",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.625
+                    ],
+                    [
+                        "~uuk",
+                        [
+                            "~gza",
+                            "~non",
+                            "~wvp"
+                        ],
+                        0.375
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UUK",
+            "outcomes": [
+                "uuk",
+                "~uuk"
+            ],
+            "parents": [
+                "GZA",
+                "NON",
+                "WVP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gza",
+                        [],
+                        0.0536
+                    ],
+                    [
+                        "~gza",
+                        [],
+                        0.9464
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GZA",
+            "outcomes": [
+                "gza",
+                "~gza"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wvp",
+                        [],
+                        0.0865
+                    ],
+                    [
+                        "~wvp",
+                        [],
+                        0.9135
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WVP",
+            "outcomes": [
+                "wvp",
+                "~wvp"
+            ],
+            "parents": []
+        }
+    ]
+}

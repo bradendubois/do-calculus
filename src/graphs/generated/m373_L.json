@@ -1,0 +1,299 @@
+{
+    "latent-model": true,
+    "name": "m373_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "exj",
+                        [],
+                        0.7261
+                    ],
+                    [
+                        "~exj",
+                        [],
+                        0.2739
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EXJ",
+            "outcomes": [
+                "exj",
+                "~exj"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mig",
+                        [
+                            "drl"
+                        ],
+                        0.6831
+                    ],
+                    [
+                        "~mig",
+                        [
+                            "drl"
+                        ],
+                        0.3169
+                    ],
+                    [
+                        "mig",
+                        [
+                            "~drl"
+                        ],
+                        0.6239
+                    ],
+                    [
+                        "~mig",
+                        [
+                            "~drl"
+                        ],
+                        0.3761
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MIG",
+            "outcomes": [
+                "mig",
+                "~mig"
+            ],
+            "parents": [
+                "DRL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wbf",
+                        [
+                            "exj"
+                        ],
+                        0.612
+                    ],
+                    [
+                        "~wbf",
+                        [
+                            "exj"
+                        ],
+                        0.388
+                    ],
+                    [
+                        "wbf",
+                        [
+                            "~exj"
+                        ],
+                        0.3904
+                    ],
+                    [
+                        "~wbf",
+                        [
+                            "~exj"
+                        ],
+                        0.6096
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WBF",
+            "outcomes": [
+                "wbf",
+                "~wbf"
+            ],
+            "parents": [
+                "EXJ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qyn",
+                        [],
+                        0.8005
+                    ],
+                    [
+                        "~qyn",
+                        [],
+                        0.1995
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "QYN",
+            "outcomes": [
+                "qyn",
+                "~qyn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "drl",
+                        [
+                            "exj",
+                            "wbf"
+                        ],
+                        0.4824
+                    ],
+                    [
+                        "~drl",
+                        [
+                            "exj",
+                            "wbf"
+                        ],
+                        0.5176
+                    ],
+                    [
+                        "drl",
+                        [
+                            "exj",
+                            "~wbf"
+                        ],
+                        0.6686
+                    ],
+                    [
+                        "~drl",
+                        [
+                            "exj",
+                            "~wbf"
+                        ],
+                        0.3314
+                    ],
+                    [
+                        "drl",
+                        [
+                            "~exj",
+                            "wbf"
+                        ],
+                        0.6261
+                    ],
+                    [
+                        "~drl",
+                        [
+                            "~exj",
+                            "wbf"
+                        ],
+                        0.3739
+                    ],
+                    [
+                        "drl",
+                        [
+                            "~exj",
+                            "~wbf"
+                        ],
+                        0.4782
+                    ],
+                    [
+                        "~drl",
+                        [
+                            "~exj",
+                            "~wbf"
+                        ],
+                        0.5218
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DRL",
+            "outcomes": [
+                "drl",
+                "~drl"
+            ],
+            "parents": [
+                "EXJ",
+                "WBF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vzt",
+                        [
+                            "drl",
+                            "wbf"
+                        ],
+                        0.1524
+                    ],
+                    [
+                        "~vzt",
+                        [
+                            "drl",
+                            "wbf"
+                        ],
+                        0.8476
+                    ],
+                    [
+                        "vzt",
+                        [
+                            "drl",
+                            "~wbf"
+                        ],
+                        0.6967
+                    ],
+                    [
+                        "~vzt",
+                        [
+                            "drl",
+                            "~wbf"
+                        ],
+                        0.3033
+                    ],
+                    [
+                        "vzt",
+                        [
+                            "~drl",
+                            "wbf"
+                        ],
+                        0.8768
+                    ],
+                    [
+                        "~vzt",
+                        [
+                            "~drl",
+                            "wbf"
+                        ],
+                        0.1232
+                    ],
+                    [
+                        "vzt",
+                        [
+                            "~drl",
+                            "~wbf"
+                        ],
+                        0.2245
+                    ],
+                    [
+                        "~vzt",
+                        [
+                            "~drl",
+                            "~wbf"
+                        ],
+                        0.7755
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VZT",
+            "outcomes": [
+                "vzt",
+                "~vzt"
+            ],
+            "parents": [
+                "DRL",
+                "WBF"
+            ]
+        }
+    ]
+}

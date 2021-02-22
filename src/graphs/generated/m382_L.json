@@ -1,0 +1,679 @@
+{
+    "latent-model": true,
+    "name": "m382_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "msf",
+                        [
+                            "ppa"
+                        ],
+                        0.9054
+                    ],
+                    [
+                        "~msf",
+                        [
+                            "ppa"
+                        ],
+                        0.0946
+                    ],
+                    [
+                        "msf",
+                        [
+                            "~ppa"
+                        ],
+                        0.396
+                    ],
+                    [
+                        "~msf",
+                        [
+                            "~ppa"
+                        ],
+                        0.604
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MSF",
+            "outcomes": [
+                "msf",
+                "~msf"
+            ],
+            "parents": [
+                "PPA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yya",
+                        [
+                            "por",
+                            "rdg"
+                        ],
+                        0.5944
+                    ],
+                    [
+                        "~yya",
+                        [
+                            "por",
+                            "rdg"
+                        ],
+                        0.4056
+                    ],
+                    [
+                        "yya",
+                        [
+                            "por",
+                            "~rdg"
+                        ],
+                        0.8177
+                    ],
+                    [
+                        "~yya",
+                        [
+                            "por",
+                            "~rdg"
+                        ],
+                        0.1823
+                    ],
+                    [
+                        "yya",
+                        [
+                            "~por",
+                            "rdg"
+                        ],
+                        0.6141
+                    ],
+                    [
+                        "~yya",
+                        [
+                            "~por",
+                            "rdg"
+                        ],
+                        0.3859
+                    ],
+                    [
+                        "yya",
+                        [
+                            "~por",
+                            "~rdg"
+                        ],
+                        0.0569
+                    ],
+                    [
+                        "~yya",
+                        [
+                            "~por",
+                            "~rdg"
+                        ],
+                        0.9431
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YYA",
+            "outcomes": [
+                "yya",
+                "~yya"
+            ],
+            "parents": [
+                "POR",
+                "RDG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xsa",
+                        [
+                            "mca",
+                            "xla"
+                        ],
+                        0.5156
+                    ],
+                    [
+                        "~xsa",
+                        [
+                            "mca",
+                            "xla"
+                        ],
+                        0.4844
+                    ],
+                    [
+                        "xsa",
+                        [
+                            "mca",
+                            "~xla"
+                        ],
+                        0.8895
+                    ],
+                    [
+                        "~xsa",
+                        [
+                            "mca",
+                            "~xla"
+                        ],
+                        0.1105
+                    ],
+                    [
+                        "xsa",
+                        [
+                            "~mca",
+                            "xla"
+                        ],
+                        0.0269
+                    ],
+                    [
+                        "~xsa",
+                        [
+                            "~mca",
+                            "xla"
+                        ],
+                        0.9731
+                    ],
+                    [
+                        "xsa",
+                        [
+                            "~mca",
+                            "~xla"
+                        ],
+                        0.5286
+                    ],
+                    [
+                        "~xsa",
+                        [
+                            "~mca",
+                            "~xla"
+                        ],
+                        0.4714
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XSA",
+            "outcomes": [
+                "xsa",
+                "~xsa"
+            ],
+            "parents": [
+                "MCA",
+                "XLA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rvr",
+                        [
+                            "mds"
+                        ],
+                        0.0106
+                    ],
+                    [
+                        "~rvr",
+                        [
+                            "mds"
+                        ],
+                        0.9894
+                    ],
+                    [
+                        "rvr",
+                        [
+                            "~mds"
+                        ],
+                        0.1652
+                    ],
+                    [
+                        "~rvr",
+                        [
+                            "~mds"
+                        ],
+                        0.8348
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RVR",
+            "outcomes": [
+                "rvr",
+                "~rvr"
+            ],
+            "parents": [
+                "MDS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xla",
+                        [
+                            "rdg"
+                        ],
+                        0.9404
+                    ],
+                    [
+                        "~xla",
+                        [
+                            "rdg"
+                        ],
+                        0.0596
+                    ],
+                    [
+                        "xla",
+                        [
+                            "~rdg"
+                        ],
+                        0.2174
+                    ],
+                    [
+                        "~xla",
+                        [
+                            "~rdg"
+                        ],
+                        0.7826
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XLA",
+            "outcomes": [
+                "xla",
+                "~xla"
+            ],
+            "parents": [
+                "RDG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dog",
+                        [],
+                        0.3732
+                    ],
+                    [
+                        "~dog",
+                        [],
+                        0.6268
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "DOG",
+            "outcomes": [
+                "dog",
+                "~dog"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rdg",
+                        [],
+                        0.4511
+                    ],
+                    [
+                        "~rdg",
+                        [],
+                        0.5489
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "RDG",
+            "outcomes": [
+                "rdg",
+                "~rdg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mca",
+                        [],
+                        0.4612
+                    ],
+                    [
+                        "~mca",
+                        [],
+                        0.5388
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MCA",
+            "outcomes": [
+                "mca",
+                "~mca"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mds",
+                        [
+                            "mca"
+                        ],
+                        0.1691
+                    ],
+                    [
+                        "~mds",
+                        [
+                            "mca"
+                        ],
+                        0.8309
+                    ],
+                    [
+                        "mds",
+                        [
+                            "~mca"
+                        ],
+                        0.3982
+                    ],
+                    [
+                        "~mds",
+                        [
+                            "~mca"
+                        ],
+                        0.6018
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MDS",
+            "outcomes": [
+                "mds",
+                "~mds"
+            ],
+            "parents": [
+                "MCA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cav",
+                        [],
+                        0.2108
+                    ],
+                    [
+                        "~cav",
+                        [],
+                        0.7892
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CAV",
+            "outcomes": [
+                "cav",
+                "~cav"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "por",
+                        [
+                            "msf"
+                        ],
+                        0.1086
+                    ],
+                    [
+                        "~por",
+                        [
+                            "msf"
+                        ],
+                        0.8914
+                    ],
+                    [
+                        "por",
+                        [
+                            "~msf"
+                        ],
+                        0.0228
+                    ],
+                    [
+                        "~por",
+                        [
+                            "~msf"
+                        ],
+                        0.9772
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "POR",
+            "outcomes": [
+                "por",
+                "~por"
+            ],
+            "parents": [
+                "MSF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "snm",
+                        [
+                            "cav",
+                            "por",
+                            "rvr"
+                        ],
+                        0.435
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "cav",
+                            "por",
+                            "rvr"
+                        ],
+                        0.565
+                    ],
+                    [
+                        "snm",
+                        [
+                            "cav",
+                            "por",
+                            "~rvr"
+                        ],
+                        0.5162
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "cav",
+                            "por",
+                            "~rvr"
+                        ],
+                        0.4838
+                    ],
+                    [
+                        "snm",
+                        [
+                            "cav",
+                            "~por",
+                            "rvr"
+                        ],
+                        0.6007
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "cav",
+                            "~por",
+                            "rvr"
+                        ],
+                        0.3993
+                    ],
+                    [
+                        "snm",
+                        [
+                            "cav",
+                            "~por",
+                            "~rvr"
+                        ],
+                        0.5017
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "cav",
+                            "~por",
+                            "~rvr"
+                        ],
+                        0.4983
+                    ],
+                    [
+                        "snm",
+                        [
+                            "~cav",
+                            "por",
+                            "rvr"
+                        ],
+                        0.6796
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "~cav",
+                            "por",
+                            "rvr"
+                        ],
+                        0.3204
+                    ],
+                    [
+                        "snm",
+                        [
+                            "~cav",
+                            "por",
+                            "~rvr"
+                        ],
+                        0.4757
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "~cav",
+                            "por",
+                            "~rvr"
+                        ],
+                        0.5243
+                    ],
+                    [
+                        "snm",
+                        [
+                            "~cav",
+                            "~por",
+                            "rvr"
+                        ],
+                        0.3605
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "~cav",
+                            "~por",
+                            "rvr"
+                        ],
+                        0.6395
+                    ],
+                    [
+                        "snm",
+                        [
+                            "~cav",
+                            "~por",
+                            "~rvr"
+                        ],
+                        0.5464
+                    ],
+                    [
+                        "~snm",
+                        [
+                            "~cav",
+                            "~por",
+                            "~rvr"
+                        ],
+                        0.4536
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SNM",
+            "outcomes": [
+                "snm",
+                "~snm"
+            ],
+            "parents": [
+                "CAV",
+                "POR",
+                "RVR"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ppa",
+                        [
+                            "mds"
+                        ],
+                        0.1765
+                    ],
+                    [
+                        "~ppa",
+                        [
+                            "mds"
+                        ],
+                        0.8235
+                    ],
+                    [
+                        "ppa",
+                        [
+                            "~mds"
+                        ],
+                        0.2116
+                    ],
+                    [
+                        "~ppa",
+                        [
+                            "~mds"
+                        ],
+                        0.7884
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PPA",
+            "outcomes": [
+                "ppa",
+                "~ppa"
+            ],
+            "parents": [
+                "MDS"
+            ]
+        }
+    ]
+}

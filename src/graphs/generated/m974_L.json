@@ -1,0 +1,301 @@
+{
+    "latent-model": true,
+    "name": "m974_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ugp",
+                        [
+                            "jhb",
+                            "qnq",
+                            "rjx"
+                        ],
+                        0.2
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "jhb",
+                            "qnq",
+                            "rjx"
+                        ],
+                        0.8
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "jhb",
+                            "qnq",
+                            "~rjx"
+                        ],
+                        0.5544
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "jhb",
+                            "qnq",
+                            "~rjx"
+                        ],
+                        0.4456
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "jhb",
+                            "~qnq",
+                            "rjx"
+                        ],
+                        0.0921
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "jhb",
+                            "~qnq",
+                            "rjx"
+                        ],
+                        0.9079
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "jhb",
+                            "~qnq",
+                            "~rjx"
+                        ],
+                        0.6985
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "jhb",
+                            "~qnq",
+                            "~rjx"
+                        ],
+                        0.3015
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "~jhb",
+                            "qnq",
+                            "rjx"
+                        ],
+                        0.6151
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "~jhb",
+                            "qnq",
+                            "rjx"
+                        ],
+                        0.3849
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "~jhb",
+                            "qnq",
+                            "~rjx"
+                        ],
+                        0.6617
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "~jhb",
+                            "qnq",
+                            "~rjx"
+                        ],
+                        0.3383
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "~jhb",
+                            "~qnq",
+                            "rjx"
+                        ],
+                        0.1115
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "~jhb",
+                            "~qnq",
+                            "rjx"
+                        ],
+                        0.8885
+                    ],
+                    [
+                        "ugp",
+                        [
+                            "~jhb",
+                            "~qnq",
+                            "~rjx"
+                        ],
+                        0.435
+                    ],
+                    [
+                        "~ugp",
+                        [
+                            "~jhb",
+                            "~qnq",
+                            "~rjx"
+                        ],
+                        0.565
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "UGP",
+            "outcomes": [
+                "ugp",
+                "~ugp"
+            ],
+            "parents": [
+                "JHB",
+                "QNQ",
+                "RJX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rjx",
+                        [],
+                        0.5961
+                    ],
+                    [
+                        "~rjx",
+                        [],
+                        0.4039
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "RJX",
+            "outcomes": [
+                "rjx",
+                "~rjx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jhb",
+                        [
+                            "rjx"
+                        ],
+                        0.8825
+                    ],
+                    [
+                        "~jhb",
+                        [
+                            "rjx"
+                        ],
+                        0.1175
+                    ],
+                    [
+                        "jhb",
+                        [
+                            "~rjx"
+                        ],
+                        0.8129
+                    ],
+                    [
+                        "~jhb",
+                        [
+                            "~rjx"
+                        ],
+                        0.1871
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JHB",
+            "outcomes": [
+                "jhb",
+                "~jhb"
+            ],
+            "parents": [
+                "RJX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qnq",
+                        [
+                            "uag"
+                        ],
+                        0.6533
+                    ],
+                    [
+                        "~qnq",
+                        [
+                            "uag"
+                        ],
+                        0.3467
+                    ],
+                    [
+                        "qnq",
+                        [
+                            "~uag"
+                        ],
+                        0.3826
+                    ],
+                    [
+                        "~qnq",
+                        [
+                            "~uag"
+                        ],
+                        0.6174
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QNQ",
+            "outcomes": [
+                "qnq",
+                "~qnq"
+            ],
+            "parents": [
+                "UAG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "uag",
+                        [],
+                        0.6806
+                    ],
+                    [
+                        "~uag",
+                        [],
+                        0.3194
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "UAG",
+            "outcomes": [
+                "uag",
+                "~uag"
+            ],
+            "parents": []
+        }
+    ]
+}

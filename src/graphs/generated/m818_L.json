@@ -1,0 +1,630 @@
+{
+    "latent-model": true,
+    "name": "m818_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "grx",
+                        [
+                            "pis",
+                            "syq"
+                        ],
+                        0.4589
+                    ],
+                    [
+                        "~grx",
+                        [
+                            "pis",
+                            "syq"
+                        ],
+                        0.5411
+                    ],
+                    [
+                        "grx",
+                        [
+                            "pis",
+                            "~syq"
+                        ],
+                        0.8409
+                    ],
+                    [
+                        "~grx",
+                        [
+                            "pis",
+                            "~syq"
+                        ],
+                        0.1591
+                    ],
+                    [
+                        "grx",
+                        [
+                            "~pis",
+                            "syq"
+                        ],
+                        0.1059
+                    ],
+                    [
+                        "~grx",
+                        [
+                            "~pis",
+                            "syq"
+                        ],
+                        0.8941
+                    ],
+                    [
+                        "grx",
+                        [
+                            "~pis",
+                            "~syq"
+                        ],
+                        0.5447
+                    ],
+                    [
+                        "~grx",
+                        [
+                            "~pis",
+                            "~syq"
+                        ],
+                        0.4553
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GRX",
+            "outcomes": [
+                "grx",
+                "~grx"
+            ],
+            "parents": [
+                "PIS",
+                "SYQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cyu",
+                        [
+                            "bpk",
+                            "syq",
+                            "tkp"
+                        ],
+                        0.4234
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "bpk",
+                            "syq",
+                            "tkp"
+                        ],
+                        0.5766
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "bpk",
+                            "syq",
+                            "~tkp"
+                        ],
+                        0.7783
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "bpk",
+                            "syq",
+                            "~tkp"
+                        ],
+                        0.2217
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "bpk",
+                            "~syq",
+                            "tkp"
+                        ],
+                        0.5366
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "bpk",
+                            "~syq",
+                            "tkp"
+                        ],
+                        0.4634
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "bpk",
+                            "~syq",
+                            "~tkp"
+                        ],
+                        0.4872
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "bpk",
+                            "~syq",
+                            "~tkp"
+                        ],
+                        0.5128
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~bpk",
+                            "syq",
+                            "tkp"
+                        ],
+                        0.8222
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~bpk",
+                            "syq",
+                            "tkp"
+                        ],
+                        0.1778
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~bpk",
+                            "syq",
+                            "~tkp"
+                        ],
+                        0.4443
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~bpk",
+                            "syq",
+                            "~tkp"
+                        ],
+                        0.5557
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~bpk",
+                            "~syq",
+                            "tkp"
+                        ],
+                        0.8814
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~bpk",
+                            "~syq",
+                            "tkp"
+                        ],
+                        0.1186
+                    ],
+                    [
+                        "cyu",
+                        [
+                            "~bpk",
+                            "~syq",
+                            "~tkp"
+                        ],
+                        0.9271
+                    ],
+                    [
+                        "~cyu",
+                        [
+                            "~bpk",
+                            "~syq",
+                            "~tkp"
+                        ],
+                        0.0729
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CYU",
+            "outcomes": [
+                "cyu",
+                "~cyu"
+            ],
+            "parents": [
+                "BPK",
+                "SYQ",
+                "TKP"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "syq",
+                        [
+                            "dmx",
+                            "jli"
+                        ],
+                        0.7999
+                    ],
+                    [
+                        "~syq",
+                        [
+                            "dmx",
+                            "jli"
+                        ],
+                        0.2001
+                    ],
+                    [
+                        "syq",
+                        [
+                            "dmx",
+                            "~jli"
+                        ],
+                        0.2653
+                    ],
+                    [
+                        "~syq",
+                        [
+                            "dmx",
+                            "~jli"
+                        ],
+                        0.7347
+                    ],
+                    [
+                        "syq",
+                        [
+                            "~dmx",
+                            "jli"
+                        ],
+                        0.0481
+                    ],
+                    [
+                        "~syq",
+                        [
+                            "~dmx",
+                            "jli"
+                        ],
+                        0.9519
+                    ],
+                    [
+                        "syq",
+                        [
+                            "~dmx",
+                            "~jli"
+                        ],
+                        0.6254
+                    ],
+                    [
+                        "~syq",
+                        [
+                            "~dmx",
+                            "~jli"
+                        ],
+                        0.3746
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SYQ",
+            "outcomes": [
+                "syq",
+                "~syq"
+            ],
+            "parents": [
+                "DMX",
+                "JLI"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wny",
+                        [],
+                        0.7288
+                    ],
+                    [
+                        "~wny",
+                        [],
+                        0.2712
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WNY",
+            "outcomes": [
+                "wny",
+                "~wny"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dmx",
+                        [
+                            "wmb"
+                        ],
+                        0.0198
+                    ],
+                    [
+                        "~dmx",
+                        [
+                            "wmb"
+                        ],
+                        0.9802
+                    ],
+                    [
+                        "dmx",
+                        [
+                            "~wmb"
+                        ],
+                        0.2362
+                    ],
+                    [
+                        "~dmx",
+                        [
+                            "~wmb"
+                        ],
+                        0.7638
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DMX",
+            "outcomes": [
+                "dmx",
+                "~dmx"
+            ],
+            "parents": [
+                "WMB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bpk",
+                        [
+                            "pis",
+                            "wny"
+                        ],
+                        0.7775
+                    ],
+                    [
+                        "~bpk",
+                        [
+                            "pis",
+                            "wny"
+                        ],
+                        0.2225
+                    ],
+                    [
+                        "bpk",
+                        [
+                            "pis",
+                            "~wny"
+                        ],
+                        0.0231
+                    ],
+                    [
+                        "~bpk",
+                        [
+                            "pis",
+                            "~wny"
+                        ],
+                        0.9769
+                    ],
+                    [
+                        "bpk",
+                        [
+                            "~pis",
+                            "wny"
+                        ],
+                        0.3993
+                    ],
+                    [
+                        "~bpk",
+                        [
+                            "~pis",
+                            "wny"
+                        ],
+                        0.6007
+                    ],
+                    [
+                        "bpk",
+                        [
+                            "~pis",
+                            "~wny"
+                        ],
+                        0.9977
+                    ],
+                    [
+                        "~bpk",
+                        [
+                            "~pis",
+                            "~wny"
+                        ],
+                        0.0023
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BPK",
+            "outcomes": [
+                "bpk",
+                "~bpk"
+            ],
+            "parents": [
+                "PIS",
+                "WNY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zli",
+                        [],
+                        0.9667
+                    ],
+                    [
+                        "~zli",
+                        [],
+                        0.0333
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZLI",
+            "outcomes": [
+                "zli",
+                "~zli"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jli",
+                        [
+                            "dmx"
+                        ],
+                        0.881
+                    ],
+                    [
+                        "~jli",
+                        [
+                            "dmx"
+                        ],
+                        0.119
+                    ],
+                    [
+                        "jli",
+                        [
+                            "~dmx"
+                        ],
+                        0.4863
+                    ],
+                    [
+                        "~jli",
+                        [
+                            "~dmx"
+                        ],
+                        0.5137
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JLI",
+            "outcomes": [
+                "jli",
+                "~jli"
+            ],
+            "parents": [
+                "DMX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wmb",
+                        [],
+                        0.7616
+                    ],
+                    [
+                        "~wmb",
+                        [],
+                        0.2384
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WMB",
+            "outcomes": [
+                "wmb",
+                "~wmb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tkp",
+                        [
+                            "syq"
+                        ],
+                        0.6458
+                    ],
+                    [
+                        "~tkp",
+                        [
+                            "syq"
+                        ],
+                        0.3542
+                    ],
+                    [
+                        "tkp",
+                        [
+                            "~syq"
+                        ],
+                        0.8209
+                    ],
+                    [
+                        "~tkp",
+                        [
+                            "~syq"
+                        ],
+                        0.1791
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TKP",
+            "outcomes": [
+                "tkp",
+                "~tkp"
+            ],
+            "parents": [
+                "SYQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pis",
+                        [],
+                        0.3081
+                    ],
+                    [
+                        "~pis",
+                        [],
+                        0.6919
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PIS",
+            "outcomes": [
+                "pis",
+                "~pis"
+            ],
+            "parents": []
+        }
+    ]
+}

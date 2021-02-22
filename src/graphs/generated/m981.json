@@ -1,0 +1,774 @@
+{
+    "latent-model": false,
+    "name": "m981",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ejp",
+                        [
+                            "nsy"
+                        ],
+                        0.1096
+                    ],
+                    [
+                        "~ejp",
+                        [
+                            "nsy"
+                        ],
+                        0.8904
+                    ],
+                    [
+                        "ejp",
+                        [
+                            "~nsy"
+                        ],
+                        0.8207
+                    ],
+                    [
+                        "~ejp",
+                        [
+                            "~nsy"
+                        ],
+                        0.1793
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EJP",
+            "outcomes": [
+                "ejp",
+                "~ejp"
+            ],
+            "parents": [
+                "NSY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ict",
+                        [
+                            "qsm"
+                        ],
+                        0.1085
+                    ],
+                    [
+                        "~ict",
+                        [
+                            "qsm"
+                        ],
+                        0.8915
+                    ],
+                    [
+                        "ict",
+                        [
+                            "~qsm"
+                        ],
+                        0.3893
+                    ],
+                    [
+                        "~ict",
+                        [
+                            "~qsm"
+                        ],
+                        0.6107
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ICT",
+            "outcomes": [
+                "ict",
+                "~ict"
+            ],
+            "parents": [
+                "QSM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "syt",
+                        [
+                            "xsh"
+                        ],
+                        0.6268
+                    ],
+                    [
+                        "~syt",
+                        [
+                            "xsh"
+                        ],
+                        0.3732
+                    ],
+                    [
+                        "syt",
+                        [
+                            "~xsh"
+                        ],
+                        0.0581
+                    ],
+                    [
+                        "~syt",
+                        [
+                            "~xsh"
+                        ],
+                        0.9419
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SYT",
+            "outcomes": [
+                "syt",
+                "~syt"
+            ],
+            "parents": [
+                "XSH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mus",
+                        [],
+                        0.8086
+                    ],
+                    [
+                        "~mus",
+                        [],
+                        0.1914
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MUS",
+            "outcomes": [
+                "mus",
+                "~mus"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eir",
+                        [
+                            "klz",
+                            "mus"
+                        ],
+                        0.7287
+                    ],
+                    [
+                        "~eir",
+                        [
+                            "klz",
+                            "mus"
+                        ],
+                        0.2713
+                    ],
+                    [
+                        "eir",
+                        [
+                            "klz",
+                            "~mus"
+                        ],
+                        0.7014
+                    ],
+                    [
+                        "~eir",
+                        [
+                            "klz",
+                            "~mus"
+                        ],
+                        0.2986
+                    ],
+                    [
+                        "eir",
+                        [
+                            "~klz",
+                            "mus"
+                        ],
+                        0.3441
+                    ],
+                    [
+                        "~eir",
+                        [
+                            "~klz",
+                            "mus"
+                        ],
+                        0.6559
+                    ],
+                    [
+                        "eir",
+                        [
+                            "~klz",
+                            "~mus"
+                        ],
+                        0.9027
+                    ],
+                    [
+                        "~eir",
+                        [
+                            "~klz",
+                            "~mus"
+                        ],
+                        0.0973
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EIR",
+            "outcomes": [
+                "eir",
+                "~eir"
+            ],
+            "parents": [
+                "KLZ",
+                "MUS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hmi",
+                        [],
+                        0.2345
+                    ],
+                    [
+                        "~hmi",
+                        [],
+                        0.7655
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HMI",
+            "outcomes": [
+                "hmi",
+                "~hmi"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wot",
+                        [],
+                        0.578
+                    ],
+                    [
+                        "~wot",
+                        [],
+                        0.422
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WOT",
+            "outcomes": [
+                "wot",
+                "~wot"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tsy",
+                        [
+                            "mus",
+                            "wot"
+                        ],
+                        0.4502
+                    ],
+                    [
+                        "~tsy",
+                        [
+                            "mus",
+                            "wot"
+                        ],
+                        0.5498
+                    ],
+                    [
+                        "tsy",
+                        [
+                            "mus",
+                            "~wot"
+                        ],
+                        0.9288
+                    ],
+                    [
+                        "~tsy",
+                        [
+                            "mus",
+                            "~wot"
+                        ],
+                        0.0712
+                    ],
+                    [
+                        "tsy",
+                        [
+                            "~mus",
+                            "wot"
+                        ],
+                        0.5512
+                    ],
+                    [
+                        "~tsy",
+                        [
+                            "~mus",
+                            "wot"
+                        ],
+                        0.4488
+                    ],
+                    [
+                        "tsy",
+                        [
+                            "~mus",
+                            "~wot"
+                        ],
+                        0.4513
+                    ],
+                    [
+                        "~tsy",
+                        [
+                            "~mus",
+                            "~wot"
+                        ],
+                        0.5487
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "TSY",
+            "outcomes": [
+                "tsy",
+                "~tsy"
+            ],
+            "parents": [
+                "MUS",
+                "WOT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qsm",
+                        [
+                            "wot"
+                        ],
+                        0.7924
+                    ],
+                    [
+                        "~qsm",
+                        [
+                            "wot"
+                        ],
+                        0.2076
+                    ],
+                    [
+                        "qsm",
+                        [
+                            "~wot"
+                        ],
+                        0.7002
+                    ],
+                    [
+                        "~qsm",
+                        [
+                            "~wot"
+                        ],
+                        0.2998
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QSM",
+            "outcomes": [
+                "qsm",
+                "~qsm"
+            ],
+            "parents": [
+                "WOT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xsh",
+                        [
+                            "eir",
+                            "yqs"
+                        ],
+                        0.4088
+                    ],
+                    [
+                        "~xsh",
+                        [
+                            "eir",
+                            "yqs"
+                        ],
+                        0.5912
+                    ],
+                    [
+                        "xsh",
+                        [
+                            "eir",
+                            "~yqs"
+                        ],
+                        0.3349
+                    ],
+                    [
+                        "~xsh",
+                        [
+                            "eir",
+                            "~yqs"
+                        ],
+                        0.6651
+                    ],
+                    [
+                        "xsh",
+                        [
+                            "~eir",
+                            "yqs"
+                        ],
+                        0.9092
+                    ],
+                    [
+                        "~xsh",
+                        [
+                            "~eir",
+                            "yqs"
+                        ],
+                        0.0908
+                    ],
+                    [
+                        "xsh",
+                        [
+                            "~eir",
+                            "~yqs"
+                        ],
+                        0.2543
+                    ],
+                    [
+                        "~xsh",
+                        [
+                            "~eir",
+                            "~yqs"
+                        ],
+                        0.7457
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XSH",
+            "outcomes": [
+                "xsh",
+                "~xsh"
+            ],
+            "parents": [
+                "EIR",
+                "YQS"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nsy",
+                        [],
+                        0.1661
+                    ],
+                    [
+                        "~nsy",
+                        [],
+                        0.8339
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NSY",
+            "outcomes": [
+                "nsy",
+                "~nsy"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yqs",
+                        [
+                            "nsy",
+                            "tsy"
+                        ],
+                        0.1664
+                    ],
+                    [
+                        "~yqs",
+                        [
+                            "nsy",
+                            "tsy"
+                        ],
+                        0.8336
+                    ],
+                    [
+                        "yqs",
+                        [
+                            "nsy",
+                            "~tsy"
+                        ],
+                        0.1262
+                    ],
+                    [
+                        "~yqs",
+                        [
+                            "nsy",
+                            "~tsy"
+                        ],
+                        0.8738
+                    ],
+                    [
+                        "yqs",
+                        [
+                            "~nsy",
+                            "tsy"
+                        ],
+                        0.6891
+                    ],
+                    [
+                        "~yqs",
+                        [
+                            "~nsy",
+                            "tsy"
+                        ],
+                        0.3109
+                    ],
+                    [
+                        "yqs",
+                        [
+                            "~nsy",
+                            "~tsy"
+                        ],
+                        0.563
+                    ],
+                    [
+                        "~yqs",
+                        [
+                            "~nsy",
+                            "~tsy"
+                        ],
+                        0.437
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YQS",
+            "outcomes": [
+                "yqs",
+                "~yqs"
+            ],
+            "parents": [
+                "NSY",
+                "TSY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qyx",
+                        [
+                            "ejp",
+                            "hmi",
+                            "wot"
+                        ],
+                        0.617
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "ejp",
+                            "hmi",
+                            "wot"
+                        ],
+                        0.383
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "ejp",
+                            "hmi",
+                            "~wot"
+                        ],
+                        0.622
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "ejp",
+                            "hmi",
+                            "~wot"
+                        ],
+                        0.378
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "ejp",
+                            "~hmi",
+                            "wot"
+                        ],
+                        0.207
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "ejp",
+                            "~hmi",
+                            "wot"
+                        ],
+                        0.793
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "ejp",
+                            "~hmi",
+                            "~wot"
+                        ],
+                        0.4058
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "ejp",
+                            "~hmi",
+                            "~wot"
+                        ],
+                        0.5942
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "~ejp",
+                            "hmi",
+                            "wot"
+                        ],
+                        0.0901
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "~ejp",
+                            "hmi",
+                            "wot"
+                        ],
+                        0.9099
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "~ejp",
+                            "hmi",
+                            "~wot"
+                        ],
+                        0.5021
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "~ejp",
+                            "hmi",
+                            "~wot"
+                        ],
+                        0.4979
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "~ejp",
+                            "~hmi",
+                            "wot"
+                        ],
+                        0.3412
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "~ejp",
+                            "~hmi",
+                            "wot"
+                        ],
+                        0.6588
+                    ],
+                    [
+                        "qyx",
+                        [
+                            "~ejp",
+                            "~hmi",
+                            "~wot"
+                        ],
+                        0.725
+                    ],
+                    [
+                        "~qyx",
+                        [
+                            "~ejp",
+                            "~hmi",
+                            "~wot"
+                        ],
+                        0.275
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QYX",
+            "outcomes": [
+                "qyx",
+                "~qyx"
+            ],
+            "parents": [
+                "EJP",
+                "HMI",
+                "WOT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "klz",
+                        [],
+                        0.8987
+                    ],
+                    [
+                        "~klz",
+                        [],
+                        0.1013
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KLZ",
+            "outcomes": [
+                "klz",
+                "~klz"
+            ],
+            "parents": []
+        }
+    ]
+}

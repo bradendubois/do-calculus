@@ -1,0 +1,650 @@
+{
+    "latent-model": true,
+    "name": "m852_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vdt",
+                        [
+                            "ahz",
+                            "jdu"
+                        ],
+                        0.7275
+                    ],
+                    [
+                        "~vdt",
+                        [
+                            "ahz",
+                            "jdu"
+                        ],
+                        0.2725
+                    ],
+                    [
+                        "vdt",
+                        [
+                            "ahz",
+                            "~jdu"
+                        ],
+                        0.9001
+                    ],
+                    [
+                        "~vdt",
+                        [
+                            "ahz",
+                            "~jdu"
+                        ],
+                        0.0999
+                    ],
+                    [
+                        "vdt",
+                        [
+                            "~ahz",
+                            "jdu"
+                        ],
+                        0.8189
+                    ],
+                    [
+                        "~vdt",
+                        [
+                            "~ahz",
+                            "jdu"
+                        ],
+                        0.1811
+                    ],
+                    [
+                        "vdt",
+                        [
+                            "~ahz",
+                            "~jdu"
+                        ],
+                        0.0395
+                    ],
+                    [
+                        "~vdt",
+                        [
+                            "~ahz",
+                            "~jdu"
+                        ],
+                        0.9605
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VDT",
+            "outcomes": [
+                "vdt",
+                "~vdt"
+            ],
+            "parents": [
+                "AHZ",
+                "JDU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jhh",
+                        [],
+                        0.4426
+                    ],
+                    [
+                        "~jhh",
+                        [],
+                        0.5574
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JHH",
+            "outcomes": [
+                "jhh",
+                "~jhh"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "hmc",
+                        [
+                            "cbc"
+                        ],
+                        0.761
+                    ],
+                    [
+                        "~hmc",
+                        [
+                            "cbc"
+                        ],
+                        0.239
+                    ],
+                    [
+                        "hmc",
+                        [
+                            "~cbc"
+                        ],
+                        0.4064
+                    ],
+                    [
+                        "~hmc",
+                        [
+                            "~cbc"
+                        ],
+                        0.5936
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "HMC",
+            "outcomes": [
+                "hmc",
+                "~hmc"
+            ],
+            "parents": [
+                "CBC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ysw",
+                        [
+                            "jdu",
+                            "jhh",
+                            "vdt"
+                        ],
+                        0.512
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "jdu",
+                            "jhh",
+                            "vdt"
+                        ],
+                        0.488
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "jdu",
+                            "jhh",
+                            "~vdt"
+                        ],
+                        0.8527
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "jdu",
+                            "jhh",
+                            "~vdt"
+                        ],
+                        0.1473
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "jdu",
+                            "~jhh",
+                            "vdt"
+                        ],
+                        0.693
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "jdu",
+                            "~jhh",
+                            "vdt"
+                        ],
+                        0.307
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "jdu",
+                            "~jhh",
+                            "~vdt"
+                        ],
+                        0.9513
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "jdu",
+                            "~jhh",
+                            "~vdt"
+                        ],
+                        0.0487
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "~jdu",
+                            "jhh",
+                            "vdt"
+                        ],
+                        0.0125
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "~jdu",
+                            "jhh",
+                            "vdt"
+                        ],
+                        0.9875
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "~jdu",
+                            "jhh",
+                            "~vdt"
+                        ],
+                        0.5381
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "~jdu",
+                            "jhh",
+                            "~vdt"
+                        ],
+                        0.4619
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "~jdu",
+                            "~jhh",
+                            "vdt"
+                        ],
+                        0.5411
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "~jdu",
+                            "~jhh",
+                            "vdt"
+                        ],
+                        0.4589
+                    ],
+                    [
+                        "ysw",
+                        [
+                            "~jdu",
+                            "~jhh",
+                            "~vdt"
+                        ],
+                        0.7373
+                    ],
+                    [
+                        "~ysw",
+                        [
+                            "~jdu",
+                            "~jhh",
+                            "~vdt"
+                        ],
+                        0.2627
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YSW",
+            "outcomes": [
+                "ysw",
+                "~ysw"
+            ],
+            "parents": [
+                "JDU",
+                "JHH",
+                "VDT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jdu",
+                        [],
+                        0.294
+                    ],
+                    [
+                        "~jdu",
+                        [],
+                        0.706
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JDU",
+            "outcomes": [
+                "jdu",
+                "~jdu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ahz",
+                        [
+                            "jhh"
+                        ],
+                        0.1789
+                    ],
+                    [
+                        "~ahz",
+                        [
+                            "jhh"
+                        ],
+                        0.8211
+                    ],
+                    [
+                        "ahz",
+                        [
+                            "~jhh"
+                        ],
+                        0.5325
+                    ],
+                    [
+                        "~ahz",
+                        [
+                            "~jhh"
+                        ],
+                        0.4675
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AHZ",
+            "outcomes": [
+                "ahz",
+                "~ahz"
+            ],
+            "parents": [
+                "JHH"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "cbc",
+                        [
+                            "jdu",
+                            "lcn",
+                            "vdt"
+                        ],
+                        0.9052
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "jdu",
+                            "lcn",
+                            "vdt"
+                        ],
+                        0.0948
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "jdu",
+                            "lcn",
+                            "~vdt"
+                        ],
+                        0.1394
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "jdu",
+                            "lcn",
+                            "~vdt"
+                        ],
+                        0.8606
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "jdu",
+                            "~lcn",
+                            "vdt"
+                        ],
+                        0.2033
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "jdu",
+                            "~lcn",
+                            "vdt"
+                        ],
+                        0.7967
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "jdu",
+                            "~lcn",
+                            "~vdt"
+                        ],
+                        0.2474
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "jdu",
+                            "~lcn",
+                            "~vdt"
+                        ],
+                        0.7526
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "~jdu",
+                            "lcn",
+                            "vdt"
+                        ],
+                        0.0736
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "~jdu",
+                            "lcn",
+                            "vdt"
+                        ],
+                        0.9264
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "~jdu",
+                            "lcn",
+                            "~vdt"
+                        ],
+                        0.5582
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "~jdu",
+                            "lcn",
+                            "~vdt"
+                        ],
+                        0.4418
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "~jdu",
+                            "~lcn",
+                            "vdt"
+                        ],
+                        0.5903
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "~jdu",
+                            "~lcn",
+                            "vdt"
+                        ],
+                        0.4097
+                    ],
+                    [
+                        "cbc",
+                        [
+                            "~jdu",
+                            "~lcn",
+                            "~vdt"
+                        ],
+                        0.7761
+                    ],
+                    [
+                        "~cbc",
+                        [
+                            "~jdu",
+                            "~lcn",
+                            "~vdt"
+                        ],
+                        0.2239
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "CBC",
+            "outcomes": [
+                "cbc",
+                "~cbc"
+            ],
+            "parents": [
+                "JDU",
+                "LCN",
+                "VDT"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lcn",
+                        [
+                            "ahz"
+                        ],
+                        0.4338
+                    ],
+                    [
+                        "~lcn",
+                        [
+                            "ahz"
+                        ],
+                        0.5662
+                    ],
+                    [
+                        "lcn",
+                        [
+                            "~ahz"
+                        ],
+                        0.8931
+                    ],
+                    [
+                        "~lcn",
+                        [
+                            "~ahz"
+                        ],
+                        0.1069
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LCN",
+            "outcomes": [
+                "lcn",
+                "~lcn"
+            ],
+            "parents": [
+                "AHZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zpq",
+                        [],
+                        0.5275
+                    ],
+                    [
+                        "~zpq",
+                        [],
+                        0.4725
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ZPQ",
+            "outcomes": [
+                "zpq",
+                "~zpq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lzm",
+                        [
+                            "cbc"
+                        ],
+                        0.1474
+                    ],
+                    [
+                        "~lzm",
+                        [
+                            "cbc"
+                        ],
+                        0.8526
+                    ],
+                    [
+                        "lzm",
+                        [
+                            "~cbc"
+                        ],
+                        0.8305
+                    ],
+                    [
+                        "~lzm",
+                        [
+                            "~cbc"
+                        ],
+                        0.1695
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LZM",
+            "outcomes": [
+                "lzm",
+                "~lzm"
+            ],
+            "parents": [
+                "CBC"
+            ]
+        }
+    ]
+}

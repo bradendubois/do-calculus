@@ -1,0 +1,347 @@
+{
+    "latent-model": true,
+    "name": "m111_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ywa",
+                        [],
+                        0.8898
+                    ],
+                    [
+                        "~ywa",
+                        [],
+                        0.1102
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "YWA",
+            "outcomes": [
+                "ywa",
+                "~ywa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mil",
+                        [
+                            "pgz",
+                            "ywa"
+                        ],
+                        0.4369
+                    ],
+                    [
+                        "~mil",
+                        [
+                            "pgz",
+                            "ywa"
+                        ],
+                        0.5631
+                    ],
+                    [
+                        "mil",
+                        [
+                            "pgz",
+                            "~ywa"
+                        ],
+                        0.7824
+                    ],
+                    [
+                        "~mil",
+                        [
+                            "pgz",
+                            "~ywa"
+                        ],
+                        0.2176
+                    ],
+                    [
+                        "mil",
+                        [
+                            "~pgz",
+                            "ywa"
+                        ],
+                        0.8775
+                    ],
+                    [
+                        "~mil",
+                        [
+                            "~pgz",
+                            "ywa"
+                        ],
+                        0.1225
+                    ],
+                    [
+                        "mil",
+                        [
+                            "~pgz",
+                            "~ywa"
+                        ],
+                        0.7443
+                    ],
+                    [
+                        "~mil",
+                        [
+                            "~pgz",
+                            "~ywa"
+                        ],
+                        0.2557
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MIL",
+            "outcomes": [
+                "mil",
+                "~mil"
+            ],
+            "parents": [
+                "PGZ",
+                "YWA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "elg",
+                        [
+                            "pgz"
+                        ],
+                        0.6752
+                    ],
+                    [
+                        "~elg",
+                        [
+                            "pgz"
+                        ],
+                        0.3248
+                    ],
+                    [
+                        "elg",
+                        [
+                            "~pgz"
+                        ],
+                        0.5621
+                    ],
+                    [
+                        "~elg",
+                        [
+                            "~pgz"
+                        ],
+                        0.4379
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ELG",
+            "outcomes": [
+                "elg",
+                "~elg"
+            ],
+            "parents": [
+                "PGZ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ytb",
+                        [
+                            "wwl",
+                            "ywa"
+                        ],
+                        0.5168
+                    ],
+                    [
+                        "~ytb",
+                        [
+                            "wwl",
+                            "ywa"
+                        ],
+                        0.4832
+                    ],
+                    [
+                        "ytb",
+                        [
+                            "wwl",
+                            "~ywa"
+                        ],
+                        0.0618
+                    ],
+                    [
+                        "~ytb",
+                        [
+                            "wwl",
+                            "~ywa"
+                        ],
+                        0.9382
+                    ],
+                    [
+                        "ytb",
+                        [
+                            "~wwl",
+                            "ywa"
+                        ],
+                        0.5646
+                    ],
+                    [
+                        "~ytb",
+                        [
+                            "~wwl",
+                            "ywa"
+                        ],
+                        0.4354
+                    ],
+                    [
+                        "ytb",
+                        [
+                            "~wwl",
+                            "~ywa"
+                        ],
+                        0.8724
+                    ],
+                    [
+                        "~ytb",
+                        [
+                            "~wwl",
+                            "~ywa"
+                        ],
+                        0.1276
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YTB",
+            "outcomes": [
+                "ytb",
+                "~ytb"
+            ],
+            "parents": [
+                "WWL",
+                "YWA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lnt",
+                        [
+                            "ywa"
+                        ],
+                        0.9982
+                    ],
+                    [
+                        "~lnt",
+                        [
+                            "ywa"
+                        ],
+                        0.0018
+                    ],
+                    [
+                        "lnt",
+                        [
+                            "~ywa"
+                        ],
+                        0.827
+                    ],
+                    [
+                        "~lnt",
+                        [
+                            "~ywa"
+                        ],
+                        0.173
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LNT",
+            "outcomes": [
+                "lnt",
+                "~lnt"
+            ],
+            "parents": [
+                "YWA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "eof",
+                        [],
+                        0.6731
+                    ],
+                    [
+                        "~eof",
+                        [],
+                        0.3269
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "EOF",
+            "outcomes": [
+                "eof",
+                "~eof"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wwl",
+                        [],
+                        0.7655
+                    ],
+                    [
+                        "~wwl",
+                        [],
+                        0.2345
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WWL",
+            "outcomes": [
+                "wwl",
+                "~wwl"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pgz",
+                        [],
+                        0.2025
+                    ],
+                    [
+                        "~pgz",
+                        [],
+                        0.7975
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "PGZ",
+            "outcomes": [
+                "pgz",
+                "~pgz"
+            ],
+            "parents": []
+        }
+    ]
+}

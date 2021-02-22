@@ -1,0 +1,460 @@
+{
+    "latent-model": true,
+    "name": "m851_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "nbu",
+                        [
+                            "lbv",
+                            "wlb"
+                        ],
+                        0.947
+                    ],
+                    [
+                        "~nbu",
+                        [
+                            "lbv",
+                            "wlb"
+                        ],
+                        0.053
+                    ],
+                    [
+                        "nbu",
+                        [
+                            "lbv",
+                            "~wlb"
+                        ],
+                        0.1381
+                    ],
+                    [
+                        "~nbu",
+                        [
+                            "lbv",
+                            "~wlb"
+                        ],
+                        0.8619
+                    ],
+                    [
+                        "nbu",
+                        [
+                            "~lbv",
+                            "wlb"
+                        ],
+                        0.7538
+                    ],
+                    [
+                        "~nbu",
+                        [
+                            "~lbv",
+                            "wlb"
+                        ],
+                        0.2462
+                    ],
+                    [
+                        "nbu",
+                        [
+                            "~lbv",
+                            "~wlb"
+                        ],
+                        0.0475
+                    ],
+                    [
+                        "~nbu",
+                        [
+                            "~lbv",
+                            "~wlb"
+                        ],
+                        0.9525
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NBU",
+            "outcomes": [
+                "nbu",
+                "~nbu"
+            ],
+            "parents": [
+                "LBV",
+                "WLB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "lbv",
+                        [
+                            "baf",
+                            "ywn"
+                        ],
+                        0.1625
+                    ],
+                    [
+                        "~lbv",
+                        [
+                            "baf",
+                            "ywn"
+                        ],
+                        0.8375
+                    ],
+                    [
+                        "lbv",
+                        [
+                            "baf",
+                            "~ywn"
+                        ],
+                        0.712
+                    ],
+                    [
+                        "~lbv",
+                        [
+                            "baf",
+                            "~ywn"
+                        ],
+                        0.288
+                    ],
+                    [
+                        "lbv",
+                        [
+                            "~baf",
+                            "ywn"
+                        ],
+                        0.0301
+                    ],
+                    [
+                        "~lbv",
+                        [
+                            "~baf",
+                            "ywn"
+                        ],
+                        0.9699
+                    ],
+                    [
+                        "lbv",
+                        [
+                            "~baf",
+                            "~ywn"
+                        ],
+                        0.1661
+                    ],
+                    [
+                        "~lbv",
+                        [
+                            "~baf",
+                            "~ywn"
+                        ],
+                        0.8339
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "LBV",
+            "outcomes": [
+                "lbv",
+                "~lbv"
+            ],
+            "parents": [
+                "BAF",
+                "YWN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "noi",
+                        [
+                            "lbv"
+                        ],
+                        0.9644
+                    ],
+                    [
+                        "~noi",
+                        [
+                            "lbv"
+                        ],
+                        0.0356
+                    ],
+                    [
+                        "noi",
+                        [
+                            "~lbv"
+                        ],
+                        0.7751
+                    ],
+                    [
+                        "~noi",
+                        [
+                            "~lbv"
+                        ],
+                        0.2249
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "NOI",
+            "outcomes": [
+                "noi",
+                "~noi"
+            ],
+            "parents": [
+                "LBV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wlb",
+                        [],
+                        0.6088
+                    ],
+                    [
+                        "~wlb",
+                        [],
+                        0.3912
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WLB",
+            "outcomes": [
+                "wlb",
+                "~wlb"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "ywn",
+                        [],
+                        0.2058
+                    ],
+                    [
+                        "~ywn",
+                        [],
+                        0.7942
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YWN",
+            "outcomes": [
+                "ywn",
+                "~ywn"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "baf",
+                        [
+                            "ywn"
+                        ],
+                        0.8824
+                    ],
+                    [
+                        "~baf",
+                        [
+                            "ywn"
+                        ],
+                        0.1176
+                    ],
+                    [
+                        "baf",
+                        [
+                            "~ywn"
+                        ],
+                        0.0378
+                    ],
+                    [
+                        "~baf",
+                        [
+                            "~ywn"
+                        ],
+                        0.9622
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BAF",
+            "outcomes": [
+                "baf",
+                "~baf"
+            ],
+            "parents": [
+                "YWN"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dgl",
+                        [
+                            "lbv",
+                            "nbu",
+                            "ywn"
+                        ],
+                        0.008
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "lbv",
+                            "nbu",
+                            "ywn"
+                        ],
+                        0.992
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "lbv",
+                            "nbu",
+                            "~ywn"
+                        ],
+                        0.277
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "lbv",
+                            "nbu",
+                            "~ywn"
+                        ],
+                        0.723
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "lbv",
+                            "~nbu",
+                            "ywn"
+                        ],
+                        0.6145
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "lbv",
+                            "~nbu",
+                            "ywn"
+                        ],
+                        0.3855
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "lbv",
+                            "~nbu",
+                            "~ywn"
+                        ],
+                        0.626
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "lbv",
+                            "~nbu",
+                            "~ywn"
+                        ],
+                        0.374
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "~lbv",
+                            "nbu",
+                            "ywn"
+                        ],
+                        0.9104
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "~lbv",
+                            "nbu",
+                            "ywn"
+                        ],
+                        0.0896
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "~lbv",
+                            "nbu",
+                            "~ywn"
+                        ],
+                        0.6191
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "~lbv",
+                            "nbu",
+                            "~ywn"
+                        ],
+                        0.3809
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "~lbv",
+                            "~nbu",
+                            "ywn"
+                        ],
+                        0.563
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "~lbv",
+                            "~nbu",
+                            "ywn"
+                        ],
+                        0.437
+                    ],
+                    [
+                        "dgl",
+                        [
+                            "~lbv",
+                            "~nbu",
+                            "~ywn"
+                        ],
+                        0.3211
+                    ],
+                    [
+                        "~dgl",
+                        [
+                            "~lbv",
+                            "~nbu",
+                            "~ywn"
+                        ],
+                        0.6789
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DGL",
+            "outcomes": [
+                "dgl",
+                "~dgl"
+            ],
+            "parents": [
+                "LBV",
+                "NBU",
+                "YWN"
+            ]
+        }
+    ]
+}

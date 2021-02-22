@@ -1,0 +1,293 @@
+{
+    "latent-model": true,
+    "name": "m286_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bbr",
+                        [
+                            "dhl",
+                            "rng"
+                        ],
+                        0.3851
+                    ],
+                    [
+                        "~bbr",
+                        [
+                            "dhl",
+                            "rng"
+                        ],
+                        0.6149
+                    ],
+                    [
+                        "bbr",
+                        [
+                            "dhl",
+                            "~rng"
+                        ],
+                        0.0527
+                    ],
+                    [
+                        "~bbr",
+                        [
+                            "dhl",
+                            "~rng"
+                        ],
+                        0.9473
+                    ],
+                    [
+                        "bbr",
+                        [
+                            "~dhl",
+                            "rng"
+                        ],
+                        0.8787
+                    ],
+                    [
+                        "~bbr",
+                        [
+                            "~dhl",
+                            "rng"
+                        ],
+                        0.1213
+                    ],
+                    [
+                        "bbr",
+                        [
+                            "~dhl",
+                            "~rng"
+                        ],
+                        0.028
+                    ],
+                    [
+                        "~bbr",
+                        [
+                            "~dhl",
+                            "~rng"
+                        ],
+                        0.972
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BBR",
+            "outcomes": [
+                "bbr",
+                "~bbr"
+            ],
+            "parents": [
+                "DHL",
+                "RNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qyz",
+                        [
+                            "bsz",
+                            "rng"
+                        ],
+                        0.4291
+                    ],
+                    [
+                        "~qyz",
+                        [
+                            "bsz",
+                            "rng"
+                        ],
+                        0.5709
+                    ],
+                    [
+                        "qyz",
+                        [
+                            "bsz",
+                            "~rng"
+                        ],
+                        0.5423
+                    ],
+                    [
+                        "~qyz",
+                        [
+                            "bsz",
+                            "~rng"
+                        ],
+                        0.4577
+                    ],
+                    [
+                        "qyz",
+                        [
+                            "~bsz",
+                            "rng"
+                        ],
+                        0.2729
+                    ],
+                    [
+                        "~qyz",
+                        [
+                            "~bsz",
+                            "rng"
+                        ],
+                        0.7271
+                    ],
+                    [
+                        "qyz",
+                        [
+                            "~bsz",
+                            "~rng"
+                        ],
+                        0.5906
+                    ],
+                    [
+                        "~qyz",
+                        [
+                            "~bsz",
+                            "~rng"
+                        ],
+                        0.4094
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QYZ",
+            "outcomes": [
+                "qyz",
+                "~qyz"
+            ],
+            "parents": [
+                "BSZ",
+                "RNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rng",
+                        [],
+                        0.2806
+                    ],
+                    [
+                        "~rng",
+                        [],
+                        0.7194
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RNG",
+            "outcomes": [
+                "rng",
+                "~rng"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bsz",
+                        [
+                            "dhl",
+                            "rng"
+                        ],
+                        0.2251
+                    ],
+                    [
+                        "~bsz",
+                        [
+                            "dhl",
+                            "rng"
+                        ],
+                        0.7749
+                    ],
+                    [
+                        "bsz",
+                        [
+                            "dhl",
+                            "~rng"
+                        ],
+                        0.2803
+                    ],
+                    [
+                        "~bsz",
+                        [
+                            "dhl",
+                            "~rng"
+                        ],
+                        0.7197
+                    ],
+                    [
+                        "bsz",
+                        [
+                            "~dhl",
+                            "rng"
+                        ],
+                        0.1898
+                    ],
+                    [
+                        "~bsz",
+                        [
+                            "~dhl",
+                            "rng"
+                        ],
+                        0.8102
+                    ],
+                    [
+                        "bsz",
+                        [
+                            "~dhl",
+                            "~rng"
+                        ],
+                        0.2786
+                    ],
+                    [
+                        "~bsz",
+                        [
+                            "~dhl",
+                            "~rng"
+                        ],
+                        0.7214
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BSZ",
+            "outcomes": [
+                "bsz",
+                "~bsz"
+            ],
+            "parents": [
+                "DHL",
+                "RNG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dhl",
+                        [],
+                        0.0963
+                    ],
+                    [
+                        "~dhl",
+                        [],
+                        0.9037
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "DHL",
+            "outcomes": [
+                "dhl",
+                "~dhl"
+            ],
+            "parents": []
+        }
+    ]
+}

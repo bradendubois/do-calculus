@@ -1,0 +1,453 @@
+{
+    "latent-model": true,
+    "name": "m871_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jml",
+                        [
+                            "bjq"
+                        ],
+                        0.2681
+                    ],
+                    [
+                        "~jml",
+                        [
+                            "bjq"
+                        ],
+                        0.7319
+                    ],
+                    [
+                        "jml",
+                        [
+                            "~bjq"
+                        ],
+                        0.4303
+                    ],
+                    [
+                        "~jml",
+                        [
+                            "~bjq"
+                        ],
+                        0.5697
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JML",
+            "outcomes": [
+                "jml",
+                "~jml"
+            ],
+            "parents": [
+                "BJQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "omi",
+                        [
+                            "plx"
+                        ],
+                        0.8557
+                    ],
+                    [
+                        "~omi",
+                        [
+                            "plx"
+                        ],
+                        0.1443
+                    ],
+                    [
+                        "omi",
+                        [
+                            "~plx"
+                        ],
+                        0.8389
+                    ],
+                    [
+                        "~omi",
+                        [
+                            "~plx"
+                        ],
+                        0.1611
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OMI",
+            "outcomes": [
+                "omi",
+                "~omi"
+            ],
+            "parents": [
+                "PLX"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bnq",
+                        [
+                            "tqv"
+                        ],
+                        0.4196
+                    ],
+                    [
+                        "~bnq",
+                        [
+                            "tqv"
+                        ],
+                        0.5804
+                    ],
+                    [
+                        "bnq",
+                        [
+                            "~tqv"
+                        ],
+                        0.4542
+                    ],
+                    [
+                        "~bnq",
+                        [
+                            "~tqv"
+                        ],
+                        0.5458
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BNQ",
+            "outcomes": [
+                "bnq",
+                "~bnq"
+            ],
+            "parents": [
+                "TQV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "plx",
+                        [],
+                        0.0696
+                    ],
+                    [
+                        "~plx",
+                        [],
+                        0.9304
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PLX",
+            "outcomes": [
+                "plx",
+                "~plx"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wgv",
+                        [
+                            "tqv"
+                        ],
+                        0.3536
+                    ],
+                    [
+                        "~wgv",
+                        [
+                            "tqv"
+                        ],
+                        0.6464
+                    ],
+                    [
+                        "wgv",
+                        [
+                            "~tqv"
+                        ],
+                        0.1035
+                    ],
+                    [
+                        "~wgv",
+                        [
+                            "~tqv"
+                        ],
+                        0.8965
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WGV",
+            "outcomes": [
+                "wgv",
+                "~wgv"
+            ],
+            "parents": [
+                "TQV"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "tqv",
+                        [],
+                        0.0351
+                    ],
+                    [
+                        "~tqv",
+                        [],
+                        0.9649
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "TQV",
+            "outcomes": [
+                "tqv",
+                "~tqv"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "xgh",
+                        [
+                            "bjq"
+                        ],
+                        0.9449
+                    ],
+                    [
+                        "~xgh",
+                        [
+                            "bjq"
+                        ],
+                        0.0551
+                    ],
+                    [
+                        "xgh",
+                        [
+                            "~bjq"
+                        ],
+                        0.5509
+                    ],
+                    [
+                        "~xgh",
+                        [
+                            "~bjq"
+                        ],
+                        0.4491
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "XGH",
+            "outcomes": [
+                "xgh",
+                "~xgh"
+            ],
+            "parents": [
+                "BJQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bjq",
+                        [],
+                        0.6334
+                    ],
+                    [
+                        "~bjq",
+                        [],
+                        0.3666
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "BJQ",
+            "outcomes": [
+                "bjq",
+                "~bjq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pfh",
+                        [
+                            "bnq",
+                            "plx",
+                            "tqv"
+                        ],
+                        0.4086
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "bnq",
+                            "plx",
+                            "tqv"
+                        ],
+                        0.5914
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "bnq",
+                            "plx",
+                            "~tqv"
+                        ],
+                        0.8946
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "bnq",
+                            "plx",
+                            "~tqv"
+                        ],
+                        0.1054
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "bnq",
+                            "~plx",
+                            "tqv"
+                        ],
+                        0.8736
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "bnq",
+                            "~plx",
+                            "tqv"
+                        ],
+                        0.1264
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "bnq",
+                            "~plx",
+                            "~tqv"
+                        ],
+                        0.1932
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "bnq",
+                            "~plx",
+                            "~tqv"
+                        ],
+                        0.8068
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "~bnq",
+                            "plx",
+                            "tqv"
+                        ],
+                        0.5874
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "~bnq",
+                            "plx",
+                            "tqv"
+                        ],
+                        0.4126
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "~bnq",
+                            "plx",
+                            "~tqv"
+                        ],
+                        0.2737
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "~bnq",
+                            "plx",
+                            "~tqv"
+                        ],
+                        0.7263
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "~bnq",
+                            "~plx",
+                            "tqv"
+                        ],
+                        0.4657
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "~bnq",
+                            "~plx",
+                            "tqv"
+                        ],
+                        0.5343
+                    ],
+                    [
+                        "pfh",
+                        [
+                            "~bnq",
+                            "~plx",
+                            "~tqv"
+                        ],
+                        0.4513
+                    ],
+                    [
+                        "~pfh",
+                        [
+                            "~bnq",
+                            "~plx",
+                            "~tqv"
+                        ],
+                        0.5487
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PFH",
+            "outcomes": [
+                "pfh",
+                "~pfh"
+            ],
+            "parents": [
+                "BNQ",
+                "PLX",
+                "TQV"
+            ]
+        }
+    ]
+}

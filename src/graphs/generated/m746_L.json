@@ -1,0 +1,441 @@
+{
+    "latent-model": true,
+    "name": "m746_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jos",
+                        [],
+                        0.2143
+                    ],
+                    [
+                        "~jos",
+                        [],
+                        0.7857
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "JOS",
+            "outcomes": [
+                "jos",
+                "~jos"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pwr",
+                        [
+                            "jos",
+                            "skl"
+                        ],
+                        0.5895
+                    ],
+                    [
+                        "~pwr",
+                        [
+                            "jos",
+                            "skl"
+                        ],
+                        0.4105
+                    ],
+                    [
+                        "pwr",
+                        [
+                            "jos",
+                            "~skl"
+                        ],
+                        0.907
+                    ],
+                    [
+                        "~pwr",
+                        [
+                            "jos",
+                            "~skl"
+                        ],
+                        0.093
+                    ],
+                    [
+                        "pwr",
+                        [
+                            "~jos",
+                            "skl"
+                        ],
+                        0.0691
+                    ],
+                    [
+                        "~pwr",
+                        [
+                            "~jos",
+                            "skl"
+                        ],
+                        0.9309
+                    ],
+                    [
+                        "pwr",
+                        [
+                            "~jos",
+                            "~skl"
+                        ],
+                        0.4262
+                    ],
+                    [
+                        "~pwr",
+                        [
+                            "~jos",
+                            "~skl"
+                        ],
+                        0.5738
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PWR",
+            "outcomes": [
+                "pwr",
+                "~pwr"
+            ],
+            "parents": [
+                "JOS",
+                "SKL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wuu",
+                        [],
+                        0.2525
+                    ],
+                    [
+                        "~wuu",
+                        [],
+                        0.7475
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "WUU",
+            "outcomes": [
+                "wuu",
+                "~wuu"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mvn",
+                        [
+                            "skl"
+                        ],
+                        0.2149
+                    ],
+                    [
+                        "~mvn",
+                        [
+                            "skl"
+                        ],
+                        0.7851
+                    ],
+                    [
+                        "mvn",
+                        [
+                            "~skl"
+                        ],
+                        0.2606
+                    ],
+                    [
+                        "~mvn",
+                        [
+                            "~skl"
+                        ],
+                        0.7394
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MVN",
+            "outcomes": [
+                "mvn",
+                "~mvn"
+            ],
+            "parents": [
+                "SKL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zvn",
+                        [
+                            "jos",
+                            "wuu"
+                        ],
+                        0.3815
+                    ],
+                    [
+                        "~zvn",
+                        [
+                            "jos",
+                            "wuu"
+                        ],
+                        0.6185
+                    ],
+                    [
+                        "zvn",
+                        [
+                            "jos",
+                            "~wuu"
+                        ],
+                        0.404
+                    ],
+                    [
+                        "~zvn",
+                        [
+                            "jos",
+                            "~wuu"
+                        ],
+                        0.596
+                    ],
+                    [
+                        "zvn",
+                        [
+                            "~jos",
+                            "wuu"
+                        ],
+                        0.5853
+                    ],
+                    [
+                        "~zvn",
+                        [
+                            "~jos",
+                            "wuu"
+                        ],
+                        0.4147
+                    ],
+                    [
+                        "zvn",
+                        [
+                            "~jos",
+                            "~wuu"
+                        ],
+                        0.5832
+                    ],
+                    [
+                        "~zvn",
+                        [
+                            "~jos",
+                            "~wuu"
+                        ],
+                        0.4168
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZVN",
+            "outcomes": [
+                "zvn",
+                "~zvn"
+            ],
+            "parents": [
+                "JOS",
+                "WUU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "foa",
+                        [
+                            "jos",
+                            "skl"
+                        ],
+                        0.7623
+                    ],
+                    [
+                        "~foa",
+                        [
+                            "jos",
+                            "skl"
+                        ],
+                        0.2377
+                    ],
+                    [
+                        "foa",
+                        [
+                            "jos",
+                            "~skl"
+                        ],
+                        0.631
+                    ],
+                    [
+                        "~foa",
+                        [
+                            "jos",
+                            "~skl"
+                        ],
+                        0.369
+                    ],
+                    [
+                        "foa",
+                        [
+                            "~jos",
+                            "skl"
+                        ],
+                        0.3267
+                    ],
+                    [
+                        "~foa",
+                        [
+                            "~jos",
+                            "skl"
+                        ],
+                        0.6733
+                    ],
+                    [
+                        "foa",
+                        [
+                            "~jos",
+                            "~skl"
+                        ],
+                        0.9388
+                    ],
+                    [
+                        "~foa",
+                        [
+                            "~jos",
+                            "~skl"
+                        ],
+                        0.0612
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FOA",
+            "outcomes": [
+                "foa",
+                "~foa"
+            ],
+            "parents": [
+                "JOS",
+                "SKL"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "keo",
+                        [
+                            "skl",
+                            "wuu"
+                        ],
+                        0.2503
+                    ],
+                    [
+                        "~keo",
+                        [
+                            "skl",
+                            "wuu"
+                        ],
+                        0.7497
+                    ],
+                    [
+                        "keo",
+                        [
+                            "skl",
+                            "~wuu"
+                        ],
+                        0.6077
+                    ],
+                    [
+                        "~keo",
+                        [
+                            "skl",
+                            "~wuu"
+                        ],
+                        0.3923
+                    ],
+                    [
+                        "keo",
+                        [
+                            "~skl",
+                            "wuu"
+                        ],
+                        0.9728
+                    ],
+                    [
+                        "~keo",
+                        [
+                            "~skl",
+                            "wuu"
+                        ],
+                        0.0272
+                    ],
+                    [
+                        "keo",
+                        [
+                            "~skl",
+                            "~wuu"
+                        ],
+                        0.5929
+                    ],
+                    [
+                        "~keo",
+                        [
+                            "~skl",
+                            "~wuu"
+                        ],
+                        0.4071
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KEO",
+            "outcomes": [
+                "keo",
+                "~keo"
+            ],
+            "parents": [
+                "SKL",
+                "WUU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "skl",
+                        [],
+                        0.0395
+                    ],
+                    [
+                        "~skl",
+                        [],
+                        0.9605
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "SKL",
+            "outcomes": [
+                "skl",
+                "~skl"
+            ],
+            "parents": []
+        }
+    ]
+}

@@ -1,0 +1,745 @@
+{
+    "latent-model": false,
+    "name": "m182",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "iub",
+                        [
+                            "vmy",
+                            "yeq"
+                        ],
+                        0.8525
+                    ],
+                    [
+                        "~iub",
+                        [
+                            "vmy",
+                            "yeq"
+                        ],
+                        0.1475
+                    ],
+                    [
+                        "iub",
+                        [
+                            "vmy",
+                            "~yeq"
+                        ],
+                        0.3838
+                    ],
+                    [
+                        "~iub",
+                        [
+                            "vmy",
+                            "~yeq"
+                        ],
+                        0.6162
+                    ],
+                    [
+                        "iub",
+                        [
+                            "~vmy",
+                            "yeq"
+                        ],
+                        0.8214
+                    ],
+                    [
+                        "~iub",
+                        [
+                            "~vmy",
+                            "yeq"
+                        ],
+                        0.1786
+                    ],
+                    [
+                        "iub",
+                        [
+                            "~vmy",
+                            "~yeq"
+                        ],
+                        0.1437
+                    ],
+                    [
+                        "~iub",
+                        [
+                            "~vmy",
+                            "~yeq"
+                        ],
+                        0.8563
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IUB",
+            "outcomes": [
+                "iub",
+                "~iub"
+            ],
+            "parents": [
+                "VMY",
+                "YEQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "mup",
+                        [
+                            "gec",
+                            "kic"
+                        ],
+                        0.4042
+                    ],
+                    [
+                        "~mup",
+                        [
+                            "gec",
+                            "kic"
+                        ],
+                        0.5958
+                    ],
+                    [
+                        "mup",
+                        [
+                            "gec",
+                            "~kic"
+                        ],
+                        0.1356
+                    ],
+                    [
+                        "~mup",
+                        [
+                            "gec",
+                            "~kic"
+                        ],
+                        0.8644
+                    ],
+                    [
+                        "mup",
+                        [
+                            "~gec",
+                            "kic"
+                        ],
+                        0.8371
+                    ],
+                    [
+                        "~mup",
+                        [
+                            "~gec",
+                            "kic"
+                        ],
+                        0.1629
+                    ],
+                    [
+                        "mup",
+                        [
+                            "~gec",
+                            "~kic"
+                        ],
+                        0.9114
+                    ],
+                    [
+                        "~mup",
+                        [
+                            "~gec",
+                            "~kic"
+                        ],
+                        0.0886
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MUP",
+            "outcomes": [
+                "mup",
+                "~mup"
+            ],
+            "parents": [
+                "GEC",
+                "KIC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "yeq",
+                        [],
+                        0.7269
+                    ],
+                    [
+                        "~yeq",
+                        [],
+                        0.2731
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "YEQ",
+            "outcomes": [
+                "yeq",
+                "~yeq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dob",
+                        [
+                            "dhk",
+                            "kic"
+                        ],
+                        0.084
+                    ],
+                    [
+                        "~dob",
+                        [
+                            "dhk",
+                            "kic"
+                        ],
+                        0.916
+                    ],
+                    [
+                        "dob",
+                        [
+                            "dhk",
+                            "~kic"
+                        ],
+                        0.3855
+                    ],
+                    [
+                        "~dob",
+                        [
+                            "dhk",
+                            "~kic"
+                        ],
+                        0.6145
+                    ],
+                    [
+                        "dob",
+                        [
+                            "~dhk",
+                            "kic"
+                        ],
+                        0.3865
+                    ],
+                    [
+                        "~dob",
+                        [
+                            "~dhk",
+                            "kic"
+                        ],
+                        0.6135
+                    ],
+                    [
+                        "dob",
+                        [
+                            "~dhk",
+                            "~kic"
+                        ],
+                        0.1157
+                    ],
+                    [
+                        "~dob",
+                        [
+                            "~dhk",
+                            "~kic"
+                        ],
+                        0.8843
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DOB",
+            "outcomes": [
+                "dob",
+                "~dob"
+            ],
+            "parents": [
+                "DHK",
+                "KIC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "may",
+                        [
+                            "dob",
+                            "yeq"
+                        ],
+                        0.8277
+                    ],
+                    [
+                        "~may",
+                        [
+                            "dob",
+                            "yeq"
+                        ],
+                        0.1723
+                    ],
+                    [
+                        "may",
+                        [
+                            "dob",
+                            "~yeq"
+                        ],
+                        0.1335
+                    ],
+                    [
+                        "~may",
+                        [
+                            "dob",
+                            "~yeq"
+                        ],
+                        0.8665
+                    ],
+                    [
+                        "may",
+                        [
+                            "~dob",
+                            "yeq"
+                        ],
+                        0.8745
+                    ],
+                    [
+                        "~may",
+                        [
+                            "~dob",
+                            "yeq"
+                        ],
+                        0.1255
+                    ],
+                    [
+                        "may",
+                        [
+                            "~dob",
+                            "~yeq"
+                        ],
+                        0.9527
+                    ],
+                    [
+                        "~may",
+                        [
+                            "~dob",
+                            "~yeq"
+                        ],
+                        0.0473
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "MAY",
+            "outcomes": [
+                "may",
+                "~may"
+            ],
+            "parents": [
+                "DOB",
+                "YEQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gec",
+                        [],
+                        0.4197
+                    ],
+                    [
+                        "~gec",
+                        [],
+                        0.5803
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GEC",
+            "outcomes": [
+                "gec",
+                "~gec"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dhk",
+                        [
+                            "bsw",
+                            "iub"
+                        ],
+                        0.7267
+                    ],
+                    [
+                        "~dhk",
+                        [
+                            "bsw",
+                            "iub"
+                        ],
+                        0.2733
+                    ],
+                    [
+                        "dhk",
+                        [
+                            "bsw",
+                            "~iub"
+                        ],
+                        0.2341
+                    ],
+                    [
+                        "~dhk",
+                        [
+                            "bsw",
+                            "~iub"
+                        ],
+                        0.7659
+                    ],
+                    [
+                        "dhk",
+                        [
+                            "~bsw",
+                            "iub"
+                        ],
+                        0.0481
+                    ],
+                    [
+                        "~dhk",
+                        [
+                            "~bsw",
+                            "iub"
+                        ],
+                        0.9519
+                    ],
+                    [
+                        "dhk",
+                        [
+                            "~bsw",
+                            "~iub"
+                        ],
+                        0.3001
+                    ],
+                    [
+                        "~dhk",
+                        [
+                            "~bsw",
+                            "~iub"
+                        ],
+                        0.6999
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DHK",
+            "outcomes": [
+                "dhk",
+                "~dhk"
+            ],
+            "parents": [
+                "BSW",
+                "IUB"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pxx",
+                        [
+                            "kic"
+                        ],
+                        0.9718
+                    ],
+                    [
+                        "~pxx",
+                        [
+                            "kic"
+                        ],
+                        0.0282
+                    ],
+                    [
+                        "pxx",
+                        [
+                            "~kic"
+                        ],
+                        0.1262
+                    ],
+                    [
+                        "~pxx",
+                        [
+                            "~kic"
+                        ],
+                        0.8738
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PXX",
+            "outcomes": [
+                "pxx",
+                "~pxx"
+            ],
+            "parents": [
+                "KIC"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "phr",
+                        [
+                            "dhk",
+                            "kic",
+                            "vmy"
+                        ],
+                        0.7679
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "dhk",
+                            "kic",
+                            "vmy"
+                        ],
+                        0.2321
+                    ],
+                    [
+                        "phr",
+                        [
+                            "dhk",
+                            "kic",
+                            "~vmy"
+                        ],
+                        0.3625
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "dhk",
+                            "kic",
+                            "~vmy"
+                        ],
+                        0.6375
+                    ],
+                    [
+                        "phr",
+                        [
+                            "dhk",
+                            "~kic",
+                            "vmy"
+                        ],
+                        0.4372
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "dhk",
+                            "~kic",
+                            "vmy"
+                        ],
+                        0.5628
+                    ],
+                    [
+                        "phr",
+                        [
+                            "dhk",
+                            "~kic",
+                            "~vmy"
+                        ],
+                        0.943
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "dhk",
+                            "~kic",
+                            "~vmy"
+                        ],
+                        0.057
+                    ],
+                    [
+                        "phr",
+                        [
+                            "~dhk",
+                            "kic",
+                            "vmy"
+                        ],
+                        0.8646
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "~dhk",
+                            "kic",
+                            "vmy"
+                        ],
+                        0.1354
+                    ],
+                    [
+                        "phr",
+                        [
+                            "~dhk",
+                            "kic",
+                            "~vmy"
+                        ],
+                        0.5926
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "~dhk",
+                            "kic",
+                            "~vmy"
+                        ],
+                        0.4074
+                    ],
+                    [
+                        "phr",
+                        [
+                            "~dhk",
+                            "~kic",
+                            "vmy"
+                        ],
+                        0.3177
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "~dhk",
+                            "~kic",
+                            "vmy"
+                        ],
+                        0.6823
+                    ],
+                    [
+                        "phr",
+                        [
+                            "~dhk",
+                            "~kic",
+                            "~vmy"
+                        ],
+                        0.1024
+                    ],
+                    [
+                        "~phr",
+                        [
+                            "~dhk",
+                            "~kic",
+                            "~vmy"
+                        ],
+                        0.8976
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PHR",
+            "outcomes": [
+                "phr",
+                "~phr"
+            ],
+            "parents": [
+                "DHK",
+                "KIC",
+                "VMY"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "vmy",
+                        [
+                            "bsw"
+                        ],
+                        0.318
+                    ],
+                    [
+                        "~vmy",
+                        [
+                            "bsw"
+                        ],
+                        0.682
+                    ],
+                    [
+                        "vmy",
+                        [
+                            "~bsw"
+                        ],
+                        0.0086
+                    ],
+                    [
+                        "~vmy",
+                        [
+                            "~bsw"
+                        ],
+                        0.9914
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "VMY",
+            "outcomes": [
+                "vmy",
+                "~vmy"
+            ],
+            "parents": [
+                "BSW"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "kic",
+                        [],
+                        0.6702
+                    ],
+                    [
+                        "~kic",
+                        [],
+                        0.3298
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "KIC",
+            "outcomes": [
+                "kic",
+                "~kic"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bsw",
+                        [],
+                        0.6949
+                    ],
+                    [
+                        "~bsw",
+                        [],
+                        0.3051
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BSW",
+            "outcomes": [
+                "bsw",
+                "~bsw"
+            ],
+            "parents": []
+        }
+    ]
+}

@@ -1,0 +1,396 @@
+{
+    "latent-model": false,
+    "name": "m85",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qur",
+                        [
+                            "fct",
+                            "idf",
+                            "rrq"
+                        ],
+                        0.3686
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "fct",
+                            "idf",
+                            "rrq"
+                        ],
+                        0.6314
+                    ],
+                    [
+                        "qur",
+                        [
+                            "fct",
+                            "idf",
+                            "~rrq"
+                        ],
+                        0.0435
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "fct",
+                            "idf",
+                            "~rrq"
+                        ],
+                        0.9565
+                    ],
+                    [
+                        "qur",
+                        [
+                            "fct",
+                            "~idf",
+                            "rrq"
+                        ],
+                        0.1489
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "fct",
+                            "~idf",
+                            "rrq"
+                        ],
+                        0.8511
+                    ],
+                    [
+                        "qur",
+                        [
+                            "fct",
+                            "~idf",
+                            "~rrq"
+                        ],
+                        0.3489
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "fct",
+                            "~idf",
+                            "~rrq"
+                        ],
+                        0.6511
+                    ],
+                    [
+                        "qur",
+                        [
+                            "~fct",
+                            "idf",
+                            "rrq"
+                        ],
+                        0.1497
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "~fct",
+                            "idf",
+                            "rrq"
+                        ],
+                        0.8503
+                    ],
+                    [
+                        "qur",
+                        [
+                            "~fct",
+                            "idf",
+                            "~rrq"
+                        ],
+                        0.3527
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "~fct",
+                            "idf",
+                            "~rrq"
+                        ],
+                        0.6473
+                    ],
+                    [
+                        "qur",
+                        [
+                            "~fct",
+                            "~idf",
+                            "rrq"
+                        ],
+                        0.774
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "~fct",
+                            "~idf",
+                            "rrq"
+                        ],
+                        0.226
+                    ],
+                    [
+                        "qur",
+                        [
+                            "~fct",
+                            "~idf",
+                            "~rrq"
+                        ],
+                        0.0116
+                    ],
+                    [
+                        "~qur",
+                        [
+                            "~fct",
+                            "~idf",
+                            "~rrq"
+                        ],
+                        0.9884
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QUR",
+            "outcomes": [
+                "qur",
+                "~qur"
+            ],
+            "parents": [
+                "FCT",
+                "IDF",
+                "RRQ"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "dav",
+                        [
+                            "fct",
+                            "idf"
+                        ],
+                        0.9215
+                    ],
+                    [
+                        "~dav",
+                        [
+                            "fct",
+                            "idf"
+                        ],
+                        0.0785
+                    ],
+                    [
+                        "dav",
+                        [
+                            "fct",
+                            "~idf"
+                        ],
+                        0.5237
+                    ],
+                    [
+                        "~dav",
+                        [
+                            "fct",
+                            "~idf"
+                        ],
+                        0.4763
+                    ],
+                    [
+                        "dav",
+                        [
+                            "~fct",
+                            "idf"
+                        ],
+                        0.0165
+                    ],
+                    [
+                        "~dav",
+                        [
+                            "~fct",
+                            "idf"
+                        ],
+                        0.9835
+                    ],
+                    [
+                        "dav",
+                        [
+                            "~fct",
+                            "~idf"
+                        ],
+                        0.4552
+                    ],
+                    [
+                        "~dav",
+                        [
+                            "~fct",
+                            "~idf"
+                        ],
+                        0.5448
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "DAV",
+            "outcomes": [
+                "dav",
+                "~dav"
+            ],
+            "parents": [
+                "FCT",
+                "IDF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fct",
+                        [],
+                        0.239
+                    ],
+                    [
+                        "~fct",
+                        [],
+                        0.761
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FCT",
+            "outcomes": [
+                "fct",
+                "~fct"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rrq",
+                        [],
+                        0.8845
+                    ],
+                    [
+                        "~rrq",
+                        [],
+                        0.1155
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RRQ",
+            "outcomes": [
+                "rrq",
+                "~rrq"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rvu",
+                        [
+                            "fct",
+                            "idf"
+                        ],
+                        0.1736
+                    ],
+                    [
+                        "~rvu",
+                        [
+                            "fct",
+                            "idf"
+                        ],
+                        0.8264
+                    ],
+                    [
+                        "rvu",
+                        [
+                            "fct",
+                            "~idf"
+                        ],
+                        0.5901
+                    ],
+                    [
+                        "~rvu",
+                        [
+                            "fct",
+                            "~idf"
+                        ],
+                        0.4099
+                    ],
+                    [
+                        "rvu",
+                        [
+                            "~fct",
+                            "idf"
+                        ],
+                        0.515
+                    ],
+                    [
+                        "~rvu",
+                        [
+                            "~fct",
+                            "idf"
+                        ],
+                        0.485
+                    ],
+                    [
+                        "rvu",
+                        [
+                            "~fct",
+                            "~idf"
+                        ],
+                        0.1279
+                    ],
+                    [
+                        "~rvu",
+                        [
+                            "~fct",
+                            "~idf"
+                        ],
+                        0.8721
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RVU",
+            "outcomes": [
+                "rvu",
+                "~rvu"
+            ],
+            "parents": [
+                "FCT",
+                "IDF"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "idf",
+                        [],
+                        0.0677
+                    ],
+                    [
+                        "~idf",
+                        [],
+                        0.9323
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "IDF",
+            "outcomes": [
+                "idf",
+                "~idf"
+            ],
+            "parents": []
+        }
+    ]
+}

@@ -1,0 +1,256 @@
+{
+    "latent-model": true,
+    "name": "m159_L",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "wzk",
+                        [],
+                        0.125
+                    ],
+                    [
+                        "~wzk",
+                        [],
+                        0.875
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "WZK",
+            "outcomes": [
+                "wzk",
+                "~wzk"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "bxo",
+                        [
+                            "gnr",
+                            "wzk"
+                        ],
+                        0.5616
+                    ],
+                    [
+                        "~bxo",
+                        [
+                            "gnr",
+                            "wzk"
+                        ],
+                        0.4384
+                    ],
+                    [
+                        "bxo",
+                        [
+                            "gnr",
+                            "~wzk"
+                        ],
+                        0.6472
+                    ],
+                    [
+                        "~bxo",
+                        [
+                            "gnr",
+                            "~wzk"
+                        ],
+                        0.3528
+                    ],
+                    [
+                        "bxo",
+                        [
+                            "~gnr",
+                            "wzk"
+                        ],
+                        0.5694
+                    ],
+                    [
+                        "~bxo",
+                        [
+                            "~gnr",
+                            "wzk"
+                        ],
+                        0.4306
+                    ],
+                    [
+                        "bxo",
+                        [
+                            "~gnr",
+                            "~wzk"
+                        ],
+                        0.6481
+                    ],
+                    [
+                        "~bxo",
+                        [
+                            "~gnr",
+                            "~wzk"
+                        ],
+                        0.3519
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "BXO",
+            "outcomes": [
+                "bxo",
+                "~bxo"
+            ],
+            "parents": [
+                "GNR",
+                "WZK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "gnr",
+                        [
+                            "isd",
+                            "wzk"
+                        ],
+                        0.6541
+                    ],
+                    [
+                        "~gnr",
+                        [
+                            "isd",
+                            "wzk"
+                        ],
+                        0.3459
+                    ],
+                    [
+                        "gnr",
+                        [
+                            "isd",
+                            "~wzk"
+                        ],
+                        0.1806
+                    ],
+                    [
+                        "~gnr",
+                        [
+                            "isd",
+                            "~wzk"
+                        ],
+                        0.8194
+                    ],
+                    [
+                        "gnr",
+                        [
+                            "~isd",
+                            "wzk"
+                        ],
+                        0.5429
+                    ],
+                    [
+                        "~gnr",
+                        [
+                            "~isd",
+                            "wzk"
+                        ],
+                        0.4571
+                    ],
+                    [
+                        "gnr",
+                        [
+                            "~isd",
+                            "~wzk"
+                        ],
+                        0.1345
+                    ],
+                    [
+                        "~gnr",
+                        [
+                            "~isd",
+                            "~wzk"
+                        ],
+                        0.8655
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "GNR",
+            "outcomes": [
+                "gnr",
+                "~gnr"
+            ],
+            "parents": [
+                "ISD",
+                "WZK"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "isd",
+                        [],
+                        0.165
+                    ],
+                    [
+                        "~isd",
+                        [],
+                        0.835
+                    ]
+                ],
+                "type": "table"
+            },
+            "latent": true,
+            "name": "ISD",
+            "outcomes": [
+                "isd",
+                "~isd"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jip",
+                        [
+                            "isd"
+                        ],
+                        0.0727
+                    ],
+                    [
+                        "~jip",
+                        [
+                            "isd"
+                        ],
+                        0.9273
+                    ],
+                    [
+                        "jip",
+                        [
+                            "~isd"
+                        ],
+                        0.7628
+                    ],
+                    [
+                        "~jip",
+                        [
+                            "~isd"
+                        ],
+                        0.2372
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JIP",
+            "outcomes": [
+                "jip",
+                "~jip"
+            ],
+            "parents": [
+                "ISD"
+            ]
+        }
+    ]
+}

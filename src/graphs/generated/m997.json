@@ -1,0 +1,451 @@
+{
+    "latent-model": false,
+    "name": "m997",
+    "variables": [
+        {
+            "determination": {
+                "table": [
+                    [
+                        "zjy",
+                        [
+                            "spa"
+                        ],
+                        0.0283
+                    ],
+                    [
+                        "~zjy",
+                        [
+                            "spa"
+                        ],
+                        0.9717
+                    ],
+                    [
+                        "zjy",
+                        [
+                            "~spa"
+                        ],
+                        0.3708
+                    ],
+                    [
+                        "~zjy",
+                        [
+                            "~spa"
+                        ],
+                        0.6292
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "ZJY",
+            "outcomes": [
+                "zjy",
+                "~zjy"
+            ],
+            "parents": [
+                "SPA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "jrm",
+                        [
+                            "spa"
+                        ],
+                        0.5959
+                    ],
+                    [
+                        "~jrm",
+                        [
+                            "spa"
+                        ],
+                        0.4041
+                    ],
+                    [
+                        "jrm",
+                        [
+                            "~spa"
+                        ],
+                        0.5034
+                    ],
+                    [
+                        "~jrm",
+                        [
+                            "~spa"
+                        ],
+                        0.4966
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "JRM",
+            "outcomes": [
+                "jrm",
+                "~jrm"
+            ],
+            "parents": [
+                "SPA"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "oka",
+                        [
+                            "pru"
+                        ],
+                        0.7976
+                    ],
+                    [
+                        "~oka",
+                        [
+                            "pru"
+                        ],
+                        0.2024
+                    ],
+                    [
+                        "oka",
+                        [
+                            "~pru"
+                        ],
+                        0.6563
+                    ],
+                    [
+                        "~oka",
+                        [
+                            "~pru"
+                        ],
+                        0.3437
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "OKA",
+            "outcomes": [
+                "oka",
+                "~oka"
+            ],
+            "parents": [
+                "PRU"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "qxa",
+                        [],
+                        0.3776
+                    ],
+                    [
+                        "~qxa",
+                        [],
+                        0.6224
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "QXA",
+            "outcomes": [
+                "qxa",
+                "~qxa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "fcg",
+                        [],
+                        0.5044
+                    ],
+                    [
+                        "~fcg",
+                        [],
+                        0.4956
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "FCG",
+            "outcomes": [
+                "fcg",
+                "~fcg"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "spa",
+                        [],
+                        0.6005
+                    ],
+                    [
+                        "~spa",
+                        [],
+                        0.3995
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "SPA",
+            "outcomes": [
+                "spa",
+                "~spa"
+            ],
+            "parents": []
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "pru",
+                        [
+                            "jrm"
+                        ],
+                        0.0464
+                    ],
+                    [
+                        "~pru",
+                        [
+                            "jrm"
+                        ],
+                        0.9536
+                    ],
+                    [
+                        "pru",
+                        [
+                            "~jrm"
+                        ],
+                        0.7637
+                    ],
+                    [
+                        "~pru",
+                        [
+                            "~jrm"
+                        ],
+                        0.2363
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "PRU",
+            "outcomes": [
+                "pru",
+                "~pru"
+            ],
+            "parents": [
+                "JRM"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "rub",
+                        [
+                            "fcg"
+                        ],
+                        0.3613
+                    ],
+                    [
+                        "~rub",
+                        [
+                            "fcg"
+                        ],
+                        0.6387
+                    ],
+                    [
+                        "rub",
+                        [
+                            "~fcg"
+                        ],
+                        0.6753
+                    ],
+                    [
+                        "~rub",
+                        [
+                            "~fcg"
+                        ],
+                        0.3247
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "RUB",
+            "outcomes": [
+                "rub",
+                "~rub"
+            ],
+            "parents": [
+                "FCG"
+            ]
+        },
+        {
+            "determination": {
+                "table": [
+                    [
+                        "aez",
+                        [
+                            "fcg",
+                            "qxa",
+                            "zjy"
+                        ],
+                        0.353
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "fcg",
+                            "qxa",
+                            "zjy"
+                        ],
+                        0.647
+                    ],
+                    [
+                        "aez",
+                        [
+                            "fcg",
+                            "qxa",
+                            "~zjy"
+                        ],
+                        0.5128
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "fcg",
+                            "qxa",
+                            "~zjy"
+                        ],
+                        0.4872
+                    ],
+                    [
+                        "aez",
+                        [
+                            "fcg",
+                            "~qxa",
+                            "zjy"
+                        ],
+                        0.1025
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "fcg",
+                            "~qxa",
+                            "zjy"
+                        ],
+                        0.8975
+                    ],
+                    [
+                        "aez",
+                        [
+                            "fcg",
+                            "~qxa",
+                            "~zjy"
+                        ],
+                        0.0556
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "fcg",
+                            "~qxa",
+                            "~zjy"
+                        ],
+                        0.9444
+                    ],
+                    [
+                        "aez",
+                        [
+                            "~fcg",
+                            "qxa",
+                            "zjy"
+                        ],
+                        0.3973
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "~fcg",
+                            "qxa",
+                            "zjy"
+                        ],
+                        0.6027
+                    ],
+                    [
+                        "aez",
+                        [
+                            "~fcg",
+                            "qxa",
+                            "~zjy"
+                        ],
+                        0.1366
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "~fcg",
+                            "qxa",
+                            "~zjy"
+                        ],
+                        0.8634
+                    ],
+                    [
+                        "aez",
+                        [
+                            "~fcg",
+                            "~qxa",
+                            "zjy"
+                        ],
+                        0.371
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "~fcg",
+                            "~qxa",
+                            "zjy"
+                        ],
+                        0.629
+                    ],
+                    [
+                        "aez",
+                        [
+                            "~fcg",
+                            "~qxa",
+                            "~zjy"
+                        ],
+                        0.3225
+                    ],
+                    [
+                        "~aez",
+                        [
+                            "~fcg",
+                            "~qxa",
+                            "~zjy"
+                        ],
+                        0.6775
+                    ]
+                ],
+                "type": "table"
+            },
+            "name": "AEZ",
+            "outcomes": [
+                "aez",
+                "~aez"
+            ],
+            "parents": [
+                "FCG",
+                "QXA",
+                "ZJY"
+            ]
+        }
+    ]
+}
