@@ -9,7 +9,6 @@ on:
 
 jobs:
   test:
-
     strategy:
       matrix:
         python-version: [ 3.8, 3.9 ]
@@ -19,7 +18,6 @@ jobs:
         - ubuntu-16.04
         - macos-latest
         # - windows-latest
-
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -36,6 +34,15 @@ jobs:
         python -m pip install flake8 pytest coverage coveralls
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+
+    - name: Test with pytest / coverage
+      run: |
+        coverage run -m pytest
+
+  lint:
+    runs-on: [ ubuntu-latest ]
+    needs: test
+    steps:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -43,14 +50,9 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Test with pytest / coverage
-      run: |
-        coverage run -m pytest
-
   report_coverage:
     runs-on: [ ubuntu-latest ]
     needs: test
-
     steps:
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
@@ -59,7 +61,6 @@ jobs:
     runs-on: [ ubuntu-latest ]
     needs: test
     if: ${{ github.ref == 'ref/head/main' || github.ref == 'ref/head/beta' }}
-
     steps:
     - name: Create Release
       env:
