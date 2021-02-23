@@ -22,7 +22,7 @@ jobs:
 
         # Special matrix job to report coverage only once
         include:
-          - python-version: "3.10"
+          - python-version: 3.9
             os: ubuntu-latest
             report-coverage: true
 
