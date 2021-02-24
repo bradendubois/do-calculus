@@ -1,14 +1,17 @@
 # TODO - Run all the tests involved in the entire testing suite - implement threading for that
 
 # api
+from random import randrange, choices
+
 from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
 from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
 from src.api.joint_distribution_table import api_joint_distribution_table
 from src.api.probability_query import api_probability_query, api_probability_query_parse
 
 from src.probability.structures.Graph import Graph
+from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
 
-from src.util.helpers import power_set, disjoint
+from src.util.helpers import power_set, disjoint, minimal_sets
 
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
 from src.validation.inference.inference_tests import inference_tests
@@ -99,9 +102,7 @@ def test_independent():
 
 # probability/structures/CausalGraph
 
-def test_probability_query():
-    ...
-
+# See: validation
 
 # probability/structures/ConditionalProbabilityTable
 
@@ -157,11 +158,39 @@ def test_reach():
 
 
 def test_disable_outgoing():
-    ...
+
+    graph.reset_disabled()
+
+    for v in graph.v:
+        children = graph.children(v)
+        descendants = graph.reach(v)
+        graph.disable_outgoing(v)
+        assert len(graph.children(v)) == 0
+        assert len(graph.reach(v)) == 0
+        for child in children:
+            assert v not in graph.parents(child)
+        for descendant in descendants:
+            assert v not in graph.ancestors(descendant)
+
+    graph.reset_disabled()
 
 
 def test_disable_incoming():
-    ...
+
+    graph.reset_disabled()
+
+    for v in graph.v:
+        parents = graph.parents(v)
+        ancestors = graph.ancestors(v)
+        graph.disable_incoming(v)
+        assert len(graph.parents(v)) == 0
+        assert len(graph.ancestors(v)) == 0
+        for parent in parents:
+            assert v not in graph.children(parent)
+        for ancestor in ancestors:
+            assert v not in graph.reach(ancestor)
+
+    graph.reset_disabled()
 
 
 def test_reset_disabled():
@@ -174,16 +203,22 @@ def test_get_topology():
 
 def test_graph_copy():
     graph_2 = graph.copy()
+
     assert len(graph.v) == len(graph_2.v)
     assert len(graph.e) == len(graph_2.e)
+
     assert graph.v is not graph_2.v
     assert graph.e is not graph_2.e
+
     for v in graph.v:
         assert v in graph_2.v
+
     for v in graph_2.v:
         assert v in graph.v
+
     for e in graph.e:
         assert e in graph_2.e
+
     for e in graph_2.e:
         assert e in graph.e
 
@@ -209,7 +244,17 @@ def test_probability():
 # probability/structures/VariableStructures
 
 def test_outcome():
-    ...
+    o1 = Outcome("X", "x")
+    o2 = Outcome("X", "~x")
+    o3 = Outcome("Y", "y")
+
+    assert o1 != o2
+    assert o1 == "X"
+    assert o1 != o2 and o2 != o3
+
+    o1_copy = o1.copy()
+
+    assert o1 == o1_copy and o1 is not o1_copy
 
 
 def test_variable():
@@ -217,7 +262,17 @@ def test_variable():
 
 
 def test_intervention():
-    ...
+    t1 = Intervention("X", "x")
+    t2 = Intervention("X", "~x")
+    t3 = Intervention("Y", "y")
+
+    assert t1 != t2
+    assert t1 == "X"
+    assert t1 != t2 and t2 != t3
+
+    t1_copy = t1.copy()
+
+    assert t1 == t1_copy and t1 is not t1_copy
 
 
 def test_parse_outcomes_and_interventions():
@@ -235,7 +290,18 @@ def test_power_set():
 
 
 def test_minimal_sets():
-    ...
+    s1 = {1, 2, 3}
+    s2 = {1, 2, 3, 4}
+    s3 = {0, 1, 2, 3, 4}
+    s4 = {5, 6, 7}
+    s5 = {0, 1, 2, 3, 4, 5, 6, 7}
+
+    minimums = minimal_sets(s1, s2, s3, s4, s5)
+    assert minimums == [s1, s4]
+
+    assert minimal_sets(s1) == [s1]
+    assert minimal_sets(s1, s2) == [s1]
+    assert minimal_sets(s1, s4) == [s1, s4]
 
 
 def test_disjoint():
