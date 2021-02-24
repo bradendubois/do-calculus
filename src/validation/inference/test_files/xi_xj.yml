@@ -6,3 +6,12 @@ tests:
   - head: Xj=xj
     body: do(Xi=xi)
     expect: 0.362828
+  - head: Xi=xi
+    body: do(Xj=xj), do(X4=x4)
+    expect: failure
+  - head: Xj=xj
+    body: do(X1=x1)
+    expect: 0.45597
+  - head: Xj=xj
+    body: X1=x1
+    expect: 0.45597

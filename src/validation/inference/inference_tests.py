@@ -93,6 +93,8 @@ def inference_tests(graph_location: str) -> (bool, str):
 
         cg = CausalGraph(**parse_model(graph_data))
 
+        test_file_success = True
+
         for test in yml_test_data["tests"]:
 
             head = parse_outcomes_and_interventions(test["head"])
@@ -101,11 +103,13 @@ def inference_tests(graph_location: str) -> (bool, str):
             result = cg.probability_query(head, body)
             expected = test["expect"]
 
-            if not within_precision(result, expected):
+            if expected != "failure" and not within_precision(result, expected):
                 print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
-                all_successful = False
-                continue
+                test_file_success = False
 
+        if test_file_success:
             print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")
+        else:
+            all_successful = False
 
     return all_successful, "Inference module passed" if all_successful else "Inference module encountered errors"
