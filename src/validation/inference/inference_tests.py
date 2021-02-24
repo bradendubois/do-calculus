@@ -37,15 +37,15 @@ def model_inference_validation(cg: CausalGraph) -> (bool, str):
             assert within_precision(total, 1.0), f"{variable} does not sum to 1.0 across its outcomes ({total})."
 
         # Probability failed to compute entirely
-        except ProbabilityIndeterminableException:
+        except ProbabilityIndeterminableException:      # coverage: skip
             return False, f"Probability indeterminable for the graph. Variable {variable}"
 
         # Indicates an invalid table, missing some row, etc.
-        except MissingTableRow as e:
+        except MissingTableRow as e:        # coverage: skip
             return False, f"Invalid table for the graph: {e}"
 
         # Didn't match the expected total
-        except AssertionError as e:
+        except AssertionError as e:     # coverage: skip
             return False, f"Failed assertion: {e}"
 
     return True, "Basic tests passed."
@@ -79,7 +79,7 @@ def inference_tests(graph_location: str) -> (bool, str):
         success, msg = model_inference_validation(causal_graph)
         print_test_result(success, msg if not success else f"All tests in {model} passed")
 
-        if not success:
+        if not success:     # coverage: skip
             all_successful = False
 
     for test_file in test_files:
@@ -103,13 +103,13 @@ def inference_tests(graph_location: str) -> (bool, str):
             result = cg.probability_query(head, body)
             expected = test["expect"]
 
-            if expected != "failure" and not within_precision(result, expected):
+            if expected != "failure" and not within_precision(result, expected):    # coverage: skip
                 print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
                 test_file_success = False
 
         if test_file_success:
             print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")
-        else:
+        else:   # coverage: skip
             all_successful = False
 
     return all_successful, "Inference module passed" if all_successful else "Inference module encountered errors"

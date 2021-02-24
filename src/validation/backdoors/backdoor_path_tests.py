@@ -39,10 +39,10 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
             # Sort each path to improve some sor
             paths = list(map(sorted, paths))
 
-            if test["exhaustive"] and len(paths) != len(expected_paths):
-                return False, f"{len(paths)} found, but expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
+            if test["exhaustive"] and len(paths) != len(expected_paths):    # coverage: skip
+                return False, f"{len(paths)} found, expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
 
-            if not all(map(lambda p: p in paths, expected_paths)):
+            if not all(map(lambda p: p in paths, expected_paths)):  # coverage: skip
                 missing = list(filter(lambda p: p not in paths, expected_paths))
                 return False, f"Missing {len(missing)} paths: {missing}"
 
@@ -54,7 +54,7 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
             dcf = test["dcf"] if "dcf" in test else set()
             independent = bc.independent(src, dst, dcf)
 
-            if independent != expected:
+            if independent != expected:     # coverage: skip
                 return False, f"{src} -> {dst} | {dcf}: {independent}, expected {expected}"
 
     return True, "Backdoor tests passed."
