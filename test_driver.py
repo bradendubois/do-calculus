@@ -7,20 +7,24 @@ from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
 from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
 from src.api.joint_distribution_table import api_joint_distribution_table
 from src.api.probability_query import api_probability_query, api_probability_query_parse
+from src.probability.structures.CausalGraph import CausalGraph
+from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
+from src.util.ModelLoader import parse_model
 
 from src.util.helpers import power_set, disjoint, minimal_sets
 
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
-from src.validation.inference.inference_tests import inference_tests
+from src.validation.inference.inference_tests import inference_tests, MissingTableRow
 from src.validation.shpitser.shpitser_tests import shpitser_tests
 
 from src.validation.test_util import print_test_result
 
 graph_location = "src/graphs/full"
 generated_location = "src/graphs/generated"
+default_model_file = "pearl-3.4.yml"
 
 # api
 
@@ -102,12 +106,26 @@ def test_independent():
 
 # probability/structures/CausalGraph
 
+cg = CausalGraph(**parse_model(f"{graph_location}/{default_model_file}"))
+
+
 # See: validation
 
 # probability/structures/ConditionalProbabilityTable
 
 def test_probability_lookup():
-    ...
+    t: ConditionalProbabilityTable = cg.tables["Xj"]
+
+    priors = [Outcome("X6", "x6"), Outcome("X4", "x4"), Outcome("X5", "x5")]
+
+    assert t.probability_lookup(Outcome("Xj", "xj"), priors) == 0.0
+    assert t.probability_lookup(Outcome("Xj", "~xj"), priors) == 1.0
+
+    try:
+        assert t.probability_lookup(Outcome("Xj", "foo"), priors) == 100
+        raise Exception
+    except MissingTableRow:
+        pass
 
 
 # probability/structures/Graph
