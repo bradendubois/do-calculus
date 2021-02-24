@@ -131,14 +131,15 @@ def test_probability_lookup():
 # probability/structures/Graph
 
 # TODO - Add graph
-graph = Graph(set(), set())
+graph = cg.graph
 
 
 def test_roots():
-    assert sum(map(lambda v: graph.parents(v), graph.roots())) == 0
+    assert sum(map(lambda v: len(graph.parents(v)), graph.roots())) == 0
 
 
 def test_parents():
+    graph.reset_disabled()
     roots = graph.roots()
     for vertex in graph.v:
         parents = graph.parents(vertex)
@@ -152,6 +153,7 @@ def test_parents():
 
 
 def test_children():
+    graph.reset_disabled()
     for vertex in graph.v:
         children = graph.children(vertex)
         for child in children:
@@ -162,6 +164,7 @@ def test_children():
 
 
 def test_ancestors():
+    graph.reset_disabled()
     for vertex in graph.v:
         ancestors = graph.ancestors(vertex)
         for ancestor in ancestors:
@@ -169,10 +172,11 @@ def test_ancestors():
 
 
 def test_reach():
+    graph.reset_disabled()
     for vertex in graph.v:
         descendants = graph.reach(vertex)
         for descendant in descendants:
-            assert vertex in graph.reach(descendant)
+            assert vertex in graph.ancestors(descendant)
 
 
 def test_disable_outgoing():
