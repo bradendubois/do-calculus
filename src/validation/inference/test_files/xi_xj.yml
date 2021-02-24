@@ -19,3 +19,15 @@ tests:
   - head: Xj=xj
     body: X1=x1
     expect: 0.45597
+
+  - head: Xi=xi
+    body: Xi=~xi
+    expect: 0.0
+
+  - head: Xi=xi
+    body: Xi=xi
+    expect: 1.0
+
+  - head: Xi=xi
+    body: Xi=xi, Xj=xj
+    expect: 1.0
