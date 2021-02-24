@@ -31,7 +31,7 @@ def parse_model(file: dict or str):
 
         else:
             print(f"Unknown extension for file: {file}, needs to end with .yml, .yaml, or .json")
-            raise Exception
+            raise FileNotFoundError
 
         with open(file) as f:
             data = loader(f)

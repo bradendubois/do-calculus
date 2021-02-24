@@ -1,8 +1,5 @@
-# TODO - Run all the tests involved in the entire testing suite - implement threading for that
 
 # api
-from random import randrange, choices
-
 from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
 from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
 from src.api.joint_distribution_table import api_joint_distribution_table
@@ -10,7 +7,7 @@ from src.api.probability_query import api_probability_query, api_probability_que
 
 from src.probability.structures.CausalGraph import CausalGraph
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from src.probability.structures.Graph import Graph
+from src.probability.structures.Graph import Graph, to_label
 from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
 
 from src.util.helpers import power_set, disjoint, minimal_sets
@@ -22,6 +19,7 @@ from src.validation.shpitser.shpitser_tests import shpitser_tests
 
 from src.validation.test_util import print_test_result
 
+# TODO - use pathlib
 graph_location = "src/graphs/full"
 generated_location = "src/graphs/generated"
 default_model_file = "pearl-3.4.yml"
@@ -84,24 +82,7 @@ def test_randomized_latent_variables():
 
 # probability/structures/BackdoorController
 
-def test_backdoor_paths():
-    ...
-
-
-def test_backdoor_paths_pair():
-    ...
-
-
-def test_all_dcf_sets():
-    ...
-
-
-def test_all_paths_cumulative():
-    ...
-
-
-def test_independent():
-    ...
+# see: validation
 
 
 # probability/structures/CausalGraph
@@ -253,7 +234,13 @@ def test_descendant_first_sort():
 
 
 def test_to_label():
-    ...
+    outcome = Outcome("Xj", "xj")
+    intervention = Intervention("Xj", "xj")
+    variable = Variable("Xj", [], [])
+
+    assert to_label(outcome) == outcome.name
+    assert to_label(intervention) == intervention.name
+    assert to_label(variable) == variable.name
 
 
 # probability/structures/Probability_Engine
@@ -335,16 +322,26 @@ def test_disjoint():
     assert disjoint(d1, d3)
 
 
-def test_p_str():
-    ...
-
-
 def test_parse_model():
-    ...
 
+    # nonexistent file
+    try:
+        parse_model("fake/path/fake")
+        raise Exception
+    except FileNotFoundError:
+        pass
 
-def test_output_logger():
-    ...
+    # invalid file
+    try:
+        parse_model("src/util/helpers.py")
+        raise Exception
+    except FileNotFoundError:
+        pass
+
+    # yml
+    parse_model(f"{graph_location}/{default_model_file}")
+
+    # json
 
 
 # validation
