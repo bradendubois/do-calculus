@@ -12,7 +12,7 @@ from src.probability.structures.CausalGraph import CausalGraph
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from src.probability.structures.VariableStructures import Variable
 
-from src.util.ModelLoader import parse_graph_file_data
+from src.util.ModelLoader import parse_model
 from src.util.OutputLogger import OutputLogger
 
 
@@ -50,7 +50,7 @@ class Do:
         @param data: A dictionary conforming to the required causal model specification to be loaded
             into the API.
         """
-        d = parse_graph_file_data(data)
+        d = parse_model(data)
 
         self._cg = CausalGraph(output=self._output, **d)
         self._g = d["graph"]

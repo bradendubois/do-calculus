@@ -14,13 +14,13 @@ def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]
     return chain.from_iterable(combinations(p_set, r) for r in range(base, len(p_set)+1))
 
 
-def minimal_sets(set_of_sets: list) -> list:
+def minimal_sets(*sets) -> list:
     """
     Take a set of sets, and return only the minimal sets
-    @param set_of_sets: A set of sets, each set containing strings
+    @param sets: An arbitrary number of sets, each set containing strings
     @return: A list of minimal sets; that is, all sets such that there is no superset
     """
-    sorted_sets = sorted(map(set, set_of_sets), key=len)
+    sorted_sets = sorted(map(set, list(sets)), key=len)
     minimal_subsets = []
     for s in sorted_sets:
         if not any(minimal_subset.issubset(s) for minimal_subset in minimal_subsets):

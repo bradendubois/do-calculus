@@ -28,21 +28,34 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
 
     for test in test_data["tests"]:
 
-        expected_paths = list(map(sorted, test["expect"]))
+        if test["type"] == "backdoor-paths":
 
-        paths = []
-        for s, t in itertools.product(test["src"], test["dst"]):
-            paths.extend(bc.backdoor_paths_pair(s, t, test["dcf"] if "dcf" in test else {}))
+            expected_paths = list(map(sorted, test["expect"]))
 
-        # Sort each path to improve some sor
-        paths = list(map(sorted, paths))
+            paths = []
+            for s, t in itertools.product(test["src"], test["dst"]):
+                paths.extend(bc.backdoor_paths_pair(s, t, test["dcf"] if "dcf" in test else {}))
 
-        if test["exhaustive"] and len(paths) != len(expected_paths):
-            return False, f"{len(paths)} found, but expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
+            # Sort each path to improve some sor
+            paths = list(map(sorted, paths))
 
-        if not all(map(lambda p: p in paths, expected_paths)):
-            missing = list(filter(lambda p: p not in paths, expected_paths))
-            return False, f"Missing {len(missing)} paths: {missing}"
+            if test["exhaustive"] and len(paths) != len(expected_paths):    # coverage: skip
+                return False, f"{len(paths)} found, expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
+
+            if not all(map(lambda p: p in paths, expected_paths)):  # coverage: skip
+                missing = list(filter(lambda p: p not in paths, expected_paths))
+                return False, f"Missing {len(missing)} paths: {missing}"
+
+        elif test["type"] == "independence":
+
+            expected = test["expect"]
+            src = test["src"]
+            dst = test["dst"]
+            dcf = test["dcf"] if "dcf" in test else set()
+            independent = bc.independent(src, dst, dcf)
+
+            if independent != expected:     # coverage: skip
+                return False, f"{src} -> {dst} | {dcf}: {independent}, expected {expected}"
 
     return True, "Backdoor tests passed."
 

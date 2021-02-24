@@ -151,7 +151,7 @@ class BackdoorController:
         # Minimize the sets, if enabled
         # TODO - Revisit configuration detail implementation
         if access("minimize_backdoor_sets"):
-            valid_deconfounding_sets = minimal_sets(valid_deconfounding_sets)
+            valid_deconfounding_sets = minimal_sets(*valid_deconfounding_sets)
 
         return list(valid_deconfounding_sets)
 
