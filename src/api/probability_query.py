@@ -17,7 +17,7 @@ def api_probability_query_parse(query: str) -> (tuple, tuple):
 
     return {
         "y": parse_outcomes_and_interventions(query),
-        "x": []
+        "x": set()
     }
 
 

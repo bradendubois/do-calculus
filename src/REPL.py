@@ -1,4 +1,4 @@
-from json import load
+from yaml import safe_load as load
 from os import path, listdir
 
 from src.api.backdoor_paths import api_backdoor_paths_parse
@@ -68,12 +68,12 @@ def run_repl(graph_location="src/graphs/full"):
         if f in list_options:
             assert path.isdir(graph_location), \
                 "The specified directory for causal graph models {} does not exist!".format(graph_location)
-            print("Options", "\n- ".join(filter(lambda g: g.endswith(".json"), sorted(listdir(graph_location)))))
+            print("Options", "\n- ".join(filter(lambda g: g.endswith(".yml"), sorted(listdir(graph_location)))))
             continue
 
         # Parse and load a model into the API
         if f in load_options:
-            s = arg + (".json" if not arg.endswith(".json") else "")
+            s = arg + (".yml" if not arg.endswith(".yml") else "")
             assert path.isfile(full_path := graph_location + "/" + s), \
                 "File: {} does not exist!".format(s)
 

@@ -111,7 +111,7 @@ class ProbabilityEngine:
                 self.output.detail(rep, "=", result, x=depth)
                 self._store_computation(rep, result)
                 return result
-            except ProbabilityException:
+            except ProbabilityException:    # coverage: skip
                 self.output.detail("Failed to resolve by reverse product rule.", x=depth)
 
         ###############################################
@@ -135,9 +135,7 @@ class ProbabilityEngine:
         ##################################################################
 
         if set(head).issubset(set(body)):
-            self.output.detail(f"Identity rule: {rep} = 1.0", x=depth)
-            if len(head) > len(body):
-                self.output.detail(f"Therefore, {rep} = 1.0", x=depth)
+            self.output.detail(f"Identity rule: X|X, therefore {rep} = 1.0", x=depth)
             return 1.0
 
         #################################################
@@ -177,7 +175,7 @@ class ProbabilityEngine:
                 self._store_computation(rep, result)
                 return result
 
-            except ProbabilityException:
+            except ProbabilityException:    # coverage: skip
                 self.output.detail("Failed to resolve by Bayes", x=depth)
 
         #######################################################################################################
@@ -217,7 +215,7 @@ class ProbabilityEngine:
                     self._store_computation(rep, total)
                     return total
 
-                except ProbabilityException:
+                except ProbabilityException:    # coverage: skip
                     self.output.detail("Failed to resolve by Jeffrey's Rule", x=depth)
 
         ###############################################
@@ -247,14 +245,14 @@ class ProbabilityEngine:
                     self._store_computation(rep, result)
                     return result
 
-                except ProbabilityException:
+                except ProbabilityException:    # coverage: skip
                     pass
 
         ###############################################
         #               Cannot compute                #
         ###############################################
 
-        raise ProbabilityIndeterminableException
+        raise ProbabilityIndeterminableException    # coverage: skip
 
     def _store_computation(self, string_representation: str, result: float):
         """
@@ -270,7 +268,7 @@ class ProbabilityEngine:
                 self._stored_computations[string_representation] = result
 
             # Stored already but with a different value - something fishy is going on...
-            elif self._stored_computations[string_representation] != result:
+            elif self._stored_computations[string_representation] != result:    # coverage: skip
                 print("Uh-oh:", string_representation, "has already been cached, but with a different value...")
 
 

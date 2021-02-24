@@ -31,6 +31,12 @@ class Outcome:
     def __hash__(self) -> int:
         return hash(self.name + self.outcome)
 
+    def __copy__(self):
+        return Outcome(self.name, self.outcome)
+
+    def copy(self):
+        return self.__copy__()
+
     def __eq__(self, other) -> bool:
         if isinstance(other, str):
             return self.name == other
