@@ -31,3 +31,7 @@ tests:
   - head: Xi=xi
     body: Xi=xi, Xj=xj
     expect: 1.0
+
+  - head: Xi=xi
+    body: do(Xj=xj)
+    expect: 0.2669

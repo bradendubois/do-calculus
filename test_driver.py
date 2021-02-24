@@ -7,14 +7,14 @@ from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
 from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
 from src.api.joint_distribution_table import api_joint_distribution_table
 from src.api.probability_query import api_probability_query, api_probability_query_parse
+
 from src.probability.structures.CausalGraph import CausalGraph
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
-from src.util.ModelLoader import parse_model
 
 from src.util.helpers import power_set, disjoint, minimal_sets
+from src.util.ModelLoader import parse_model
 
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
 from src.validation.inference.inference_tests import inference_tests, MissingTableRow
@@ -130,7 +130,6 @@ def test_probability_lookup():
 
 # probability/structures/Graph
 
-# TODO - Add graph
 graph = cg.graph
 
 
@@ -369,34 +368,3 @@ def test_shpitser_module() -> bool:
     assert shpitser_bool, shpitser_msg
     print_test_result(shpitser_bool, shpitser_msg)
     return shpitser_bool
-
-
-
-# TODO - Incorporate into above tests
-def run_all_tests(extreme=False) -> bool:
-    """
-    Run all the tests for each of the individual components of the software (the basic inference engine, backdoor paths,
-    as well as shpitser).
-    @param extreme: bool; whether or not to run additional tests on generated models; this may increase testing time
-        substantially.
-    @postcondition Output of all tests is printed to standard output
-    @return: True if all tests are successful, False otherwise
-    """
-
-    inference_bool, inference_msg = inference_tests(graph_location)
-    backdoor_bool, backdoor_msg = backdoor_tests(graph_location)
-    shpitser_bool, shpitser_msg = shpitser_tests(graph_location)
-
-    print_test_result(inference_bool, inference_msg)
-    print_test_result(backdoor_bool, backdoor_msg)
-    print_test_result(shpitser_bool, shpitser_msg)
-
-    if extreme:
-
-        print("Additional tests beginning...")
-
-        extreme_inference_bool, extreme_inference_msg = inference_tests(generated_location)
-        print_test_result(extreme_inference_bool, extreme_inference_msg)
-        inference_bool = inference_bool and extreme_inference_bool
-
-    return all([inference_bool, backdoor_bool, shpitser_bool])

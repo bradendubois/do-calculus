@@ -135,9 +135,7 @@ class ProbabilityEngine:
         ##################################################################
 
         if set(head).issubset(set(body)):
-            self.output.detail(f"Identity rule: {rep} = 1.0", x=depth)
-            if len(head) > len(body):
-                self.output.detail(f"Therefore, {rep} = 1.0", x=depth)
+            self.output.detail(f"Identity rule: X|X, therefore {rep} = 1.0", x=depth)
             return 1.0
 
         #################################################
