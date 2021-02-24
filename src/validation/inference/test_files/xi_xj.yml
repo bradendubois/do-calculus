@@ -1,0 +1,8 @@
+graph_filename: pearl-3.4.yml
+tests:
+  - head: Xj=xj
+    body: Xi=xi
+    expect: 0.41845
+  - head: Xj=xj
+    body: do(Xi=xi)
+    expect: 0.362828

@@ -1,12 +1,15 @@
 from yaml import safe_load as load
 from os import listdir
+from os.path import dirname, abspath
 
 from src.config.config_manager import access
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
 
 from src.util.ProbabilityExceptions import *
-from src.util.ModelLoader import parse_model
+from src.util.ModelLoader import parse_model, parse_outcomes_and_interventions
 from src.validation.test_util import print_test_result
+
+test_file_directory = dirname(abspath(__file__)) + "/test_files"
 
 
 def within_precision(a: float, b: float) -> bool:
@@ -55,23 +58,54 @@ def inference_tests(graph_location: str) -> (bool, str):
     @return: True if all tests are successful, False otherwise, along with a string summary message.
     """
 
-    files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(graph_location))))
+    model_files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(graph_location))))
+    test_files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(test_file_directory))))
+
+    assert len(model_files) > 0, "Models not found"
+    assert len(test_files) > 0, "Inference test files not found"
+
     all_successful = True
 
     # TODO - Threading to handle all the tests
 
-    for test_file in files:
+    for model in model_files:
 
-        with open(graph_location + "/" + test_file) as f:
+        with open(graph_location + "/" + model) as f:
             yml_model = load(f)
 
         parsed_model = parse_model(yml_model)
         causal_graph = CausalGraph(**parsed_model)
 
         success, msg = model_inference_validation(causal_graph)
-        print_test_result(success, msg if not success else f"All tests in {test_file} passed")
+        print_test_result(success, msg if not success else f"All tests in {model} passed")
 
         if not success:
             all_successful = False
+
+    for test_file in test_files:
+
+        with open(f"{test_file_directory}/{test_file}") as f:
+            yml_test_data = load(f)
+
+        graph_filename = yml_test_data["graph_filename"]
+        with open(f"{graph_location}/{graph_filename}") as f:
+            graph_data = load(f)
+
+        cg = CausalGraph(**parse_model(graph_data))
+
+        for test in yml_test_data["tests"]:
+
+            head = parse_outcomes_and_interventions(test["head"])
+            body = parse_outcomes_and_interventions(test["body"]) if "body" in test else set()
+
+            result = cg.probability_query(head, body)
+            expected = test["expect"]
+
+            if not within_precision(result, expected):
+                print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
+                all_successful = False
+                continue
+
+            print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")
 
     return all_successful, "Inference module passed" if all_successful else "Inference module encountered errors"
