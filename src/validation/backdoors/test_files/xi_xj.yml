@@ -19,3 +19,13 @@ tests:
     src: [ X1 ]
     dst: [ X2 ]
     expect: true
+
+  - type: independence
+    src: [ X1 ]
+    dst: [ Xj ]
+    expect: false
+
+  - type: independence
+    src: [ X2 ]
+    dst: [ Xi ]
+    expect: false
