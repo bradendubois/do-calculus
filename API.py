@@ -107,7 +107,7 @@ class Do:
 
         return result
 
-    def joint_distribution_table(self) -> list:
+    def joint_distribution_table(self) -> ConditionalProbabilityTable:
         """
         Compute a joint distribution table across the entire model loaded.
         @return: A list of tuples, (Outcomes, P), where Outcomes is a unique set of Outcome objects for the model, and
@@ -117,12 +117,8 @@ class Do:
 
         if self._print_result:
             keys = sorted(self._cg.variables.keys())
-            rows = [[",".join(map(str, outcomes)), [], p] for outcomes, p in result]
-            rows.append(["Total:", [], sum(map(lambda r: r[1], result))])
-            cpt = ConditionalProbabilityTable(Variable(",".join(keys), [], []), [], rows)
-
             self._output.result(f"Joint Distribution Table for: {','.join(keys)}")
-            self._output.result(f"{cpt}")
+            self._output.result(f"{result}")
 
         return result
 
