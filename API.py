@@ -2,6 +2,9 @@
 #                   probability-code API                  #
 ###########################################################
 
+from typing import Union
+from pathlib import Path
+
 from src.api.backdoor_paths import api_backdoor_paths
 from src.api.deconfounding_sets import api_deconfounding_sets
 from src.api.joint_distribution_table import api_joint_distribution_table
@@ -44,7 +47,7 @@ class Do:
     #                       API Modifications                      #
     ################################################################
 
-    def load_model(self, data: dict):
+    def load_model(self, data: Union[str, dict, Path]):
         """
         Load a model into the API.
         @param data: A dictionary conforming to the required causal model specification to be loaded
