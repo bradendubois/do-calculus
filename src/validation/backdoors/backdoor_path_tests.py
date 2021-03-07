@@ -1,6 +1,7 @@
 import itertools
 from os import listdir
 from os.path import dirname, abspath
+from pathlib import Path
 from yaml import safe_load as load
 
 from src.validation.test_util import print_test_result
@@ -8,7 +9,7 @@ from src.validation.test_util import print_test_result
 from src.probability.structures.BackdoorController import BackdoorController
 from src.util.ModelLoader import parse_model
 
-test_file_directory = dirname(abspath(__file__)) + "/test_files"
+test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 
 
 def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool, str):
@@ -60,27 +61,25 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
     return True, "Backdoor tests passed."
 
 
-def backdoor_tests(graph_location: str) -> (bool, str):
+def backdoor_tests(graph_location: Path) -> (bool, str):
     """
     Run tests on models located in a given directory of graphs, verifying various backdoor paths in the models.
     @param graph_location: a directory containing causal graph models in JSON
     @return: True if all tests are successful, False otherwise
     """
 
-    files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(test_file_directory))))
+    files = sorted(list(filter(lambda x: x.suffix.lower() == ".yml", test_file_directory.iterdir())))
     assert len(files) > 0, f"Found no backdoor module tests"
 
     all_successful = True
 
-    # TODO - Threading ? Good for inference tests but shouldn't take too long here
-
     for test_file in files:
 
-        with open(f"{test_file_directory}/{test_file}") as f:
+        with test_file.open("r") as f:
             yml_test_data = load(f)
 
         graph_filename = yml_test_data["graph_filename"]
-        with open(f"{graph_location}/{graph_filename}") as f:
+        with (graph_location / graph_filename).open("r") as f:
             graph_data = load(f)
 
         bc = BackdoorController(parse_model(graph_data)["graph"])

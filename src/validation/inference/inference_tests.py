@@ -1,12 +1,9 @@
-from yaml import safe_load as load
-
-from os import listdir
 from os.path import dirname, abspath
 from pathlib import Path
+from yaml import safe_load as load
 
 from src.config.settings import Settings
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
-
 from src.util.ProbabilityExceptions import *
 from src.util.ModelLoader import parse_model, parse_outcomes_and_interventions
 from src.validation.test_util import print_test_result
