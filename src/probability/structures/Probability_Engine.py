@@ -9,7 +9,7 @@
 
 from itertools import product
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import Outcome, Intervention
@@ -75,7 +75,7 @@ class ProbabilityEngine:
         ###############################################
 
         # Sort the head and body if enabled
-        if access("topological_sort_variables"):
+        if Settings.topological_sort_variables:
             head, body = self.graph.descendant_first_sort(head), self.graph.descendant_first_sort(body)
 
         # Create a string representation of this query, and see if it's been done / in-progress / contradictory
@@ -261,7 +261,7 @@ class ProbabilityEngine:
         @param result: The actual float value to store
         """
         # Ensure the configuration file is specified to allow caching
-        if access("cache_computation_results"):
+        if Settings.cache_computation_results:
 
             # Not stored yet - store it
             if string_representation not in self._stored_computations:
