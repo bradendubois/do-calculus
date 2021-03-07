@@ -37,6 +37,8 @@ cg = CausalGraph(**parse_model(test_file))
 graph = cg.graph
 bc = BackdoorController(graph)
 
+json_model = graphs /  "test.json"
+
 
 # api
 
@@ -437,6 +439,7 @@ def test_parse_model():
     parse_model(test_file)
 
     # json
+    parse_model(json_model)
 
 
 # validation
