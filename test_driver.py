@@ -1,5 +1,5 @@
+from math import prod
 from pathlib import Path
-from yaml import safe_load as load
 
 # api
 from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
@@ -7,12 +7,13 @@ from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding
 from src.api.joint_distribution_table import api_joint_distribution_table
 from src.api.probability_query import api_probability_query, api_probability_query_parse
 
+from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.CausalGraph import CausalGraph
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from src.probability.structures.Graph import Graph, to_label
 from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
 
-from src.util.helpers import power_set, disjoint, minimal_sets
+from src.util.helpers import power_set, disjoint, minimal_sets, within_precision
 from src.util.ModelLoader import parse_model
 
 from src.validation.backdoors.backdoor_path_tests import backdoor_tests
@@ -32,25 +33,87 @@ graphs = Path(".", "src", "graphs", "full")
 test_file = graphs / default_model_file
 
 
+cg = CausalGraph(**parse_model(test_file))
+graph = cg.graph
+bc = BackdoorController(graph)
+
+
 # api
 
 def test_api_backdoor_paths():
-    ...
+
+    blocked = ({"Xi"}, {"Xj"}, {"X4", "X2"})
+    unblocked = ({"Xi"}, {"Xj"}, set())
+
+    assert api_backdoor_paths_parse("Xi -> Xj") == {"src": {"Xi"}, "dst": {"Xj"}, "dcf": set()}
+    assert api_backdoor_paths_parse("Xi -> Xj | X4, X2") == {"src": {"Xi"}, "dst": {"Xj"}, "dcf": {"X4", "X2"}}
+
+    assert len(api_backdoor_paths(bc, *unblocked)) > 0
+    assert len(api_backdoor_paths(bc, *blocked)) == 0
+
+    assert api_backdoor_paths(bc, *unblocked) == bc.backdoor_paths(*unblocked)
+    assert api_backdoor_paths(bc, *blocked) == bc.backdoor_paths(*blocked)
 
 
 def test_api_deconfounding_sets():
-    ...
+
+    paths = ({"Xi"}, {"Xj"})
+    paths2 = ({"Xj"}, {"Xi"})
+    no_paths = ({"X1"}, {"Xj"})
+
+    unfixable = ({"Xi", "X4", "X2"}, {"Xj"})
+
+    assert api_deconfounding_sets_parse("Xi, X1 -> Xj") == {"src": {"Xi", "X1"}, "dst": {"Xj"}}
+    assert api_deconfounding_sets_parse("Xi -> Xj") == {"src": {"Xi"}, "dst": {"Xj"}}
+    assert api_deconfounding_sets_parse("Xj -> Xi") == {"src": {"Xj"}, "dst": {"Xi"}}
+    assert api_deconfounding_sets_parse("X1 -> Xj") == {"src": {"X1"}, "dst": {"Xj"}}
+    assert api_deconfounding_sets_parse("Xi, X4, X2 -> Xj") == {"src": {"Xi", "X4", "X2"}, "dst": {"Xj"}}
+
+    assert len(api_deconfounding_sets(bc, *paths)) > 0
+    assert len(api_deconfounding_sets(bc, *paths2)) > 0
+    assert len(api_deconfounding_sets(bc, *no_paths)) > 0
+    assert len(api_deconfounding_sets(bc, *unfixable)) == 0
+
+    assert api_deconfounding_sets(bc, *paths) == bc.all_dcf_sets(*paths)
+    assert api_deconfounding_sets(bc, *paths2) == bc.all_dcf_sets(*paths2)
+    assert api_deconfounding_sets(bc, *no_paths) == bc.all_dcf_sets(*no_paths)
+    assert api_deconfounding_sets(bc, *unfixable) == bc.all_dcf_sets(*unfixable)
 
 
 def test_api_joint_distribution_table():
-    ...
+
+    jdt: ConditionalProbabilityTable = api_joint_distribution_table(cg)
+
+    outcome_counts = list(map(lambda v: len(cg.outcomes[v]), cg.variables))
+    totals = map(lambda row: row[-1], jdt.table_rows[:-1])
+
+    assert isinstance(jdt, ConditionalProbabilityTable)
+    assert len(jdt.table_rows[:-1]) == prod(outcome_counts)
+    assert within_precision(sum(list(totals)), 1)
 
 
 def test_api_probability_query():
-    ...
 
+    x = Outcome("X", "x")
+    y = Outcome("Y", "y")
+    z = Outcome("Z", "z")
 
-# config - TODO
+    v = Intervention("V", "v")
+    w = Intervention("W", "w")
+
+    head_and_body = "Y=y, X=x | Z=z, do(W=w, V=v)"
+    head_only = "Y=y, X=x"
+    single_both = "Y=y | X = x"
+    single_head = "Y = y"
+
+    assert api_probability_query_parse(head_and_body) == {"y": {y, x}, "x": {z, w, v}}
+    assert api_probability_query_parse(head_only) == {"y": {y, x}, "x": set()}
+    assert api_probability_query_parse(single_both) == {"y": {y}, "x": {x}}
+    assert api_probability_query_parse(single_head) == {"y": {y}, "x": set()}
+
+    xi = Outcome("Xi", "xi")
+    xj = Outcome("Xj", "xj")
+    assert api_probability_query(cg, {xj}, {xi}) == cg.probability_query({xj}, {xi})
 
 
 # graphs
@@ -95,8 +158,6 @@ def test_randomized_latent_variables():
 
 # probability/structures/CausalGraph
 
-cg = CausalGraph(**parse_model(test_file))
-
 
 # See: validation
 
@@ -118,9 +179,6 @@ def test_probability_lookup():
 
 
 # probability/structures/Graph
-
-graph = cg.graph
-
 
 def test_roots():
     assert sum(map(lambda v: len(graph.parents(v)), graph.roots())) == 0
