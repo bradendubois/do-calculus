@@ -3,7 +3,6 @@ from yaml import safe_load as load, dump
 
 from src.config.primary_configuration import *
 
-
 path = Path(".", "src", "config", "config.yml")
 
 
