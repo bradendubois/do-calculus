@@ -9,7 +9,7 @@
 
 from itertools import product
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 
 from src.probability.structures.BackdoorController import BackdoorController
 from src.probability.structures.Graph import Graph
@@ -111,7 +111,7 @@ class CausalGraph:
                     # If results do NOT match; error
                     assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
-        msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=access("output_levels_of_precision") + 1)
+        msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=Settings.output_levels_of_precision + 1)
         self.output.detail(msg)
         self.graph.reset_disabled()
         return probability

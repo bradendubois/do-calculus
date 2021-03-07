@@ -9,7 +9,7 @@
 import numpy as np              # Used in table->str formatting
 from math import floor, ceil    # Used in table->str formatting
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
 from src.util.ProbabilityExceptions import MissingTableRow
 
@@ -71,7 +71,7 @@ class ConditionalProbabilityTable:
                 table[i+1][1+given_idx] = row[1][given_idx].outcome
 
             # The probability, to some modifiable number of digits
-            table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=access("output_levels_of_precision"))
+            table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=Settings.output_levels_of_precision)
 
         # Wiggle/Padding, column by column
         for column_index in range(1 + len(self.given) + 1):

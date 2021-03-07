@@ -2,7 +2,7 @@ from yaml import safe_load as load
 from os import listdir
 from os.path import dirname, abspath
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
 
 from src.util.ProbabilityExceptions import *
@@ -19,7 +19,7 @@ def within_precision(a: float, b: float) -> bool:
     @param b: The second value
     @return: True if the values are within the margin of error acceptable, False otherwise
     """
-    return abs(a - b) < 1 / (10 ** access("regression_levels_of_precision"))
+    return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
 
 
 def model_inference_validation(cg: CausalGraph) -> (bool, str):
