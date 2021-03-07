@@ -1,3 +1,5 @@
+from pathlib import Path
+from yaml import safe_load as load
 
 # api
 from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
@@ -19,10 +21,16 @@ from src.validation.shpitser.shpitser_tests import shpitser_tests
 
 from src.validation.test_util import print_test_result
 
-# TODO - use pathlib
-graph_location = "src/graphs/full"
-generated_location = "src/graphs/generated"
+
+# Use the Xi-Xj model of TBoW as a test
 default_model_file = "pearl-3.4.yml"
+
+# Default location for the graphs made by hand
+graphs = Path(".", "src", "graphs", "full")
+
+# Path to the Xi-Xj model
+test_file = graphs / default_model_file
+
 
 # api
 
@@ -87,7 +95,7 @@ def test_randomized_latent_variables():
 
 # probability/structures/CausalGraph
 
-cg = CausalGraph(**parse_model(f"{graph_location}/{default_model_file}"))
+cg = CausalGraph(**parse_model(test_file))
 
 
 # See: validation
@@ -326,20 +334,20 @@ def test_parse_model():
 
     # nonexistent file
     try:
-        parse_model("fake/path/fake")
+        parse_model(Path("fake", "path", "fake"))
         raise Exception
     except FileNotFoundError:
         pass
 
     # invalid file
     try:
-        parse_model("src/util/helpers.py")
+        parse_model(Path("src", "util", "helpers.py"))
         raise Exception
     except FileNotFoundError:
         pass
 
     # yml
-    parse_model(f"{graph_location}/{default_model_file}")
+    parse_model(test_file)
 
     # json
 
@@ -347,21 +355,21 @@ def test_parse_model():
 # validation
 
 def test_inference_module() -> bool:
-    inference_bool, inference_msg = inference_tests(graph_location)
+    inference_bool, inference_msg = inference_tests(graphs)
     assert inference_bool, inference_msg
     print_test_result(inference_bool, inference_msg)
     return inference_bool
 
 
 def test_backdoor_module() -> bool:
-    backdoor_bool, backdoor_msg = backdoor_tests(graph_location)
+    backdoor_bool, backdoor_msg = backdoor_tests(graphs)
     assert backdoor_bool, backdoor_msg
     print_test_result(backdoor_bool, backdoor_msg)
     return backdoor_bool
 
 
 def test_shpitser_module() -> bool:
-    shpitser_bool, shpitser_msg = shpitser_tests(graph_location)
+    shpitser_bool, shpitser_msg = shpitser_tests(graphs)
     assert shpitser_bool, shpitser_msg
     print_test_result(shpitser_bool, shpitser_msg)
     return shpitser_bool

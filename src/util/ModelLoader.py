@@ -1,5 +1,6 @@
 from json import load as json_load
-from os import path
+from pathlib import Path
+from typing import Union
 from yaml import safe_load as yaml_load
 
 from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
@@ -7,33 +8,42 @@ from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import *
 
 
-def parse_model(file: dict or str):
+def parse_model(file: Union[dict, str, Path]):
     """
     Parse a given model for use within the project, such as to create a CausalGraph
     @param file: a string path to either a JSON or YML file containing a valid model, or a dictionary
         containing a model
-    @raises FileNotFoundError if a string is provided that does not lead to a file
-    @raises Exception if a string given does not end in .yml, .yaml, or .json
+    @raise FileNotFoundError if a string is provided that does not lead to a file
+    @raise Exception if a string given does not end in .yml, .yaml, or .json
     @return a dictionary of the parsed model, with keys "variables", "outcomes", "tables", "graph", "latent"
     """
 
-    # str: path to a file
-    if isinstance(file, str):
-        if not path.isfile(file):
+    # str: path to a file, or Path
+    if not isinstance(file, dict):
+
+        if isinstance(file, Path):
+            p = file
+
+        else:
+            p = Path(file)
+
+        if not p.is_file():
             print(f"ERROR: Can't find {file}")
             raise FileNotFoundError
 
-        if file.lower().endswith(".yml") or file.lower().endswith(".yaml"):
+        extension = p.suffix.lower()
+
+        if extension in [".yml", ".yaml"]:
             loader = yaml_load
 
-        elif file.lower().endswith(".json"):
+        elif extension == ".json":
             loader = json_load
 
         else:
-            print(f"Unknown extension for file: {file}, needs to end with .yml, .yaml, or .json")
+            print(f"Unknown extension '{extension}' for file: {file}, needs to end with .yml, .yaml, or .json")
             raise FileNotFoundError
 
-        with open(file) as f:
+        with p.open("r") as f:
             data = loader(f)
 
     # dict: assume valid model
