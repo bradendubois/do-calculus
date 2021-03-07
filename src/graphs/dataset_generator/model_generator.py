@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from sys import argv
-from os import path, listdir
 from json import dump
+from pathlib import Path
 from random import randrange
+from sys import argv
 
 from src.probability.structures.CausalGraph import CausalGraph
 from src.validation.inference.inference_tests import model_inference_validation
@@ -26,9 +26,9 @@ try:
 except ValueError:
     print("Could not convert", argv[1], "to int; defaulting to", N)
 
-destination_directory = argv[2]
+destination_directory = Path(".", argv[2])
 
-if not path.isdir(destination_directory):
+if not destination_directory.is_dir():
     print("Cannot resolve", destination_directory)
     exit()
 
@@ -43,14 +43,14 @@ while N:
         g = generate_graph(num_vertices, max_path_length, num_edges)
         distribution = generate_distribution(g)
 
-        cg = CausalGraph(**parse_model({"variables": list(distribution.values())}))
+        cg = CausalGraph(**parse_model({"model": list(distribution.values())}))
 
         success, message = model_inference_validation(cg)
         if success:
 
-            l = len(listdir(destination_directory)) // 2 + 1
+            l = len(list(destination_directory.iterdir())) // 2 + 1
 
-            with open("{}/m{}.json".format(destination_directory, l), "w") as f:
+            with (destination_directory / f"m{l}").open("w") as f:
                 dump({
                     "name": "m" + str(l),
                     "variables": list(distribution.values()),
@@ -61,7 +61,7 @@ while N:
             for v in latent_variables:
                 distribution[v]["latent"] = True
 
-            with open("{}/m{}_L.json".format(destination_directory, l), "w") as f:
+            with (destination_directory / f"m{l}_L").open("w") as f:
                 dump({
                     "name": "m" + str(l) + "_L",
                     "variables": list(distribution.values()),

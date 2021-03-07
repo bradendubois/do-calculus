@@ -30,12 +30,8 @@ def generate_distribution(graph: Graph):
         parent_list = sorted(list(graph.parents(v)))
 
         cur = {
-            "name": v,
             "outcomes": outcome_list,
             "parents": parent_list,
-            "determination": {
-                "type": "table"
-            }
         }
 
         variables[v] = cur
@@ -52,8 +48,8 @@ def generate_distribution(graph: Graph):
             nums = sum_to(len(outcomes), 10000)
 
             for i, outcome in enumerate(outcomes):
-                distribution.append([outcome, list(cross), nums[i] / 10000])
+                distribution.append([outcome, *list(cross), nums[i] / 10000])
 
-        variables[v]["determination"]["table"] = distribution
+        variables[v]["table"] = distribution
 
     return variables
