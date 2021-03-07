@@ -1,5 +1,6 @@
 from yaml import safe_load as load
 from os import path, listdir
+from pathlib import Path
 
 from src.api.backdoor_paths import api_backdoor_paths_parse
 from src.api.deconfounding_sets import api_deconfounding_sets_parse
@@ -10,7 +11,9 @@ from API import Do
 
 # TODO - Change graph_location to allow a specific graph to be given and loaded, or specify a user directory without
 #   there being path issues depending on the working directory
-def run_repl(graph_location="src/graphs/full"):
+
+
+def run_repl(graph_location=Path(".", "src", "graphs", "full")):
     """
     Run an interactive IO prompt allowing full use of the causality software.
     @param graph_location: A string of the path from the working directory to a directory of graphs
@@ -66,18 +69,20 @@ def run_repl(graph_location="src/graphs/full"):
 
         # List all possible graphs (ignores the generated models used for debugging / testing)
         if f in list_options:
-            assert path.isdir(graph_location), \
-                "The specified directory for causal graph models {} does not exist!".format(graph_location)
-            print("Options", "\n- ".join(filter(lambda g: g.endswith(".yml"), sorted(listdir(graph_location)))))
+            assert graph_location.is_dir(), \
+                "The specified directory for causal graph models {} does not exist!".format(graph_location.name)
+
+            files = filter(lambda g: g.suffix.lower() == ".yml", sorted(graph_location.iterdir()))
+            print("Options", *list(map(lambda file: file.stem, files)), sep="\n- ")
             continue
 
         # Parse and load a model into the API
         if f in load_options:
             s = arg + (".yml" if not arg.endswith(".yml") else "")
-            assert path.isfile(full_path := graph_location + "/" + s), \
+            assert (full_path := graph_location / s).is_file(), \
                 "File: {} does not exist!".format(s)
 
-            with open(full_path) as f:
+            with full_path.open("r") as f:
                 api.load_model(load(f))
             continue
 
