@@ -365,6 +365,7 @@ def test_variable():
         assert list(map(lambda variable: hash(variable), cg.variables.values())).count(hash(v)) <= 3
         assert str(v) == str(c)
 
+        assert v == v.name
 
 def test_intervention():
     t1 = Intervention("X", "x")
