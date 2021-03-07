@@ -367,6 +367,7 @@ def test_variable():
 
         assert v == v.name
 
+
 def test_intervention():
     t1 = Intervention("X", "x")
     t2 = Intervention("X", "~x")

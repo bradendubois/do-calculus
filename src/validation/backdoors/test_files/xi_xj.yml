@@ -26,6 +26,6 @@ tests:
     expect: false
 
   - type: independence
-    src: [ Xi ]
-    dst: [ X1 ]
+    src: [ X5 ]
+    dst: [ X2 ]
     expect: false
