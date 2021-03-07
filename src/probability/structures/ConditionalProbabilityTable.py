@@ -6,8 +6,8 @@
 #                                                       #
 #########################################################
 
-import numpy as np              # Used in table->str formatting
-from math import floor, ceil    # Used in table->str formatting
+from numpy import empty
+from math import floor, ceil
 
 from src.config.settings import Settings
 from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
@@ -51,7 +51,7 @@ class ConditionalProbabilityTable:
         columns = 1 + len(self.given) + 1
 
         # dtype declaration is better than "str", as str only allows one character in each cell
-        table = np.empty((rows, columns), dtype='<U100')
+        table = empty((rows, columns), dtype='<U100')
 
         # Populate the first row: variable, given variables, probability
         table[0][0] = self.variable.name
