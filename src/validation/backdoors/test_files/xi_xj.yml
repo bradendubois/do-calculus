@@ -27,5 +27,5 @@ tests:
 
   - type: independence
     src: [ Xi ]
-    dst: [ X2 ]
+    dst: [ X1 ]
     expect: false

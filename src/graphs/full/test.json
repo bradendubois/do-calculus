@@ -3,6 +3,7 @@
   "model": {
 
     "Y": {
+      "latent": true,
       "outcomes": ["y", "~y"],
       "table": [
         ["y", 0.6],
