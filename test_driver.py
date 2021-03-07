@@ -332,7 +332,36 @@ def test_outcome():
 
 
 def test_variable():
-    ...
+
+    for v in cg.variables.values():
+
+        v: Variable
+
+        assert isinstance(v.name, str)
+        assert isinstance(v.reach, set)
+        assert isinstance(v.parents, list)
+        assert isinstance(v.topological_order, int)
+
+        c = v.copy()
+
+        assert v == c
+        assert v is not c
+
+        assert v.name == c.name
+
+        assert v.reach is not c.reach
+        assert v.reach == c.reach
+
+        assert v.parents is not c.parents
+        assert v.parents == c.parents
+
+        assert v.topological_order == c.topological_order
+
+        assert hash(v) == hash(c)
+
+        # Unique enough hashing function
+        assert list(map(lambda variable: hash(variable), cg.variables.values())).count(hash(v)) <= 3
+        assert str(v) == str(c)
 
 
 def test_intervention():
