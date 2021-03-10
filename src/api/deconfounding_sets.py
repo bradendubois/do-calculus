@@ -9,7 +9,7 @@ def api_deconfounding_sets_parse(query: str) -> (set, set):
         right sides of the arrow, respectively.
     """
     def clean(x):
-        return set(map(lambda y: y.strip(), x.strip().split(" ")))
+        return set(map(lambda y: y.strip(), x.strip().split(",")))
 
     src, dst = map(clean, query.split("->"))
 

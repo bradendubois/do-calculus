@@ -9,7 +9,7 @@
 
 from itertools import product
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 from src.probability.structures.Graph import Graph
 from src.util.helpers import minimal_sets
 from src.util.helpers import power_set
@@ -111,7 +111,7 @@ class BackdoorController:
         backdoor_paths = get_backdoor_paths(s, [], [])
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
-        return list(filter(lambda l: l[0] in self.graph.children(l[1]), backdoor_paths))
+        return list(filter(lambda l: l[0] in self.graph.children(l[1]) and l[1] != t, backdoor_paths))
 
     def all_dcf_sets(self, src: set, dst: set) -> list:
         """
@@ -149,8 +149,7 @@ class BackdoorController:
                 valid_deconfounding_sets.append(tentative_dcf)
 
         # Minimize the sets, if enabled
-        # TODO - Revisit configuration detail implementation
-        if access("minimize_backdoor_sets"):
+        if Settings.minimize_backdoor_sets:
             valid_deconfounding_sets = minimal_sets(*valid_deconfounding_sets)
 
         return list(valid_deconfounding_sets)

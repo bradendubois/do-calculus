@@ -13,4 +13,4 @@
 src/logs/
 
 # Config file is generated on run
-src/config/config.json
+src/config/config.*

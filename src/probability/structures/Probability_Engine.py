@@ -9,7 +9,7 @@
 
 from itertools import product
 
-from src.config.config_manager import access
+from src.config.settings import Settings
 
 from src.probability.structures.Graph import Graph
 from src.probability.structures.VariableStructures import Outcome, Intervention
@@ -75,7 +75,7 @@ class ProbabilityEngine:
         ###############################################
 
         # Sort the head and body if enabled
-        if access("topological_sort_variables"):
+        if Settings.topological_sort_variables:
             head, body = self.graph.descendant_first_sort(head), self.graph.descendant_first_sort(body)
 
         # Create a string representation of this query, and see if it's been done / in-progress / contradictory
@@ -165,7 +165,7 @@ class ProbabilityEngine:
                 result_1 = self._compute(child, head + new_body, depth+1)
                 result_2 = self._compute(head, new_body, depth+1)
                 result_3 = self._compute(child, new_body, depth+1)
-                if result_3 == 0:       # Avoid dividing by 0!
+                if result_3 == 0:       # Avoid dividing by 0! coverage: skip
                     self.output.detail(f"{str_3} = 0, therefore the result is 0.", x=depth)
                     return 0
 
@@ -190,33 +190,32 @@ class ProbabilityEngine:
         if missing_parents:
             self.output.detail("Attempting application of Jeffrey's Rule", x=depth)
 
-            # Try an approach beginning with each missing parent
-            for missing_parent in missing_parents:
+        for missing_parent in missing_parents:
 
-                try:
-                    # Add one parent back in and recurse
-                    parent_outcomes = self.outcomes[missing_parent]
+            try:
+                # Add one parent back in and recurse
+                parent_outcomes = self.outcomes[missing_parent]
 
-                    # Consider the missing parent and sum every probability involving it
-                    total = 0.0
-                    for parent_outcome in parent_outcomes:
+                # Consider the missing parent and sum every probability involving it
+                total = 0.0
+                for parent_outcome in parent_outcomes:
 
-                        as_outcome = Outcome(missing_parent, parent_outcome)
+                    as_outcome = Outcome(missing_parent, parent_outcome)
 
-                        self.output.detail(p_str(head, [as_outcome] + body), "*", p_str([as_outcome], body), x=depth)
+                    self.output.detail(p_str(head, [as_outcome] + body), "*", p_str([as_outcome], body), x=depth)
 
-                        result_1 = self._compute(head, [as_outcome] + body, depth+1)
-                        result_2 = self._compute([as_outcome], body, depth+1)
-                        outcome_result = result_1 * result_2
+                    result_1 = self._compute(head, [as_outcome] + body, depth+1)
+                    result_2 = self._compute([as_outcome], body, depth+1)
+                    outcome_result = result_1 * result_2
 
-                        total += outcome_result
+                    total += outcome_result
 
-                    self.output.detail(rep, "=", total, x=depth)
-                    self._store_computation(rep, total)
-                    return total
+                self.output.detail(rep, "=", total, x=depth)
+                self._store_computation(rep, total)
+                return total
 
-                except ProbabilityException:    # coverage: skip
-                    self.output.detail("Failed to resolve by Jeffrey's Rule", x=depth)
+            except ProbabilityException:    # coverage: skip
+                self.output.detail("Failed to resolve by Jeffrey's Rule", x=depth)
 
         ###############################################
         #            Interventions / do(X)            #
@@ -261,7 +260,7 @@ class ProbabilityEngine:
         @param result: The actual float value to store
         """
         # Ensure the configuration file is specified to allow caching
-        if access("cache_computation_results"):
+        if Settings.cache_computation_results:
 
             # Not stored yet - store it
             if string_representation not in self._stored_computations:

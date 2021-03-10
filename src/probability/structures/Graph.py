@@ -11,10 +11,12 @@
 #   We can isolate more generalized graph code here, as well as create a better way to "erase" incoming or outgoing
 #   edges, but only temporarily; this will improve "reach", "parents", etc.
 
+from typing import Union
+
 from src.probability.structures.VariableStructures import *
 
 # These functions should work with any sort of Variable type, or the name itself
-CG_Types = str or Variable or Outcome or Intervention
+CG_Types = Union[str, Variable, Outcome, Intervention]
 
 
 class Graph:

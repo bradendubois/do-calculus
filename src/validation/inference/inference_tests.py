@@ -1,25 +1,14 @@
-from yaml import safe_load as load
-from os import listdir
 from os.path import dirname, abspath
+from pathlib import Path
+from yaml import safe_load as load
 
-from src.config.config_manager import access
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
-
-from src.util.ProbabilityExceptions import *
+from src.util.helpers import within_precision
 from src.util.ModelLoader import parse_model, parse_outcomes_and_interventions
+from src.util.ProbabilityExceptions import *
 from src.validation.test_util import print_test_result
 
-test_file_directory = dirname(abspath(__file__)) + "/test_files"
-
-
-def within_precision(a: float, b: float) -> bool:
-    """
-    Check whether two values differ by an amount less than some number of digits of precision
-    @param a: The first value
-    @param b: The second value
-    @return: True if the values are within the margin of error acceptable, False otherwise
-    """
-    return abs(a - b) < 1 / (10 ** access("regression_levels_of_precision"))
+test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 
 
 def model_inference_validation(cg: CausalGraph) -> (bool, str):
@@ -51,26 +40,24 @@ def model_inference_validation(cg: CausalGraph) -> (bool, str):
     return True, "Basic tests passed."
 
 
-def inference_tests(graph_location: str) -> (bool, str):
+def inference_tests(graph_location: Path) -> (bool, str):
     """
     Run tests on all models located in a given directory of graphs, verifying the probabilities in the model.
     @param graph_location: A string path to a directory containing any number of causal graph JSON files
     @return: True if all tests are successful, False otherwise, along with a string summary message.
     """
 
-    model_files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(graph_location))))
-    test_files = sorted(list(filter(lambda x: x.endswith(".yml"), listdir(test_file_directory))))
+    model_files = sorted(list(filter(lambda x: x.suffix.lower() == ".yml", graph_location.iterdir())))
+    test_files = sorted(list(filter(lambda x: x.suffix.lower() == ".yml", test_file_directory.iterdir())))
 
     assert len(model_files) > 0, "Models not found"
     assert len(test_files) > 0, "Inference test files not found"
 
     all_successful = True
 
-    # TODO - Threading to handle all the tests
-
     for model in model_files:
 
-        with open(graph_location + "/" + model) as f:
+        with model.open("r") as f:
             yml_model = load(f)
 
         parsed_model = parse_model(yml_model)
@@ -84,11 +71,11 @@ def inference_tests(graph_location: str) -> (bool, str):
 
     for test_file in test_files:
 
-        with open(f"{test_file_directory}/{test_file}") as f:
+        with test_file.open("r") as f:
             yml_test_data = load(f)
 
         graph_filename = yml_test_data["graph_filename"]
-        with open(f"{graph_location}/{graph_filename}") as f:
+        with (graph_location / graph_filename).open("r") as f:
             graph_data = load(f)
 
         cg = CausalGraph(**parse_model(graph_data))

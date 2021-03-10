@@ -11,7 +11,7 @@ def api_backdoor_paths_parse(query: str) -> (set, set):
         of the arrow, and the third as all vertices are the right of the bar, respectively.
     """
     def clean(x):
-        return set(map(lambda y: y.strip(), x.strip().split(" ")))
+        return set(map(lambda y: y.strip(), x.strip().split(",")))
 
     l, r = query.split("->")
 
@@ -19,7 +19,7 @@ def api_backdoor_paths_parse(query: str) -> (set, set):
         s = r.split("|")
         r, dcf = clean(s[0]), clean(s[1])
     else:
-        r, dcf = clean(r), {}
+        r, dcf = clean(r), set()
 
     return {
         "src": clean(l),
