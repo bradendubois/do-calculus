@@ -29,8 +29,6 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
 
     for test in test_data["tests"]:
 
-        print(test)
-
         if test["type"] == "backdoor-paths":
 
             expected_paths = list(map(sorted, test["expect"]))

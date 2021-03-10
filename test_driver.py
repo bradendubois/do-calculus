@@ -37,7 +37,7 @@ cg = CausalGraph(**parse_model(test_file))
 graph = cg.graph
 bc = BackdoorController(graph)
 
-json_model = graphs /  "test.json"
+json_model = graphs / "test.json"
 
 
 # api
@@ -436,6 +436,9 @@ def test_parse_model():
         raise Exception
     except FileNotFoundError:
         pass
+
+    # string path
+    parse_model(str(test_file.absolute()))
 
     # yml
     parse_model(test_file)
