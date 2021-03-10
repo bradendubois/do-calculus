@@ -1,0 +1,25 @@
+{
+  "name": "Two-Variable Test",
+  "model": {
+
+    "Y": {
+      "latent": true,
+      "outcomes": ["y", "~y"],
+      "table": [
+        ["y", 0.6],
+        ["~y", 0.4]
+      ]
+    },
+
+    "X":{
+      "outcomes": ["x", "~x"],
+      "parents": ["Y"],
+      "table": [
+        ["x", "y", 0.7],
+        ["x", "~y", 0.2],
+        ["~x", "y", 0.3],
+        ["~x", "~y", 0.8]
+      ]
+    }
+  }
+}

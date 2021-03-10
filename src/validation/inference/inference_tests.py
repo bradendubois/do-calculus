@@ -2,23 +2,13 @@ from os.path import dirname, abspath
 from pathlib import Path
 from yaml import safe_load as load
 
-from src.config.settings import Settings
 from src.probability.structures.CausalGraph import CausalGraph, Outcome
-from src.util.ProbabilityExceptions import *
+from src.util.helpers import within_precision
 from src.util.ModelLoader import parse_model, parse_outcomes_and_interventions
+from src.util.ProbabilityExceptions import *
 from src.validation.test_util import print_test_result
 
 test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
-
-
-def within_precision(a: float, b: float) -> bool:
-    """
-    Check whether two values differ by an amount less than some number of digits of precision
-    @param a: The first value
-    @param b: The second value
-    @return: True if the values are within the margin of error acceptable, False otherwise
-    """
-    return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
 
 
 def model_inference_validation(cg: CausalGraph) -> (bool, str):

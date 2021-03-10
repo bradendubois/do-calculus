@@ -1,6 +1,8 @@
 from itertools import chain, combinations
 from typing import Iterator
 
+from src.config.settings import Settings
+
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
     """
@@ -49,3 +51,13 @@ def p_str(lhs: list, rhs: list) -> str:
         return f'P({", ".join(map(str, lhs))})'
 
     return f'P({", ".join(map(str, lhs))} | {", ".join(map(str, rhs))})'
+
+
+def within_precision(a: float, b: float) -> bool:
+    """
+    Check whether two values differ by an amount less than some number of digits of precision
+    @param a: The first value
+    @param b: The second value
+    @return: True if the values are within the margin of error acceptable, False otherwise
+    """
+    return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)

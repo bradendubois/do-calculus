@@ -87,7 +87,7 @@ def backdoor_tests(graph_location: Path) -> (bool, str):
         success, msg = model_backdoor_validation(bc, yml_test_data)
         print_test_result(success, msg if not success else f"All tests in {test_file}, {graph_filename} passed")
 
-        if not success:
+        if not success:     # coverage: skip
             all_successful = False
 
     return all_successful, "[Backdoor module passed]" if all_successful else "[Backdoor module encountered errors]"
