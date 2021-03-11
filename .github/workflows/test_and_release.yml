@@ -11,19 +11,19 @@ jobs:
   test:
     strategy:
       matrix:
-        report-coverage: [ false ]
-        python-version: [ 3.8, 3.9 ]
         os:
         - ubuntu-latest
         - ubuntu-18.04
         - ubuntu-16.04
         - macos-latest
         - windows-latest
-
+        report-coverage: [ false ]
+        python-version: [ 3.8, 3.9 ]
+  
         # Special matrix job to report coverage only once
         include:
-          - python-version: 3.9
-            os: ubuntu-latest
+          - os: ubuntu-latest
+            python-version: 3.9
             report-coverage: true
 
     runs-on: ${{ matrix.os }}
