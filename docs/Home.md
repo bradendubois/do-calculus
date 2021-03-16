@@ -1,11 +1,11 @@
-# probability-code wiki
+# do-calculus wiki
 
-This wiki is under construction, and most documentation is still under revision or subject to change in the near future.
-
-At present, the pages listed below are for the newer versions of the project under the ``develop`` branch, while other pages accessible from the sidebar are for the first tagged version of the project.
+This wiki is *under construction*, and most documentation is still a work in progress.
 
 #### Table of Contents
 
-* [[Getting Started]]
-* [[REPL]]
-* [[Causal Models]]
+* [[Installation]]: Installing the project, either through [PyPI](https://pypi.org/project/do-calculus) or [GitHub](https://github.com/bradendubois/do-calculus).
+* [[Causal Models]]: The format of how to structure 
+* [[API]]: Details of the API provided.
+* [[REPL]]: Details of the REPL interface provided.
+* [[Literature]]: Further documentation or resources of *do-calculus*.
