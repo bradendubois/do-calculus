@@ -1,4 +1,4 @@
-from src.config.config_manager import settings_yml
+from .config_manager import settings_yml
 
 
 class Settings:

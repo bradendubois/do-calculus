@@ -2,32 +2,32 @@ from math import prod
 from pathlib import Path
 
 # api
-from src.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
-from src.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
-from src.api.joint_distribution_table import api_joint_distribution_table
-from src.api.probability_query import api_probability_query, api_probability_query_parse
+from do.api.backdoor_paths import api_backdoor_paths, api_backdoor_paths_parse
+from do.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_sets_parse
+from do.api.joint_distribution_table import api_joint_distribution_table
+from do.api.probability_query import api_probability_query, api_probability_query_parse
 
-from src.probability.structures.BackdoorController import BackdoorController
-from src.probability.structures.CausalGraph import CausalGraph
-from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from src.probability.structures.Graph import Graph, to_label
-from src.probability.structures.VariableStructures import Outcome, Variable, Intervention
+from do.probability.structures.BackdoorController import BackdoorController
+from do.probability.structures.CausalGraph import CausalGraph
+from do.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from do.probability.structures.Graph import Graph, to_label
+from do.probability.structures.VariableStructures import Outcome, Variable, Intervention
 
-from src.util.helpers import power_set, disjoint, minimal_sets, within_precision
-from src.util.ModelLoader import parse_model
+from do.util.helpers import power_set, disjoint, minimal_sets, within_precision
+from do.util.ModelLoader import parse_model
 
-from src.validation.backdoors.backdoor_path_tests import backdoor_tests
-from src.validation.inference.inference_tests import inference_tests, MissingTableRow
-from src.validation.shpitser.shpitser_tests import shpitser_tests
+from tests.backdoors.backdoor_path_tests import backdoor_tests
+from tests.inference.inference_tests import inference_tests, MissingTableRow
+from tests.shpitser.shpitser_tests import shpitser_tests
 
-from src.validation.test_util import print_test_result
+from tests.test_util import print_test_result
 
 
 # Use the Xi-Xj model of TBoW as a test
 default_model_file = "pearl-3.4.yml"
 
 # Default location for the graphs made by hand
-graphs = Path(".", "do-calculus", "graphs", "full")
+graphs = Path("do", "graphs", "full")
 
 # Path to the Xi-Xj model
 test_file = graphs / default_model_file

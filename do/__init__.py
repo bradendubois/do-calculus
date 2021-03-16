@@ -5,5 +5,3 @@ __all__ = [
     "util",
     "API",
 ]
-
-import API

@@ -2,11 +2,13 @@ from os.path import dirname, abspath
 from pathlib import Path
 from yaml import safe_load as load
 
-from probability.structures.CausalGraph import CausalGraph, Outcome
-from util.helpers import within_precision
-from util.ModelLoader import parse_model, parse_outcomes_and_interventions
-from util.ProbabilityExceptions import *
-from validation.test_util import print_test_result
+from ..test_util import print_test_result
+
+from do.probability.structures.CausalGraph import CausalGraph, Outcome
+from do.probability.structures.VariableStructures import parse_outcomes_and_interventions
+from do.util.helpers import within_precision
+from do.util.ModelLoader import parse_model
+from do.util.ProbabilityExceptions import *
 
 test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 
