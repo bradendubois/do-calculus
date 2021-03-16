@@ -19,11 +19,7 @@ setup(
     url="https://github.com/bradendubois/do-calculus",
     author="Braden Dubois",
     author_email="braden.dubois@usask.ca",
-    packages=find_packages(
-        where="do",
-        include=[],
-        exclude=["debug"]
-    ),
+    packages=["do"],
     keywords="do-calculus causation statistics pearl python",
     include_package_data=True,
     install_requires=dependencies,
