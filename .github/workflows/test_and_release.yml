@@ -11,19 +11,19 @@ jobs:
   test:
     strategy:
       matrix:
-        report-coverage: [ false ]
-        python-version: [ 3.8, 3.9 ]
         os:
         - ubuntu-latest
         - ubuntu-18.04
         - ubuntu-16.04
         - macos-latest
         - windows-latest
+        python-version: [ 3.8, 3.9 ]
+        report-coverage: [ false ]
 
         # Special matrix job to report coverage only once
         include:
-          - python-version: 3.9
-            os: ubuntu-latest
+          - os: ubuntu-latest
+            python-version: 3.9
             report-coverage: true
 
     runs-on: ${{ matrix.os }}
@@ -57,9 +57,12 @@ jobs:
       uses: AndreMiras/coveralls-python-action@develop
       if: ${{ matrix.report-coverage }}
 
-  release:
+  # Tag and create a new release - handled by semantic-release
+  tag:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test   # Only consider creating a release if  all tests pass
+
+    # Only create a release on main / beta
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
     steps:
     - uses: actions/checkout@v2
@@ -67,3 +70,44 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release
+
+  # Package and upload to PyPI
+  pypi:
+    runs-on: ubuntu-latest
+    needs: tag  # Need to get the latest version number, which may change based on semantic-release
+
+    # Only upload to PyPI on main
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install flake8 pytest coverage coveralls
+          pip install -r requirements.txt
+
+      - name: Get Version Number
+        uses: oprypin/find-latest-tag@v1
+        id: tag
+        with:
+          repository: ${{ github.repository }}
+          releases-only: true
+
+      - name: Build PyPI Package
+        run: |
+          python setup.py sdist bdist_wheel
+        env:
+          SEMANTIC_VERSION: ${{ steps.tag.outputs.tag }}
+
+      - name: PyPI Publish
+        uses: pypa/gh-action-pypi-publish@v1.4.2
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}

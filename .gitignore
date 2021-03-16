@@ -10,7 +10,14 @@
 *.pyc
 
 # Log files from operating software
-src/logs/
+do-calculus/logs/
 
 # Config file is generated on run
-src/config/config.*
+*config.*
+
+*.egg*
+
+# results from building package
+build/*
+dist/*
+
