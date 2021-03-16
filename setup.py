@@ -1,14 +1,18 @@
 from pathlib import Path
 from setuptools import find_packages, setup
+from os import environ
 
 cwd = Path(".")
 
 README = (cwd / "README.md").read_text()
 dependencies = (cwd / "requirements.txt").read_text().strip().split("\n")
 
+# This should be set by the automated Github workflow
+VERSION = environ["SEMANTIC_VERSION"]
+
 setup(
     name="do-calculus",
-    version="1.1.3",
+    version=VERSION,
     description="A Python implementation of the do-calculus of Judea Pearl et. al.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -20,6 +24,7 @@ setup(
         include=[],
         exclude=["debug"]
     ),
+    keywords="do-calculus causation statistics pearl python",
     include_package_data=True,
     install_requires=dependencies,
     entry_points={
