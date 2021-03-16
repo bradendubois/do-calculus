@@ -32,6 +32,9 @@ class Do:
             an argument to log_fd, or can be done later with a call to set_log_fd.
         @param log_fd: An open file descriptor to write to, if log_details is enabled.
         """
+        self._print_result = print_result
+        self._output = OutputLogger(print_result, print_detail, log, log_fd)
+
         if model:
             self.load_model(model)
 
@@ -39,9 +42,6 @@ class Do:
             self._cg = None
             self._g = None
             self._bc = None
-
-        self._print_result = print_result
-        self._output = OutputLogger(print_result, print_detail, log, log_fd)
 
     ################################################################
     #                       API Modifications                      #
