@@ -27,7 +27,7 @@ from src.validation.test_util import print_test_result
 default_model_file = "pearl-3.4.yml"
 
 # Default location for the graphs made by hand
-graphs = Path(".", "src", "graphs", "full")
+graphs = Path(".", "do-calculus", "graphs", "full")
 
 # Path to the Xi-Xj model
 test_file = graphs / default_model_file
@@ -432,7 +432,7 @@ def test_parse_model():
 
     # invalid file
     try:
-        parse_model(Path("src", "util", "helpers.py"))
+        parse_model(Path("do-calculus", "util", "helpers.py"))
         raise Exception
     except FileNotFoundError:
         pass
