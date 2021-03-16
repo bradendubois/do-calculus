@@ -8,7 +8,7 @@ dependencies = (cwd / "requirements.txt").read_text().strip().split("\n")
 
 setup(
     name="do-calculus",
-    version="1.1.2",
+    version="1.1.3",
     description="A Python implementation of the do-calculus of Judea Pearl et. al.",
     long_description=README,
     long_description_content_type="text/markdown",
