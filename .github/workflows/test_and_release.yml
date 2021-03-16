@@ -98,10 +98,10 @@ jobs:
         uses: WyriHaximus/github-action-get-previous-tag@v1
 
       - name: Build PyPI Package
-        with:
-          SEMANTIC_VERSION: ${{ steps.tag.outputs.tag }}
         run: |
           python setup.py sdist bdist_wheel
+        with:
+          SEMANTIC_VERSION: ${{ steps.tag.outputs.tag }}
 
       - name: PyPI Publish
         uses: pypa/gh-action-pypi-publish@v1.4.2
