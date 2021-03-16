@@ -1,11 +1,11 @@
 <h1 align="center" style="border-bottom: none;">do-calculus</h1>
 <h3 align="center">A Python implementation of the <i>do-calculus</i> of Judea Pearl et. al.</h3>
 <p align="center">
-    <a href="https://github.com/bradendubois/probability-code/actions?query=workflow%3ATest+branch%3Amain">
-        <img alt="Test Workflows" src="https://github.com/bradendubois/probability-code/workflows/Test and Release/badge.svg">
+    <a href="https://github.com/bradendubois/do-calculus/actions?query=workflow%3ATest+branch%3Amain">
+        <img alt="Test Workflows" src="https://github.com/bradendubois/do-calculus/workflows/Test and Release/badge.svg">
     </a>
-    <a href='https://coveralls.io/github/bradendubois/probability-code?branch=main'>
-        <img src='https://coveralls.io/repos/github/bradendubois/probability-code/badge.svg?branch=main' alt='Coverage Status' />
+    <a href='https://coveralls.io/github/bradendubois/do-calculus?branch=main'>
+        <img src='https://coveralls.io/repos/github/bradendubois/do-calculus/badge.svg?branch=main' alt='Coverage Status' />
     </a>
     <a href="https://pypi.org/project/do-calculus/">
         <img alt="" src="https://pypip.in/v/do-calculus/badge.svg">
