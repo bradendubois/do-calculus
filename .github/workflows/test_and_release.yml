@@ -97,7 +97,7 @@ jobs:
         uses: oprypin/find-latest-tag@v1
         id: tag
         with:
-          repository: ${{ github.repository_owner }}/${{ github.repository }}
+          repository: ${{ github.repository }}
           releases-only: true
 
       - name: Build PyPI Package
