@@ -28,5 +28,3 @@
 * **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
 
 See the [wiki](https://github.com/bradendubois/probability-code/wiki) to get started.
-
-
