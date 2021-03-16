@@ -100,7 +100,7 @@ jobs:
       - name: Build PyPI Package
         run: |
           python setup.py sdist bdist_wheel
-        with:
+        env:
           SEMANTIC_VERSION: ${{ steps.tag.outputs.tag }}
 
       - name: PyPI Publish
