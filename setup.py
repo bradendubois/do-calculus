@@ -10,9 +10,6 @@ dependencies = (cwd / "requirements.txt").read_text().strip().split("\n")
 # This should be set by the automated Github workflow
 VERSION = environ["SEMANTIC_VERSION"]
 
-# TEST - Ensure version number is correctly set
-print(VERSION)
-
 setup(
     name="do-calculus",
     version=VERSION,
