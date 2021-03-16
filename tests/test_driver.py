@@ -175,7 +175,7 @@ def test_probability_lookup():
 
     try:
         assert t.probability_lookup(Outcome("Xj", "foo"), priors) == 100
-        raise Exception
+        raise Exception     # coverage: skip
     except MissingTableRow:
         pass
 
@@ -426,14 +426,14 @@ def test_parse_model():
     # nonexistent file
     try:
         parse_model(Path("fake", "path", "fake"))
-        raise Exception
+        raise Exception     # coverage: skip
     except FileNotFoundError:
         pass
 
     # invalid file
     try:
         parse_model(Path("do", "util", "helpers.py"))
-        raise Exception
+        raise Exception     # coverage: skip
     except FileNotFoundError:
         pass
 
