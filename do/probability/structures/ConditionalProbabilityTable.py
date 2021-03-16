@@ -1,4 +1,4 @@
-#                                                       #
+#########################################################
 #   Causal Graph                                        #
 #                                                       #
 #   Author: Braden Dubois (braden.dubois@usask.ca)      #
@@ -9,9 +9,10 @@
 from numpy import empty
 from math import floor, ceil
 
-from src.config.settings import Settings
-from src.probability.structures.VariableStructures import Variable, Outcome, Intervention
-from src.util.ProbabilityExceptions import MissingTableRow
+from .VariableStructures import Variable, Outcome, Intervention
+
+from ...config.settings import Settings
+from ...util.ProbabilityExceptions import MissingTableRow
 
 
 class ConditionalProbabilityTable:

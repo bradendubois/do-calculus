@@ -1,7 +1,8 @@
 from itertools import product
-from src.probability.structures.CausalGraph import CausalGraph
-from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from src.probability.structures.VariableStructures import Outcome, Variable
+
+from ..probability.structures.CausalGraph import CausalGraph
+from ..probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from ..probability.structures.VariableStructures import Outcome, Variable
 
 
 def api_joint_distribution_table(cg: CausalGraph) -> ConditionalProbabilityTable:

@@ -1,4 +1,4 @@
-from src.probability.structures.BackdoorController import BackdoorController
+from ..probability.structures.BackdoorController import BackdoorController
 
 
 def api_deconfounding_sets_parse(query: str) -> (set, set):

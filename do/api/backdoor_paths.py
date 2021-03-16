@@ -1,6 +1,6 @@
 from itertools import product
 
-from src.probability.structures.BackdoorController import BackdoorController
+from ..probability.structures.BackdoorController import BackdoorController
 
 
 def api_backdoor_paths_parse(query: str) -> (set, set):

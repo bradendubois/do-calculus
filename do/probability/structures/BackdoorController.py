@@ -9,10 +9,11 @@
 
 from itertools import product
 
-from src.config.settings import Settings
-from src.probability.structures.Graph import Graph
-from src.util.helpers import minimal_sets
-from src.util.helpers import power_set
+from .Graph import Graph
+
+from ...config.settings import Settings
+from ...util.helpers import minimal_sets
+from ...util.helpers import power_set
 
 
 class BackdoorController:

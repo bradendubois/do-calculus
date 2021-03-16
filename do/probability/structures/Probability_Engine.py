@@ -9,14 +9,13 @@
 
 from itertools import product
 
-from src.config.settings import Settings
+from .Graph import Graph
+from .VariableStructures import Outcome, Intervention
 
-from src.probability.structures.Graph import Graph
-from src.probability.structures.VariableStructures import Outcome, Intervention
-
-from src.util.OutputLogger import OutputLogger
-from src.util.helpers import p_str
-from src.util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
+from ...config.settings import Settings
+from ...util.OutputLogger import OutputLogger
+from ...util.helpers import p_str
+from ...util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 
 class ProbabilityEngine:

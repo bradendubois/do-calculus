@@ -1,19 +1,18 @@
 from yaml import safe_load as load
-from os import path, listdir
 from pathlib import Path
 
-from src.api.backdoor_paths import api_backdoor_paths_parse
-from src.api.deconfounding_sets import api_deconfounding_sets_parse
-from src.api.probability_query import api_probability_query_parse
+from .api.backdoor_paths import api_backdoor_paths_parse
+from .api.deconfounding_sets import api_deconfounding_sets_parse
+from .api.probability_query import api_probability_query_parse
 
-from API import Do
+from .API import Do
 
 
 # TODO - Change graph_location to allow a specific graph to be given and loaded, or specify a user directory without
 #   there being path issues depending on the working directory
 
 
-def run_repl(graph_location=Path(".", "src", "graphs", "full")):
+def main(graph_location=Path(".", "src", "graphs", "full")):
     """
     Run an interactive IO prompt allowing full use of the causality software.
     @param graph_location: A string of the path from the working directory to a directory of graphs

@@ -9,15 +9,14 @@
 
 from itertools import product
 
-from src.config.settings import Settings
+from .BackdoorController import BackdoorController
+from .Graph import Graph
+from .Probability_Engine import ProbabilityEngine
+from .VariableStructures import Outcome, Intervention
 
-from src.probability.structures.BackdoorController import BackdoorController
-from src.probability.structures.Graph import Graph
-from src.probability.structures.Probability_Engine import ProbabilityEngine
-from src.probability.structures.VariableStructures import Outcome, Intervention
-
-from src.util.OutputLogger import OutputLogger
-from src.util.helpers import p_str
+from ...config.settings import Settings
+from ...util.OutputLogger import OutputLogger
+from ...util.helpers import p_str
 
 
 class CausalGraph:

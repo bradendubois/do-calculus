@@ -13,7 +13,7 @@
 
 from typing import Union
 
-from src.probability.structures.VariableStructures import *
+from .VariableStructures import Variable, Outcome, Intervention
 
 # These functions should work with any sort of Variable type, or the name itself
 CG_Types = Union[str, Variable, Outcome, Intervention]

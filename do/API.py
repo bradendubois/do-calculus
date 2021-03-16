@@ -5,18 +5,18 @@
 from typing import Union
 from pathlib import Path
 
-from src.api.backdoor_paths import api_backdoor_paths
-from src.api.deconfounding_sets import api_deconfounding_sets
-from src.api.joint_distribution_table import api_joint_distribution_table
-from src.api.probability_query import api_probability_query
+from .api.backdoor_paths import api_backdoor_paths
+from .api.deconfounding_sets import api_deconfounding_sets
+from .api.joint_distribution_table import api_joint_distribution_table
+from .api.probability_query import api_probability_query
 
-from src.probability.structures.BackdoorController import BackdoorController
-from src.probability.structures.CausalGraph import CausalGraph
-from src.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from src.probability.structures.VariableStructures import Variable
+from .probability.structures.BackdoorController import BackdoorController
+from .probability.structures.CausalGraph import CausalGraph
+from .probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from .probability.structures.VariableStructures import Variable
 
-from src.util.ModelLoader import parse_model
-from src.util.OutputLogger import OutputLogger
+from .util.ModelLoader import parse_model
+from .util.OutputLogger import OutputLogger
 
 
 class Do:

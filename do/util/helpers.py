@@ -1,7 +1,7 @@
 from itertools import chain, combinations
 from typing import Iterator
 
-from src.config.settings import Settings
+from ..config.settings import Settings
 
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
