@@ -432,7 +432,7 @@ def test_parse_model():
 
     # invalid file
     try:
-        parse_model(Path("do-calculus", "util", "helpers.py"))
+        parse_model(Path("do", "util", "helpers.py"))
         raise Exception
     except FileNotFoundError:
         pass
