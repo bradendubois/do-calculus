@@ -57,7 +57,7 @@ jobs:
       uses: AndreMiras/coveralls-python-action@develop
       if: ${{ matrix.report-coverage }}
 
-  release:
+  tag:
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
@@ -67,3 +67,18 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release
+
+  pypi:
+    runs-on: ubuntu-latest
+    needs: test
+    # Enabled on develop for testing
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: PyPI Publish
+        uses: pypa/gh-action-pypi-publish@v1.4.2
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
