@@ -94,8 +94,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Get Version Number
+        uses: oprypin/find-latest-tag@v1
         id: tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          repository: ${{ github.repository_owner }}/${{ github.repository }}
+          releases-only: true
 
       - name: Build PyPI Package
         run: |
