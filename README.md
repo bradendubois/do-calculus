@@ -20,11 +20,11 @@
 
 ## Resources
 
-* **Documentation / Wiki**: [github.com/bradendubois/probability-code/wiki](https://github.com/bradendubois/probability-code/wiki)
-* **Source Code**: [github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
+* **Documentation / Wiki**: [github.com/bradendubois/do-calculus/wiki](https://github.com/bradendubois/do-calculus/wiki)
+* **Source Code**: [github.com/bradendubois/do-calculus](https://github.com/bradendubois/do-calculus)
 * **PyPI**: [pypi.org/project/do-calculus/](https://pypi.org/project/do-calculus/)
-* **Releases**: [github.com/bradendubois/probability-code/releases](https://github.com/bradendubois/probability-code/releases)
-* **Bug reports**: [github.com/bradendubois/probability-code/issues](https://github.com/bradendubois/probability-code/issues)
+* **Releases**: [github.com/bradendubois/do-calculus/releases](https://github.com/bradendubois/do-calculus/releases)
+* **Bug reports**: [github.com/bradendubois/do-calculus/issues](https://github.com/bradendubois/do-calculus/issues)
 * **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
 
-See the [wiki](https://github.com/bradendubois/probability-code/wiki) to get started.
+See the [wiki](https://github.com/bradendubois/do-calculus/wiki) to get started.
