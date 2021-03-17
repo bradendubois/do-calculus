@@ -4,11 +4,23 @@ How to install and set up the software.
 
 ## Table of Contents
 
-* [Installation](#installation)
+* [Installation](#installing)
 * [Requirements](#requirements)
 * [Further](#further)
 
-## Installation
+## Requirements
+
+Setup requirements for the project are:
+- **[Python 3.8+](https://www.python.org/)**
+- [**pip**](https://pip.pypa.io/en/stable/) is used to install required packages.
+
+**Note**: `pip` will already be installed with any installation of **Python 3.4+**.
+
+If [installing with PyPI](#pypi-package), all required packages are also installed when installing [do-calculus](https://pypi.org/project/do-calculus/).
+
+If [acquiring a copy of the source code](#source-code), additional packages must be installed.
+
+## Installing
 
 There are multiple ways to install the software: one can either [install as a package from PyPI](#pypi-package), or [acquire the source code](#source-code).
 
@@ -44,6 +56,8 @@ See the [[API]] page for importing and using the package once installed.
 
 To acquire a copy of the source code, one can [**clone the repository**](#clone), [**download a release**](#release), or use the [**GitHub CLI**](#cli).
 
+After a copy has been acquired, [install the extra dependencies](#extra-dependencies).
+
 #### Clone
 
 In order to clone the repository, you must have [git](https://git-scm.com/) installed; if you are on [macOS](https://www.apple.com/ca/macos/) or [Linux](https://www.linux.org/), you almost certainly already have this installed.
@@ -77,17 +91,9 @@ To clone with the [GitHub CLI](https://cli.github.com/).
 gh repo clone bradendubois/do-calculus
 ```
 
-## Requirements
+#### Extra Dependencies
 
-Setup requirements for the project are:
-- **[Python 3.8+](https://www.python.org/)**
-- [**pip**](https://pip.pypa.io/en/stable/) is used to install [required packages](#python-requirements).
-
-**Note**: `pip` will already be installed with any installation of **Python 3.4+**.
-
-If [installing with PyPI](#pypi-package), all required packages are also installed when installing [do-calculus](https://pypi.org/project/do-calculus/).
-
-If [acquiring a copy of the source code](#source-code), additional packages must be installed:
+After acquiring a copy:
 
 ```shell
 pip install -r requirements.txt
@@ -98,5 +104,3 @@ The above command will install all dependencies listed in ``requirements.txt``.
 ## Further
 
 An [API](https://en.wikipedia.org/wiki/API) is available and [[details can be found here|API]].
-
-A basic [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) is also available and [[details can be found here|REPL]].
