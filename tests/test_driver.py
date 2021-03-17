@@ -27,7 +27,7 @@ from tests.test_util import print_test_result
 default_model_file = "pearl-3.4.yml"
 
 # Default location for the graphs made by hand
-graphs = Path("do", "graphs", "full")
+graphs = Path("do", "graphs")
 
 # Path to the Xi-Xj model
 test_file = graphs / default_model_file

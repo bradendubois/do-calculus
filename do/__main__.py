@@ -12,7 +12,7 @@ from .API import Do
 #   there being path issues depending on the working directory
 
 
-def main(graph_location=Path(".", "src", "graphs", "full")):
+def main(graph_location=Path(".", "graphs")):
     """
     Run an interactive IO prompt allowing full use of the causality software.
     @param graph_location: A string of the path from the working directory to a directory of graphs

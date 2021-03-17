@@ -21,7 +21,7 @@ Additionally, a key ``name`` can be given, corresponding to an arbitrary name fo
 ## Files
 
 Models can be stored in ``json`` or ``yml`` files, and must have either ``.json``, ``.yml``, or ``.yaml`` file extensions.
-- A handful of models are stored in ``do/graphs/full``.
+- A handful of models are stored in ``do/graphs``.
 
 ## Dictionaries
 
