@@ -14,8 +14,10 @@ To import the package:
 import do
 ```
 
-**Key**:
+**Important**:
 - The package name on [PyPI](https://pypi.org/) is [do-calculus](https://pypi.org/project/do-calculus/), but the module to import is called ``do``.
+
+<hr />
 
 To import *just* the API:
 
@@ -23,7 +25,7 @@ To import *just* the API:
 from do.API import Do
 ```
 
-**Keys**:
+**Important**:
 - The API, represented as a Python class, is called **Do**.
 - **Do** is stored in the file ``API``, so it can be imported from ``do.API``.
 
@@ -60,9 +62,9 @@ m = {
 x = Do(m)
 ```
 
-**Keys**:
+**Important**:
 - A regular Python dictionary representation of a [[Causal Model]] is valid input to **Do**.
-- Since **Do** is a class, multiple instances of **Do** - each with their own model - can be instantiated in one project at time.
+- Since **Do** is a class, multiple instances of **Do** - each with their own model - can be instantiated in one project at a time.
 
 ## Making a Query
 
@@ -110,7 +112,7 @@ x_and_y = do_api.p({x, y}, set())
 print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 ```
 
-**Keys**:
+**Important**:
 - The representation of a variable in the model having some *observed* value is implemented as an **Outcome** object.
 - The creation of an Outcome object is to supply the *name* of the variable, and *some outcome of this variable*.
 - The Outcome class is located at ``do.probability.structures.VariableStructures``.
@@ -145,7 +147,7 @@ if x_y != x_do_y:
     print(f"P(X=x | Y=y) ({x_y:5}) != P(X=x | do(Y=y)) ({x_do_y:5}): Y shows causal influence over X!")
 ```
 
-**Keys**:
+**Important**:
 - A *treatment* or *intervention* is represented by the **Intervention** object.
 - The Intervention class is located at ``do.probability.structures.VariableStructures``, the same as the Outcome class.
 - The Intervention class takes the same arguments as the Outcome class.
