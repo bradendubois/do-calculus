@@ -68,7 +68,7 @@ x = Do(m)
 ```
 
 **Important**:
-- A regular Python dictionary representation of a [[Causal Models]] is valid input to **Do**.
+- A regular Python dictionary representation of a [[causal model|Causal Models]] is valid input to **Do**.
 - Since **Do** is a class, multiple instances of **Do** - each with their own model - can be instantiated in one project at a time.
 
 ## Further
@@ -76,4 +76,5 @@ x = Do(m)
 Now that a model is successfully loaded, one can begin [[querying distributions|Probability Queries]].
 
 See any of the more specific pages:
+* [[Configuration]]
 * [[Probability Queries]]
