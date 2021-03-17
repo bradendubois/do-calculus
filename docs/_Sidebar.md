@@ -1,3 +1,4 @@
-* [[API]]
-* [[API|API]]
-* [[Probability Queries|API/Probability Queries]]
+* [[API|Do-API]]
+* [[Probability Queries|Probability Queries]]
+* [[Probability Queries|Probability-Queries]]
+* [[Probability Queries]]

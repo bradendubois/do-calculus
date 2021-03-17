@@ -1,4 +1,4 @@
-# API
+# Do API
 
 Details on the [API](https://en.wikipedia.org/wiki/API) provided in the project.
 
@@ -73,7 +73,7 @@ x = Do(m)
 
 ## Further
 
-Now that a model is successfully loaded, one can begin [[querying distributions|API/Probability Queries]].
+Now that a model is successfully loaded, one can begin [[querying distributions|Probability Queries]].
 
 See any of the more specific pages:
-* [[Probability Queries|API/Probability Queries]]
+* [[Probability Queries]]

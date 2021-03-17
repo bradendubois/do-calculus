@@ -25,7 +25,7 @@ Models can be stored in ``json`` or ``yml`` files, and must have either ``.json`
 
 ## Dictionaries
 
-A model can also be stored as a Python dictionary directly, and loaded into an instance of the [[API]].
+A model can also be stored as a Python dictionary directly, and loaded into an instance of the [API|Do-API].
 
 ### Example
 
@@ -88,4 +88,4 @@ m = {
 }
 ```
 
-Both representations be used in the [[API]].
+Both representations be used in the [API|Do-API].
