@@ -1,6 +1,6 @@
 # Causal Models
 
-This document outlines the structure of how to create a causal model for use in the package, such as in the [[API]].
+This document outlines the structure of how to create a causal model for use in the package, such as in the [[API|Do API]].
 
 Models are inherently **DAGs**, where each variable in a model is also represented as a vertex in the DAG.
 
@@ -25,7 +25,7 @@ Models can be stored in ``json`` or ``yml`` files, and must have either ``.json`
 
 ## Dictionaries
 
-A model can also be stored as a Python dictionary directly, and loaded into an instance of the [API|Do-API].
+A model can also be stored as a Python dictionary directly, and loaded into an instance of the [[API|Do API]].
 
 ### Example
 
@@ -88,4 +88,4 @@ m = {
 }
 ```
 
-Both representations be used in the [API|Do-API].
+Both representations be used in the [[API|Do API]].

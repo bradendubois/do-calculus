@@ -2,14 +2,14 @@
 
 Details on the [API](https://en.wikipedia.org/wiki/API) provided in the project.
 
-This assumes the steps in [[Getting Started]] have been followed, and the project is set up.
+This assumes the steps in [[Installation]] have been followed, and the project is set up.
 
 **Note**: For simplicity of import-statements, any examples will *assume* the project was installed as [PyPI](https://pypi.org/project/do-calculus/) package.
 
 ## Table of Contents
 
 * [Importing the **Do** API](#importing)
-* [Loading a Model]
+* [Loading a Model](#loading-a-model)
 
 ## Importing
 
@@ -68,7 +68,7 @@ x = Do(m)
 ```
 
 **Important**:
-- A regular Python dictionary representation of a [[Causal Model]] is valid input to **Do**.
+- A regular Python dictionary representation of a [[Causal Models]] is valid input to **Do**.
 - Since **Do** is a class, multiple instances of **Do** - each with their own model - can be instantiated in one project at a time.
 
 ## Further
