@@ -57,7 +57,7 @@ print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 - The API function provided in **Do** to query a probability is the ``p`` function.
 - **Do.p** takes *two* arguments, a *set of outcome outcomes*, and a *set of "given" outcomes*.
 - **Do.p** requires an empty set as its "given" outcomes even if there are none.
-- **Do.p** returns a *float, between [0, 1].
+- **Do.p** returns a *float*, between [0, 1].
 
 ## Querying an Interventional Distribution
 
