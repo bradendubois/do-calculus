@@ -13,7 +13,7 @@ from .api.probability_query import api_probability_query
 from .probability.structures.BackdoorController import BackdoorController
 from .probability.structures.CausalGraph import CausalGraph
 from .probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from .probability.structures.VariableStructures import Variable
+from .probability.structures.VariableStructures import Outcome, Intervention
 
 from .util.ModelLoader import parse_model
 from .util.OutputLogger import OutputLogger
