@@ -8,7 +8,7 @@ on:
       - 'docs/**'
 
     # Trigger only on main/beta
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   deploy-wiki:
