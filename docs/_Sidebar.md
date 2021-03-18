@@ -1,6 +1,7 @@
 ## [[Home]]
-## [[Installation]]
-## [[Causal Models]]
+* [[Installation]]
+* [[Causal Models]]
+
 ## [[Do API]]
 * [[Configuration]]
 * [[Probability Queries]]
