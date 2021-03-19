@@ -1,11 +1,11 @@
 <h1 align="center" style="border-bottom: none;">do-calculus</h1>
 <h3 align="center">A Python implementation of the <i>do-calculus</i> of Judea Pearl et. al.</h3>
 <p align="center">
-    <a href="https://github.com/bradendubois/probability-code/actions?query=workflow%3ATest+branch%3Amain">
-        <img alt="Test Workflows" src="https://github.com/bradendubois/probability-code/workflows/Test and Release/badge.svg">
+    <a href="https://github.com/bradendubois/do-calculus/actions?query=workflow%3ATest+branch%3Amain">
+        <img alt="Test Workflows" src="https://github.com/bradendubois/do-calculus/workflows/Test and Release/badge.svg">
     </a>
-    <a href='https://coveralls.io/github/bradendubois/probability-code?branch=main'>
-        <img src='https://coveralls.io/repos/github/bradendubois/probability-code/badge.svg?branch=main' alt='Coverage Status' />
+    <a href='https://coveralls.io/github/bradendubois/do-calculus?branch=main'>
+        <img src='https://coveralls.io/repos/github/bradendubois/do-calculus/badge.svg?branch=main' alt='Coverage Status' />
     </a>
     <a href="https://pypi.org/project/do-calculus/">
         <img alt="" src="https://pypip.in/v/do-calculus/badge.svg">
@@ -20,11 +20,11 @@
 
 ## Resources
 
-* **Documentation / Wiki**: [github.com/bradendubois/probability-code/wiki](https://github.com/bradendubois/probability-code/wiki)
-* **Source Code**: [github.com/bradendubois/probability-code](https://github.com/bradendubois/probability-code)
+* **Documentation / Wiki**: [github.com/bradendubois/do-calculus/wiki](https://github.com/bradendubois/do-calculus/wiki)
+* **Source Code**: [github.com/bradendubois/do-calculus](https://github.com/bradendubois/do-calculus)
 * **PyPI**: [pypi.org/project/do-calculus/](https://pypi.org/project/do-calculus/)
-* **Releases**: [github.com/bradendubois/probability-code/releases](https://github.com/bradendubois/probability-code/releases)
-* **Bug reports**: [github.com/bradendubois/probability-code/issues](https://github.com/bradendubois/probability-code/issues)
+* **Releases**: [github.com/bradendubois/do-calculus/releases](https://github.com/bradendubois/do-calculus/releases)
+* **Bug reports**: [github.com/bradendubois/do-calculus/issues](https://github.com/bradendubois/do-calculus/issues)
 * **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
 
-See the [wiki](https://github.com/bradendubois/probability-code/wiki) to get started.
+See the [wiki](https://github.com/bradendubois/do-calculus/wiki) to get started.

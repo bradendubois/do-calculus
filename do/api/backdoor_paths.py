@@ -1,9 +1,10 @@
-from itertools import product
+from typing import Collection, Dict, List, Optional
 
-from ..probability.structures.BackdoorController import BackdoorController
+from ..structures.BackdoorController import BackdoorController
+from ..structures.Types import Path, Vertices
 
 
-def api_backdoor_paths_parse(query: str) -> (set, set):
+def api_backdoor_paths_parse(query: str) -> Dict[str, Collection[str]]:
     """
     Convert a given query string into a pair of sets to compute all backdoor paths between
     @param query: A string of the form "X, Y, Z -> A, B, C" or "X, Y, Z -> A, B, C | I, J, K"
@@ -28,7 +29,7 @@ def api_backdoor_paths_parse(query: str) -> (set, set):
     }
 
 
-def api_backdoor_paths(bc: BackdoorController, src: set, dst: set, dcf: set) -> list:
+def api_backdoor_paths(bc: BackdoorController, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
     """
     Compute and return all the backdoor paths from any vertex in src to any vertex in dst
     @param bc: A Backdoor Controller with a graph conforming to the given source and destination sets.
@@ -42,8 +43,4 @@ def api_backdoor_paths(bc: BackdoorController, src: set, dst: set, dcf: set) -> 
         list containing each vertex (as a string) from the source vertex to the destination vertex, with dcf acting as
         a deconfounding set.
     """
-    # TODO Add a method in Backdoor Controller that can return all paths immediately
-    paths = []
-    for s, t in product(src, dst):
-        paths += bc.backdoor_paths_pair(s, t, dcf)
-    return paths
+    return bc.backdoor_paths(src, dst, dcf)

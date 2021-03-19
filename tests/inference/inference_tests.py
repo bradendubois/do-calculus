@@ -2,13 +2,13 @@ from os.path import dirname, abspath
 from pathlib import Path
 from yaml import safe_load as load
 
-from ..test_util import print_test_result
-
-from do.probability.structures.CausalGraph import CausalGraph, Outcome
-from do.probability.structures.VariableStructures import parse_outcomes_and_interventions
+from do.structures.CausalGraph import CausalGraph, Outcome
+from do.structures.VariableStructures import parse_outcomes_and_interventions
 from do.util.helpers import within_precision
 from do.util.ModelLoader import parse_model
 from do.util.ProbabilityExceptions import *
+
+from ..test_util import print_test_result
 
 test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 
@@ -89,12 +89,25 @@ def inference_tests(graph_location: Path) -> (bool, str):
             head = parse_outcomes_and_interventions(test["head"])
             body = parse_outcomes_and_interventions(test["body"]) if "body" in test else set()
 
-            result = cg.probability_query(head, body)
             expected = test["expect"]
 
-            if expected != "failure" and not within_precision(result, expected):    # coverage: skip
-                print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
-                test_file_success = False
+            try:
+
+                result = cg.probability_query(head, body)
+
+                # Should have raised assertion error...
+                if expected == "failure":
+                    print_test_result(False, f"Expected test to fail, but it did not! {graph_filename}")
+                    test_file_success = False
+
+                if expected != "failure" and not within_precision(result, expected):    # coverage: skip
+                    print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
+                    test_file_success = False
+
+            except AssertionError:
+                if expected != "failure":
+                    print_test_result(False, f"Unexpected assertion error! {graph_filename}")
+                    test_file_success = False
 
         if test_file_success:
             print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")

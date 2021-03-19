@@ -26,7 +26,7 @@ try:
 except ValueError:
     print("Could not convert", argv[1], "to int; defaulting to", N)
 
-destination_directory = Path(".", argv[2])
+destination_directory = Path("", argv[2])
 
 if not destination_directory.is_dir():
     print("Cannot resolve", destination_directory)

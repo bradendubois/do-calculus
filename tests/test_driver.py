@@ -7,11 +7,11 @@ from do.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_
 from do.api.joint_distribution_table import api_joint_distribution_table
 from do.api.probability_query import api_probability_query, api_probability_query_parse
 
-from do.probability.structures.BackdoorController import BackdoorController
-from do.probability.structures.CausalGraph import CausalGraph
-from do.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from do.probability.structures.Graph import Graph, to_label
-from do.probability.structures.VariableStructures import Outcome, Variable, Intervention
+from do.structures.BackdoorController import BackdoorController
+from do.structures.CausalGraph import CausalGraph
+from do.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from do.structures.Graph import Graph, to_label
+from do.structures.VariableStructures import Outcome, Variable, Intervention
 
 from do.util.helpers import power_set, disjoint, minimal_sets, within_precision
 from do.util.ModelLoader import parse_model
@@ -27,7 +27,7 @@ from tests.test_util import print_test_result
 default_model_file = "pearl-3.4.yml"
 
 # Default location for the graphs made by hand
-graphs = Path("do", "graphs", "full")
+graphs = Path("do", "graphs")
 
 # Path to the Xi-Xj model
 test_file = graphs / default_model_file
@@ -175,7 +175,7 @@ def test_probability_lookup():
 
     try:
         assert t.probability_lookup(Outcome("Xj", "foo"), priors) == 100
-        raise Exception
+        raise Exception     # coverage: skip
     except MissingTableRow:
         pass
 
@@ -426,14 +426,14 @@ def test_parse_model():
     # nonexistent file
     try:
         parse_model(Path("fake", "path", "fake"))
-        raise Exception
+        raise Exception     # coverage: skip
     except FileNotFoundError:
         pass
 
     # invalid file
     try:
         parse_model(Path("do", "util", "helpers.py"))
-        raise Exception
+        raise Exception     # coverage: skip
     except FileNotFoundError:
         pass
 

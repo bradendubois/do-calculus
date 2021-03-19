@@ -1,8 +1,10 @@
-from ..probability.structures.CausalGraph import CausalGraph
-from ..probability.structures.VariableStructures import parse_outcomes_and_interventions
+from typing import Collection, Dict, Union
+
+from ..structures.CausalGraph import CausalGraph
+from ..structures.VariableStructures import Outcome, Intervention, parse_outcomes_and_interventions
 
 
-def api_probability_query_parse(query: str) -> (tuple, tuple):
+def api_probability_query_parse(query: str) -> Dict[str, Collection[str]]:
     """
     Parse a query string into Outcome and Intervention structures.
     @param query: A string of the form "Y=y, X=x | W=w", or just "Y=y, X=x"
@@ -21,7 +23,7 @@ def api_probability_query_parse(query: str) -> (tuple, tuple):
     }
 
 
-def api_probability_query(cg: CausalGraph, y: set, x: set) -> float:
+def api_probability_query(cg: CausalGraph, y: Collection[Outcome], x: Collection[Union[Outcome, Intervention]]) -> float:
     """
     Compute a probability query for the currently loaded causal graph.
     @param cg: A Causal Graph containing variables, distributions, etc.

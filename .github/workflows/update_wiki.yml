@@ -5,7 +5,7 @@ on:
   push:
     # Trigger only when wiki directory changes
     paths:
-      - 'doc/**'
+      - 'wiki/**'
 
     # Trigger only on main/beta
     branches: [ main ]
@@ -19,7 +19,7 @@ jobs:
     - name: Push Wiki Changes
       uses: Andrew-Chen-Wang/github-wiki-action@v2
       env:
-        WIKI_DIR: doc/
+        WIKI_DIR: docs/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_MAIL: ${{ secrets.EMAIL }}
         GH_NAME: ${{ github.repository_owner }}
