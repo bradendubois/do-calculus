@@ -51,7 +51,7 @@ print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 - The creation of an Outcome object is to supply the *name* of the variable, and *some outcome of this variable*.
 - The Outcome class is located at ``do.structures.VariableStructures``.
 - The API function provided in **Do** to query a probability is the ``p`` function.
-- **Do.p** takes *two* arguments, a *set of outcome outcomes*, and a *set of "given" outcomes*.
+- **Do.p** takes *two* arguments, a *Collection of outcome outcomes*, and a *Collection of "given" outcomes*.
 - **Do.p** requires an empty set as its "given" outcomes even if there are none.
 - **Do.p** returns a *float*, between [0, 1].
 
@@ -86,3 +86,4 @@ if x_y != x_do_y:
 - The Intervention class is located at ``do.structures.VariableStructures``, the same as the Outcome class.
 - The Intervention class takes the same arguments as the Outcome class.
 - Queries involving interventions use **Do.p** just as standard queries do.
+- The "given" / body of a query is a *Collection* of Outcomes and Interventions.
