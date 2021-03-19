@@ -5,10 +5,10 @@ on:
   push:
     # Trigger only when wiki directory changes
     paths:
-      - 'docs/**'
+      - 'wiki/**'
 
     # Trigger only on main/beta
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   deploy-wiki:
