@@ -2,8 +2,6 @@
 
 How to measure probabilities using the **Do** API.
 
-This assumes the steps in [[Installation]] have been followed, and the package has been successfully installed.
-
 ## Making a Query
 
 For this, we will query a standard probability through the **Do** API.

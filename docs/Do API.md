@@ -2,7 +2,7 @@
 
 Details on the [API](https://en.wikipedia.org/wiki/API) provided in the project.
 
-This assumes the steps in [[Installation]] have been followed, and the project is set up.
+This assumes the steps in the [[Installation]] section have been followed, and the project is set up.
 
 **Note**: For simplicity of import-statements, any examples will *assume* the project was installed as [PyPI](https://pypi.org/project/do-calculus/) package.
 
@@ -76,5 +76,6 @@ x = Do(m)
 Now that a model is successfully loaded, one can begin [[querying distributions|Probability Queries]].
 
 See any of the more specific pages:
-* [[Configuration]]
 * [[Probability Queries]]
+* [[Backdoor Paths]]
+* [[Deconfounding Sets]]

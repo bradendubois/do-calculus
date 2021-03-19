@@ -1,11 +1,15 @@
-[[Home]]
+### [[Home]]
 
-[[Installation]]
-* [[Installation]]
+### [[Installation]]
+* [[PyPI]]
+* [[GitHub]]
 
-[[Resources]]
-* [[Causal Models]]
-
-[[Do API]]
+### [[Resources]]
 * [[Configuration]]
+* [[Causal Models]]
+* [[Literature]]
+
+### [[Do API]]
 * [[Probability Queries]]
+* [[Backdoor Paths]]
+* [[Deconfounding Sets]]
