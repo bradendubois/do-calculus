@@ -2,7 +2,7 @@
 #                   probability-code API                  #
 ###########################################################
 
-from typing import Collection, Union
+from typing import Collection, List, Optional, Set, Union
 from pathlib import Path
 
 from .api.backdoor_paths import api_backdoor_paths
@@ -10,9 +10,11 @@ from .api.deconfounding_sets import api_deconfounding_sets
 from .api.joint_distribution_table import api_joint_distribution_table
 from .api.probability_query import api_probability_query
 
-from .probability.structures.BackdoorController import BackdoorController
-from .probability.structures.CausalGraph import CausalGraph
-from .probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from .structures.BackdoorController import BackdoorController
+from .structures.CausalGraph import CausalGraph
+from .structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from .structures.Types import Vertex, Vertices
+from .structures.VariableStructures import Outcome, Intervention
 
 from .util.ModelLoader import parse_model
 from .util.OutputLogger import OutputLogger
@@ -92,7 +94,7 @@ class Do:
     #                         Distributions                        #
     ################################################################
 
-    def p(self, y: set, x: set) -> float:
+    def p(self, y: Collection[Outcome], x: Collection[Union[Outcome, Intervention]]) -> Optional[float]:
         """
         Compute a probability query of Y, given X.
         @param y: Head of query; a set of Outcome objects
@@ -100,11 +102,15 @@ class Do:
         @return: The probability of P(Y | X), in the range [0.0, 1.0]
         @raise ProbabilityException when the given probability cannot be computed, such as an invalid Outcome
         """
-        # All deconfounding is handled by the CG
-        result = api_probability_query(self._cg, y, x)
-        self._output.result(result)
+        try:
+            # All deconfounding is handled by the CG
+            result = api_probability_query(self._cg, y, x)
+            self._output.result(result)
+            return result
 
-        return result
+        except AssertionError as e:
+            self._output.detail(e)
+            return None
 
     def joint_distribution_table(self) -> ConditionalProbabilityTable:
         """
@@ -112,7 +118,7 @@ class Do:
         @return: A list of tuples, (Outcomes, P), where Outcomes is a unique set of Outcome objects for the model, and
             P is the corresponding probability.
         """
-        result = api_joint_distribution_table(self._cg)
+        result: ConditionalProbabilityTable = api_joint_distribution_table(self._cg)
 
         if self._print_result:
             keys = sorted(self._cg.variables.keys())
@@ -125,7 +131,7 @@ class Do:
     #               Pathfinding (Backdoor Controller)              #
     ################################################################
 
-    def backdoor_paths(self, src: set, dst: set, dcf: set) -> list:
+    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
         """
         Find all the "backdoor paths" between two sets of variables.
         @param src: A set of (string) vertices defined in the loaded model, which will be the source to begin searching
@@ -144,9 +150,10 @@ class Do:
                 for left, right in zip(path[:-1], path[1:]):
                     print(left, "<-" if right in self._g.parents(left) else "->", end=" ")
                 print(path[-1])
+
         return result
 
-    def deconfounding_sets(self, src: set, dst: set) -> list:
+    def deconfounding_sets(self, src: set, dst: set) -> List[Set[str]]:
         """
         Find the sets of vertices in the loaded model that are sufficient at blocking all backdoor paths from all
         vertices in src to any vertices in dst

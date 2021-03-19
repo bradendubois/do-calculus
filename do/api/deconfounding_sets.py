@@ -1,7 +1,10 @@
+from typing import Collection, Dict, List, Set
+
 from ..structures.BackdoorController import BackdoorController
+from ..structures.Types import Vertices
 
 
-def api_deconfounding_sets_parse(query: str) -> (set, set):
+def api_deconfounding_sets_parse(query: str) -> Dict[str, Collection[str]]:
     """
     Convert a given query string into a pair of sets to find all sufficient deconfounding sets between.
     @param query: A string of the form "X, Y, Z -> A, B, C"
@@ -19,7 +22,7 @@ def api_deconfounding_sets_parse(query: str) -> (set, set):
     }
 
 
-def api_deconfounding_sets(bc: BackdoorController, src: set, dst: set) -> list:
+def api_deconfounding_sets(bc: BackdoorController, src: Vertices, dst: Vertices) -> List[Set[str]]:
     """
     Compute and return all the backdoor paths from any vertex in src to any vertex is dst
     @param bc: A Backdoor Controller with a graph conforming to the given source and destination sets.
