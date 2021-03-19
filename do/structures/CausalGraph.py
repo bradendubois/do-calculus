@@ -14,9 +14,9 @@ from .Graph import Graph
 from .Probability_Engine import ProbabilityEngine
 from .VariableStructures import Outcome, Intervention
 
-from ...config.settings import Settings
-from ...util.OutputLogger import OutputLogger
-from ...util.helpers import p_str
+from do.config.settings import Settings
+from do.util.OutputLogger import OutputLogger
+from do.util.helpers import p_str
 
 
 class CausalGraph:

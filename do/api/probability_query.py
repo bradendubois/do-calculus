@@ -1,5 +1,5 @@
-from ..probability.structures.CausalGraph import CausalGraph
-from ..probability.structures.VariableStructures import parse_outcomes_and_interventions
+from ..structures.CausalGraph import CausalGraph
+from ..structures.VariableStructures import parse_outcomes_and_interventions
 
 
 def api_probability_query_parse(query: str) -> (tuple, tuple):

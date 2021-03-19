@@ -11,9 +11,9 @@ from itertools import product
 
 from .Graph import Graph
 
-from ...config.settings import Settings
-from ...util.helpers import minimal_sets
-from ...util.helpers import power_set
+from do.config.settings import Settings
+from do.util.helpers import minimal_sets
+from do.util.helpers import power_set
 
 
 class BackdoorController:

@@ -7,11 +7,11 @@ from do.api.deconfounding_sets import api_deconfounding_sets, api_deconfounding_
 from do.api.joint_distribution_table import api_joint_distribution_table
 from do.api.probability_query import api_probability_query, api_probability_query_parse
 
-from do.probability.structures.BackdoorController import BackdoorController
-from do.probability.structures.CausalGraph import CausalGraph
-from do.probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from do.probability.structures.Graph import Graph, to_label
-from do.probability.structures.VariableStructures import Outcome, Variable, Intervention
+from do.structures.BackdoorController import BackdoorController
+from do.structures.CausalGraph import CausalGraph
+from do.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from do.structures.Graph import Graph, to_label
+from do.structures.VariableStructures import Outcome, Variable, Intervention
 
 from do.util.helpers import power_set, disjoint, minimal_sets, within_precision
 from do.util.ModelLoader import parse_model

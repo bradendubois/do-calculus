@@ -11,8 +11,8 @@ from math import floor, ceil
 
 from .VariableStructures import Variable, Outcome, Intervention
 
-from ...config.settings import Settings
-from ...util.ProbabilityExceptions import MissingTableRow
+from ..config.settings import Settings
+from ..util.ProbabilityExceptions import MissingTableRow
 
 
 class ConditionalProbabilityTable:

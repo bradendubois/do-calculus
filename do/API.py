@@ -2,7 +2,7 @@
 #                   probability-code API                  #
 ###########################################################
 
-from typing import Union
+from typing import Collection, Union
 from pathlib import Path
 
 from .api.backdoor_paths import api_backdoor_paths

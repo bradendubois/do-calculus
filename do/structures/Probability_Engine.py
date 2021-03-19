@@ -12,10 +12,10 @@ from itertools import product
 from .Graph import Graph
 from .VariableStructures import Outcome, Intervention
 
-from ...config.settings import Settings
-from ...util.OutputLogger import OutputLogger
-from ...util.helpers import p_str
-from ...util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
+from do.config.settings import Settings
+from do.util.OutputLogger import OutputLogger
+from do.util.helpers import p_str
+from do.util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 
 class ProbabilityEngine:
