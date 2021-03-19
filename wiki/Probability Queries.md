@@ -6,7 +6,7 @@ For this, we will query a standard probability through the **Do** API.
 
 ```python
 from do.API import Do
-from do.probability.structures.VariableStructures import Outcome
+from do.structures.VariableStructures import Outcome
 
 m = {
   "name": "Simple Model",
@@ -49,7 +49,7 @@ print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 **Important**:
 - The representation of a variable in the model having some *observed* value is implemented as an **Outcome** object.
 - The creation of an Outcome object is to supply the *name* of the variable, and *some outcome of this variable*.
-- The Outcome class is located at ``do.probability.structures.VariableStructures``.
+- The Outcome class is located at ``do.structures.VariableStructures``.
 - The API function provided in **Do** to query a probability is the ``p`` function.
 - **Do.p** takes *two* arguments, a *set of outcome outcomes*, and a *set of "given" outcomes*.
 - **Do.p** requires an empty set as its "given" outcomes even if there are none.
@@ -62,7 +62,7 @@ Assume the existence of some more complicated model, ``m_confounded``, in which 
 
 ```python
 from do.API import Do
-from do.probability.structures.VariableStructures import Outcome, Intervention
+from do.structures.VariableStructures import Outcome, Intervention
 
 # Assume this were some more complicated model...
 m_confounding = dict()
@@ -83,6 +83,6 @@ if x_y != x_do_y:
 
 **Important**:
 - A *treatment* or *intervention* is represented by the **Intervention** object.
-- The Intervention class is located at ``do.probability.structures.VariableStructures``, the same as the Outcome class.
+- The Intervention class is located at ``do.structures.VariableStructures``, the same as the Outcome class.
 - The Intervention class takes the same arguments as the Outcome class.
 - Queries involving interventions use **Do.p** just as standard queries do.
