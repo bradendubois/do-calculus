@@ -89,12 +89,25 @@ def inference_tests(graph_location: Path) -> (bool, str):
             head = parse_outcomes_and_interventions(test["head"])
             body = parse_outcomes_and_interventions(test["body"]) if "body" in test else set()
 
-            result = cg.probability_query(head, body)
             expected = test["expect"]
 
-            if expected != "failure" and not within_precision(result, expected):    # coverage: skip
-                print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
-                test_file_success = False
+            try:
+
+                result = cg.probability_query(head, body)
+
+                # Should have raised assertion error...
+                if expected == "failure":
+                    print_test_result(False, f"Expected test to fail, but it did not! {graph_filename}")
+                    test_file_success = False
+
+                if expected != "failure" and not within_precision(result, expected):    # coverage: skip
+                    print_test_result(False, f"Got {result} but expected {expected} in {graph_filename}")
+                    test_file_success = False
+
+            except AssertionError:
+                if expected != "failure":
+                    print_test_result(False, f"Unexpected assertion error! {graph_filename}")
+                    test_file_success = False
 
         if test_file_success:
             print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")

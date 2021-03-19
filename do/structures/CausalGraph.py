@@ -95,15 +95,13 @@ class CausalGraph:
 
                 # Filter down the deconfounding sets not overlapping with our query body
                 vertex_dcf = list(filter(lambda s: len(set(s) & strings(body)) == 0, deconfounding_sets))
-                if len(vertex_dcf) == 0:
-                    self.output.result("No deconfounding set Z can exist for the given data.")
-                    return
+                assert len(vertex_dcf) != 0, "No deconfounding set Z can exist for the given data."
 
                 # Compute with every possible deconfounding set as a safety measure; ensuring they all match
                 probability = None  # Sentinel value
                 for z_set in vertex_dcf:
 
-                    result = self._marginalize_query(head, body, interventions, z_set)
+                    result = self._marginalize_query(head, body, z_set)
                     if probability is None:  # Storing first result
                         probability = result
 
