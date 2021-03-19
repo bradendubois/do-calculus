@@ -32,11 +32,11 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
 
             expected_paths = list(map(sorted, test["expect"]))
 
-            paths = []
-            for s, t in itertools.product(test["src"], test["dst"]):
-                paths.extend(bc.backdoor_paths_pair(s, t, test["dcf"] if "dcf" in test else {}))
+            src = test["src"]
+            dst = test["dst"]
+            dcf = test["dcf"] if "dcf" in test else set()
 
-            # Sort each path to improve some sor
+            paths = bc.backdoor_paths(src, dst, dcf)
             paths = list(map(sorted, paths))
 
             if test["exhaustive"] and len(paths) != len(expected_paths):    # coverage: skip

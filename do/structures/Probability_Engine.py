@@ -8,14 +8,15 @@
 #########################################################
 
 from itertools import product
+from typing import Collection, Union
 
 from .Graph import Graph
 from .VariableStructures import Outcome, Intervention
 
-from do.config.settings import Settings
-from do.util.OutputLogger import OutputLogger
-from do.util.helpers import p_str
-from do.util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
+from ..config.settings import Settings
+from ..util.OutputLogger import OutputLogger
+from ..util.helpers import p_str
+from ..util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 
 class ProbabilityEngine:
@@ -33,7 +34,7 @@ class ProbabilityEngine:
         self.output = kwargs["output"] if "output" in kwargs else OutputLogger()
         self._stored_computations = dict()
 
-    def probability(self, head: set, body: set) -> float:
+    def probability(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
         @param head: A set of Outcome objects representing the head of a query
         @param body: A set of Outcome/Intervention objects representing the body of a query
@@ -41,6 +42,9 @@ class ProbabilityEngine:
         @raise AssertionError if an Outcome/Intervention provided is not defined in the given model
         @raise AssertionError if there is an Intervention in the head
         """
+
+        head = set(head)
+        body = set(body)
 
         # Ensure there are no adjustments/interventions in the head
         for out in head:
@@ -59,7 +63,7 @@ class ProbabilityEngine:
         self.graph.disable_incoming(*interventions)
         return self._compute(list(head), list(body))
 
-    def _compute(self, head: list, body: list, depth=0) -> float:
+    def _compute(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], depth=0) -> float:
         """
         Compute the probability of some head given some body
         @param head: A list of some number of Outcome objects
@@ -270,7 +274,7 @@ class ProbabilityEngine:
                 print("Uh-oh:", string_representation, "has already been cached, but with a different value...")
 
 
-def contradictory_outcome_set(outcomes: list) -> bool:
+def contradictory_outcome_set(outcomes: Collection[Union[Outcome, Intervention]]) -> bool:
     """
     Check whether a list of outcomes contain any contradictory values, such as Y = y and Y = ~y
     @param outcomes: A list of Outcome objects

@@ -6,8 +6,9 @@
 #                                                       #
 #########################################################
 
-from numpy import empty
 from math import floor, ceil
+from numpy import empty
+from typing import List
 
 from .VariableStructures import Variable, Outcome, Intervention
 
@@ -27,7 +28,7 @@ class ConditionalProbabilityTable:
     # Padding units on the left/right sides of each cell
     padding = 1
 
-    def __init__(self, variable: Variable, given: list, table_rows: list):
+    def __init__(self, variable: Variable, given: List[str], table_rows: List):
         self.variable = variable    # The LHS of the table, single-variable only
         self.given = given          # The RHS/body of the table
 

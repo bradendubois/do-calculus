@@ -8,12 +8,13 @@
 #########################################################
 
 from itertools import product
+from typing import List, Optional
 
 from .Graph import Graph
+from .Types import Collection, Path, Vertices, Vertex, V_Type
 
-from do.config.settings import Settings
-from do.util.helpers import minimal_sets
-from do.util.helpers import power_set
+from ..config.settings import Settings
+from ..util.helpers import minimal_sets, power_set, str_map
 
 
 class BackdoorController:
@@ -31,28 +32,33 @@ class BackdoorController:
         self.graph = graph.copy()
         self.graph.reset_disabled()
 
-    def backdoor_paths(self, src: set, dst: set, dcf: set) -> list:
+    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
         """
         Get all possible backdoor paths between some source set of vertices in the internal graph to any vertices in
         some destination set of vertices. A given (possibly empty) set of deconfounding vertices may serve to block, or
         even open, some backdoor paths.
         @param src: The source set of (string) vertices to search for paths from
         @param dst: The destination set of (string) vertices to search from src towards.
-        @param dcf: A set of (string) vertices that may serve as a sufficient deconfounding set to block or open
+        @param dcf: An optional set of (string) vertices that may serve as a sufficient deconfounding set to block or open
             backdoor paths.
         @return: A list of lists, where each sublist contains a backdoor path, the first and last element being a
             vertex from src and dst, respectively, with all vertices between representing the path. All elements are
             string vertices.
         """
+
         paths = []
 
+        src_str = str_map(src)
+        dst_str = str_map(dst)
+        dcf_str = str_map(dcf) if dcf else set()
+
         # Use the product of src, dst to try each possible pairing
-        for s, t in product(src, dst):
-            paths += self.backdoor_paths_pair(s, t, dcf)
+        for s, t in product(src_str, dst_str):
+            paths += self._backdoor_paths_pair(s, t, dcf_str)
 
         return paths
 
-    def backdoor_paths_pair(self, s: str, t: str, dcf: set) -> list:
+    def _backdoor_paths_pair(self, s: Collection[str], t: Collection[str], dcf: Collection[str]) -> List[Path]:
         """
         Find all backdoor paths between any particular pair of vertices in the loaded graph
         @param s: A source (string) vertex in the graph
@@ -114,7 +120,7 @@ class BackdoorController:
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
         return list(filter(lambda l: l[0] in self.graph.children(l[1]) and l[1] != t, backdoor_paths))
 
-    def all_dcf_sets(self, src: set, dst: set) -> list:
+    def all_dcf_sets(self, src: Vertices, dst: Vertices) -> List[Collection[str]]:
         """
         Finds all Z subsets that serve as deconfounding sets between two sets of vertices, such as for the purpose of
         measuring interventional distributions.
@@ -123,8 +129,11 @@ class BackdoorController:
         @return: A list of sets, each set representing a set of variables that are a sufficient Z set
         """
 
+        src_str = str_map(src)
+        dst_str = str_map(dst)
+
         # Can't use anything in src, dst, or any descendant of any vertex in src as a deconfounding/blocking vertex
-        disallowed_vertices = src | dst | set().union(*[self.graph.reach(s) for s in src])
+        disallowed_vertices = src_str | dst_str | set().union(*[self.graph.reach(s) for s in src_str])
 
         valid_deconfounding_sets = list()
 
@@ -135,11 +144,11 @@ class BackdoorController:
             any_backdoor_paths = False
 
             # Cross represents one (x in X, y in Y) tuple
-            for s, t in product(src, dst):
+            for s, t in product(src_str, dst_str):
 
                 # Get any/all backdoor paths for this particular pair of vertices in src,dst with given potential
                 #   deconfounding set
-                backdoor_paths = self.backdoor_paths_pair(s, t, set(tentative_dcf))
+                backdoor_paths = self._backdoor_paths_pair(s, t, set(tentative_dcf))
 
                 if len(backdoor_paths) > 0:
                     any_backdoor_paths = True
@@ -155,7 +164,7 @@ class BackdoorController:
 
         return list(valid_deconfounding_sets)
 
-    def all_paths_cumulative(self, s: str, t: str, path: list, path_list: list) -> list:
+    def all_paths_cumulative(self, s: str, t: str, path: list, path_list: list) -> List[Path]:
         """
         Return a list of lists of all paths from a source to a target, with conditional movement from child to parent,
         or parent to child.
@@ -173,7 +182,7 @@ class BackdoorController:
                 path_list = self.all_paths_cumulative(child, t, path + [s], path_list)
         return path_list
 
-    def independent(self, src: set, dst: set, dcf: set) -> bool:
+    def independent(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> bool:
         """
         Helper function that makes some do_calculus logic more readable; determine if two sets are independent, given
         some third set.
@@ -182,12 +191,17 @@ class BackdoorController:
         @param dcf: A deconfounding set (of strings) Z, to block paths between X and Y
         @return: True if there are no backdoor paths and no straight-line paths, False otherwise
         """
+
+        src_str = str_map(src)
+        dst_str = str_map(dst)
+        dcf_str = str_map(dcf) if dcf else set()
+
         # Not independent if there are any unblocked backdoor paths
-        if len(self.backdoor_paths(src, dst, dcf)) > 0:
+        if len(self.backdoor_paths(src_str, dst_str, dcf_str)) > 0:
             return False
 
         # Ensure no straight-line variables from any X -> Y or Y -> X
-        for s, t in product(src, dst):
+        for s, t in product(src_str, dst_str):
             if len(self.all_paths_cumulative(s, t, [], [])) != 0:
                 return False        # x -> y
             if len(self.all_paths_cumulative(t, s, [], [])) != 0:

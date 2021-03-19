@@ -8,15 +8,16 @@
 #########################################################
 
 from itertools import product
+from typing import Collection, Union
 
 from .BackdoorController import BackdoorController
 from .Graph import Graph
 from .Probability_Engine import ProbabilityEngine
 from .VariableStructures import Outcome, Intervention
 
-from do.config.settings import Settings
-from do.util.OutputLogger import OutputLogger
-from do.util.helpers import p_str
+from ..config.settings import Settings
+from ..util.OutputLogger import OutputLogger
+from ..util.helpers import p_str
 
 
 class CausalGraph:
@@ -44,15 +45,18 @@ class CausalGraph:
         self.latent = latent.copy()
         self.output = kwargs["output"] if "output" in kwargs else OutputLogger()
 
-    def probability_query(self, head: set, body: set) -> float or None:
+    def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
         Compute a probability in the given model.
         @param head: A set of Outcome objects
         @param body: A set of Outcome and/or Intervention objects.
         @return: A value in the range [0.0, 1.0] if the probability can be computed, None otherwise.
         """
-        def strings(s: set):
+        def strings(s: Collection[Union[Outcome, Intervention]]):
             return set(map(lambda x: x.name, s))
+
+        head = set(head)
+        body = set(body)
 
         self.graph.reset_disabled()
 
@@ -113,18 +117,20 @@ class CausalGraph:
         self.graph.reset_disabled()
         return probability
 
-    def _marginalize_query(self, head: set, body: set, interventions: set, dcf: set) -> float:
+    def _marginalize_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], dcf: Collection[str]) -> float:
         """
         Handle the modified query where we require a deconfounding set due to Interventions / treatments.
         @param head: The head of the query, a set containing Outcome objects
         @param body: The body of the query, a set containing Outcome and Intervention objects
-        @param interventions: A set containing Intervention objects; this should be a subset within body, of all
-            Intervention objects in the query, since this should already have been found whenever this function is
-            called.
         @param dcf: A set of (string) names of variables to serve as a deconfounding set, blocking all backdoor paths
             between the head and body
         @return:
         """
+
+        head = set(head)
+        body = set(body)
+
+        interventions = set(filter(lambda x: isinstance(x, Intervention), body))
 
         # Augment graph (isolating interventions as roots) and create engine
         self.graph.disable_incoming(*interventions)
