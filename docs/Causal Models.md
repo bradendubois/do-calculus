@@ -1,5 +1,3 @@
-# Causal Models
-
 This document outlines the structure of how to create a causal model for use in the package, such as in the [[API|Do API]].
 
 Models are inherently **DAGs**, where each variable in a model is also represented as a vertex in the DAG.

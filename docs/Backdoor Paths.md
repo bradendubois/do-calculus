@@ -1,12 +1,10 @@
-# Backdoor Paths
-
 How to discover backdoor paths between two sets of variables in a given [[causal model|Causal Models]].
 
 ## Basic Backdoor Paths
 
-Assume the following model uses the graph G = (V, E), where:
-- V = {x, y, z}
-- E = {(x, y), (z, x), (z, y)}
+Assume the following model uses the graph **G = (V, E)**, where:
+- **V** = ``{x, y, z}``
+- **E** = ``{(x, y), (z, x), (z, y)}``
 
 ```python
 from do.API import Do

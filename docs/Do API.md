@@ -1,5 +1,3 @@
-# Do API
-
 Details on the [API](https://en.wikipedia.org/wiki/API) provided in the project.
 
 This assumes the steps in the [[Installation]] section have been followed, and the project is set up.

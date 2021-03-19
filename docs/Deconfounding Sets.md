@@ -4,9 +4,9 @@ Finding all deconfounding sets between two sets of vertices.
 
 ## Basic Example
 
-Assuming the basic 3-vertex graph from [[Backdoor Paths]], G = (V, E) where:
-- V = {x, y, z}
-- E = {(x, y), (z, x), (z, y)}
+Assuming the basic 3-vertex graph from [[Backdoor Paths]], **G = (V, E)** where:
+- **V** = ``{x, y, z}``
+- **E** = ``{(x, y), (z, x), (z, y)}``
 
 ```python
 from do.API import Do

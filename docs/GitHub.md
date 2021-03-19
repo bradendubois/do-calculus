@@ -1,5 +1,3 @@
-# GitHub
-
 Instructions for installing the project from the [source code](https://github.com/bradendubois/do-calculus/wiki).
 
 ## Acquiring a Copy

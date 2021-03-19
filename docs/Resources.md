@@ -1,5 +1,3 @@
-# Resources
-
 A collection of resources for information the project, or *do-calculus* generally.
 
 * [[Configuration]]: Settings for the project.

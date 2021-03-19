@@ -1,5 +1,3 @@
-# Probability Queries
-
 How to measure probabilities using the **Do** API.
 
 ## Making a Query

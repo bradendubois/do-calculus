@@ -1,12 +1,9 @@
-# Installation
-
 How to install and set up the software.
 
 ## Table of Contents
 
-* [Installation](#installing)
 * [Requirements](#requirements)
-* [Further](#further)
+* [Options](#options)
 
 ## Requirements
 
@@ -16,10 +13,8 @@ Setup requirements for the project are:
 
 **Note**: `pip` will already be installed with any installation of **Python 3.4+**.
 
-If [installing with PyPI](#pypi-package), all required packages are also installed when installing [do-calculus](https://pypi.org/project/do-calculus/).
+## Options
 
-If [acquiring a copy of the source code](#source-code), additional packages must be installed.
-
-## Installing
-
-There are multiple ways to install the software: one can either [install as a package from PyPI](#pypi-package), or [acquire the source code](#source-code).
+There are **two** main ways to install the package:
+- [[Install from PyPI|PyPI]]
+- [[Install from source|GitHub]]

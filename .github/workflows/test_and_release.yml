@@ -2,10 +2,10 @@ name: Test and Release
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches: [ main, beta, develop ]
-  #pull_request:
-  #  branches: [ main ]
+  push:
+    branches: [ main, beta, develop ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:

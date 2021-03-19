@@ -1,5 +1,3 @@
-# PyPI
-
 Instructions for installing the package through its [PyPI distribution](https://pypi.org/project/do-calculus/).
 
 ## PyPI Package
