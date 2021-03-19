@@ -4,7 +4,7 @@
 
 from pathlib import Path
 
-from .primary_configuration import *
+from .primary_configuration import primary_config_file
 
 documentation_file = Path(".", "doc", "Configuration.md")
 

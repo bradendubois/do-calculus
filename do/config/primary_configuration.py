@@ -61,4 +61,3 @@ primary_config_file = [
         }]
     }
 ]
-

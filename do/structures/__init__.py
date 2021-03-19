@@ -4,5 +4,6 @@ __all__ = [
     "ConditionalProbabilityTable",
     "Graph",
     "Probability_Engine",
+    "Types",
     "VariableStructures"
 ]

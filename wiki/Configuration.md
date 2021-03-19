@@ -1,6 +1,4 @@
-# Configuration File Settings
-
-Settings for the project are stored in ``src/config/config.yml``.
+Settings for the project are stored in ``config.yml`` in the same directory as the Python file that imports ``Do``.
 - **Note**: This file will be created if it does not exist, when the project is run.
 
 ## Output Control

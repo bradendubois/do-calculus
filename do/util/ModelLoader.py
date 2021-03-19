@@ -3,9 +3,9 @@ from pathlib import Path
 from typing import Union
 from yaml import safe_load as yaml_load
 
-from ..probability.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from ..probability.structures.Graph import Graph
-from ..probability.structures.VariableStructures import Variable, Outcome, Intervention
+from ..structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from ..structures.Graph import Graph
+from ..structures.VariableStructures import Variable
 
 
 def parse_model(file: Union[dict, str, Path]):

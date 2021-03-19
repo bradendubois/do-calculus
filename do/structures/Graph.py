@@ -11,19 +11,16 @@
 #   We can isolate more generalized graph code here, as well as create a better way to "erase" incoming or outgoing
 #   edges, but only temporarily; this will improve "reach", "parents", etc.
 
-from typing import Union
+from typing import Collection, Set, Tuple, Union
 
-from .VariableStructures import Variable, Outcome, Intervention
-
-# These functions should work with any sort of Variable type, or the name itself
-CG_Types = Union[str, Variable, Outcome, Intervention]
+from .Types import V_Type
 
 
 class Graph:
 
     """A basic graph, with edge control."""
 
-    def __init__(self, v: set, e: set):
+    def __init__(self, v: Set[str], e: Set[Tuple[str, str]]):
         """
         Initializer for a basic Graph.
         @param v: A set of vertices
@@ -46,7 +43,7 @@ class Graph:
 
         self.topology_map = {vertex: 0 for vertex in v}
 
-        def initialize_topology(vertex: CG_Types, depth=0):
+        def initialize_topology(vertex: V_Type, depth=0):
             """
             Helper function to initialize the ordering of the Variables in the graph
             @param vertex: A Variable to set the ordering of, and then all its children
@@ -70,14 +67,14 @@ class Graph:
         msg += "Edges:\n" + "\n".join(" -> ".join(i for i in edge) for edge in self.e)
         return msg
 
-    def roots(self) -> set:
+    def roots(self) -> Collection[str]:
         """
         Get the roots of the the graph G.
         @return: A set of vertices (strings) in G that have no parents.
         """
         return set([x for x in self.v if len(self.parents(x)) == 0])
 
-    def parents(self, v: CG_Types) -> set:
+    def parents(self, v: V_Type) -> Collection[Union[str, V_Type]]:
         """
         Get the parents of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -89,7 +86,7 @@ class Graph:
 
         return {p for p in self.incoming[label] if p not in self.outgoing_disabled and p not in self.outgoing[label]}
 
-    def children(self, v: CG_Types) -> set:
+    def children(self, v: V_Type) -> Collection[Union[str, V_Type]]:
         """
         Get the children of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -101,7 +98,7 @@ class Graph:
 
         return {c for c in self.outgoing[label] if c not in self.incoming_disabled and c not in self.incoming[label]}
 
-    def ancestors(self, v: CG_Types) -> set:
+    def ancestors(self, v: V_Type) -> Collection[Union[str, V_Type]]:
         """
         Get the ancestors of v, accounting for disabled vertices
         @param v: The vertex to find all ancestors of
@@ -119,7 +116,7 @@ class Graph:
 
         return ancestors
 
-    def reach(self, v: CG_Types) -> set:
+    def reach(self, v: V_Type) -> Collection[Union[str, V_Type]]:
         """
         Get the reach of v, accounting for disabled vertices
         @param v: The vertex to find all descendants of
@@ -137,7 +134,7 @@ class Graph:
 
         return set(children)
 
-    def disable_outgoing(self, *disable: CG_Types):
+    def disable_outgoing(self, *disable: V_Type):
         """
         Disable the given vertices' outgoing edges
         @param disable: Any number of vertices to disable
@@ -145,7 +142,7 @@ class Graph:
         for v in disable:
             self.outgoing_disabled.add(to_label(v))
 
-    def disable_incoming(self, *disable: CG_Types):
+    def disable_incoming(self, *disable: V_Type):
         """
         Disable the given vertices' incoming edges
         @param disable: Any number of vertices to disable
@@ -160,7 +157,7 @@ class Graph:
         self.outgoing_disabled.clear()
         self.incoming_disabled.clear()
 
-    def get_topology(self, v: CG_Types) -> int:
+    def get_topology(self, v: V_Type) -> int:
         """
         Determine the "depth" a given Variable is at in a topological sort of the graph
         @param v: The variable to determine the depth of
@@ -185,7 +182,7 @@ class Graph:
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied
 
-    def topological_variable_sort(self, variables: list) -> list:
+    def topological_variable_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
         """
         A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
         @param variables: A list of any number of Variable/Outcome/Intervention instances
@@ -198,7 +195,7 @@ class Graph:
         sorted_variables = [[v for v in variables if self.get_topology(v) == i] for i in range(largest_topology+1)]
         return [item for topology_sublist in sorted_variables for item in topology_sublist]
 
-    def descendant_first_sort(self, variables: list) -> list:
+    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
@@ -209,7 +206,7 @@ class Graph:
         return self.topological_variable_sort(variables)[::-1]
 
 
-def to_label(item: CG_Types) -> str:
+def to_label(item: V_Type) -> str:
     """
     Convert a variable to its string name, if not already provided as such
     @param item: The item to convert, either a string (done) or some Variable

@@ -1,7 +1,8 @@
 from itertools import chain, combinations
-from typing import Iterator
+from typing import Collection, Iterator, Union
 
 from ..config.settings import Settings
+from ..structures.Types import Intervention, Outcome, Vertices
 
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
@@ -40,7 +41,7 @@ def disjoint(*sets) -> bool:
     return len(set().union(*sets)) == sum(map(lambda iterable: len(iterable), sets))
 
 
-def p_str(lhs: list, rhs: list) -> str:
+def p_str(lhs: Collection[Outcome], rhs: Collection[Union[Outcome, Intervention]]) -> str:
     """
     Convert a head&body to a properly-formatted string
     @param lhs: The head/LHS of the query; a list of Outcome/Intervention objects
@@ -61,3 +62,7 @@ def within_precision(a: float, b: float) -> bool:
     @return: True if the values are within the margin of error acceptable, False otherwise
     """
     return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
+
+
+def str_map(to_filter: Vertices):
+    return set(map(lambda v: v if isinstance(v, str) else v.name, to_filter))

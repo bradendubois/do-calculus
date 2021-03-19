@@ -1,7 +1,7 @@
 from pathlib import Path
 from yaml import safe_load as load, dump
 
-from ..config.primary_configuration import *
+from ..config.primary_configuration import primary_config_file
 
 path = Path(".", "config.yml")
 
