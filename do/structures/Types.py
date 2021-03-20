@@ -1,11 +1,11 @@
-from typing import Collection, List, NewType, Union
+from typing import Collection, List, Union
 
 from .VariableStructures import Variable, Outcome, Intervention
 
 # General
-V_Type = NewType("V_Type", Union[Variable, Outcome, Intervention])
+V_Type = Union[Variable, Outcome, Intervention]
 
 # Graph-related
-Vertex = NewType("Vertex", Union[V_Type, str])
-Vertices = NewType("Vertices", Collection[Vertex])
-Path = NewType("Path", List[Vertex])
+Vertex = Union[V_Type, str]
+Vertices = Collection[Vertex]
+Path = List[Vertex]

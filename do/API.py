@@ -2,7 +2,7 @@
 #                   probability-code API                  #
 ###########################################################
 
-from typing import Collection, List, Optional, Set, Union
+from typing import Collection, List, Optional, Sequence, Set, Union
 from pathlib import Path
 
 from .api.backdoor_paths import api_backdoor_paths
@@ -131,7 +131,7 @@ class Do:
     #               Pathfinding (Backdoor Controller)              #
     ################################################################
 
-    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
+    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> Collection[Sequence[str]]:
         """
         Find all the "backdoor paths" between two sets of variables.
         @param src: A set of (string) vertices defined in the loaded model, which will be the source to begin searching
