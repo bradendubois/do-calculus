@@ -153,7 +153,7 @@ class Do:
 
         return result
 
-    def deconfounding_sets(self, src: set, dst: set) -> List[Set[str]]:
+    def deconfounding_sets(self, src: set, dst: set) -> Collection[Collection[str]]:
         """
         Find the sets of vertices in the loaded model that are sufficient at blocking all backdoor paths from all
         vertices in src to any vertices in dst

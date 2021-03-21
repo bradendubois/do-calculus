@@ -1,4 +1,4 @@
-from typing import Collection, Dict, List, Optional
+from typing import Collection, Dict, Optional
 
 from ..structures.BackdoorController import BackdoorController
 from ..structures.Types import Path, Vertices
@@ -29,7 +29,7 @@ def api_backdoor_paths_parse(query: str) -> Dict[str, Collection[str]]:
     }
 
 
-def api_backdoor_paths(bc: BackdoorController, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
+def api_backdoor_paths(bc: BackdoorController, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> Collection[Path]:
     """
     Compute and return all the backdoor paths from any vertex in src to any vertex in dst
     @param bc: A Backdoor Controller with a graph conforming to the given source and destination sets.

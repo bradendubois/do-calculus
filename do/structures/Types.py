@@ -1,4 +1,4 @@
-from typing import Collection, List, Union
+from typing import Collection, Sequence, Union
 
 from .VariableStructures import Variable, Outcome, Intervention
 
@@ -8,4 +8,4 @@ V_Type = Union[Variable, Outcome, Intervention]
 # Graph-related
 Vertex = Union[V_Type, str]
 Vertices = Collection[Vertex]
-Path = List[Vertex]
+Path = Sequence[str]
