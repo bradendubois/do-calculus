@@ -5,12 +5,11 @@ from pathlib import Path
 from random import randrange
 from sys import argv
 
-from src.probability.structures.CausalGraph import CausalGraph
-from src.validation.inference.inference_tests import model_inference_validation
-from src.util.ModelLoader import parse_model
+from do.structures.CausalGraph import CausalGraph
+from do.util.ModelLoader import parse_model
 
-from graph_generator import generate_graph, randomized_latent_variables
-from distribution_generation import generate_distribution
+from .gen_graph import generate_graph, randomized_latent_variables
+from .gen_distribution import generate_distribution
 
 
 # Default number of graphs to create

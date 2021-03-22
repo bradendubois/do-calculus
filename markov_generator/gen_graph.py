@@ -2,10 +2,10 @@
 
 from string import ascii_uppercase
 
-import random
-import itertools
+from random import choice, choices, randrange
+from itertools import product
 
-from src.probability.structures.Graph import Graph
+from do.structures.Graph import Graph
 
 
 def cycle(v, e):
@@ -62,7 +62,7 @@ def generate_graph(vertices, max_length, minimum_edges):
 
         name = ""
         while len(name) < 3:
-            name += random.choice(ascii_uppercase)
+            name += choice(ascii_uppercase)
             if name in v:
                 name = ""
         return name
@@ -75,7 +75,7 @@ def generate_graph(vertices, max_length, minimum_edges):
 
             assert len(viable) > 0, "No possible edges!"
 
-            temp = random.choice(list(viable))
+            temp = choice(list(viable))
             tentative_e.remove(temp)
 
             if cycle(v, e | {temp}):
@@ -91,8 +91,8 @@ def generate_graph(vertices, max_length, minimum_edges):
         print("Generating vertices... {} of {} : ({:.2f}%)".format(len(v), vertices, len(v) / vertices * 100), end='\r')
     print()
 
-    tentative_e = set(itertools.product(v, v))
-    inner = set(random.choice(list(v)))
+    tentative_e = set(product(v, v))
+    inner = set(choice(list(v)))
 
     def insert_edge(edge):
         inner.update(edge)
@@ -111,4 +111,4 @@ def generate_graph(vertices, max_length, minimum_edges):
 
 def randomized_latent_variables(g: Graph):
     roots = g.roots()
-    return random.choices(list(roots), k=random.randrange(1, len(roots)+1))
+    return choices(list(roots), k=randrange(1, len(roots)+1))

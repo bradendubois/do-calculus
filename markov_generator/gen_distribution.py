@@ -1,7 +1,7 @@
 import itertools
 import random
 
-from src.probability.structures import Graph
+from do.structures import Graph
 
 
 def sum_to(x, y):
