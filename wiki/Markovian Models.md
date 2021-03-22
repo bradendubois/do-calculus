@@ -86,4 +86,4 @@ m = {
 }
 ```
 
-Both representations be used in the [[API|Do API]].
+Both representations can be used in the [[API|Do API]]; if a string path to a file is given, an attempt will be made to load and parse it.
