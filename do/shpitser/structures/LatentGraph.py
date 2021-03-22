@@ -7,10 +7,26 @@
 #                                                       #
 #########################################################
 
-from src.probability.structures.Graph import Graph
+from random import choice
+from typing import Set
+
+from ...structures.Graph import Graph
 
 # A representation of a Latent Graph, in which we have replaced all unobservable
 #   variables with bidirected arcs between the observable variables
+
+
+class CComponent(set):
+
+    def __init__(self, v: Set[str]):
+        super(CComponent, self).__init__()
+        self.v = v
+
+    def __hash__(self):
+        return sum(map(hash, self.v))
+
+    def __str__(self):
+        return str(self.v)
 
 
 class LatentGraph(Graph):
@@ -23,33 +39,38 @@ class LatentGraph(Graph):
 
         # Pre-compute all C components
         self.c_components = dict()       # Map V -> C(V)
-        seen = set()        # Prevent infinite loops, just a set of vertices examined
-        for vertex in v:
-            if vertex in seen:  # No repeats / infinite loops
-                continue
 
-            # Initialize current C component to begin
-            component = set()   # C Component is a set of vertices, can construct a subgraph
-            component.add(vertex)  # C component is at least a component of 1, the original vertex
-            queue = list(self.incoming[vertex] | self.outgoing[vertex])  # Start with everything connected to v
+        all_components = self._all_c_components()
+        for component in all_components:
+            for v in component.v:
+                self.c_components[v] = component
 
-            while len(queue) > 0:
-                current = queue.pop()
-                if current in seen:
-                    continue
+    def _all_c_components(self):
 
-                # Check if this vertex is connected by a bidirected arc to any vertex already in the component
-                if any(self.bidirected(item, current) for item in component):
-                    component.add(current)
-                    seen.add(current)
-                    # Tentatively queue all vertices connected to this vertex
-                    queue = list(self.incoming[current] | self.outgoing[current])
+        all_c_components = set()
 
-            # Map all elements of the c-component to the set representing the full component
-            for element in component:
-                self.c_components[element] = component
+        v_working = self.v.copy()
 
-        # print(self.incoming)
+        while len(v_working):
+
+            start = choice(list(v_working))
+            component = set()
+            queue = [start]
+
+            while len(queue):
+                c = queue.pop()
+                component.add(c)
+
+                for other in v_working - ({c} | component):
+                    if self.bidirected(c, other):
+                        queue.append(other)
+
+            v_working -= component
+
+            all_c_components.add(CComponent(component))
+
+        assert len(v_working) == 0
+        return all_c_components
 
     def __call__(self, v: set):
         """
@@ -70,8 +91,4 @@ class LatentGraph(Graph):
         return (s, t) in self.e and (t, s) in self.e
 
     def all_c_components(self) -> list:
-        no_duplicates = []
-        for component in self.c_components.values():
-            if component not in no_duplicates:
-                no_duplicates.append(component)
-        return no_duplicates
+        return list(map(lambda c: c.v, set(self.c_components.values())))

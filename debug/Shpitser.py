@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from src.probability.shpitser.identification.IDAlgorithm import ID
+from identification.IDAlgorithm import ID
 from src.probability.shpitser.identification.IDProcessing import parse_shpitser
 from src.probability.shpitser.latent.LatentProjection import latent_projection
 from src.probability.shpitser.structures.Distribution import Distribution

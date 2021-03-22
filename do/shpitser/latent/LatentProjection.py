@@ -9,8 +9,8 @@
 
 import itertools
 
-from src.probability.structures.Graph import Graph
-from src.probability.shpitser.structures.LatentGraph import LatentGraph
+from ...structures.Graph import Graph
+from ..structures.LatentGraph import LatentGraph
 
 # A method to convert a Graph and a set of unobservable variables into a LatentGraph,
 #   in which all unobservable variables are replaced with bidirected arcs

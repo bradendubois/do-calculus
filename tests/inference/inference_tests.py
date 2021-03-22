@@ -96,7 +96,7 @@ def inference_tests(graph_location: Path) -> (bool, str):
                 result = cg.probability_query(head, body)
 
                 # Should have raised assertion error...
-                if expected == "failure":
+                if expected == "failure":   # coverage: skip
                     print_test_result(False, f"Expected test to fail, but it did not! {graph_filename}")
                     test_file_success = False
 
@@ -105,7 +105,7 @@ def inference_tests(graph_location: Path) -> (bool, str):
                     test_file_success = False
 
             except AssertionError:
-                if expected != "failure":
+                if expected != "failure":   # coverage: skip
                     print_test_result(False, f"Unexpected assertion error! {graph_filename}")
                     test_file_success = False
 
