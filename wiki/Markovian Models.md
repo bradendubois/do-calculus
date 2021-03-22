@@ -1,4 +1,4 @@
-This document outlines the structure of how to create a causal model for use in the package, such as in the [[API|Do API]].
+This document outlines the structure of how to create and represent a Markovian model for use in the package, such as in the [[API|Do API]].
 
 Models are inherently **DAGs** (Directed Acyclic Graph), where each variable in a model is also represented as a vertex in the DAG.
 

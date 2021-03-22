@@ -1,4 +1,4 @@
-How to discover backdoor paths between two sets of variables in a given [[causal model|Causal Models]].
+How to discover backdoor paths between two sets of variables in a given [[Markovian model|Markovian Models]].
 
 ## Basic Backdoor Paths
 

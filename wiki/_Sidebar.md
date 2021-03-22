@@ -6,7 +6,7 @@
 
 ### [[Resources]]
 * [[Configuration]]
-* [[Causal Models]]
+* [[Markovian Models]]
 * [[Literature]]
 
 ### [[Do API]]
