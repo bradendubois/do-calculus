@@ -8,9 +8,10 @@ from sys import argv
 from do.structures.CausalGraph import CausalGraph
 from do.util.ModelLoader import parse_model
 
+from tests.inference.inference_tests import model_inference_validation
+
 from .gen_graph import generate_graph, randomized_latent_variables
 from .gen_distribution import generate_distribution
-
 
 # Default number of graphs to create
 N = 10
