@@ -118,7 +118,7 @@ class BackdoorController:
         backdoor_paths = get_backdoor_paths(s, [], [])
 
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
-        return list(filter(lambda l: l[0] in self.graph.children(l[1]) and l[1] != t, backdoor_paths))
+        return list(filter(lambda l: len(l) > 2 and l[0] in self.graph.children(l[1]) and l[1] != t, backdoor_paths))
 
     def all_dcf_sets(self, src: Vertices, dst: Vertices) -> List[Collection[str]]:
         """

@@ -74,7 +74,7 @@ class Graph:
         """
         return set([x for x in self.v if len(self.parents(x)) == 0])
 
-    def parents(self, v: V_Type) -> Collection[Union[str, V_Type]]:
+    def parents(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the parents of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -86,7 +86,7 @@ class Graph:
 
         return {p for p in self.incoming[label] if p not in self.outgoing_disabled and p not in self.outgoing[label]}
 
-    def children(self, v: V_Type) -> Collection[Union[str, V_Type]]:
+    def children(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the children of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -98,7 +98,7 @@ class Graph:
 
         return {c for c in self.outgoing[label] if c not in self.incoming_disabled and c not in self.incoming[label]}
 
-    def ancestors(self, v: V_Type) -> Collection[Union[str, V_Type]]:
+    def ancestors(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the ancestors of v, accounting for disabled vertices
         @param v: The vertex to find all ancestors of
@@ -116,7 +116,7 @@ class Graph:
 
         return ancestors
 
-    def reach(self, v: V_Type) -> Collection[Union[str, V_Type]]:
+    def reach(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the reach of v, accounting for disabled vertices
         @param v: The vertex to find all descendants of
@@ -134,7 +134,7 @@ class Graph:
 
         return set(children)
 
-    def disable_outgoing(self, *disable: V_Type):
+    def disable_outgoing(self, *disable: Union[V_Type, str]):
         """
         Disable the given vertices' outgoing edges
         @param disable: Any number of vertices to disable
@@ -142,7 +142,7 @@ class Graph:
         for v in disable:
             self.outgoing_disabled.add(to_label(v))
 
-    def disable_incoming(self, *disable: V_Type):
+    def disable_incoming(self, *disable: Union[V_Type, str]):
         """
         Disable the given vertices' incoming edges
         @param disable: Any number of vertices to disable
@@ -157,7 +157,7 @@ class Graph:
         self.outgoing_disabled.clear()
         self.incoming_disabled.clear()
 
-    def get_topology(self, v: V_Type) -> int:
+    def get_topology(self, v: Union[V_Type, str]) -> int:
         """
         Determine the "depth" a given Variable is at in a topological sort of the graph
         @param v: The variable to determine the depth of

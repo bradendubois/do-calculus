@@ -8,12 +8,14 @@
 #########################################################
 
 from itertools import product
-from typing import Collection, Union
+from typing import Collection, Dict, Union
 
 from .BackdoorController import BackdoorController
+from .ConditionalProbabilityTable import ConditionalProbabilityTable
 from .Graph import Graph
 from .Probability_Engine import ProbabilityEngine
-from .VariableStructures import Outcome, Intervention
+from .Types import V_Type
+from .VariableStructures import Variable, Outcome, Intervention
 
 from ..config.settings import Settings
 from ..util.OutputLogger import OutputLogger
@@ -44,6 +46,9 @@ class CausalGraph:
         self.tables = tables.copy()
         self.latent = latent.copy()
         self.output = kwargs["output"] if "output" in kwargs else OutputLogger()
+
+    def __getitem__(self, component: Collection[Union[Variable, str]]) -> Dict[Union[str, Variable], ConditionalProbabilityTable]:
+        return dict(filter(lambda x: x[0] in component, self.tables.items()))
 
     def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
