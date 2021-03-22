@@ -205,6 +205,23 @@ class Graph:
         # We can already do top-down sorting, just reverse the answer
         return self.topological_variable_sort(variables)[::-1]
 
+    def topology_sort(self):
+
+        topology = []
+        copy = self.copy()
+
+        while len(copy.v) > 0:
+            roots = copy.roots()
+
+            assert len(roots) > 0
+            topology.extend(roots)
+            copy.v -= roots
+            copy.e = set(filter(lambda edge: edge[0] not in roots, copy.e))
+
+            copy = Graph(copy.v, copy.e)
+
+        return topology
+
 
 def to_label(item: V_Type) -> str:
     """
