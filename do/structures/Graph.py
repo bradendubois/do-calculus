@@ -184,9 +184,10 @@ class Graph:
         e = self.e.copy()
 
         while len(v) > 0:
-            roots = set(filter(lambda s: not any((s, t) in e for t in v), v))
 
+            roots = sorted(list(filter(lambda s: not any((s, t) in e for t in v), v)))
             assert len(roots) > 0
+
             topology.extend(roots)
             v -= roots
             e -= set(filter(lambda edge: edge[0] in roots, e))
