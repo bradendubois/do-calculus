@@ -41,22 +41,8 @@ class Graph:
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
 
-        self.topology_map = {vertex: 0 for vertex in v}
-
-        def initialize_topology(vertex: V_Type, depth=0):
-            """
-            Helper function to initialize the ordering of the Variables in the graph
-            @param vertex: A Variable to set the ordering of, and then all its children
-            @param depth: How many "levels deep"/variables traversed to reach current
-            """
-            label = to_label(vertex)
-            self.topology_map[label] = max(self.topology_map[label], depth)
-            for child in [c for c in self.outgoing[label] if c not in self.incoming[label]]:
-                initialize_topology(child, depth+1)
-
-        # Begin the topological ordering, which is started from every "root" in the graph
-        for r in [root_node for root_node in v if len(self.incoming[root_node]) == 0]:
-            initialize_topology(r)
+        topology = self.topology_sort()
+        self.topology_map = {vertex: topology.index(vertex) for vertex in v}
 
     def __str__(self) -> str:
         """
@@ -182,19 +168,6 @@ class Graph:
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied
 
-    def topological_variable_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
-        """
-        A helper function to abstract what it means to "sort" a list of Variables/Outcomes/Interventions
-        @param variables: A list of any number of Variable/Outcome/Intervention instances
-        @return: A list, sorted (currently in the form of a topological sort)
-        """
-        if len(variables) == 0:
-            return []
-
-        largest_topology = max(self.get_topology(v) for v in variables)
-        sorted_variables = [[v for v in variables if self.get_topology(v) == i] for i in range(largest_topology+1)]
-        return [item for topology_sublist in sorted_variables for item in topology_sublist]
-
     def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
@@ -202,23 +175,21 @@ class Graph:
         @param variables: A list of any number of Variable/Outcome/Intervention instances
         @return: A sorted list, such that any instance has no ancestor earlier in the list
         """
-        # We can already do top-down sorting, just reverse the answer
-        return self.topological_variable_sort(variables)[::-1]
+        return sorted(variables, key=lambda v: self.get_topology(v))
 
     def topology_sort(self):
 
         topology = []
-        copy = self.copy()
+        v = self.v.copy()
+        e = self.e.copy()
 
-        while len(copy.v) > 0:
-            roots = copy.roots()
+        while len(v) > 0:
+            roots = set(filter(lambda s: not any((s, t) in e for t in v), v))
 
             assert len(roots) > 0
             topology.extend(roots)
-            copy.v -= roots
-            copy.e = set(filter(lambda edge: edge[0] not in roots, copy.e))
-
-            copy = Graph(copy.v, copy.e)
+            v -= roots
+            e -= set(filter(lambda edge: edge[0] in roots, e))
 
         return topology
 

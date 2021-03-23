@@ -47,9 +47,6 @@ class CausalGraph:
         self.latent = latent.copy()
         self.output = kwargs["output"] if "output" in kwargs else OutputLogger()
 
-    def __getitem__(self, component: Collection[Union[Variable, str]]) -> Dict[Union[str, Variable], ConditionalProbabilityTable]:
-        return dict(filter(lambda x: x[0] in component, self.tables.items()))
-
     def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
         Compute a probability in the given model.
