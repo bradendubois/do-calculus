@@ -144,7 +144,7 @@ class ProbabilityEngine:
         #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
         #################################################
 
-        reachable_from_head = set().union(*[self.graph.reach(outcome) for outcome in head])
+        reachable_from_head = set().union(*[self.graph.descendants(outcome) for outcome in head])
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:

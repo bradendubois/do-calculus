@@ -60,6 +60,13 @@ class Graph:
         """
         return set([x for x in self.v if len(self.parents(x)) == 0])
 
+    def sinks(self) -> Collection[str]:
+        """
+        Get the sinks of the graph G.
+        @return: A collection of string vertices in G that have no descendants.
+        """
+        return set([x for x in self.v if len(self.children(x)) == 0])
+
     def parents(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the parents of v, which may actually be currently controlled
@@ -102,7 +109,7 @@ class Graph:
 
         return ancestors
 
-    def reach(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
+    def descendants(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
         """
         Get the reach of v, accounting for disabled vertices
         @param v: The vertex to find all descendants of

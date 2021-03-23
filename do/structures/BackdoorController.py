@@ -96,7 +96,7 @@ class BackdoorController:
                 if previous == "down":
 
                     # We can ascend on a controlled collider, OR an ancestor of a controlled collider
-                    if cur in dcf or any(map(lambda v: v in dcf, self.graph.reach(cur))):
+                    if cur in dcf or any(map(lambda v: v in dcf, self.graph.descendants(cur))):
                         for parent in self.graph.parents(cur):
                             path_list = get_backdoor_paths(parent, path + [cur], path_list, "up")
 
@@ -136,7 +136,7 @@ class BackdoorController:
         dst_str = str_map(dst)
 
         # Can't use anything in src, dst, or any descendant of any vertex in src as a deconfounding/blocking vertex
-        disallowed_vertices = src_str | dst_str | set().union(*[self.graph.reach(s) for s in src_str])
+        disallowed_vertices = src_str | dst_str | set().union(*[self.graph.descendants(s) for s in src_str])
 
         valid_deconfounding_sets = list()
 
