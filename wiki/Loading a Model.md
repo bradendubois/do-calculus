@@ -62,6 +62,14 @@ do_api_2 = Do(fake_path)        # This will raise an exception!
 One can also provide a [Path](https://docs.python.org/3/library/pathlib.html#pathlib.Path) object, as part of the [pathlib library](https://docs.python.org/3/library/pathlib.html).
 - **Trivia**: Providing a [string path to a file](#loading-a-model-file) works by attempting to create a [Path](https://docs.python.org/3/library/pathlib.html#pathlib.Path) from the string path.
 
+```python
+from pathlib import Path
+from do.API import Do
+
+model_path = Path("graph2.yml")
+do_api = Do(model_path)
+```
+
 ## Swapping Models
 
 If an instance of the **Do API** is already created, a new one can be swapped in as well. 
