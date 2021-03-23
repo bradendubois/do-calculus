@@ -221,25 +221,69 @@ class Do:
     ################################################################
 
     def roots(self) -> Collection[Vertex]:
+        """
+        Find all roots in the graph, where a root is defined as any vertex with no ancestors. This definition contrasts
+        with some causal inference literature, in which a root is actually defined as any vertex with no descendants.
+        @return: A collection of all vertices in the graph with no ancestors.
+        """
         ...
 
-    def sinks(self, v) -> Collection[Vertex]:
+    def sinks(self) -> Collection[Vertex]:
+        """
+        Find all sinks in the graph, where a sink is defined as any vertex with no descendants.
+        @return: A collection of all vertices in the graph with no descendants.
+        """
         ...
 
     def parents(self, v: Vertex) -> Collection[Vertex]:
+        """
+        Find all parents in the graph of some given vertex. A parent is defined as a vertex p such that (p, v) exists
+        in E, the collection of edges comprising the graph.
+        @param v: Some vertex defined in the graph.
+        @return: A collection of all parents of v.
+        """
         ...
 
     def children(self, v: Vertex) -> Collection[Vertex]:
+        """
+        Find all children in the graph of some given vertex. A child is defined as a vertex c such that (v, c) exists
+        in E, the collection of edges comprising the graph.
+        @param v: Some vertex defined in the graph.
+        @return: A collection of all children of v.
+        """
         ...
 
     def ancestors(self, v: Vertex) -> Collection[Vertex]:
+        """
+        Find all ancestors in the graph of some given vertex. An ancestors is defined as a vertex a such that a directed
+        path (p, x1, ... xi, v) in E, the collection of edges comprising the graph.
+        @param v: Some vertex defined in the graph.
+        @return: A collection of all ancestors of v.
+        """
         ...
 
-    def descendents(self, v: Vertex) -> Collection[Vertex]:
+    def descendants(self, v: Vertex) -> Collection[Vertex]:
+        """
+        Find all descendants in the graph of some given vertex. A descendant is defined as a vertex d such that a
+        directed path (v, x1, ... xi, d) in E, the collection of edges comprising the graph.
+        @param v: Some vertex defined in the graph.
+        @return: A collection of all descendants of v.
+        """
         ...
 
     def topology(self) -> Sequence[Vertex]:
+        """
+        Get a topological ordering of all vertices defined in the graph. A topological ordering is some sequence of the
+        N vertices in the graph, V1, ..., VN such that for any i, j | 1 <= i < j <= N, Vj is not an ancestor of Vi.
+        @return: A sequence of vertices defining a topological ordering, V1, ..., VN.
+        """
         ...
 
     def topology_position(self, v: Vertex) -> int:
+        """
+        Find the position of some given vertex in a topological ordering of the graph.
+        @param v: Some vertex defined in the graph.
+        @return: An integer i in the range [1, N] representing the index of vertex v such that Vi = v in the
+        topological ordering of G, given as 1 <= Vi <= Vn.
+        """
         ...
