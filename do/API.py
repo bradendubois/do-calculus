@@ -2,8 +2,8 @@
 #                   probability-code API                  #
 ###########################################################
 
-from typing import Collection, List, Optional, Sequence, Set, Union
 from pathlib import Path
+from typing import Collection, Optional, Sequence, Union
 
 from .api.backdoor_paths import api_backdoor_paths
 from .api.deconfounding_sets import api_deconfounding_sets
@@ -13,7 +13,7 @@ from .api.probability_query import api_probability_query
 from .structures.BackdoorController import BackdoorController
 from .structures.CausalGraph import CausalGraph
 from .structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from .structures.Types import Vertex, Vertices
+from .structures.Types import Vertex, ProbabilityException
 from .structures.VariableStructures import Outcome, Intervention
 
 from .util.ModelLoader import parse_model
@@ -22,16 +22,18 @@ from .util.OutputLogger import OutputLogger
 
 class Do:
 
-    def __init__(self, model: dict or None, print_detail=False, print_result=False, log=False, log_fd=None):
+    def __init__(self, model: Union[str, dict, Path], print_detail=False, print_result=False, log=False, log_fd=None):
         """
         Initializer for an instance of the API.
-        @param model: An optional dictionary of a loaded causal graph model. Can be None, and loaded later.
+        @param model: An optional causal model. Can be a string path to a file, a pathlib.Path to a file, a dictionary
+        of a valid model. Can also be specified as None, and loaded later using load_model.
         @param print_detail: Boolean; whether the computation steps involved in queries should be printed.
         @param print_result: Boolean; whether the result of a query should be printed.
         @param log: Boolean; whether the computation steps involved in queries should logged to a file. If this
             is true, a file must have been set to log to. This can be done by providing a file descriptor either as
             an argument to log_fd, or can be done later with a call to set_log_fd.
-        @param log_fd: An open file descriptor to write to, if log_details is enabled.
+        @raise FileNotFoundError or KeyError if a model is provided but encounters errors in loading. See load_model for
+        details on when these exceptions occur.
         """
         self._print_result = print_result
         self._output = OutputLogger(print_result, print_detail, log, log_fd)
@@ -50,15 +52,24 @@ class Do:
 
     def load_model(self, data: Union[str, dict, Path]):
         """
-        Load a model into the API.
-        @param data: A dictionary conforming to the required causal model specification to be loaded
-            into the API.
+        Parse and load a model into the API.
+        @param data: Any of a string path or pathlib.Path to a file, or a dictionary conforming to the required causal
+        model specification.
+        @raise FileNotFoundError if a string path or pathlib.Path object does not point to a file, or does not point to
+        a file that can be loaded. This can occur if the file does not end in .json, .yml, or .yaml.
+        @raise KeyError on issues relating to parsing the model. This can occur if the model does not conform to the
+        required specification and is missing an attribute.
         """
-        d = parse_model(data)
+        try:
+            d = parse_model(data)
 
-        self._cg = CausalGraph(output=self._output, **d)
-        self._g = d["graph"]
-        self._bc = BackdoorController(self._g.copy())
+            self._cg = CausalGraph(output=self._output, **d)
+            self._g = d["graph"]
+            self._bc = BackdoorController(self._g.copy())
+
+        except Union[FileNotFoundError, KeyError] as e:
+            self._output.detail(str(e))
+            raise e
 
     def set_print_result(self, to_print: bool):
         """
@@ -94,35 +105,41 @@ class Do:
     #                         Distributions                        #
     ################################################################
 
-    def p(self, y: Collection[Outcome], x: Collection[Union[Outcome, Intervention]]) -> Optional[float]:
+    def p(self, y: Collection[Outcome], x: Collection[Union[Outcome, Intervention]]) -> float:
         """
-        Compute a probability query of Y, given X.
-        @param y: Head of query; a set of Outcome objects
-        @param x: Body of query; a set of Outcome and/or Variable objects
-        @return: The probability of P(Y | X), in the range [0.0, 1.0]
-        @raise ProbabilityException when the given probability cannot be computed, such as an invalid Outcome
+        Compute a probability query of Y, given X. All deconfounding and standard inference rules are handled by the
+        Causal Graph automatically.
+        @param y: The head of a query; a collection of Outcome objects.
+        @param x: The body of a query; a collection of Outcome and/or Intervention objects
+        @return: The probability, P(Y | X), as a float in the range [0.0, 1.0]
+        @raise AssertionError If two results differ by a significant margin; this indicates a fault with the software,
+        not with the model or query.
+        @raise InvalidOutcome If a given Outcome or Intervention does not exist in the model, or the specified value
+        is not a valid outcome of the respective Variable.
+        @raise NoDeconfoundingSet If there does not exist a sufficient set of deconfounding variables in the model to
+        block all backdoor paths from x->y.
+        @raise ProbabilityIndeterminableException if the query can not be completed for any reason. With a consistent
+        model, this should never occur.
         """
         try:
-            # All deconfounding is handled by the CG
             result = api_probability_query(self._cg, y, x)
             self._output.result(result)
             return result
 
-        except AssertionError as e:
+        except Union[AssertionError, ProbabilityException] as e:
             self._output.detail(e)
-            return None
+            raise e
 
     def joint_distribution_table(self) -> ConditionalProbabilityTable:
         """
-        Compute a joint distribution table across the entire model loaded.
-        @return: A list of tuples, (Outcomes, P), where Outcomes is a unique set of Outcome objects for the model, and
-            P is the corresponding probability.
+        Compute a singular ConditionalProbabilityTable across the joint distribution of the model.
+        @return: A ConditionalProbabilityTable representing the each possible joint outcome of the model.
         """
+
         result: ConditionalProbabilityTable = api_joint_distribution_table(self._cg)
 
         if self._print_result:
-            keys = sorted(self._cg.variables.keys())
-            self._output.result(f"Joint Distribution Table for: {','.join(keys)}")
+            self._output.result(f"Joint Distribution Table for: {','.join(sorted(self._cg.variables.keys()))}")
             self._output.result(f"{result}")
 
         return result
@@ -131,17 +148,19 @@ class Do:
     #               Pathfinding (Backdoor Controller)              #
     ################################################################
 
-    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> Collection[Sequence[str]]:
+    def backdoor_paths(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> Collection[Sequence[str]]:
         """
-        Find all the "backdoor paths" between two sets of variables.
-        @param src: A set of (string) vertices defined in the loaded model, which will be the source to begin searching
-            for paths from, to any vertex in dst
-        @param dst: A set of (string) vertices defined in the loaded model, which are the destination vertices to be
-            reached by any vertex in src
-        @param dcf: A set of (string) vertices which will be considered part of the given deconfounding set as a means
-            of blocking (or potentially unblocking) backdoor paths
-        @return: A list of lists, where each sub-list is a backdoor path from some vertex in src to some vertex in dst,
-            and each vertex within the sub-list is a vertex along this path.
+        Find all backdoor paths between two collections of variables in the model.
+        @param src: A collection of variables defined in the model, which will be the source to begin searching for
+            paths from, to any vertex in dst
+        @param dst: A collection of variables defined in the model, which are the destination vertices to be reached by
+            any vertex in src
+        @param dcf: An optional set of variables defined in the model, which will be considered part of the given
+            deconfounding set as a means of blocking (or potentially unblocking) backdoor paths. To indicate no
+            deconfounding variables, an empty collection or None can be specified.
+        @return: A collection of paths, where each path is represented as a sequence of (string) vertices. Each path
+            is ordered (endpoints in src and dst included) preserving the order of the path.
+        @raise: IntersectingSets if any of src, dst, and dcf have any intersection.
         """
         result = api_backdoor_paths(self._bc, src, dst, dcf)
 
@@ -153,30 +172,74 @@ class Do:
 
         return result
 
-    def deconfounding_sets(self, src: set, dst: set) -> Collection[Collection[str]]:
+    def deconfounding_sets(self, src: Collection[Vertex], dst: Collection[Vertex]) -> Collection[Collection[str]]:
         """
-        Find the sets of vertices in the loaded model that are sufficient at blocking all backdoor paths from all
-        vertices in src to any vertices in dst
-        @param src: A set of (string) vertices defined in the loaded model, acting as the source for backdoor paths
-            to find, and have blocked by a sufficient deconfounding set of vertices.
-        @param dst: A set of (string) vertices defined in the loaded model, acting as the destination set of vertices
-        @return: A list of sets, where each set contains (string) vertices sufficient at blocking all backdoor paths
-            between any pair of vertices in src X dst
+        Find the sets of vertices in the model that are sufficient at blocking all backdoor paths from all vertices in
+        src to any vertices in dst
+        @param src: A collection of vertices defined in the model, acting as the source for backdoor paths to find,
+            and have blocked by a sufficient deconfounding set of vertices.
+        @param dst: A collection of vertices defined in the model, acting as the destination set of vertices
+        @return: A collection of sufficient deconfounding sets, where each deconfounding set consists of a collection of
+         (string) vertices sufficient at blocking all backdoor paths between any pair of vertices in (src X dst).
+        @raise: IntersectingSets if src and dst have any intersection.
         """
+
         result = api_deconfounding_sets(self._bc, src, dst)
+
         if self._print_result:
             for s in result:
                 print("-", ", ".join(map(str, s)))
+
         return result
+
+    def standard_paths(self, src: Collection[Vertex], dst: Collection[Vertex]) -> Collection[Sequence[str]]:
+        """
+        Find all "standard" paths from any pair vertices in the product of some source and destination set of vertices.
+        @param src: A collection of vertices from which to search for a path to dst.
+        @param dst: A collection of vertices that will be reached from src.
+        @return: A collection of paths, where each path is represented as a sequence of string vertices in the graph,
+        (endpoints in src and dst included), the order of which represents the path.
+        @raise: IntersectingSets if src and dst have any intersection.
+        """
+        ...
+
+    def independent(self, s: Collection[Vertex], t: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
+        """
+        Determine if two sets of vertices in the model are conditionally independent, given an optional third set of
+        deconfounding vertices.
+        @param s: A collection of vertices in the model.
+        @param t: A collection of destination vertices in the model.
+        @param dcf: An optional collection of deconfounding vertices in the model to block backdoor paths between s and
+        t. This can also be an empty set, or explicitly set to None.
+        @return: True if all vertices in s and t are conditionally independent.
+        @raise: IntersectingSets if any of s, t, and dcf have any intersection.
+        """
+        ...
 
     ################################################################
     #                         Graph-Related                        #
     ################################################################
 
-    ################################################################
-    #                          Bookkeeping                         #
-    ################################################################
+    def roots(self) -> Collection[Vertex]:
+        ...
 
-    # TODO - Decorator to require the API to have a model loaded
-    def require_model(self, function):
+    def sinks(self, v) -> Collection[Vertex]:
+        ...
+
+    def parents(self, v: Vertex) -> Collection[Vertex]:
+        ...
+
+    def children(self, v: Vertex) -> Collection[Vertex]:
+        ...
+
+    def ancestors(self, v: Vertex) -> Collection[Vertex]:
+        ...
+
+    def descendents(self, v: Vertex) -> Collection[Vertex]:
+        ...
+
+    def topology(self) -> Sequence[Vertex]:
+        ...
+
+    def topology_position(self, v: Vertex) -> int:
         ...
