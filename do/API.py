@@ -2,6 +2,7 @@
 #                   probability-code API                  #
 ###########################################################
 
+from itertools import product
 from pathlib import Path
 from typing import Collection, Optional, Sequence, Union
 
@@ -13,6 +14,7 @@ from .api.probability_query import api_probability_query
 from .structures.BackdoorController import BackdoorController
 from .structures.CausalGraph import CausalGraph
 from .structures.ConditionalProbabilityTable import ConditionalProbabilityTable
+from .structures.Graph import Graph
 from .structures.Types import Vertex, ProbabilityException
 from .structures.VariableStructures import Outcome, Intervention
 
@@ -63,9 +65,9 @@ class Do:
         try:
             d = parse_model(data)
 
-            self._cg = CausalGraph(output=self._output, **d)
-            self._g = d["graph"]
-            self._bc = BackdoorController(self._g.copy())
+            self._cg: CausalGraph = CausalGraph(output=self._output, **d)
+            self._g: Graph = d["graph"]
+            self._bc: BackdoorController = BackdoorController(self._g.copy())
 
         except Union[FileNotFoundError, KeyError] as e:
             self._output.detail(str(e))
@@ -201,7 +203,11 @@ class Do:
         (endpoints in src and dst included), the order of which represents the path.
         @raise: IntersectingSets if src and dst have any intersection.
         """
-        ...
+        paths = set()
+        for s, t in product(src, dst):
+            paths.update(self._bc.all_paths_cumulative(s, t))
+        self._output.result(paths)
+        return paths
 
     def independent(self, s: Collection[Vertex], t: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
         """
@@ -214,7 +220,9 @@ class Do:
         @return: True if all vertices in s and t are conditionally independent.
         @raise: IntersectingSets if any of s, t, and dcf have any intersection.
         """
-        ...
+        independent = all(self._bc.independent(s, t, dcf) for (s, t) in product(s, t))
+        self._output.result(f"{s} x {t}: {independent}")
+        return independent
 
     ################################################################
     #                         Graph-Related                        #
@@ -226,14 +234,18 @@ class Do:
         with some causal inference literature, in which a root is actually defined as any vertex with no descendants.
         @return: A collection of all vertices in the graph with no ancestors.
         """
-        ...
+        roots = self._g.roots()
+        self._output.result(roots)
+        return roots
 
     def sinks(self) -> Collection[Vertex]:
         """
         Find all sinks in the graph, where a sink is defined as any vertex with no descendants.
         @return: A collection of all vertices in the graph with no descendants.
         """
-        ...
+        sinks = self._g.sinks()
+        self._output.result(sinks)
+        return sinks
 
     def parents(self, v: Vertex) -> Collection[Vertex]:
         """
@@ -242,7 +254,9 @@ class Do:
         @param v: Some vertex defined in the graph.
         @return: A collection of all parents of v.
         """
-        ...
+        parents = self._g.parents(v)
+        self._output.result(parents)
+        return parents
 
     def children(self, v: Vertex) -> Collection[Vertex]:
         """
@@ -251,7 +265,9 @@ class Do:
         @param v: Some vertex defined in the graph.
         @return: A collection of all children of v.
         """
-        ...
+        children = self._g.children(v)
+        self._output.result(children)
+        return children
 
     def ancestors(self, v: Vertex) -> Collection[Vertex]:
         """
@@ -260,7 +276,9 @@ class Do:
         @param v: Some vertex defined in the graph.
         @return: A collection of all ancestors of v.
         """
-        ...
+        ancestors = self._g.ancestors(v)
+        self._output.result(ancestors)
+        return ancestors
 
     def descendants(self, v: Vertex) -> Collection[Vertex]:
         """
@@ -269,7 +287,9 @@ class Do:
         @param v: Some vertex defined in the graph.
         @return: A collection of all descendants of v.
         """
-        ...
+        descendants =  self._g.descendants(v)
+        self._output.result(descendants)
+        return descendants
 
     def topology(self) -> Sequence[Vertex]:
         """
@@ -277,7 +297,9 @@ class Do:
         N vertices in the graph, V1, ..., VN such that for any i, j | 1 <= i < j <= N, Vj is not an ancestor of Vi.
         @return: A sequence of vertices defining a topological ordering, V1, ..., VN.
         """
-        ...
+        topology = self._g.topology_sort()
+        self._output.result(topology)
+        return topology
 
     def topology_position(self, v: Vertex) -> int:
         """
@@ -286,4 +308,6 @@ class Do:
         @return: An integer i in the range [1, N] representing the index of vertex v such that Vi = v in the
         topological ordering of G, given as 1 <= Vi <= Vn.
         """
-        ...
+        topology = self._g.get_topology(v)
+        self._output.result(topology)
+        return topology
