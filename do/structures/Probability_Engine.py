@@ -46,10 +46,6 @@ class ProbabilityEngine:
         head = set(head)
         body = set(body)
 
-        # Ensure there are no adjustments/interventions in the head
-        for out in head:
-            assert not isinstance(out, Intervention), f"Error: {out} is in head; no Interventions should be in head."
-
         # Validate the queried variables and any given
         # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
         for out in head | body:
@@ -114,6 +110,7 @@ class ProbabilityEngine:
                 self.output.detail(rep, "=", result, x=depth)
                 self._store_computation(rep, result)
                 return result
+
             except ProbabilityException:    # coverage: skip
                 self.output.detail("Failed to resolve by reverse product rule.", x=depth)
 
@@ -225,7 +222,7 @@ class ProbabilityEngine:
         ###############################################
 
         # Interventions imply that we have fixed X=x
-        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:     # coverage: skip
+        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
             self.output.detail("Intervention without RHS Children:", rep, "= 1.0", x=depth)
             return 1.0
 
