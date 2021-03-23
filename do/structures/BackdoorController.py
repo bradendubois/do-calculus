@@ -11,10 +11,10 @@ from itertools import product
 from typing import List, Optional
 
 from .Graph import Graph
-from .Types import Collection, Path, Vertices, Vertex, V_Type
+from .Types import Collection, Path, Vertices, Vertex, V_Type, IntersectingSets
 
 from ..config.settings import Settings
-from ..util.helpers import minimal_sets, power_set, str_map
+from ..util.helpers import minimal_sets, power_set, str_map, disjoint
 
 
 class BackdoorController:
@@ -46,11 +46,14 @@ class BackdoorController:
             string vertices.
         """
 
-        paths = []
-
         src_str = str_map(src)
         dst_str = str_map(dst)
         dcf_str = str_map(dcf) if dcf else set()
+
+        if not disjoint(src_str, dst_str, dcf_str):
+            raise IntersectingSets
+
+        paths = []
 
         # Use the product of src, dst to try each possible pairing
         for s, t in product(src_str, dst_str):

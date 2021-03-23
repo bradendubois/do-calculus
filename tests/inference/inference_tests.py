@@ -3,7 +3,8 @@ from pathlib import Path
 from yaml import safe_load as load
 
 from do.structures.CausalGraph import CausalGraph, Outcome
-from do.structures.Types import MissingTableRow, ProbabilityIndeterminableException
+from do.structures.Types import MissingTableRow, ProbabilityIndeterminableException, \
+    NoDeconfoundingSet
 from do.structures.VariableStructures import parse_outcomes_and_interventions
 from do.util.helpers import within_precision
 from do.util.ModelLoader import parse_model
@@ -97,7 +98,7 @@ def inference_tests(graph_location: Path) -> (bool, str):
 
                 # Should have raised assertion error...
                 if expected == "failure":   # coverage: skip
-                    print_test_result(False, f"Expected test to fail, but it did not! {graph_filename}")
+                    print_test_result(False, f"Expected test to fail, but it did not! {result} {graph_filename}")
                     test_file_success = False
 
                 if expected != "failure" and not within_precision(result, expected):    # coverage: skip
@@ -108,6 +109,10 @@ def inference_tests(graph_location: Path) -> (bool, str):
                 if expected != "failure":   # coverage: skip
                     print_test_result(False, f"Unexpected assertion error! {graph_filename}")
                     test_file_success = False
+
+            except NoDeconfoundingSet:
+                if expected != "failure":   # coverage: skip
+                    print_test_result(False, f"Unexpected NoDeconfoundingSet exception! {graph_filename}")
 
         if test_file_success:
             print_test_result(True, f"All tests in {test_file}|{graph_filename} passed")
