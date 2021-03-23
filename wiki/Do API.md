@@ -4,11 +4,6 @@ This assumes the steps in the [[Installation]] section have been followed, and t
 
 **Note**: For simplicity of import-statements, any examples will *assume* the project was installed as [PyPI](https://pypi.org/project/do-calculus/) package.
 
-## Table of Contents
-
-* [Importing the **Do** API](#importing)
-* [Loading a Model](#loading-a-model)
-
 ## Importing
 
 To import the package:
@@ -34,10 +29,16 @@ from do.API import Do
 
 ## Further
 
-Now that a model is successfully loaded, one can begin [[querying distributions|Probability Queries]].
-
 See any of the more specific pages:
 * [[Loading a Model]]
 * [[Probability Queries]]
+* [[Joint Distribution Table]
 * [[Backdoor Paths]]
+* [[Standard Paths]]]
 * [[Deconfounding Sets]]
+* [[Conditional Independence]]
+* [[Roots / Sinks|Graph Boilerplates]]
+* [[Parents / Ancestors|Graph Boilerplates]]
+* [[Children / Descendants|Graph Boilerplates]]
+* [[Topology]]
+* [[Exceptions]]

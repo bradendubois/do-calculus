@@ -174,6 +174,21 @@ class Do:
 
         return result
 
+    def standard_paths(self, src: Collection[Vertex], dst: Collection[Vertex]) -> Collection[Sequence[str]]:
+        """
+        Find all "standard" paths from any pair vertices in the product of some source and destination set of vertices.
+        @param src: A collection of vertices from which to search for a path to dst.
+        @param dst: A collection of vertices that will be reached from src.
+        @return: A collection of paths, where each path is represented as a sequence of string vertices in the graph,
+        (endpoints in src and dst included), the order of which represents the path.
+        @raise: IntersectingSets if src and dst have any intersection.
+        """
+        paths = set()
+        for s, t in product(src, dst):
+            paths.update(self._bc.all_paths_cumulative(s, t))
+        self._output.result(paths)
+        return paths
+
     def deconfounding_sets(self, src: Collection[Vertex], dst: Collection[Vertex]) -> Collection[Collection[str]]:
         """
         Find the sets of vertices in the model that are sufficient at blocking all backdoor paths from all vertices in
@@ -193,21 +208,6 @@ class Do:
                 print("-", ", ".join(map(str, s)))
 
         return result
-
-    def standard_paths(self, src: Collection[Vertex], dst: Collection[Vertex]) -> Collection[Sequence[str]]:
-        """
-        Find all "standard" paths from any pair vertices in the product of some source and destination set of vertices.
-        @param src: A collection of vertices from which to search for a path to dst.
-        @param dst: A collection of vertices that will be reached from src.
-        @return: A collection of paths, where each path is represented as a sequence of string vertices in the graph,
-        (endpoints in src and dst included), the order of which represents the path.
-        @raise: IntersectingSets if src and dst have any intersection.
-        """
-        paths = set()
-        for s, t in product(src, dst):
-            paths.update(self._bc.all_paths_cumulative(s, t))
-        self._output.result(paths)
-        return paths
 
     def independent(self, s: Collection[Vertex], t: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
         """
