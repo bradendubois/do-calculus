@@ -88,7 +88,7 @@ class ProbabilityEngine:
         self.output.detail("Querying:", rep, x=depth)
 
         # If the calculation has been done and cached, just return it from storage
-        if rep in self._stored_computations:
+        if Settings.cache_computation_results and rep in self._stored_computations:
             result = self._stored_computations[rep]
             self.output.detail("Computation already calculated:", rep, "=", result, x=depth)
             return result
@@ -225,7 +225,7 @@ class ProbabilityEngine:
         ###############################################
 
         # Interventions imply that we have fixed X=x
-        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:
+        if isinstance(head[0], Intervention) and len(head) == 1 and not descendants_in_rhs:     # coverage: skip
             self.output.detail("Intervention without RHS Children:", rep, "= 1.0", x=depth)
             return 1.0
 
