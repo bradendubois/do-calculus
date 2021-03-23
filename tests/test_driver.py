@@ -11,13 +11,14 @@ from do.structures.BackdoorController import BackdoorController
 from do.structures.CausalGraph import CausalGraph
 from do.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from do.structures.Graph import Graph, to_label
+from do.structures.Types import MissingTableRow
 from do.structures.VariableStructures import Outcome, Variable, Intervention
 
 from do.util.helpers import power_set, disjoint, minimal_sets, within_precision
 from do.util.ModelLoader import parse_model
 
 from tests.backdoors.backdoor_path_tests import backdoor_tests
-from tests.inference.inference_tests import inference_tests, MissingTableRow
+from tests.inference.inference_tests import inference_tests
 from tests.shpitser.shpitser_tests import shpitser_tests
 
 from tests.test_util import print_test_result

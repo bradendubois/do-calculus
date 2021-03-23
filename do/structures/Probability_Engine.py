@@ -11,12 +11,12 @@ from itertools import product
 from typing import Collection, Union
 
 from .Graph import Graph
+from .Types import ProbabilityException, ProbabilityIndeterminableException
 from .VariableStructures import Outcome, Intervention
 
 from ..config.settings import Settings
 from ..util.OutputLogger import OutputLogger
 from ..util.helpers import p_str
-from ..util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 
 class ProbabilityEngine:

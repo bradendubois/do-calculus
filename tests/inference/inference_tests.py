@@ -3,10 +3,10 @@ from pathlib import Path
 from yaml import safe_load as load
 
 from do.structures.CausalGraph import CausalGraph, Outcome
+from do.structures.Types import MissingTableRow, ProbabilityIndeterminableException
 from do.structures.VariableStructures import parse_outcomes_and_interventions
 from do.util.helpers import within_precision
 from do.util.ModelLoader import parse_model
-from do.util.ProbabilityExceptions import *
 
 from ..test_util import print_test_result
 
