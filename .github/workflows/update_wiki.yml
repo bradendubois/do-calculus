@@ -16,6 +16,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install latest version
+      run: |
+        pip install do-calculus
+
     - name: Build Pages (replace stubs)
       run: |
         python ./wiki/build_wiki.py
