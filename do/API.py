@@ -287,7 +287,7 @@ class Do:
         @param v: Some vertex defined in the graph.
         @return: A collection of all descendants of v.
         """
-        descendants =  self._g.descendants(v)
+        descendants = self._g.descendants(v)
         self._output.result(descendants)
         return descendants
 

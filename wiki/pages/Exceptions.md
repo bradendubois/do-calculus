@@ -1,0 +1,3 @@
+Details on the custom exceptions that can be raised when using the [[API|Do API]].
+
+TODO...

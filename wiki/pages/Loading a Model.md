@@ -2,6 +2,8 @@ How to load a model into an instance of the API.
 
 All examples will be using the model from [[Markovian Models]].
 
+STUB|load_model
+
 ## Loading a Model (Python dictionary)
 
 One can have a model represented as a dictionary, and pass this as a *constructor argument* to instantiate a **Do API** instance.

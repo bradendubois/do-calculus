@@ -5,14 +5,15 @@ Models are inherently **DAGs** (Directed Acyclic Graph), where each variable in 
 ## Model Structure
 
 A model is represented as dictionary, mapping the name of one variable in the model to its detailed information.
-- A variable's detailed information consists of the following key-value pairs:
-  - ``outcomes``: all discrete outcomes the variable may take, represented as a list.
-  - ``parents``: parent variables (also defined in the model) of the current variable, represented as a list.
-    - If the variable is a root - that is, there are no parents - the list can be left empty, or this key can be absent from this variable entirely.
-  - ``table``: a list of lists, representing the probability distribution of the variable. Each sub-list is one unique combination of outcomes of the given variable and each of its parents, along with a probability between 0 and 1.
-    - The order of the parent variables must correspond to the order given in the ``parents`` entry, if there are any.
-  - ``latent``: a boolean representing whether the variable is unobservable in the given model. 
-    - If this key is absent, it will be assumed ``False`` - that is, assumed observable.
+
+A variable's detailed information consists of the following key-value pairs:
+- ``outcomes``: all discrete outcomes the variable may take, represented as a list.
+- ``parents``: parent variables (also defined in the model) of the current variable, represented as a list.
+  - If the variable is a root - that is, there are no parents - the list can be left empty, or this key can be absent from this variable entirely.
+  - If there are *observable parents* - that is, a *latent variable* - they must be listed *after* all observable parents, but in any particular order.
+- ``table``: a list of lists, representing the probability distribution of the variable. Each sub-list is one unique combination of outcomes of the given variable and each of its parents, along with a probability between 0 and 1.
+  - The order of the parent variables must correspond to the order given in the ``parents`` entry, if there are any.
+  - to represent a latent variable, **omit** this key.
   
 Additionally, a key ``name`` can be given, corresponding to an arbitrary name for the model.
 
@@ -54,7 +55,6 @@ model:
 ```
 
 This represents the basic graph of a single edge, (Y, X).
-- In the absence of any ``latent`` attributes, both variables are observable.
 - ``Y`` has no parents, it is a root.
 
 #### Dictionary

@@ -1,5 +1,7 @@
 How to measure probabilities using the **Do** API.
 
+STUB|p
+
 ## Making a Query
 
 For this, we will query a standard probability through the **Do** API.

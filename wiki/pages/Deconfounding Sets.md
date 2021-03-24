@@ -1,6 +1,6 @@
-# Deconfounding Sets
-
 Finding all deconfounding sets between two sets of vertices.
+
+STUB|deconfounding_sets
 
 ## Basic Example
 
@@ -28,8 +28,7 @@ for deconfounding_set in dcf:
 
 ## Usage of Deconfounding Sets
 
-Finding a deconfounding set can be helpful, but any [[probability queries involving interventions|Probability Queries]] automatically handles deconfounding. An easy check to verify each deconfounding set:
-
+Finding a deconfounding set can be helpful, but any [[probability queries involving interventions|Probability Queries]] automatically handle deconfounding. An easy check to verify each deconfounding set:
 
 ```python
 from do.API import Do
