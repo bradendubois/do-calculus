@@ -25,7 +25,7 @@ def api_docstring_description(function_name):
     if len(parameters) == 0:
         parameters =  "### Parameters\n\n**None**\n"
     
-    if function_signature.return_annotation is not Signature.smpty:
+    if function_signature.return_annotation is not Signature.empty:
         return_annotation = function_signature.return_annotation
     else:
         return_annotation = "None"
