@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     # Trigger only when wiki directory changes
-    paths:
-      - 'wiki/pages/**'
+    #paths:
+    #  - 'wiki/pages/**'
 
     # Trigger only on main
     branches: [ main, develop ]
