@@ -1,4 +1,4 @@
-from inspect import empty, getmembers, getsource, ismethod, signature, Signature
+from inspect import getmembers, getsource, ismethod, signature, Signature
 from os import chdir
 from os.path import abspath, dirname
 from pathlib import Path
