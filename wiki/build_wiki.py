@@ -66,8 +66,8 @@ def populate_wiki_stubs():
                 stub, replace = content.split("|")
                 if replace in api_signatures:
                     text[line] = api_signatures[replace]
-                elif replace in exceptions:
-                    text[line] = exceptions[replace]
+                elif replace == exceptions:
+                    text[line] = "\n\n".join(exceptions.values())
                 found = True
 
         if found:

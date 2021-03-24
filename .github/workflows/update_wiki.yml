@@ -8,7 +8,7 @@ on:
       - 'wiki/pages/**'
 
     # Trigger only on main
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   deploy-wiki:
