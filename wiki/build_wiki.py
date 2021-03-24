@@ -3,7 +3,7 @@ from os import chdir
 from os.path import abspath, dirname
 from pathlib import Path
 
-from do.API import Do
+from ..do.API import Do
 
 
 def api_docstring_description(function_name):
