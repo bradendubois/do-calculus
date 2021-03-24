@@ -5,10 +5,10 @@ on:
   push:
     # Trigger only when wiki directory changes
     paths:
-      - 'wiki/**'
+      - 'wiki/pages/**'
 
-    # Trigger only on main/beta
-    branches: [ main ]
+    # Trigger only on main
+    branches: [ main, develop ]
 
 jobs:
   deploy-wiki:
@@ -16,10 +16,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Build Pages (replace stubs)
+      run: |
+        python ./wiki/build_wiki.py
+
     - name: Push Wiki Changes
       uses: Andrew-Chen-Wang/github-wiki-action@v2
       env:
-        WIKI_DIR: docs/
+        WIKI_DIR: wiki/pages/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_MAIL: ${{ secrets.EMAIL }}
         GH_NAME: ${{ github.repository_owner }}

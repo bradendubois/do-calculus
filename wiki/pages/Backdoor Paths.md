@@ -1,5 +1,7 @@
 How to discover backdoor paths between two sets of variables in a given [[Markovian model|Markovian Models]].
 
+STUB|backdoor_paths
+
 ## Basic Backdoor Paths
 
 Assume the following model uses the graph **G = (V, E)**, where:
@@ -42,7 +44,7 @@ model = dict()
 
 do_api = Do(model)
 
-backdoor_paths = do_api.backdoor_paths({"x"}, {"y"}, set())
+backdoor_paths = do_api.backdoor_paths({"x"}, {"y"}, dcf=None)
 
 for path in backdoor_paths:
     print(f"Backdoor path from x->y!: {path}")
@@ -53,4 +55,5 @@ assert len(blocked) == 0
 ```
 
 **Important**
+- To represent that there are no deconfounding variables, an *empty* collection of vertices can be given, or specified as ``None``.
 - If all backdoor paths are successfully blocked, an **empty list** is returned.
