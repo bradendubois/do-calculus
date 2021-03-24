@@ -23,7 +23,7 @@ jobs:
 
     - name: Install tools to build whl package
       run: |
-        pip install sdist bdist_wheel
+        pip install sdist
 
     - name: Build whl package
       run: |
