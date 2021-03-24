@@ -32,7 +32,7 @@ def api_docstring_description(function_name):
 
     return_value = f"### Return Value\n\n```py\n{return_annotation}\n```\n"
     
-    sections = [title, header, parameters, return_value]
+    sections = [title, header, parameters, return_value] + "\n<hr />\n"
     
     return "\n".join(sections)
 
