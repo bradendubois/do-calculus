@@ -10,7 +10,7 @@ def api_docstring_description(function_name):
 
     def parameter_signature(parameter_item):
         parameter_key, parameter_value = parameter_item
-        return f"- **{parameter_key}**: {parameter_value.annotation}"
+        return f"- **{parameter_key}**: ``{parameter_value.annotation}``"
 
     name = str(function_name.__name__)
 
