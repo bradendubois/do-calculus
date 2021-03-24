@@ -3,8 +3,7 @@ from pathlib import Path
 from yaml import safe_load as load
 
 from do.structures.CausalGraph import CausalGraph, Outcome
-from do.structures.Types import MissingTableRow, ProbabilityIndeterminableException, \
-    NoDeconfoundingSet
+from do.structures.Exceptions import ProbabilityIndeterminableException, MissingTableRow, NoDeconfoundingSet
 from do.structures.VariableStructures import parse_outcomes_and_interventions
 from do.util.helpers import within_precision
 from do.util.ModelLoader import parse_model

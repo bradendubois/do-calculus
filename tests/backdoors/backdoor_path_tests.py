@@ -4,7 +4,7 @@ from pathlib import Path
 from yaml import safe_load as load
 
 from do.structures.BackdoorController import BackdoorController
-from do.structures.Types import IntersectingSets
+from do.structures.Exceptions import IntersectingSets
 from do.util.ModelLoader import parse_model
 
 from ..test_util import print_test_result

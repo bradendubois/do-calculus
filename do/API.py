@@ -15,7 +15,8 @@ from .structures.BackdoorController import BackdoorController
 from .structures.CausalGraph import CausalGraph
 from .structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from .structures.Graph import Graph
-from .structures.Types import Vertex, ProbabilityException
+from .structures.Types import Vertex
+from .structures.Exceptions import ProbabilityException
 from .structures.VariableStructures import Outcome, Intervention
 
 from .util.ModelLoader import parse_model

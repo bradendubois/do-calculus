@@ -1,9 +1,10 @@
-from inspect import getmembers, getsource, ismethod, signature, Signature
+from inspect import getmembers, getdoc, getsource, isclass, ismethod, signature, Signature
 from os import chdir
 from os.path import abspath, dirname
 from pathlib import Path
 
 from do.API import Do
+import do.structures.Exceptions
 
 
 def api_docstring_description(function_name):
@@ -22,7 +23,7 @@ def api_docstring_description(function_name):
     header = f"### Header\n\n```py\n{header}\n```\n"
     
     parameters = "### Parameters\n\n" + "\n".join(map(parameter_signature, function_signature.parameters.items()))
-    if len(parameters) == 0:
+    if len(function_signature.parameters) == 0:
         parameters = "### Parameters\n\n**None**\n"
     
     if function_signature.return_annotation is not Signature.empty:
@@ -37,12 +38,19 @@ def api_docstring_description(function_name):
     return "\n".join(sections) + "\n<hr />\n"
 
 
+def exception_description(exception_name):
+    return f"## {exception_name}\n\n> {getdoc(exception_name)}\n\n"
+
+
 def populate_wiki_stubs():
 
     chdir(dirname(abspath(__file__)))
 
     api_signatures = {name: api_docstring_description(method) for (name, method) in
                       getmembers(Do(model=None), predicate=ismethod)}
+
+    exceptions = {name: exception_description(exception) for (name, exception) in
+                  getmembers(do.structures.Exceptions, predicate=isclass)}
 
     wiki_dir = Path("pages")
 
@@ -55,8 +63,11 @@ def populate_wiki_stubs():
         found = False
         for line, content in enumerate(text):
             if content.startswith("STUB"):
-                stub, function = content.split("|")
-                text[line] = api_signatures[function]
+                stub, replace = content.split("|")
+                if replace in api_signatures:
+                    text[line] = api_signatures[replace]
+                elif replace in exceptions:
+                    text[line] = exceptions[replace]
                 found = True
 
         if found:

@@ -14,7 +14,8 @@ from .BackdoorController import BackdoorController
 from .ConditionalProbabilityTable import ConditionalProbabilityTable
 from .Graph import Graph
 from .Probability_Engine import ProbabilityEngine
-from .Types import V_Type, NoDeconfoundingSet
+from .Types import V_Type
+from .Exceptions import NoDeconfoundingSet
 from .VariableStructures import Variable, Outcome, Intervention
 
 from ..config.settings import Settings

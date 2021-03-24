@@ -10,7 +10,7 @@ from math import floor, ceil
 from numpy import empty
 from typing import List
 
-from .Types import MissingTableRow
+from .Exceptions import MissingTableRow
 from .VariableStructures import Variable, Outcome, Intervention
 
 from ..config.settings import Settings

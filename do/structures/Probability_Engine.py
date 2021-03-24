@@ -11,7 +11,7 @@ from itertools import product
 from typing import Collection, Union
 
 from .Graph import Graph
-from .Types import ProbabilityException, ProbabilityIndeterminableException
+from .Exceptions import ProbabilityException, ProbabilityIndeterminableException
 from .VariableStructures import Outcome, Intervention
 
 from ..config.settings import Settings
