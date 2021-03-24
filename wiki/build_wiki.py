@@ -13,8 +13,9 @@ def api_docstring_description(function_name):
         return f"- **{parameter_key}** ```py\n{parameter_value.annotation}\n```"
 
     name = str(function_name.__name__)
+    function_signature = signature(function_name, follow_wrapped=True)
 
-    function_signature = f"## Function Signature - {signature(function_name, follow_wrapped=True)}\n"
+    title = f"## Function Signature - {function_signature}\n"
 
     source = getsource(function_name)
     header = source.split("\n")[0][:-1].split(" ", maxsplit=1)[1].strip(" ")
@@ -31,7 +32,7 @@ def api_docstring_description(function_name):
 
     return_value = f"### Return Value\n\n```py\n{return_annotation}\n```\n"
     
-    sections = [signature, header, parameters, return_value]
+    sections = [title, header, parameters, return_value]
     
     return "\n".join(sections)
 
