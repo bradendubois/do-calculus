@@ -21,9 +21,19 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install latest version of do-calculus package
+    - name: Install tools to build whl package
       run: |
-        pip install do-calculus
+        pip install sdist bdist_wheel
+
+    - name: Build whl package
+      run: |
+        python setup.py sdist bdist_wheel
+      env:
+        SEMANTIC_VERSION: ${{ steps.tag.outputs.tag }}
+
+    - name: Install do-calculus package
+      run: |
+        pip install -e dist/*.whl
 
     - name: Build Pages (replace stubs)
       run: |
