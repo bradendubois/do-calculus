@@ -33,7 +33,7 @@ jobs:
 
     - name: Install do-calculus package
       run: |
-        pip install -e dist/*.whl
+        pip install -e .
 
     - name: Build Pages (replace stubs)
       run: |
