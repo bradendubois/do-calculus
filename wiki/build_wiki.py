@@ -10,7 +10,7 @@ def api_docstring_description(function_name):
 
     def parameter_signature(parameter_item):
         parameter_key, parameter_value = parameter_item
-        return f"- **{parameter_key}** \n```py\n{parameter_value.annotation}\n```"
+        return f"#### {parameter_key}\n```py\n{parameter_value.annotation}\n```"
 
     name = str(function_name.__name__)
     function_signature = signature(function_name, follow_wrapped=True)
@@ -21,7 +21,7 @@ def api_docstring_description(function_name):
     header = source.split("\n")[0][:-1].split(" ", maxsplit=1)[1].strip(" ")
     header = f"### Header\n\n```py\n{header}\n```\n"
     
-    parameters = "\n".join(map(parameter_signature, function_signature.parameters.items()))
+    parameters = "### Parameters\n\n" + "\n".join(map(parameter_signature, function_signature.parameters.items()))
     if len(parameters) == 0:
         parameters =  "### Parameters\n\n**None**\n"
     
