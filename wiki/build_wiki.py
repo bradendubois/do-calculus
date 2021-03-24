@@ -51,8 +51,7 @@ def populate_wiki_stubs():
                 found = True
 
         if found:
-            # file.write_text("\n".join(text))
-            print(text)
+            file.write_text("\n".join(text))
 
 
 if __name__ == "__main__":

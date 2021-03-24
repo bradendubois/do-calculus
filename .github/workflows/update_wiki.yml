@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     # Trigger only when wiki directory changes
-    #paths:
-    #  - 'wiki/pages/**'
+    paths:
+      - 'wiki/pages/**'
 
     # Trigger only on main
     branches: [ main, develop ]
@@ -21,7 +21,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install latest version
+    - name: Install latest version of do-calculus package
       run: |
         pip install do-calculus
 

@@ -22,15 +22,14 @@ for path in backdoor_paths:
     print(f"Backdoor path from x->y!: {path}")
 ```
 
-``backdoor_paths`` returns a list of lists, in which each sub-list consists of the vertices (end-points included) connecting some vertex in the ``src`` set to some vertex in the ``dst`` set.
+``backdoor_paths`` returns a collection of paths, in which each path consists of the vertices (end-points included) connecting some vertex in the ``src`` collection to some vertex in the ``dst`` collection.
 - In this example, the return value would be ``[["x", "z", "y"]]``, as this denotes the singular backdoor path ``x <- z -> y``.
 
 **Important**
 - The first parameter is the set of source variables from which the pathfinding begins.
 - The second parameter is the set of destination variables to which the pathfinding attempts to reach.
 - A third parameter is a set of *deconfounding* variables by which to "block" backdoor paths.
-- The deconfounding set currently must be given, even if empty.
-- Each sublist, a backdoor path, is ordered such that the path order is correctly maintained.
+- Each path, a backdoor path, is ordered such that the path order is correctly maintained.
 
 ## Deconfounding Variables
 
