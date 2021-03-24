@@ -23,7 +23,7 @@ def api_docstring_description(function_name):
     
     parameters = "### Parameters\n\n" + "\n".join(map(parameter_signature, function_signature.parameters.items()))
     if len(parameters) == 0:
-        parameters =  "### Parameters\n\n**None**\n"
+        parameters = "### Parameters\n\n**None**\n"
     
     if function_signature.return_annotation is not Signature.empty:
         return_annotation = function_signature.return_annotation
@@ -32,9 +32,9 @@ def api_docstring_description(function_name):
 
     return_value = f"### Return Value\n\n```py\n{return_annotation}\n```\n"
     
-    sections = [title, header, parameters, return_value] + "\n<hr />\n"
+    sections = [title, header, parameters, return_value]
     
-    return "\n".join(sections)
+    return "\n".join(sections) + "\n<hr />\n"
 
 
 def populate_wiki_stubs():
