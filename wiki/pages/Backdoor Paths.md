@@ -26,12 +26,12 @@ for path in backdoor_paths:
 - In this example, the return value would be ``[["x", "z", "y"]]``, as this denotes the singular backdoor path ``x <- z -> y``.
 
 **Important**
-- The first parameter is the set of source variables from which the pathfinding begins.
-- The second parameter is the set of destination variables to which the pathfinding attempts to reach.
-- A third parameter is a set of *deconfounding* variables by which to "block" backdoor paths.
+- The first parameter is the collection of source variables from which the pathfinding begins.
+- The second parameter is the collection of destination variables to which the pathfinding attempts to reach.
+- A third parameter is a collection of *deconfounding* variables by which to "block" backdoor paths.
 - Each path, a backdoor path, is ordered such that the path order is correctly maintained.
 
-## Deconfounding Variables
+## Blocking Backdoor Paths
 
 Assuming the same graph as defined [above](#basic-backdoor-paths)...
 
