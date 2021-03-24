@@ -34,6 +34,8 @@ jobs:
     - name: Install do-calculus package
       run: |
         pip install -e .
+      env:
+        SEMANTIC_VERSION: 1.0.0   # not actually 1.0.0, but has no impact on wiki-building
 
     - name: Build Pages (replace stubs)
       run: |
