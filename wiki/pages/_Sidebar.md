@@ -7,9 +7,8 @@
 ### [[Resources]]
 * [[Definitions]]
 * [[Markovian Models]]
-* [[Topological Ordering]]
-* [[Literature]]
 * [[Configuration]]
+* [[Literature]]
 
 ### [[Do API]]
 * [[Do.\_\_init\_\_|\_\_init\_\_]]

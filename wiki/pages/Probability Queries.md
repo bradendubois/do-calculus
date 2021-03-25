@@ -2,9 +2,11 @@ How to measure probabilities using the **Do** API.
 
 STUB|p
 
-## Making a Query
+## Basic Query
 
 For this, we will query a standard probability through the **Do** API.
+
+This will use the [[simple model from Markovian Models|Markovian Models]].
 
 ```python
 from do.API import Do
@@ -57,7 +59,7 @@ print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 - **Do.p** requires an empty set as its "given" outcomes even if there are none.
 - **Do.p** returns a *float*, between [0, 1].
 
-## Querying an Interventional Distribution
+## Querying an Interventional Measurement
 
 Assume the existence of some more complicated model, ``m_confounded``, in which multiple variables are susceptible to *backdoor paths* or *confounding*, but a sufficient *deconfounding set* can block all backdoor paths.
 - See [[Literature]] for more details on *backdoor paths* and *deconfounding*.
