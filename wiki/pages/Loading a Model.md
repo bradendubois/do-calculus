@@ -4,7 +4,7 @@ All examples will be using the model from [[Markovian Models]].
 
 STUB|load_model
 
-As shown in [[\_\_init\_\_|__init__]], the following forms of models are acceptable:
+As shown in [[\_\_init\_\_|\_\_init\_\_]], the following forms of models are acceptable:
 - a Python dictionary
 - a string path to a file
 - a [pathlib.Path](https://docs.python.org/3/library/pathlib.html#pathlib.Path) object
