@@ -451,6 +451,9 @@ def test_parse_model():
     # json
     parse_model(json_model)
 
+    # latent variable
+    parse_model(Path("do", "graphs", "test.json"))
+
 
 # validation
 
