@@ -63,7 +63,7 @@ def parse_shpitser(result: Symbol, cg: CausalGraph, known: dict):
     # Compute probability
     elif isinstance(result, Distribution):
         h = result.tables
-        b = result.given
+        b = result.parents
 
         head = []
         for key in h:
