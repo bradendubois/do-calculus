@@ -16,7 +16,7 @@ G = Graph(V, E)
 
 distribution = generate_distribution(G)
 
-P = Path(".", "../shpitser2a.yml")
+P = Path(".", "shpitser2a.yml")
 
 with P.open("w") as f:
     safe_dump({
