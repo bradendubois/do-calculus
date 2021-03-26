@@ -25,8 +25,7 @@ from .util.OutputLogger import OutputLogger
 
 class Do:
 
-    def __init__(self,
-                 model: Optional[Union[str, bytes, dict, Path]] = None,
+    def __init__(self, model: Optional[Union[str, bytes, dict, Path]] = None,
                  print_detail: bool = False, print_result: bool = False,
                  log: bool = False, log_fd: Optional[TextIO] = None):
         """
@@ -111,7 +110,7 @@ class Do:
     #                         Distributions                        #
     ################################################################
 
-    def p(self, y: Collection[Outcome], x: Collection[Union[Outcome, Intervention]]) -> float:
+    def p(self, y: Collection[Outcome], x: Optional[Collection[Union[Outcome, Intervention]]] = None) -> float:
         """
         Compute a probability query of Y, given X. All deconfounding and standard inference rules are handled by the
         Causal Graph automatically.
@@ -128,7 +127,7 @@ class Do:
         model, this should never occur.
         """
         try:
-            result = api_probability_query(self._cg, y, x)
+            result = api_probability_query(self._cg, y, x if x else set())
             self._output.result(result)
             return result
 
@@ -154,7 +153,7 @@ class Do:
     #               Pathfinding (Backdoor Controller)              #
     ################################################################
 
-    def backdoor_paths(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> Collection[Sequence[str]]:
+    def backdoor_paths(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]] = None) -> Collection[Sequence[str]]:
         """
         Find all backdoor paths between two collections of variables in the model.
         @param src: A collection of variables defined in the model, which will be the source to begin searching for
@@ -213,7 +212,7 @@ class Do:
 
         return result
 
-    def independent(self, s: Collection[Vertex], t: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
+    def independent(self, s: Collection[Vertex], t: Collection[Vertex], dcf: Optional[Collection[Vertex]] = None) -> bool:
         """
         Determine if two sets of vertices in the model are conditionally independent, given an optional third set of
         deconfounding vertices.
@@ -224,7 +223,7 @@ class Do:
         @return: True if all vertices in s and t are conditionally independent.
         @raise: IntersectingSets if any of s, t, and dcf have any intersection.
         """
-        independent = all(self._bc.independent(s, t, dcf) for (s, t) in product(s, t))
+        independent = all(self._bc.independent(s, t, dcf if dcf else set()) for (s, t) in product(s, t))
         self._output.result(f"{s} x {t}: {independent}")
         return independent
 

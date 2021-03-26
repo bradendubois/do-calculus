@@ -40,7 +40,7 @@ do_api = Do(m)
 x = Outcome("X", "x")
 y = Outcome("Y", "y")
 
-x_alone = do_api.p({x}, set())
+x_alone = do_api.p({x})
 print(f"The probability of X=x, P(X=x) = {x_alone:5}")
 
 x_if_y = do_api.p({x}, {y})
@@ -56,7 +56,9 @@ print(f"The probability of P(X=x, Y=y) = {x_and_y:5}")
 - The Outcome class is located at ``do.structures.VariableStructures``.
 - The API function provided in **Do** to query a probability is the ``p`` function.
 - **Do.p** takes *two* arguments, a *Collection of outcome outcomes*, and a *Collection of "given" outcomes*.
-- **Do.p** requires an empty set as its "given" outcomes even if there are none.
+- **Do.p** can take an *empty collection* if there are no "given" outcomes.
+- **Do.p** can *completely omit* the "given" collection of outcomes if there are none.
+- **Do.p** can have its "given" collection of outcomes explicitly set to ``None`` if there are none.
 - **Do.p** returns a *float*, between [0, 1].
 
 ## Querying an Interventional Measurement

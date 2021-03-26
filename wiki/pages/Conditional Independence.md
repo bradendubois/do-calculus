@@ -12,7 +12,11 @@ model = dict()
 
 do_api = Do(model)
 
-independent = do_api.independent({"x"}, {"y"}, set())
+independent = do_api.independent({"x"}, {"y"})
+
+independent_2 = do_api.independent({"x"}, {"y"}, {"z"})
+
+independent_3 = do_api.independent({"y"}, {"z"}, dcf=None)
 
 if independent:
     print("Independent!")
@@ -24,4 +28,4 @@ A boolean for whether the two sets are conditionally independent, given some opt
 
 **Important**
 - The third parameter, a set of deconfounding variables, can be given, to block backdoor paths from ``s`` to ``t``.
-- If there are no deconfounding variables, an empty collection can be provided, or explicitly set to ``None``.
+- If there are no deconfounding variables, an empty collection can be provided, *omitted entirely*, or explicitly set to ``None``.

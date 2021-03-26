@@ -16,7 +16,7 @@ model = dict()
 
 do_api = Do(model)
 
-backdoor_paths = do_api.backdoor_paths({"x"}, {"y"}, set())
+backdoor_paths = do_api.backdoor_paths({"x"}, {"y"})
 
 for path in backdoor_paths:
     print(f"Backdoor path from x->y!: {path}")
@@ -28,7 +28,6 @@ for path in backdoor_paths:
 **Important**
 - The first parameter is the collection of source variables from which the pathfinding begins.
 - The second parameter is the collection of destination variables to which the pathfinding attempts to reach.
-- A third parameter is a collection of *deconfounding* variables by which to "block" backdoor paths.
 - Each path, a backdoor path, is ordered such that the path order is correctly maintained.
 
 ## Blocking Backdoor Paths
@@ -43,7 +42,7 @@ model = dict()
 
 do_api = Do(model)
 
-backdoor_paths = do_api.backdoor_paths({"x"}, {"y"}, dcf=None)
+backdoor_paths = do_api.backdoor_paths({"x"}, {"y"})
 
 for path in backdoor_paths:
     print(f"Backdoor path from x->y!: {path}")
@@ -54,5 +53,6 @@ assert len(blocked) == 0
 ```
 
 **Important**
-- To represent that there are no deconfounding variables, an *empty* collection of vertices can be given, or specified as ``None``.
+- A third parameter is a collection of *deconfounding* variables by which to "block" backdoor paths.
+- To represent that there are no deconfounding variables, an *empty* collection of vertices can be given, explicitly set as ``None``, or *omitted entirely*.
 - If all backdoor paths are successfully blocked, an **empty list** is returned.
