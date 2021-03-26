@@ -17,10 +17,9 @@ def api_docstring_description(function_name):
     function_signature = signature(function_name, follow_wrapped=True)
 
     title = f"## Function Signature - Do.{name}\n"
-
-    source = getsource(function_name)
-    header = source.split("\n")[0][:-1].split(" ", maxsplit=1)[1].strip(" ")
-    header = f"### Header\n\n```py\n{header}\n```\n"
+    print(function_signature)
+    # header = source.split("\n")[0][:-1].split(" ", maxsplit=1)[1].strip(" ")
+    header = f"### Header\n\n```py\ndef {function_signature}\n```\n"
     
     parameters = "### Parameters\n\n" + "\n".join(map(parameter_signature, function_signature.parameters.items()))
     if len(function_signature.parameters) == 0:
