@@ -22,6 +22,8 @@ do_api.set_print_result(True)
 # queries here...
 ```
 
+<hr />
+
 ## Print Detail
 
 Set whether to print the detail of an API call to standard output.
@@ -39,6 +41,8 @@ do_api.set_print_detail(True)
 # queries here...
 ```
 
+<hr />
+
 ## Set Logging
 
 Set whether to log results and details to some file descriptor.
@@ -52,7 +56,6 @@ STUB|set_logging
 ```python
 from pathlib import Path
 from do.API import Do
-
 
 file = Path("output/model1-output")
 f = file.open("w")
@@ -68,6 +71,8 @@ f.close()
 
 **Important**
 - If logging is enabled, What is written to the file descriptor set will be all results and details will be written to the file, regardless of settings for whether to *print* results and/or details.
+
+<hr />
 
 ## Set Log FD
 
@@ -94,4 +99,4 @@ f.close()
 ```
 
 **Important**
-- For this, *any* open file descriptor can be given, as long the file descriptor object given *has write permission*, and supports a ``.write()`` method that **takes a string as input**.
+- For this, *any* open file descriptor can be given, as long as the file descriptor object given *has write permission*, and supports a ``.write()`` method that **takes a string as input**.

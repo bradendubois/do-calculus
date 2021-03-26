@@ -24,6 +24,8 @@ for v in topology:
 **Important**
 - A sequence of *N* vertices is returned.
 
+<hr />
+
 ## Topology Position
 
 Get the position of some vertex in the model in its topological ordering.
