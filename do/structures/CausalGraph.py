@@ -8,12 +8,15 @@
 #########################################################
 
 from itertools import product
-from typing import Collection, Union
+from typing import Collection, Dict, Union
 
 from .BackdoorController import BackdoorController
+from .ConditionalProbabilityTable import ConditionalProbabilityTable
 from .Graph import Graph
 from .Probability_Engine import ProbabilityEngine
-from .VariableStructures import Outcome, Intervention
+from .Types import V_Type
+from .Exceptions import NoDeconfoundingSet
+from .VariableStructures import Variable, Outcome, Intervention
 
 from ..config.settings import Settings
 from ..util.OutputLogger import OutputLogger
@@ -99,7 +102,8 @@ class CausalGraph:
 
                 # Filter down the deconfounding sets not overlapping with our query body
                 vertex_dcf = list(filter(lambda s: len(set(s) & strings(body)) == 0, deconfounding_sets))
-                assert len(vertex_dcf) != 0, "No deconfounding set Z can exist for the given data."
+                if len(vertex_dcf) == 0:
+                    raise NoDeconfoundingSet
 
                 # Compute with every possible deconfounding set as a safety measure; ensuring they all match
                 probability = None  # Sentinel value

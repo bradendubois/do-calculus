@@ -4,6 +4,7 @@ from pathlib import Path
 from yaml import safe_load as load
 
 from do.structures.BackdoorController import BackdoorController
+from do.structures.Exceptions import IntersectingSets
 from do.util.ModelLoader import parse_model
 
 from ..test_util import print_test_result
@@ -28,34 +29,41 @@ def model_backdoor_validation(bc: BackdoorController, test_data: dict) -> (bool,
 
     for test in test_data["tests"]:
 
-        if test["type"] == "backdoor-paths":
+        expect = test["expect"]
+        src = test["src"]
+        dst = test["dst"]
+        dcf = test["dcf"] if "dcf" in test else set()
 
-            expected_paths = list(map(sorted, test["expect"]))
+        try:
 
-            src = test["src"]
-            dst = test["dst"]
-            dcf = test["dcf"] if "dcf" in test else set()
+            if test["type"] == "backdoor-paths":
 
-            paths = bc.backdoor_paths(src, dst, dcf)
-            paths = list(map(sorted, paths))
+                if expect != "failure":
+                    expect = list(map(sorted, expect))
 
-            if test["exhaustive"] and len(paths) != len(expected_paths):    # coverage: skip
-                return False, f"{len(paths)} found, expected {len(expected_paths)}: {paths} vs. Exp: {expected_paths}"
+                paths = bc.backdoor_paths(src, dst, dcf)
+                paths = list(map(sorted, paths))
 
-            if not all(map(lambda p: p in paths, expected_paths)):  # coverage: skip
-                missing = list(filter(lambda p: p not in paths, expected_paths))
-                return False, f"Missing {len(missing)} paths: {missing}"
+                if test["exhaustive"] and len(paths) != len(expect):    # coverage: skip
+                    return False, f"{len(paths)} found, expected {len(expect)}: {paths} vs. Exp: {expect}"
 
-        elif test["type"] == "independence":
+                if not all(map(lambda p: p in paths, expect)):  # coverage: skip
+                    missing = list(filter(lambda p: p not in paths, expect))
+                    return False, f"Missing {len(missing)} paths: {missing}"
 
-            expected = test["expect"]
-            src = test["src"]
-            dst = test["dst"]
-            dcf = test["dcf"] if "dcf" in test else set()
-            independent = bc.independent(src, dst, dcf)
+            elif test["type"] == "independence":
 
-            if independent != expected:     # coverage: skip
-                return False, f"{src} -> {dst} | {dcf}: {independent}, expected {expected}"
+                independent = bc.independent(src, dst, dcf)
+
+                if independent != expect:     # coverage: skip
+                    return False, f"{src} -> {dst} | {dcf}: {independent}, expected {expect}"
+
+        except IntersectingSets:
+
+            if expect != "failure":     # coverage: skip
+                error = f"Unexpected IntersectingSets exception! {src}, {dst}"
+                print_test_result(False, error)
+                return False, error
 
     return True, "Backdoor tests passed."
 

@@ -10,10 +10,10 @@ from math import floor, ceil
 from numpy import empty
 from typing import List
 
+from .Exceptions import MissingTableRow
 from .VariableStructures import Variable, Outcome, Intervention
 
 from ..config.settings import Settings
-from ..util.ProbabilityExceptions import MissingTableRow
 
 
 class ConditionalProbabilityTable:
@@ -21,25 +21,27 @@ class ConditionalProbabilityTable:
     A basic conditional probability table that reflects the values of one Variable, and any number of conditional
     values
     @param variable: A Variable object, representing the variable this table computes a probability for
-    @param given: A (possibly empty) list of Variables, representing the parents for the variable given
+    @param parents: A (possibly empty) list of Variables, representing the parents for the variable given
     @param table_rows: A list of rows in the table, each formatted as [<OUTCOME>, ["<GIVEN_1_OUTCOME>, ...], <P>]
     """
 
     # Padding units on the left/right sides of each cell
     padding = 1
 
-    def __init__(self, variable: Variable, given: List[str], table_rows: List):
+    def __init__(self, variable: Variable, parents: List[str], table_rows: List):
         self.variable = variable    # The LHS of the table, single-variable only
-        self.given = given          # The RHS/body of the table
+        self.parents = parents          # The RHS/body of the table
 
         self.table_rows = []
+
+        latent = len(parents) - (len(table_rows) - 2)
 
         # Clean up the rows; Each is formatted as: [outcome of variable, parent_1, parent_2, ..., probability]
         for row in table_rows:
             outcome = Outcome(variable.name, row[0])
-            parents = row[1:-1]
+            p = row[1:-1]
 
-            self.table_rows.append([outcome, [Outcome(v, x) for v, x in zip(given, parents)], row[-1]])
+            self.table_rows.append([outcome, [Outcome(v, x) for v, x in zip(parents[:-latent], p)], row[-1]])
 
     def __str__(self) -> str:
         """
@@ -50,15 +52,15 @@ class ConditionalProbabilityTable:
         # Create a snazzy numpy table
         # Rows: 1 for a header + 1 for each row; Columns: 1 for variable, 1 for each given var, 1 for the probability
         rows = 1 + len(self.table_rows)
-        columns = 1 + len(self.given) + 1
+        columns = 1 + len(self.parents) + 1
 
         # dtype declaration is better than "str", as str only allows one character in each cell
         table = empty((rows, columns), dtype='<U100')
 
         # Populate the first row: variable, given variables, probability
         table[0][0] = self.variable.name
-        for i in range(len(self.given)):
-            table[0][i+1] = self.given[i]
+        for i in range(len(self.parents)):
+            table[0][i+1] = self.parents[i]
         table[0][table.shape[1]-1] = "P()"
 
         # Populate each row
@@ -76,7 +78,7 @@ class ConditionalProbabilityTable:
             table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=Settings.output_levels_of_precision)
 
         # Wiggle/Padding, column by column
-        for column_index in range(1 + len(self.given) + 1):
+        for column_index in range(1 + len(self.parents) + 1):
             widest_element = max([len(cell) for cell in table[:, column_index]])
             for row_index in range(1 + len(self.table_rows)):
                 cell_value = table[row_index][column_index]

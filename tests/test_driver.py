@@ -11,13 +11,14 @@ from do.structures.BackdoorController import BackdoorController
 from do.structures.CausalGraph import CausalGraph
 from do.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
 from do.structures.Graph import Graph, to_label
+from do.structures.Exceptions import MissingTableRow
 from do.structures.VariableStructures import Outcome, Variable, Intervention
 
 from do.util.helpers import power_set, disjoint, minimal_sets, within_precision
 from do.util.ModelLoader import parse_model
 
 from tests.backdoors.backdoor_path_tests import backdoor_tests
-from tests.inference.inference_tests import inference_tests, MissingTableRow
+from tests.inference.inference_tests import inference_tests
 from tests.shpitser.shpitser_tests import shpitser_tests
 
 from tests.test_util import print_test_result
@@ -186,6 +187,10 @@ def test_roots():
     assert sum(map(lambda v: len(graph.parents(v)), graph.roots())) == 0
 
 
+def test_descendants():
+    assert sum(map(lambda v: len(graph.children(v)), graph.sinks())) == 0
+
+
 def test_parents():
     graph.reset_disabled()
     roots = graph.roots()
@@ -216,13 +221,13 @@ def test_ancestors():
     for vertex in graph.v:
         ancestors = graph.ancestors(vertex)
         for ancestor in ancestors:
-            assert vertex in graph.reach(ancestor)
+            assert vertex in graph.descendants(ancestor)
 
 
 def test_reach():
     graph.reset_disabled()
     for vertex in graph.v:
-        descendants = graph.reach(vertex)
+        descendants = graph.descendants(vertex)
         for descendant in descendants:
             assert vertex in graph.ancestors(descendant)
 
@@ -233,10 +238,10 @@ def test_disable_outgoing():
 
     for v in graph.v:
         children = graph.children(v)
-        descendants = graph.reach(v)
+        descendants = graph.descendants(v)
         graph.disable_outgoing(v)
         assert len(graph.children(v)) == 0
-        assert len(graph.reach(v)) == 0
+        assert len(graph.descendants(v)) == 0
         for child in children:
             assert v not in graph.parents(child)
         for descendant in descendants:
@@ -258,7 +263,7 @@ def test_disable_incoming():
         for parent in parents:
             assert v not in graph.children(parent)
         for ancestor in ancestors:
-            assert v not in graph.reach(ancestor)
+            assert v not in graph.descendants(ancestor)
 
     graph.reset_disabled()
 
@@ -340,7 +345,7 @@ def test_variable():
         v: Variable
 
         assert isinstance(v.name, str)
-        assert isinstance(v.reach, set)
+        assert isinstance(v.descendants, set)
         assert isinstance(v.parents, list)
         assert isinstance(v.topological_order, int)
 
@@ -351,8 +356,8 @@ def test_variable():
 
         assert v.name == c.name
 
-        assert v.reach is not c.reach
-        assert v.reach == c.reach
+        assert v.descendants is not c.descendants
+        assert v.descendants == c.descendants
 
         assert v.parents is not c.parents
         assert v.parents == c.parents
@@ -445,6 +450,9 @@ def test_parse_model():
 
     # json
     parse_model(json_model)
+
+    # latent variable
+    parse_model(Path("do", "graphs", "test.json"))
 
 
 # validation

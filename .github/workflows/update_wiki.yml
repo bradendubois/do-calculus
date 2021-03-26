@@ -5,9 +5,9 @@ on:
   push:
     # Trigger only when wiki directory changes
     paths:
-      - 'wiki/**'
+      - 'wiki/pages/**'
 
-    # Trigger only on main/beta
+    # Trigger only on main
     branches: [ main ]
 
 jobs:
@@ -16,10 +16,35 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install tools to build whl package
+      run: |
+        pip install sdist
+
+    - name: Build whl package
+      run: |
+        python setup.py sdist bdist_wheel
+      env:
+        SEMANTIC_VERSION: 1.0.0   # not actually 1.0.0, but has no impact on wiki-building
+
+    - name: Install do-calculus package
+      run: |
+        pip install -e .
+      env:
+        SEMANTIC_VERSION: 1.0.0   # not actually 1.0.0, but has no impact on wiki-building
+
+    - name: Build Pages (replace stubs)
+      run: |
+        python ./wiki/build_wiki.py
+
     - name: Push Wiki Changes
       uses: Andrew-Chen-Wang/github-wiki-action@v2
       env:
-        WIKI_DIR: wiki/
+        WIKI_DIR: wiki/pages/
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_MAIL: ${{ secrets.EMAIL }}
         GH_NAME: ${{ github.repository_owner }}
