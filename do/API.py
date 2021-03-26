@@ -4,7 +4,7 @@
 
 from itertools import product
 from pathlib import Path
-from typing import Collection, Optional, Sequence, Union
+from typing import Collection, Optional, Sequence, TextIO, Union
 
 from .api.backdoor_paths import api_backdoor_paths
 from .api.deconfounding_sets import api_deconfounding_sets
@@ -25,7 +25,10 @@ from .util.OutputLogger import OutputLogger
 
 class Do:
 
-    def __init__(self, model: Union[str, dict, Path], print_detail=False, print_result=False, log=False, log_fd=None):
+    def __init__(self,
+                 model: Optional[Union[str, bytes, dict, Path]] = None,
+                 print_detail: bool = False, print_result: bool = False,
+                 log: bool = False, log_fd: Optional[TextIO] = None):
         """
         Initializer for an instance of the API.
         @param model: An optional causal model. Can be a string path to a file, a pathlib.Path to a file, a dictionary
@@ -53,7 +56,7 @@ class Do:
     #                       API Modifications                      #
     ################################################################
 
-    def load_model(self, data: Union[str, dict, Path]):
+    def load_model(self, data: Union[str, bytes, dict, Path]):
         """
         Parse and load a model into the API.
         @param data: Any of a string path or pathlib.Path to a file, or a dictionary conforming to the required causal
@@ -74,7 +77,7 @@ class Do:
             self._output.detail(str(e))
             raise e
 
-    def set_print_result(self, to_print: bool):
+    def set_print_result(self, to_print: bool = True):
         """
         Set whether or not to print the result of any API query to standard output
         @param to_print: Boolean; True to print results, False to not print results.
@@ -82,14 +85,14 @@ class Do:
         self._output.set_print_result(to_print)
         self._print_result = to_print
 
-    def set_print_detail(self, to_print: bool):
+    def set_print_detail(self, to_print: bool = True):
         """
         Set whether or not to print the computation steps of any API query to standard output
         @param to_print: Boolean; True to print results, False to not print steps.
         """
         self._output.set_print_detail(to_print)
 
-    def set_logging(self, to_log: bool):
+    def set_logging(self, to_log: bool = True):
         """
         Set whether to log computation steps and results.
         @precondition A file descriptor has been given to the API either in the initializer, or in a call to set_log_fd.
@@ -97,7 +100,7 @@ class Do:
         """
         self._output.set_log(to_log)
 
-    def set_log_fd(self, log_fd):
+    def set_log_fd(self, log_fd: Optional[TextIO] = None):
         """
         Set the internal file descriptor to log computation steps to, if this option is enabled.
         @param log_fd: An open file descriptor to write computation details to.
