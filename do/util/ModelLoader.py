@@ -78,17 +78,18 @@ def parse_model(file: Union[dict, str, Path]):
         outcomes[name] = v_outcomes
         outcomes[variable] = v_outcomes
 
-        if "latent" in detail and detail["latent"]:
+        if "table" not in detail:
             latent.add(name)
             latent.add(variable)
 
-        # Load in the table and construct a CPT
-        table = detail["table"]
-        cpt = ConditionalProbabilityTable(variable, v_parents, table)
+        else:
+            # Load in the table and construct a CPT
+            table = detail["table"]
+            cpt = ConditionalProbabilityTable(variable, v_parents, table)
 
-        # Map the name/variable to the table
-        tables[name] = cpt
-        tables[variable] = cpt
+            # Map the name/variable to the table
+            tables[name] = cpt
+            tables[variable] = cpt
 
     v = set(variables.keys())
     e = set()

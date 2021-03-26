@@ -11,12 +11,12 @@ from itertools import product
 from typing import Collection, Union
 
 from .Graph import Graph
+from .Exceptions import ProbabilityException, ProbabilityIndeterminableException
 from .VariableStructures import Outcome, Intervention
 
 from ..config.settings import Settings
 from ..util.OutputLogger import OutputLogger
 from ..util.helpers import p_str
-from ..util.ProbabilityExceptions import ProbabilityException, ProbabilityIndeterminableException
 
 
 class ProbabilityEngine:
@@ -45,10 +45,6 @@ class ProbabilityEngine:
 
         head = set(head)
         body = set(body)
-
-        # Ensure there are no adjustments/interventions in the head
-        for out in head:
-            assert not isinstance(out, Intervention), f"Error: {out} is in head; no Interventions should be in head."
 
         # Validate the queried variables and any given
         # Ensure variable is defined, outcome is possible for that variable, and it's formatted right.
@@ -88,7 +84,7 @@ class ProbabilityEngine:
         self.output.detail("Querying:", rep, x=depth)
 
         # If the calculation has been done and cached, just return it from storage
-        if rep in self._stored_computations:
+        if Settings.cache_computation_results and rep in self._stored_computations:
             result = self._stored_computations[rep]
             self.output.detail("Computation already calculated:", rep, "=", result, x=depth)
             return result
@@ -114,6 +110,7 @@ class ProbabilityEngine:
                 self.output.detail(rep, "=", result, x=depth)
                 self._store_computation(rep, result)
                 return result
+
             except ProbabilityException:    # coverage: skip
                 self.output.detail("Failed to resolve by reverse product rule.", x=depth)
 
@@ -147,7 +144,7 @@ class ProbabilityEngine:
         #      p(a|Cd) = p(d|aC) * p(a|C) / p(d|C)      #
         #################################################
 
-        reachable_from_head = set().union(*[self.graph.reach(outcome) for outcome in head])
+        reachable_from_head = set().union(*[self.graph.descendants(outcome) for outcome in head])
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:

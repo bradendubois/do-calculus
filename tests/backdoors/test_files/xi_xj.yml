@@ -29,3 +29,9 @@ tests:
     src: [ X5 ]
     dst: [ X2 ]
     expect: false
+
+  - type: independence
+    src: [Xi, X4]
+    dst: [X4, Xj]
+    expect: failure
+

@@ -22,7 +22,7 @@ def api_deconfounding_sets_parse(query: str) -> Dict[str, Collection[str]]:
     }
 
 
-def api_deconfounding_sets(bc: BackdoorController, src: Vertices, dst: Vertices) -> List[Set[str]]:
+def api_deconfounding_sets(bc: BackdoorController, src: Vertices, dst: Vertices) -> Collection[Collection[str]]:
     """
     Compute and return all the backdoor paths from any vertex in src to any vertex is dst
     @param bc: A Backdoor Controller with a graph conforming to the given source and destination sets.
