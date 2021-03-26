@@ -192,7 +192,7 @@ class Graph:
 
         while len(v) > 0:
 
-            roots = set(filter(lambda s: not any((s, t) in e for t in v), v))
+            roots = set(filter(lambda t: not any((s, t) in e for s in v), v))
             assert len(roots) > 0
 
             topology.extend(sorted(list(roots)))
