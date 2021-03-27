@@ -11,7 +11,7 @@
 #   We can isolate more generalized graph code here, as well as create a better way to "erase" incoming or outgoing
 #   edges, but only temporarily; this will improve "reach", "parents", etc.
 
-from typing import Collection, Set, Tuple, Union
+from typing import Collection, Sequence, Set, Tuple, Union
 
 from .Types import V_Type
 
@@ -179,11 +179,11 @@ class Graph:
         """
         Compute a subset V of some Graph G.
         :param v: A set of variables in G.
-        :return: A LatentGraph representing the subgraph G(V).
+        :return: A Graph representing the subgraph G[V].
         """
         return Graph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
 
-    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
+    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Sequence[Union[str, V_Type]]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
@@ -192,7 +192,7 @@ class Graph:
         """
         return sorted(variables, key=lambda v: self.get_topology(v))
 
-    def topology_sort(self):
+    def topology_sort(self) -> Sequence[str]:
 
         topology = []
         v = self.v.copy()
@@ -208,6 +208,15 @@ class Graph:
             e -= set(filter(lambda edge: edge[0] in roots, e))
 
         return topology
+
+    def V(self, i) -> Sequence[str]:
+        """
+        Return all vertices in the graph up to some given value (exclusive) in a topological ordering.
+        @param i: Some integer in the range [1, |V|]
+        @return: A sequence of vertices V1, V2, ..., Vi-1 in the graph.
+        """
+        assert 1 <= i <= len(self.v), "Invalid integer i; not in the range [1, |V|]"
+        return self.topology_sort()[:i]
 
 
 def to_label(item: V_Type) -> str:
