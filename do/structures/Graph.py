@@ -209,6 +209,7 @@ class Graph:
 
         return topology
 
+    # noinspection PyPep8Naming
     def V(self, i) -> Sequence[str]:
         """
         Return all vertices in the graph up to some given value (exclusive) in a topological ordering.
