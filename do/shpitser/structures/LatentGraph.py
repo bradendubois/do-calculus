@@ -72,7 +72,7 @@ class LatentGraph(Graph):
         assert len(v_working) == 0
         return all_c_components
 
-    def __call__(self, v: set):
+    def __getitem__(self, v: set):
         """
         Compute a subset V of some Graph G.
         :param v: A set of variables in G.

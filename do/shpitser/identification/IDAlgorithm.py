@@ -7,9 +7,9 @@
 #                                                       #
 #########################################################
 
-from src.probability.shpitser.structures.Expressions import SigmaObj, PiObj
-from src.probability.shpitser.structures.Distribution import Distribution
-from src.probability.shpitser.structures.LatentGraph import LatentGraph
+from ..structures.Expressions import SigmaObj, PiObj
+from ..structures.Distribution import Distribution
+from ..structures.LatentGraph import LatentGraph
 
 # This is the implementation of Shpitser & Pearl (2006)'s 3rd algorithm, which provides an identification of
 #   an interventional distribution using observational distributions, without any of Pearl's backdoor criterion.
@@ -64,7 +64,7 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
     if V != An(y):
 
         # return ID(y, x ∩ An(Y)_G, P(An(Y)), An(Y)_G)
-        return ID(y, x & An(y), P(An(y)), G(An(y)), rec+1)
+        return ID(y, x & An(y), P(An(y)), G[An(y)], rec+1)
 
     # 3 - let W = (V\X) \ An(Y)_{G_X}.
     G.disable_incoming(*x)
@@ -78,13 +78,13 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
         return ID(y, x | W, P, G, rec+1)
 
     # 4 - if C(G\X) == { S_1, ..., S_k},
-    if len(S := C(G(V - x))) > 1:
+    if len(S := C(G[V - x])) > 1:
 
         # return Sigma_{v\(y ∪ x)} Pi_i id_algorithm(s_i, v \ s_i, P, G)
         return Sigma(V - (y | x), Pi(S, [ID(s, V - s, P, G, rec+1) for s in S]))
 
     #   if C(G \ X) == {S},
-    if len(C(G(V - x))) == 1:
+    if len(C(G[V - x])) == 1:
 
         S = S[0]  # Simplify; S is currently a list of one component, so make S the component itself
 
@@ -105,6 +105,6 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
             Si = [Si for Si in C(G) if S.issubset(Si)][0]
 
             # return ID(y, x ∩ S', Pi_{V_i ∈ S'} P(V_i | V_{pi}^{i-1} ∩ S', v_{pi}^{i-1} \ S'), S')
-            return ID(y, x & Si, P, G(Si))
+            return ID(y, x & Si, P, G[Si])
 
     raise FAIL(G, C(G))
