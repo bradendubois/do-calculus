@@ -175,6 +175,14 @@ class Graph:
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied
 
+    def __getitem__(self, v: set):
+        """
+        Compute a subset V of some Graph G.
+        :param v: A set of variables in G.
+        :return: A LatentGraph representing the subgraph G(V).
+        """
+        return Graph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
+
     def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a

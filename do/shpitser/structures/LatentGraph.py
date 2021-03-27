@@ -78,7 +78,8 @@ class LatentGraph(Graph):
         :param v: A set of variables in G.
         :return: A LatentGraph representing the subgraph G(V).
         """
-        return LatentGraph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
+        g = super().__getitem__(v)
+        return LatentGraph(g.v, g.e)
 
     def __eq__(self, other) -> bool:
         if isinstance(other, list) and len(other) == 1:     # Comparison to a C component
