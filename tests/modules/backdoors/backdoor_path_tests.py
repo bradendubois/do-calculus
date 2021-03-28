@@ -7,7 +7,7 @@ from do.structures.BackdoorController import BackdoorController
 from do.structures.Exceptions import IntersectingSets
 from do.util.ModelLoader import parse_model
 
-from tests.test_driver import print_test_result
+from tests.print_test_result import print_test_result
 
 test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 

@@ -8,7 +8,7 @@ from do.structures.VariableStructures import parse_outcomes_and_interventions
 from do.util.helpers import within_precision
 from do.util.ModelLoader import parse_model
 
-from tests.test_driver import print_test_result
+from ...print_test_result import print_test_result
 
 test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
 
