@@ -1,0 +1,415 @@
+{
+    "model": {
+        "model": {
+            "AWW": {
+                "outcomes": [
+                    "aww",
+                    "~aww"
+                ],
+                "parents": [
+                    "MYM"
+                ],
+                "table": [
+                    [
+                        "aww",
+                        "mym",
+                        0.9039
+                    ],
+                    [
+                        "~aww",
+                        "mym",
+                        0.0961
+                    ],
+                    [
+                        "aww",
+                        "~mym",
+                        0.0103
+                    ],
+                    [
+                        "~aww",
+                        "~mym",
+                        0.9897
+                    ]
+                ]
+            },
+            "EIL": {
+                "outcomes": [
+                    "eil",
+                    "~eil"
+                ],
+                "parents": [
+                    "EKK",
+                    "WJU"
+                ],
+                "table": [
+                    [
+                        "eil",
+                        "ekk",
+                        "wju",
+                        0.8131
+                    ],
+                    [
+                        "~eil",
+                        "ekk",
+                        "wju",
+                        0.1869
+                    ],
+                    [
+                        "eil",
+                        "ekk",
+                        "~wju",
+                        0.1313
+                    ],
+                    [
+                        "~eil",
+                        "ekk",
+                        "~wju",
+                        0.8687
+                    ],
+                    [
+                        "eil",
+                        "~ekk",
+                        "wju",
+                        0.3137
+                    ],
+                    [
+                        "~eil",
+                        "~ekk",
+                        "wju",
+                        0.6863
+                    ],
+                    [
+                        "eil",
+                        "~ekk",
+                        "~wju",
+                        0.3896
+                    ],
+                    [
+                        "~eil",
+                        "~ekk",
+                        "~wju",
+                        0.6104
+                    ]
+                ]
+            },
+            "EKK": {
+                "outcomes": [
+                    "ekk",
+                    "~ekk"
+                ],
+                "parents": [
+                    "XKW"
+                ],
+                "table": [
+                    [
+                        "ekk",
+                        "xkw",
+                        0.047
+                    ],
+                    [
+                        "~ekk",
+                        "xkw",
+                        0.953
+                    ],
+                    [
+                        "ekk",
+                        "~xkw",
+                        0.2034
+                    ],
+                    [
+                        "~ekk",
+                        "~xkw",
+                        0.7966
+                    ]
+                ]
+            },
+            "HKH": {
+                "outcomes": [
+                    "hkh",
+                    "~hkh"
+                ],
+                "parents": [
+                    "WJU"
+                ],
+                "table": [
+                    [
+                        "hkh",
+                        "wju",
+                        0.2091
+                    ],
+                    [
+                        "~hkh",
+                        "wju",
+                        0.7909
+                    ],
+                    [
+                        "hkh",
+                        "~wju",
+                        0.8455
+                    ],
+                    [
+                        "~hkh",
+                        "~wju",
+                        0.1545
+                    ]
+                ]
+            },
+            "IIK": {
+                "outcomes": [
+                    "iik",
+                    "~iik"
+                ],
+                "parents": [
+                    "ZQV"
+                ],
+                "table": [
+                    [
+                        "iik",
+                        "zqv",
+                        0.7351
+                    ],
+                    [
+                        "~iik",
+                        "zqv",
+                        0.2649
+                    ],
+                    [
+                        "iik",
+                        "~zqv",
+                        0.8368
+                    ],
+                    [
+                        "~iik",
+                        "~zqv",
+                        0.1632
+                    ]
+                ]
+            },
+            "LCJ": {
+                "outcomes": [
+                    "lcj",
+                    "~lcj"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "lcj",
+                        0.0669
+                    ],
+                    [
+                        "~lcj",
+                        0.9331
+                    ]
+                ]
+            },
+            "MYM": {
+                "outcomes": [
+                    "mym",
+                    "~mym"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "mym",
+                        0.0736
+                    ],
+                    [
+                        "~mym",
+                        0.9264
+                    ]
+                ]
+            },
+            "OPI": {
+                "outcomes": [
+                    "opi",
+                    "~opi"
+                ],
+                "parents": [
+                    "EIL",
+                    "HKH",
+                    "ZQV"
+                ],
+                "table": [
+                    [
+                        "opi",
+                        "eil",
+                        "hkh",
+                        "zqv",
+                        0.603
+                    ],
+                    [
+                        "~opi",
+                        "eil",
+                        "hkh",
+                        "zqv",
+                        0.397
+                    ],
+                    [
+                        "opi",
+                        "eil",
+                        "hkh",
+                        "~zqv",
+                        0.9165
+                    ],
+                    [
+                        "~opi",
+                        "eil",
+                        "hkh",
+                        "~zqv",
+                        0.0835
+                    ],
+                    [
+                        "opi",
+                        "eil",
+                        "~hkh",
+                        "zqv",
+                        0.5792
+                    ],
+                    [
+                        "~opi",
+                        "eil",
+                        "~hkh",
+                        "zqv",
+                        0.4208
+                    ],
+                    [
+                        "opi",
+                        "eil",
+                        "~hkh",
+                        "~zqv",
+                        0.3767
+                    ],
+                    [
+                        "~opi",
+                        "eil",
+                        "~hkh",
+                        "~zqv",
+                        0.6233
+                    ],
+                    [
+                        "opi",
+                        "~eil",
+                        "hkh",
+                        "zqv",
+                        0.7996
+                    ],
+                    [
+                        "~opi",
+                        "~eil",
+                        "hkh",
+                        "zqv",
+                        0.2004
+                    ],
+                    [
+                        "opi",
+                        "~eil",
+                        "hkh",
+                        "~zqv",
+                        0.6734
+                    ],
+                    [
+                        "~opi",
+                        "~eil",
+                        "hkh",
+                        "~zqv",
+                        0.3266
+                    ],
+                    [
+                        "opi",
+                        "~eil",
+                        "~hkh",
+                        "zqv",
+                        0.2226
+                    ],
+                    [
+                        "~opi",
+                        "~eil",
+                        "~hkh",
+                        "zqv",
+                        0.7774
+                    ],
+                    [
+                        "opi",
+                        "~eil",
+                        "~hkh",
+                        "~zqv",
+                        0.8724
+                    ],
+                    [
+                        "~opi",
+                        "~eil",
+                        "~hkh",
+                        "~zqv",
+                        0.1276
+                    ]
+                ]
+            },
+            "WJU": {
+                "outcomes": [
+                    "wju",
+                    "~wju"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "wju",
+                        0.9891
+                    ],
+                    [
+                        "~wju",
+                        0.0109
+                    ]
+                ]
+            },
+            "XKW": {
+                "outcomes": [
+                    "xkw",
+                    "~xkw"
+                ],
+                "parents": [
+                    "WJU"
+                ],
+                "table": [
+                    [
+                        "xkw",
+                        "wju",
+                        0.4622
+                    ],
+                    [
+                        "~xkw",
+                        "wju",
+                        0.5378
+                    ],
+                    [
+                        "xkw",
+                        "~wju",
+                        0.25
+                    ],
+                    [
+                        "~xkw",
+                        "~wju",
+                        0.75
+                    ]
+                ]
+            },
+            "ZQV": {
+                "outcomes": [
+                    "zqv",
+                    "~zqv"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "zqv",
+                        0.4088
+                    ],
+                    [
+                        "~zqv",
+                        0.5912
+                    ]
+                ]
+            }
+        }
+    },
+    "name": "m1"
+}

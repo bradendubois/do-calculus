@@ -1,0 +1,364 @@
+{
+    "model": {
+        "model": {
+            "AXS": {
+                "outcomes": [
+                    "axs",
+                    "~axs"
+                ],
+                "parents": [
+                    "JSD"
+                ],
+                "table": [
+                    [
+                        "axs",
+                        "jsd",
+                        0.6433
+                    ],
+                    [
+                        "~axs",
+                        "jsd",
+                        0.3567
+                    ],
+                    [
+                        "axs",
+                        "~jsd",
+                        0.4349
+                    ],
+                    [
+                        "~axs",
+                        "~jsd",
+                        0.5651
+                    ]
+                ]
+            },
+            "FHU": {
+                "outcomes": [
+                    "fhu",
+                    "~fhu"
+                ],
+                "parents": [
+                    "NPB"
+                ],
+                "table": [
+                    [
+                        "fhu",
+                        "npb",
+                        0.6616
+                    ],
+                    [
+                        "~fhu",
+                        "npb",
+                        0.3384
+                    ],
+                    [
+                        "fhu",
+                        "~npb",
+                        0.3724
+                    ],
+                    [
+                        "~fhu",
+                        "~npb",
+                        0.6276
+                    ]
+                ]
+            },
+            "GPR": {
+                "outcomes": [
+                    "gpr",
+                    "~gpr"
+                ],
+                "parents": [
+                    "QYZ"
+                ],
+                "table": [
+                    [
+                        "gpr",
+                        "qyz",
+                        0.7162
+                    ],
+                    [
+                        "~gpr",
+                        "qyz",
+                        0.2838
+                    ],
+                    [
+                        "gpr",
+                        "~qyz",
+                        0.48
+                    ],
+                    [
+                        "~gpr",
+                        "~qyz",
+                        0.52
+                    ]
+                ]
+            },
+            "JSD": {
+                "outcomes": [
+                    "jsd",
+                    "~jsd"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "jsd",
+                        0.8065
+                    ],
+                    [
+                        "~jsd",
+                        0.1935
+                    ]
+                ]
+            },
+            "KDS": {
+                "outcomes": [
+                    "kds",
+                    "~kds"
+                ],
+                "parents": [
+                    "JSD",
+                    "ZQT"
+                ],
+                "table": [
+                    [
+                        "kds",
+                        "jsd",
+                        "zqt",
+                        0.4744
+                    ],
+                    [
+                        "~kds",
+                        "jsd",
+                        "zqt",
+                        0.5256
+                    ],
+                    [
+                        "kds",
+                        "jsd",
+                        "~zqt",
+                        0.8871
+                    ],
+                    [
+                        "~kds",
+                        "jsd",
+                        "~zqt",
+                        0.1129
+                    ],
+                    [
+                        "kds",
+                        "~jsd",
+                        "zqt",
+                        0.2234
+                    ],
+                    [
+                        "~kds",
+                        "~jsd",
+                        "zqt",
+                        0.7766
+                    ],
+                    [
+                        "kds",
+                        "~jsd",
+                        "~zqt",
+                        0.5565
+                    ],
+                    [
+                        "~kds",
+                        "~jsd",
+                        "~zqt",
+                        0.4435
+                    ]
+                ]
+            },
+            "NPB": {
+                "outcomes": [
+                    "npb",
+                    "~npb"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "npb",
+                        0.3359
+                    ],
+                    [
+                        "~npb",
+                        0.6641
+                    ]
+                ]
+            },
+            "QYZ": {
+                "outcomes": [
+                    "qyz",
+                    "~qyz"
+                ],
+                "parents": [
+                    "FHU"
+                ],
+                "table": [
+                    [
+                        "qyz",
+                        "fhu",
+                        0.8602
+                    ],
+                    [
+                        "~qyz",
+                        "fhu",
+                        0.1398
+                    ],
+                    [
+                        "qyz",
+                        "~fhu",
+                        0.1096
+                    ],
+                    [
+                        "~qyz",
+                        "~fhu",
+                        0.8904
+                    ]
+                ]
+            },
+            "UZC": {
+                "outcomes": [
+                    "uzc",
+                    "~uzc"
+                ],
+                "parents": [
+                    "GPR",
+                    "YRU"
+                ],
+                "table": [
+                    [
+                        "uzc",
+                        "gpr",
+                        "yru",
+                        0.4833
+                    ],
+                    [
+                        "~uzc",
+                        "gpr",
+                        "yru",
+                        0.5167
+                    ],
+                    [
+                        "uzc",
+                        "gpr",
+                        "~yru",
+                        0.4868
+                    ],
+                    [
+                        "~uzc",
+                        "gpr",
+                        "~yru",
+                        0.5132
+                    ],
+                    [
+                        "uzc",
+                        "~gpr",
+                        "yru",
+                        0.0799
+                    ],
+                    [
+                        "~uzc",
+                        "~gpr",
+                        "yru",
+                        0.9201
+                    ],
+                    [
+                        "uzc",
+                        "~gpr",
+                        "~yru",
+                        0.0051
+                    ],
+                    [
+                        "~uzc",
+                        "~gpr",
+                        "~yru",
+                        0.9949
+                    ]
+                ]
+            },
+            "YRU": {
+                "outcomes": [
+                    "yru",
+                    "~yru"
+                ],
+                "parents": [
+                    "ZQT"
+                ],
+                "table": [
+                    [
+                        "yru",
+                        "zqt",
+                        0.9035
+                    ],
+                    [
+                        "~yru",
+                        "zqt",
+                        0.0965
+                    ],
+                    [
+                        "yru",
+                        "~zqt",
+                        0.6967
+                    ],
+                    [
+                        "~yru",
+                        "~zqt",
+                        0.3033
+                    ]
+                ]
+            },
+            "ZQT": {
+                "outcomes": [
+                    "zqt",
+                    "~zqt"
+                ],
+                "parents": [
+                    "NPB"
+                ],
+                "table": [
+                    [
+                        "zqt",
+                        "npb",
+                        0.5272
+                    ],
+                    [
+                        "~zqt",
+                        "npb",
+                        0.4728
+                    ],
+                    [
+                        "zqt",
+                        "~npb",
+                        0.0485
+                    ],
+                    [
+                        "~zqt",
+                        "~npb",
+                        0.9515
+                    ]
+                ]
+            },
+            "ZWL": {
+                "outcomes": [
+                    "zwl",
+                    "~zwl"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "zwl",
+                        0.6913
+                    ],
+                    [
+                        "~zwl",
+                        0.3087
+                    ]
+                ]
+            }
+        }
+    },
+    "name": "m10"
+}

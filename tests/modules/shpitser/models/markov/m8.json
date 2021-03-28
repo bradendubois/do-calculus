@@ -1,0 +1,415 @@
+{
+    "model": {
+        "model": {
+            "BMZ": {
+                "outcomes": [
+                    "bmz",
+                    "~bmz"
+                ],
+                "parents": [
+                    "OMG"
+                ],
+                "table": [
+                    [
+                        "bmz",
+                        "omg",
+                        0.6872
+                    ],
+                    [
+                        "~bmz",
+                        "omg",
+                        0.3128
+                    ],
+                    [
+                        "bmz",
+                        "~omg",
+                        0.0013
+                    ],
+                    [
+                        "~bmz",
+                        "~omg",
+                        0.9987
+                    ]
+                ]
+            },
+            "DCP": {
+                "outcomes": [
+                    "dcp",
+                    "~dcp"
+                ],
+                "parents": [
+                    "HLJ"
+                ],
+                "table": [
+                    [
+                        "dcp",
+                        "hlj",
+                        0.7991
+                    ],
+                    [
+                        "~dcp",
+                        "hlj",
+                        0.2009
+                    ],
+                    [
+                        "dcp",
+                        "~hlj",
+                        0.7753
+                    ],
+                    [
+                        "~dcp",
+                        "~hlj",
+                        0.2247
+                    ]
+                ]
+            },
+            "DIZ": {
+                "outcomes": [
+                    "diz",
+                    "~diz"
+                ],
+                "parents": [
+                    "OMG"
+                ],
+                "table": [
+                    [
+                        "diz",
+                        "omg",
+                        0.129
+                    ],
+                    [
+                        "~diz",
+                        "omg",
+                        0.871
+                    ],
+                    [
+                        "diz",
+                        "~omg",
+                        0.3427
+                    ],
+                    [
+                        "~diz",
+                        "~omg",
+                        0.6573
+                    ]
+                ]
+            },
+            "FQH": {
+                "outcomes": [
+                    "fqh",
+                    "~fqh"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "fqh",
+                        0.7856
+                    ],
+                    [
+                        "~fqh",
+                        0.2144
+                    ]
+                ]
+            },
+            "GCU": {
+                "outcomes": [
+                    "gcu",
+                    "~gcu"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "gcu",
+                        0.7335
+                    ],
+                    [
+                        "~gcu",
+                        0.2665
+                    ]
+                ]
+            },
+            "HLJ": {
+                "outcomes": [
+                    "hlj",
+                    "~hlj"
+                ],
+                "parents": [
+                    "FQH",
+                    "JKV"
+                ],
+                "table": [
+                    [
+                        "hlj",
+                        "fqh",
+                        "jkv",
+                        0.7564
+                    ],
+                    [
+                        "~hlj",
+                        "fqh",
+                        "jkv",
+                        0.2436
+                    ],
+                    [
+                        "hlj",
+                        "fqh",
+                        "~jkv",
+                        0.5634
+                    ],
+                    [
+                        "~hlj",
+                        "fqh",
+                        "~jkv",
+                        0.4366
+                    ],
+                    [
+                        "hlj",
+                        "~fqh",
+                        "jkv",
+                        0.88
+                    ],
+                    [
+                        "~hlj",
+                        "~fqh",
+                        "jkv",
+                        0.12
+                    ],
+                    [
+                        "hlj",
+                        "~fqh",
+                        "~jkv",
+                        0.4166
+                    ],
+                    [
+                        "~hlj",
+                        "~fqh",
+                        "~jkv",
+                        0.5834
+                    ]
+                ]
+            },
+            "IJD": {
+                "outcomes": [
+                    "ijd",
+                    "~ijd"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "ijd",
+                        0.1621
+                    ],
+                    [
+                        "~ijd",
+                        0.8379
+                    ]
+                ]
+            },
+            "JKV": {
+                "outcomes": [
+                    "jkv",
+                    "~jkv"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "jkv",
+                        0.2244
+                    ],
+                    [
+                        "~jkv",
+                        0.7756
+                    ]
+                ]
+            },
+            "OHW": {
+                "outcomes": [
+                    "ohw",
+                    "~ohw"
+                ],
+                "parents": [
+                    "IJD",
+                    "JKV",
+                    "QTD"
+                ],
+                "table": [
+                    [
+                        "ohw",
+                        "ijd",
+                        "jkv",
+                        "qtd",
+                        0.2417
+                    ],
+                    [
+                        "~ohw",
+                        "ijd",
+                        "jkv",
+                        "qtd",
+                        0.7583
+                    ],
+                    [
+                        "ohw",
+                        "ijd",
+                        "jkv",
+                        "~qtd",
+                        0.9929
+                    ],
+                    [
+                        "~ohw",
+                        "ijd",
+                        "jkv",
+                        "~qtd",
+                        0.0071
+                    ],
+                    [
+                        "ohw",
+                        "ijd",
+                        "~jkv",
+                        "qtd",
+                        0.5308
+                    ],
+                    [
+                        "~ohw",
+                        "ijd",
+                        "~jkv",
+                        "qtd",
+                        0.4692
+                    ],
+                    [
+                        "ohw",
+                        "ijd",
+                        "~jkv",
+                        "~qtd",
+                        0.2156
+                    ],
+                    [
+                        "~ohw",
+                        "ijd",
+                        "~jkv",
+                        "~qtd",
+                        0.7844
+                    ],
+                    [
+                        "ohw",
+                        "~ijd",
+                        "jkv",
+                        "qtd",
+                        0.2166
+                    ],
+                    [
+                        "~ohw",
+                        "~ijd",
+                        "jkv",
+                        "qtd",
+                        0.7834
+                    ],
+                    [
+                        "ohw",
+                        "~ijd",
+                        "jkv",
+                        "~qtd",
+                        0.8607
+                    ],
+                    [
+                        "~ohw",
+                        "~ijd",
+                        "jkv",
+                        "~qtd",
+                        0.1393
+                    ],
+                    [
+                        "ohw",
+                        "~ijd",
+                        "~jkv",
+                        "qtd",
+                        0.4347
+                    ],
+                    [
+                        "~ohw",
+                        "~ijd",
+                        "~jkv",
+                        "qtd",
+                        0.5653
+                    ],
+                    [
+                        "ohw",
+                        "~ijd",
+                        "~jkv",
+                        "~qtd",
+                        0.9115
+                    ],
+                    [
+                        "~ohw",
+                        "~ijd",
+                        "~jkv",
+                        "~qtd",
+                        0.0885
+                    ]
+                ]
+            },
+            "OMG": {
+                "outcomes": [
+                    "omg",
+                    "~omg"
+                ],
+                "parents": [
+                    "GCU"
+                ],
+                "table": [
+                    [
+                        "omg",
+                        "gcu",
+                        0.5223
+                    ],
+                    [
+                        "~omg",
+                        "gcu",
+                        0.4777
+                    ],
+                    [
+                        "omg",
+                        "~gcu",
+                        0.9795
+                    ],
+                    [
+                        "~omg",
+                        "~gcu",
+                        0.0205
+                    ]
+                ]
+            },
+            "QTD": {
+                "outcomes": [
+                    "qtd",
+                    "~qtd"
+                ],
+                "parents": [
+                    "DCP"
+                ],
+                "table": [
+                    [
+                        "qtd",
+                        "dcp",
+                        0.9582
+                    ],
+                    [
+                        "~qtd",
+                        "dcp",
+                        0.0418
+                    ],
+                    [
+                        "qtd",
+                        "~dcp",
+                        0.675
+                    ],
+                    [
+                        "~qtd",
+                        "~dcp",
+                        0.325
+                    ]
+                ]
+            }
+        }
+    },
+    "name": "m8"
+}
