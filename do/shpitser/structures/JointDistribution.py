@@ -9,7 +9,7 @@
 
 # A representation of probability distributions for use in Shpitser's ID algorithm
 
-class Distribution:
+class JointDistribution:
     """
     A dictionary, mapping a variable to its probability distribution
     """
@@ -18,25 +18,25 @@ class Distribution:
         self.tables = tables
         self.given = given
 
-    def __call__(self, x, parents=None):
+    def __call__(self, x, predecessors=None):
         """
         Get subset X of some ProbabilityDistribution P.
         :param x: A set of variables in some ProbabilityDistribution P.
-        :param parents: The set of parents of X
+        :param predecessors: The set of parents of X
         :return: A ProbabilityDistribution of the subset X.
         """
 
         # Line 1 Return
-        if isinstance(x, str) and parents is None:
-            return Distribution({x: self.tables[x]})
+        if isinstance(x, str) and predecessors is None:
+            return JointDistribution({x: self.tables[x]})
 
         # Line 2 Return
-        elif isinstance(x, set) and parents is None:
-            return Distribution({p: self.tables[p] for p in self.tables if p in x})
+        elif isinstance(x, set) and predecessors is None:
+            return JointDistribution({p: self.tables[p] for p in self.tables if p in x})
 
         # Line 6 return
-        elif isinstance(x, str) and parents is not None:
-            return Distribution({x: self.tables[x]}, {p: self.tables[p] for p in parents})
+        elif isinstance(x, str) and predecessors is not None:
+            return JointDistribution(self.tables[x], {p: self.tables[p] for p in predecessors})
 
     def __str__(self):
         if self.tables is None:
