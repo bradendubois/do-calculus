@@ -8,7 +8,7 @@
 #########################################################
 
 from ..structures.Expressions import SigmaObj, PiObj
-from ..structures.Distribution import Distribution
+from ..structures.JointDistribution import JointDistribution
 from ..structures.LatentGraph import LatentGraph
 
 # This is the implementation of Shpitser & Pearl (2006)'s 3rd algorithm, which provides an identification of
@@ -40,15 +40,11 @@ def Pi(s, X):
 
 
 # noinspection PyPep8Naming
-def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
+def ID(y: set, x: set, P: JointDistribution, G: LatentGraph, rec=0):
 
     # noinspection PyPep8Naming
     def An(X: set):
         return set().union(*[G.ancestors(v) for v in X]) | X
-
-    def parents(v):
-        print(v, G.parents(v))
-        return G.parents(v)
 
     V = G.v
 
@@ -97,7 +93,7 @@ def ID(y: set, x: set, P: Distribution, G: LatentGraph, rec=0):
         if S in C(G):
 
             # return Sigma_{S\Y} Pi_{V_i ∈ S} P(v_i | v_P{pi}^{i -1})
-            return Sigma(S-y, Pi(S, [P(Vi, parents(Vi)) for Vi in S]))
+            return Sigma(S-y, Pi(S, [P(Vi, G.V(G.get_topology(Vi))) for Vi in S]))
 
         #   7 -  if (∃S')S ⊂ S' ∈ C(G)
         if any(S.issubset(Si) for Si in C(G)):

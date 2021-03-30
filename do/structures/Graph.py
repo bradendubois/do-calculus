@@ -20,7 +20,7 @@ class Graph:
 
     """A basic graph, with edge control."""
 
-    def __init__(self, v: Set[str], e: Set[Tuple[str, str]]):
+    def __init__(self, v: Set[str], e: Set[Tuple[str, str]], compute_topology=True):
         """
         Initializer for a basic Graph.
         @param v: A set of vertices
@@ -41,8 +41,9 @@ class Graph:
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
 
-        topology = self.topology_sort()
-        self.topology_map = {vertex: topology.index(vertex) for vertex in v}
+        if compute_topology:
+            topology = self.topology_sort()
+            self.topology_map = {vertex: topology.index(vertex) for vertex in v}
 
     def __str__(self) -> str:
         """

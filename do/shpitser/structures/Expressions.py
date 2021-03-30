@@ -7,7 +7,7 @@
 #                                                       #
 #########################################################
 
-from .Distribution import Distribution
+from .JointDistribution import JointDistribution
 
 # A representation of Summation / Product symbols for use in Shpitser
 
@@ -36,7 +36,7 @@ class Symbol:
             if len(self.exp) > 1:
                 rep += "["
             for item in self.exp:
-                if isinstance(item, Symbol) or isinstance(item, Distribution):
+                if isinstance(item, Symbol) or isinstance(item, JointDistribution):
                     rep += str(item) + (", " if len(self.exp) > 1 else "")
                 else:
                     print("CONFUSED: ", type(item))

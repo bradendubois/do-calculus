@@ -1,5 +1,5 @@
 __all__ = [
-    "Distribution",
+    "JointDistribution.py",
     "Expressions",
     "LatentGraph"
 ]

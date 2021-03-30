@@ -12,8 +12,8 @@ from do.util.ModelLoader import parse_model
 
 from tests.modules.inference.inference_tests import model_inference_validation
 
-from gen_graph import generate_graph, randomized_latent_variables
-from gen_distribution import generate_distribution
+from .gen_graph import generate_graph, randomized_latent_variables
+from .gen_distribution import generate_distribution
 
 
 def semi_markov_transform(model: dict, k=1):

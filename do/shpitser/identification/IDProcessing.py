@@ -9,7 +9,7 @@
 
 import itertools
 
-from ..structures.Distribution import Distribution
+from ..structures.JointDistribution import JointDistribution
 from ..structures.Expressions import Symbol, PiObj, SigmaObj
 
 from ...structures.CausalGraph import CausalGraph
@@ -61,7 +61,7 @@ def parse_shpitser(result: Symbol, cg: CausalGraph, known: dict):
             return parse_shpitser(result.exp, cg, known)
 
     # Compute probability
-    elif isinstance(result, Distribution):
+    elif isinstance(result, JointDistribution):
         h = result.tables
         b = result.parents
 

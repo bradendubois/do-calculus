@@ -23,6 +23,8 @@ def latent_projection(G: Graph, U: set) -> LatentGraph:
     E = set(G.e.copy())
     Un = U.copy()
 
+    topology = G.topology_sort()
+
     # Collapse unobservable variables, such as U1 -> U2 -> V ==> U1 -> V
     reduction = True
     while reduction:
@@ -80,4 +82,4 @@ def latent_projection(G: Graph, U: set) -> LatentGraph:
             E.add((a[1], b[1]))
             E.add((b[1], a[1]))
 
-    return LatentGraph(V, E)
+    return LatentGraph(V, E, topology)
