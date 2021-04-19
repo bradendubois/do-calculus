@@ -1,16 +1,3 @@
-#########################################################
-#                                                       #
-#   Graph                                               #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
-# This will serve as a way to break up the behemoth Causal Graph into smaller sections.
-#   We can isolate more generalized graph code here, as well as create a better way to "erase" incoming or outgoing
-#   edges, but only temporarily; this will improve "reach", "parents", etc.
-
 from typing import Collection, Set, Tuple, Union
 
 from .Types import V_Type
@@ -200,6 +187,20 @@ class Graph:
             e -= set(filter(lambda edge: edge[0] in roots, e))
 
         return topology
+
+    def without_incoming_edges(self, x: Collection[Union[str, V_Type]]):
+
+        v = self.v.copy()
+        e = {(s, t) for (s, t) in self.e if t not in x}
+
+        return Graph(v, e)
+
+    def without_outgoing_edges(self, x: Collection[Union[str, V_Type]]):
+
+        v = self.v.copy()
+        e = {(s, t) for (s, t) in self.e if s not in x}
+
+        return Graph(v, e)
 
 
 def to_label(item: V_Type) -> str:

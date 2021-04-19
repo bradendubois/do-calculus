@@ -1,7 +1,7 @@
 from random import choices, randint
 
 from do.structures.VariableStructures import Variable, Outcome, Intervention
-from do.structures.Graph import to_label
+from do.structures.Graph import Graph, to_label
 
 from ..test_driver import graph
 
@@ -153,6 +153,44 @@ def test_descendant_first_sort():
     ...
 
 
+def test_without_incoming_edges():
+
+    g = graph.copy()
+
+    roots = g.roots()
+    root_children = set().union(*[g.children(x) for x in roots])
+
+    nop = g.without_incoming_edges(roots)       # roots have no incoming; should change nothing
+    op = g.without_incoming_edges(root_children)     # sever initial roots
+
+    assert g.v == nop.v and g.e == nop.e    # ensure no change
+
+    assert g.v == op.v
+    assert g.e != op.e
+    assert len(g.e) > len(op.e)
+    assert len(op.roots()) > len(g.roots())
+    assert op.roots() == set(g.roots()) | root_children
+
+
+def test_without_outgoing_edges():
+
+    g: Graph = graph.copy()
+
+    sinks = g.sinks()
+    sink_parents = set().union(*[g.parents(x) for x in sinks])
+
+    nop = g.without_outgoing_edges(sinks)       # sinks have no outgoing; should change nothing
+    op = g.without_outgoing_edges(sink_parents)     # sever initial sinks
+
+    assert g.v == nop.v and g.e == nop.e    # ensure no change
+
+    assert g.v == op.v
+    assert g.e != op.e
+    assert len(g.e) > len(op.e)
+    assert len(op.sinks()) > len(g.sinks())
+    assert op.sinks() == set(g.sinks()) | sink_parents
+
+
 def test_to_label():
     outcome = Outcome("Xj", "xj")
     intervention = Intervention("Xj", "xj")
@@ -161,4 +199,3 @@ def test_to_label():
     assert to_label(outcome) == outcome.name
     assert to_label(intervention) == intervention.name
     assert to_label(variable) == variable.name
-
