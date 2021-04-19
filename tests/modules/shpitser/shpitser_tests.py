@@ -20,7 +20,7 @@ markov_model_directory = shpitser_test_module / "models" / "markov"
 semi_markov_model_directory = shpitser_test_module / "models" / "semi_markov"
 
 
-def shpitser_parity(markov_cg: CausalGraph, semi_markov_cg) -> (bool, str):
+def shpitser_parity(markov_cg: CausalGraph, semi_markov_cg: CausalGraph) -> (bool, str):
     """
 
     @param markov_cg:
@@ -32,13 +32,13 @@ def shpitser_parity(markov_cg: CausalGraph, semi_markov_cg) -> (bool, str):
 
     for y in power_set(v, allow_empty_set=False):
 
-        for x in power_set(v - y, allow_empty_set=True):
+        for x in power_set(v - set(y), allow_empty_set=True):
 
             try:
 
                 # Regular backdoor criteria with
-
-                y_outcomes = {Outcome(s, markov_cg.outcomes[s][0]) for s in v}
+                print("YO", v)
+                y_outcomes = {Outcome(s, markov_cg.outcomes[s][0]) for s in y}
                 x_do = [Intervention(s, markov_cg.outcomes[s][0]) for s in x]
 
                 try:
@@ -85,6 +85,12 @@ def shpitser_tests(graph_location: Path) -> (bool, str):
 
         with semi_markov.open("r") as f:
             semi_markov_model = load(f)
+
+        print(markov_model)
+
+        print("*******")
+
+        print(semi_markov_model)
 
         # Parse and create Causal Graphs
 

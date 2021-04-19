@@ -1,4 +1,4 @@
-from typing import Collection, Sequence, Set, Tuple, Union
+from typing import Collection, Optional, Sequence, Set, Tuple, Union
 
 from .Types import V_Type
 
@@ -7,11 +7,12 @@ class Graph:
 
     """A basic graph, with edge control."""
 
-    def __init__(self, v: Set[str], e: Set[Tuple[str, str]]):
+    def __init__(self, v: Set[str], e: Set[Tuple[str, str]], topology: Optional[Sequence[Union[str, V_Type]]] = None):
         """
         Initializer for a basic Graph.
         @param v: A set of vertices
         @param e: A set of edges, each edge being (source, target)
+        @param topology: An optional sequence of vertices defining the topological ordering of the graph
         """
 
         self.v = v
@@ -28,9 +29,12 @@ class Graph:
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
 
-        if compute_topology:
+        if not topology:
             topology = self.topology_sort()
-            self.topology_map = {vertex: topology.index(vertex) for vertex in v}
+        else:
+            topology = list(filter(lambda x: x in v, topology))
+
+        self.topology_map = {vertex: index for index, vertex in enumerate(topology, start=1)}
 
     def __str__(self) -> str:
         """

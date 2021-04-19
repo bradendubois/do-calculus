@@ -124,6 +124,7 @@ def test_topology_sort():
 
 
 def test_graph_copy():
+
     graph_2 = graph.copy()
 
     assert len(graph.v) == len(graph_2.v)

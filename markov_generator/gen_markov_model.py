@@ -93,7 +93,7 @@ def create_k_models(n, destination_directory, k, num_vertices=10, max_length=10,
             with (markov_directory / f"m{model_number}.json").open("w") as f:
                 dump({
                     "name": "m" + str(model_number),
-                    "model": generated_model
+                    **generated_model
                 }, f, indent=4, sort_keys=True)
 
             semi_markov = semi_markov_transform(generated_model, k=k)
@@ -101,7 +101,7 @@ def create_k_models(n, destination_directory, k, num_vertices=10, max_length=10,
             with (semi_markov_directory / f"m{model_number}.json").open("w") as f:
                 dump({
                     "name": "m" + str(model_number) + "_L",
-                    "model": semi_markov,
+                    **semi_markov,
                 }, f, indent=4, sort_keys=True)
 
             generated += 1
