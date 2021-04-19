@@ -1,0 +1,481 @@
+{
+    "model": {
+        "model": {
+            "AFP": {
+                "outcomes": [
+                    "afp",
+                    "~afp"
+                ],
+                "parents": [
+                    "IOK"
+                ],
+                "table": [
+                    [
+                        "afp",
+                        "iok",
+                        0.1475
+                    ],
+                    [
+                        "~afp",
+                        "iok",
+                        0.8525
+                    ],
+                    [
+                        "afp",
+                        "~iok",
+                        0.1873
+                    ],
+                    [
+                        "~afp",
+                        "~iok",
+                        0.8127
+                    ]
+                ]
+            },
+            "AJN": {
+                "outcomes": [
+                    "ajn",
+                    "~ajn"
+                ],
+                "parents": [
+                    "GYI",
+                    "RDU",
+                    "SXT"
+                ],
+                "table": [
+                    [
+                        "ajn",
+                        "gyi",
+                        "rdu",
+                        "sxt",
+                        0.5628
+                    ],
+                    [
+                        "~ajn",
+                        "gyi",
+                        "rdu",
+                        "sxt",
+                        0.4372
+                    ],
+                    [
+                        "ajn",
+                        "gyi",
+                        "rdu",
+                        "~sxt",
+                        0.0874
+                    ],
+                    [
+                        "~ajn",
+                        "gyi",
+                        "rdu",
+                        "~sxt",
+                        0.9126
+                    ],
+                    [
+                        "ajn",
+                        "gyi",
+                        "~rdu",
+                        "sxt",
+                        0.5231
+                    ],
+                    [
+                        "~ajn",
+                        "gyi",
+                        "~rdu",
+                        "sxt",
+                        0.4769
+                    ],
+                    [
+                        "ajn",
+                        "gyi",
+                        "~rdu",
+                        "~sxt",
+                        0.8972
+                    ],
+                    [
+                        "~ajn",
+                        "gyi",
+                        "~rdu",
+                        "~sxt",
+                        0.1028
+                    ],
+                    [
+                        "ajn",
+                        "~gyi",
+                        "rdu",
+                        "sxt",
+                        0.3102
+                    ],
+                    [
+                        "~ajn",
+                        "~gyi",
+                        "rdu",
+                        "sxt",
+                        0.6898
+                    ],
+                    [
+                        "ajn",
+                        "~gyi",
+                        "rdu",
+                        "~sxt",
+                        0.3791
+                    ],
+                    [
+                        "~ajn",
+                        "~gyi",
+                        "rdu",
+                        "~sxt",
+                        0.6209
+                    ],
+                    [
+                        "ajn",
+                        "~gyi",
+                        "~rdu",
+                        "sxt",
+                        0.8468
+                    ],
+                    [
+                        "~ajn",
+                        "~gyi",
+                        "~rdu",
+                        "sxt",
+                        0.1532
+                    ],
+                    [
+                        "ajn",
+                        "~gyi",
+                        "~rdu",
+                        "~sxt",
+                        0.8903
+                    ],
+                    [
+                        "~ajn",
+                        "~gyi",
+                        "~rdu",
+                        "~sxt",
+                        0.1097
+                    ]
+                ]
+            },
+            "AWT": {
+                "outcomes": [
+                    "awt",
+                    "~awt"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "awt",
+                        0.739
+                    ],
+                    [
+                        "~awt",
+                        0.261
+                    ]
+                ]
+            },
+            "AYC": {
+                "outcomes": [
+                    "ayc",
+                    "~ayc"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "ayc",
+                        0.2523
+                    ],
+                    [
+                        "~ayc",
+                        0.7477
+                    ]
+                ]
+            },
+            "GYI": {
+                "outcomes": [
+                    "gyi",
+                    "~gyi"
+                ],
+                "parents": [
+                    "AYC"
+                ],
+                "table": [
+                    [
+                        "gyi",
+                        "ayc",
+                        0.8368
+                    ],
+                    [
+                        "~gyi",
+                        "ayc",
+                        0.1632
+                    ],
+                    [
+                        "gyi",
+                        "~ayc",
+                        0.4289
+                    ],
+                    [
+                        "~gyi",
+                        "~ayc",
+                        0.5711
+                    ]
+                ]
+            },
+            "IOK": {
+                "outcomes": [
+                    "iok",
+                    "~iok"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "iok",
+                        0.8495
+                    ],
+                    [
+                        "~iok",
+                        0.1505
+                    ]
+                ]
+            },
+            "KQF": {
+                "outcomes": [
+                    "kqf",
+                    "~kqf"
+                ],
+                "parents": [
+                    "AFP",
+                    "AWT"
+                ],
+                "table": [
+                    [
+                        "kqf",
+                        "afp",
+                        "awt",
+                        0.5239
+                    ],
+                    [
+                        "~kqf",
+                        "afp",
+                        "awt",
+                        0.4761
+                    ],
+                    [
+                        "kqf",
+                        "afp",
+                        "~awt",
+                        0.2378
+                    ],
+                    [
+                        "~kqf",
+                        "afp",
+                        "~awt",
+                        0.7622
+                    ],
+                    [
+                        "kqf",
+                        "~afp",
+                        "awt",
+                        0.2871
+                    ],
+                    [
+                        "~kqf",
+                        "~afp",
+                        "awt",
+                        0.7129
+                    ],
+                    [
+                        "kqf",
+                        "~afp",
+                        "~awt",
+                        0.1467
+                    ],
+                    [
+                        "~kqf",
+                        "~afp",
+                        "~awt",
+                        0.8533
+                    ]
+                ]
+            },
+            "NDF": {
+                "outcomes": [
+                    "ndf",
+                    "~ndf"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "ndf",
+                        0.7771
+                    ],
+                    [
+                        "~ndf",
+                        0.2229
+                    ]
+                ]
+            },
+            "RDU": {
+                "outcomes": [
+                    "rdu",
+                    "~rdu"
+                ],
+                "parents": [
+                    "AWT",
+                    "AYC",
+                    "KQF"
+                ],
+                "table": [
+                    [
+                        "rdu",
+                        "awt",
+                        "ayc",
+                        "kqf",
+                        0.1798
+                    ],
+                    [
+                        "~rdu",
+                        "awt",
+                        "ayc",
+                        "kqf",
+                        0.8202
+                    ],
+                    [
+                        "rdu",
+                        "awt",
+                        "ayc",
+                        "~kqf",
+                        0.058
+                    ],
+                    [
+                        "~rdu",
+                        "awt",
+                        "ayc",
+                        "~kqf",
+                        0.942
+                    ],
+                    [
+                        "rdu",
+                        "awt",
+                        "~ayc",
+                        "kqf",
+                        0.084
+                    ],
+                    [
+                        "~rdu",
+                        "awt",
+                        "~ayc",
+                        "kqf",
+                        0.916
+                    ],
+                    [
+                        "rdu",
+                        "awt",
+                        "~ayc",
+                        "~kqf",
+                        0.2815
+                    ],
+                    [
+                        "~rdu",
+                        "awt",
+                        "~ayc",
+                        "~kqf",
+                        0.7185
+                    ],
+                    [
+                        "rdu",
+                        "~awt",
+                        "ayc",
+                        "kqf",
+                        0.2962
+                    ],
+                    [
+                        "~rdu",
+                        "~awt",
+                        "ayc",
+                        "kqf",
+                        0.7038
+                    ],
+                    [
+                        "rdu",
+                        "~awt",
+                        "ayc",
+                        "~kqf",
+                        0.6227
+                    ],
+                    [
+                        "~rdu",
+                        "~awt",
+                        "ayc",
+                        "~kqf",
+                        0.3773
+                    ],
+                    [
+                        "rdu",
+                        "~awt",
+                        "~ayc",
+                        "kqf",
+                        0.4669
+                    ],
+                    [
+                        "~rdu",
+                        "~awt",
+                        "~ayc",
+                        "kqf",
+                        0.5331
+                    ],
+                    [
+                        "rdu",
+                        "~awt",
+                        "~ayc",
+                        "~kqf",
+                        0.7806
+                    ],
+                    [
+                        "~rdu",
+                        "~awt",
+                        "~ayc",
+                        "~kqf",
+                        0.2194
+                    ]
+                ]
+            },
+            "RGJ": {
+                "outcomes": [
+                    "rgj",
+                    "~rgj"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "rgj",
+                        0.3485
+                    ],
+                    [
+                        "~rgj",
+                        0.6515
+                    ]
+                ]
+            },
+            "SXT": {
+                "outcomes": [
+                    "sxt",
+                    "~sxt"
+                ],
+                "parents": [],
+                "table": [
+                    [
+                        "sxt",
+                        0.0644
+                    ],
+                    [
+                        "~sxt",
+                        0.9356
+                    ]
+                ]
+            }
+        }
+    },
+    "name": "m4"
+}

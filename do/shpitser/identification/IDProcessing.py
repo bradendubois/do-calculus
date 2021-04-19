@@ -9,11 +9,11 @@
 
 import itertools
 
-from src.probability.shpitser.structures.Distribution import Distribution
-from src.probability.shpitser.structures.Expressions import Symbol, PiObj, SigmaObj
+from ..structures.JointDistribution import JointDistribution
+from ..structures.Expressions import Symbol, PiObj, SigmaObj
 
-from src.probability.structures.CausalGraph import CausalGraph
-from src.probability.structures.VariableStructures import Outcome
+from ...structures.CausalGraph import CausalGraph
+from ...structures.VariableStructures import Outcome
 
 
 # Parse an Expression object produced by the application of Shpitser & Pearl's ID algorithm
@@ -61,7 +61,7 @@ def parse_shpitser(result: Symbol, cg: CausalGraph, known: dict):
             return parse_shpitser(result.exp, cg, known)
 
     # Compute probability
-    elif isinstance(result, Distribution):
+    elif isinstance(result, JointDistribution):
         h = result.tables
         b = result.parents
 

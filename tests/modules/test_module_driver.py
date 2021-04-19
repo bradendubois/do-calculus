@@ -2,7 +2,8 @@ from .backdoors.backdoor_path_tests import backdoor_tests
 from .inference.inference_tests import inference_tests
 from .shpitser.shpitser_tests import shpitser_tests
 
-from ..test_driver import graphs, print_test_result
+from ..test_driver import graphs
+from ..print_test_result import print_test_result
 
 
 def test_backdoor_module() -> bool:

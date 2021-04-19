@@ -2,7 +2,7 @@
 
 ## Version Support
 
-Version support always extends only to the current MINOR version number (the second number under semantic versioning, following the patterm MAJOR.MINOR.PATH). There are no plans for any breaking changes to the API moving forward, only feature *additions*, so it seems a reasonable expectation for a dependant of this package to be able to upgrade with no problems.
+Version support always extends only to the current MINOR version number (the second number under semantic versioning, following the pattern MAJOR.MINOR.PATH). There are no plans for any breaking changes to the API moving forward, only feature *additions*, so it seems a reasonable expectation for a dependant of this package to be able to upgrade with no problems.
 
 ## Reporting a Vulnerability
 

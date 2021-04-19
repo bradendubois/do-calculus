@@ -1,4 +1,4 @@
-from typing import Collection, Set, Tuple, Union
+from typing import Collection, Sequence, Set, Tuple, Union
 
 from .Types import V_Type
 
@@ -28,8 +28,9 @@ class Graph:
         self.outgoing_disabled = set()
         self.incoming_disabled = set()
 
-        topology = self.topology_sort()
-        self.topology_map = {vertex: topology.index(vertex) for vertex in v}
+        if compute_topology:
+            topology = self.topology_sort()
+            self.topology_map = {vertex: topology.index(vertex) for vertex in v}
 
     def __str__(self) -> str:
         """
@@ -162,7 +163,15 @@ class Graph:
         copied.outgoing_disabled = self.outgoing_disabled.copy()
         return copied
 
-    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Collection[Union[str, V_Type]]:
+    def __getitem__(self, v: set):
+        """
+        Compute a subset V of some Graph G.
+        :param v: A set of variables in G.
+        :return: A Graph representing the subgraph G[V].
+        """
+        return Graph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
+
+    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Sequence[Union[str, V_Type]]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
@@ -171,7 +180,7 @@ class Graph:
         """
         return sorted(variables, key=lambda v: self.get_topology(v))
 
-    def topology_sort(self):
+    def topology_sort(self) -> Sequence[str]:
 
         topology = []
         v = self.v.copy()
