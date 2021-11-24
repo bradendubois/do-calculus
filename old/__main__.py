@@ -102,3 +102,6 @@ def main(graph_location=Path(".", "graphs")):
         func(**parse(arg))
         # except Exception as e:
         #    print("EXCEPTION:", str(e))
+
+if __name__ == "__main__":
+    main()
