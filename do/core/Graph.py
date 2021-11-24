@@ -1,13 +1,13 @@
 from typing import Collection, Optional, Sequence, Set, Tuple, Union
 
-from .Types import V_Type
+from .Types import VClass, Vertex
 
 
 class Graph:
 
     """A basic graph, with edge control."""
 
-    def __init__(self, v: Set[str], e: Set[Tuple[str, str]], topology: Optional[Sequence[Union[str, V_Type]]] = None):
+    def __init__(self, v: Set[str], e: Set[Tuple[str, str]], topology: Optional[Sequence[Union[str, VClass]]] = None):
         """
         Initializer for a basic Graph.
         @param v: A set of vertices
@@ -59,7 +59,7 @@ class Graph:
         """
         return set([x for x in self.v if len(self.children(x)) == 0])
 
-    def parents(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
+    def parents(self, v: Vertex) -> Collection[Vertex]:
         """
         Get the parents of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -71,7 +71,7 @@ class Graph:
 
         return {p for p in self.incoming[label] if p not in self.outgoing_disabled and p not in self.outgoing[label]}
 
-    def children(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
+    def children(self, v: Vertex) -> Collection[Vertex]:
         """
         Get the children of v, which may actually be currently controlled
         @param v: A variable in our graph
@@ -83,7 +83,7 @@ class Graph:
 
         return {c for c in self.outgoing[label] if c not in self.incoming_disabled and c not in self.incoming[label]}
 
-    def ancestors(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
+    def ancestors(self, v: Vertex) -> Collection[Vertex]:
         """
         Get the ancestors of v, accounting for disabled vertices
         @param v: The vertex to find all ancestors of
@@ -101,7 +101,7 @@ class Graph:
 
         return ancestors
 
-    def descendants(self, v: Union[V_Type, str]) -> Collection[Union[str, V_Type]]:
+    def descendants(self, v: Vertex) -> Collection[Vertex]:
         """
         Get the reach of v, accounting for disabled vertices
         @param v: The vertex to find all descendants of
@@ -117,9 +117,9 @@ class Graph:
             children.add(current)
             queue.extend(list(self.children(current)))
 
-        return set(children)
+        return children
 
-    def disable_outgoing(self, *disable: Union[V_Type, str]):
+    def disable_outgoing(self, *disable: Vertex):
         """
         Disable the given vertices' outgoing edges
         @param disable: Any number of vertices to disable
@@ -127,7 +127,7 @@ class Graph:
         for v in disable:
             self.outgoing_disabled.add(to_label(v))
 
-    def disable_incoming(self, *disable: Union[V_Type, str]):
+    def disable_incoming(self, *disable: Vertex):
         """
         Disable the given vertices' incoming edges
         @param disable: Any number of vertices to disable
@@ -142,7 +142,7 @@ class Graph:
         self.outgoing_disabled.clear()
         self.incoming_disabled.clear()
 
-    def get_topology(self, v: Union[V_Type, str]) -> int:
+    def get_topology(self, v: Vertex) -> int:
         """
         Determine the "depth" a given Variable is at in a topological sort of the graph
         @param v: The variable to determine the depth of
@@ -175,7 +175,7 @@ class Graph:
         """
         return Graph({s for s in self.v if s in v}, {s for s in self.e if s[0] in v and s[1] in v})
 
-    def descendant_first_sort(self, variables: Collection[Union[str, V_Type]]) -> Sequence[Union[str, V_Type]]:
+    def descendant_first_sort(self, variables: Collection[Vertex]) -> Sequence[Vertex]:
         """
         A helper function to "sort" a list of Variables/Outcomes/Interventions such that no element has a
         "parent"/"ancestor" to its left
@@ -201,14 +201,14 @@ class Graph:
 
         return topology
 
-    def without_incoming_edges(self, x: Collection[Union[str, V_Type]]):
+    def without_incoming_edges(self, x: Collection[Vertex]):
 
         v = self.v.copy()
         e = {(s, t) for (s, t) in self.e if t not in x}
 
         return Graph(v, e)
 
-    def without_outgoing_edges(self, x: Collection[Union[str, V_Type]]):
+    def without_outgoing_edges(self, x: Collection[Vertex]):
 
         v = self.v.copy()
         e = {(s, t) for (s, t) in self.e if s not in x}
@@ -216,7 +216,7 @@ class Graph:
         return Graph(v, e)
 
 
-def to_label(item: V_Type) -> str:
+def to_label(item: VClass) -> str:
     """
     Convert a variable to its string name, if not already provided as such
     @param item: The item to convert, either a string (done) or some Variable

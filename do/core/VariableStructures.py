@@ -1,13 +1,4 @@
-#########################################################
-#                                                       #
-#   VariableStructures.py                               #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
-from re import findall, sub    # Used to parse a line of text into respective Outcomes and Interventions
+from re import findall, sub
 
 
 class Outcome:
@@ -115,7 +106,7 @@ def parse_outcomes_and_interventions(line: str) -> set:
     @param line: A string representing the query
     @return: A list, of Outcomes and/or Interventions
     """
-    # "do(X=x)", "do(X=x, Y=y)", "do(X-x), do(Y=y)" are all valid ways to write interventions
+    # "do(X=x)", "do(X=x, Y=y)", "do(X=x), do(Y=y)" are all valid ways to write interventions
     interventions_preprocessed = findall(r'do\([^do]*\)', line)
     interventions_preprocessed = [item.strip("do(), ") for item in interventions_preprocessed]
     interventions = []

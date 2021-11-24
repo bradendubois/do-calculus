@@ -1,11 +1,3 @@
-#########################################################
-#   Causal Graph                                        #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
 from math import floor, ceil
 from numpy import empty
 from typing import List
