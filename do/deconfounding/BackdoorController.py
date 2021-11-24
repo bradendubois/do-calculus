@@ -10,12 +10,14 @@
 from itertools import product
 from typing import List, Optional
 
-from .Graph import Graph
-from .Types import Collection, Path, Vertices, Vertex, V_Type
-from .Exceptions import IntersectingSets
+from ..core.Graph import Graph
+from ..core.Types import Collection, Path, Vertices, Vertex, V_Type
+from ..core.Exceptions import IntersectingSets
 
-from ..config.settings import Settings
-from ..util.helpers import minimal_sets, power_set, str_map, disjoint
+# TODO - Settings change
+# from ..config.settings import Settings
+
+# from ..util.helpers import minimal_sets, power_set, str_map, disjoint
 
 
 class BackdoorController:

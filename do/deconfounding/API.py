@@ -1,3 +1,12 @@
+
+class API:
+
+    def foo(self):
+        print("foo")
+
+    ...
+
+
 from typing import Collection, Dict, Optional
 
 from ..structures.BackdoorController import BackdoorController

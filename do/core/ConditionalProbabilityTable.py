@@ -5,7 +5,8 @@ from typing import List
 from .Exceptions import MissingTableRow
 from .VariableStructures import Variable, Outcome, Intervention
 
-from ..config.settings import Settings
+# TODO - Different configuration form
+# from ..config.settings import Settings
 
 
 class ConditionalProbabilityTable:

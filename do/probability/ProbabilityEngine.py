@@ -1,23 +1,16 @@
-#########################################################
-#                                                       #
-#   Probability Engine                                  #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
 from itertools import product
 from typing import Collection, Union
 
-from .Graph import Graph
-from .Exceptions import ProbabilityException, ProbabilityIndeterminableException
-from .VariableStructures import Outcome, Intervention
+from ..core.Graph import Graph
+from ..core.Exceptions import ProbabilityException, ProbabilityIndeterminableException
+from ..core.VariableStructures import Outcome, Intervention
 
-from ..config.settings import Settings
-from ..util.OutputLogger import OutputLogger
-from ..util.helpers import p_str
+# from ..config.settings import Settings
+# from ..util.OutputLogger import OutputLogger
+# from ..util.helpers import p_str
 
+
+Settings = {}
 
 class ProbabilityEngine:
 
