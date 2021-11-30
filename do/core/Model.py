@@ -1,11 +1,40 @@
 from json import load as json_load
 from pathlib import Path
-from typing import Union
+from typing import Mapping, Union
 from yaml import safe_load as yaml_load
 
-from ..structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from ..structures.Graph import Graph
-from ..structures.VariableStructures import Variable
+from .ConditionalProbabilityTable import ConditionalProbabilityTable
+from .Graph import Graph
+from .Variables import Variable
+
+class Model:
+
+    def __init__(self, graph: Graph, variables: Mapping[str, Variable], distribution: Mapping[Variable, ConditionalProbabilityTable]):
+        ...
+
+class CausalGraph:
+    """Handles probability queries / joint distributions on the given Causal Graph"""
+
+    def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, latent: set, **kwargs):
+        """
+        Initialize a Causal Graph to compute standard probability queries as well as interventional, as per the
+        do-calculus of Judea Pearl, with deconfounding sets handled automatically.
+        @param graph: A Graph object representing a given model
+        @param variables: A dictionary mapping a string name of a variable to a Variable object
+        @param outcomes: A dictionary mapping both a string name of a Variable, as well as the Variable object itself
+            to a list of possible outcome values for the variable.
+        @param tables: A dictionary mapping both a string name of a Variable, as well as the Variable object itself to
+            a given ConditionalProbabilityTable object.
+        @param latent: A set of variables, both string name as well as the Variable object itself, representing all
+            latent (unobservable) variables in the given model.
+        @param kwargs: Any arbitrary additional keyword arguments, allowing a model loaded using a library to be
+            unpacked into an initializer call using the ** prefix.
+        """
+        self.graph = graph.copy()
+        self.variables = variables.copy()
+        self.outcomes = outcomes.copy()
+        self.tables = tables.copy()
+        self.latent = latent.copy()
 
 
 def parse_model(file: Union[dict, str, Path]):

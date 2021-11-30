@@ -1,12 +1,9 @@
 from math import floor, ceil
 from numpy import empty
-from typing import List
+from typing import List, Union
 
 from .Exceptions import MissingTableRow
-from .VariableStructures import Variable, Outcome, Intervention
-
-# TODO - Different configuration form
-# from ..config.settings import Settings
+from .Variables import Variable, Outcome, Intervention
 
 
 class ConditionalProbabilityTable:
@@ -68,7 +65,7 @@ class ConditionalProbabilityTable:
                 table[i+1][1+given_idx] = row[1][given_idx].outcome
 
             # The probability, to some modifiable number of digits
-            table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=Settings.output_levels_of_precision)
+            table[i+1][table.shape[1]-1] = "{0:.{prec}f}".format(row[2], prec=5)
 
         # Wiggle/Padding, column by column
         for column_index in range(1 + len(self.parents) + 1):
@@ -86,7 +83,7 @@ class ConditionalProbabilityTable:
 
         return top_bottom_wrap + "\n" + "\n".join(string_list) + "\n" + top_bottom_wrap
 
-    def probability_lookup(self, outcome: Outcome or Intervention, given: list) -> float:
+    def probability_lookup(self, outcome: Union[Outcome, Intervention], given: list) -> float:
         """
         Directly lookup the probability for the row corresponding to the queried outcome and given data
         @param outcome: The specific outcome to lookup

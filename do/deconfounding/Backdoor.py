@@ -1,23 +1,11 @@
-#########################################################
-#                                                       #
-#   Backdoor Controller                                 #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
 from itertools import product
 from typing import List, Optional
 
 from ..core.Graph import Graph
-from ..core.Types import Collection, Path, Vertices, Vertex, V_Type
+from ..core.Types import Collection, Path, Vertex
 from ..core.Exceptions import IntersectingSets
 
-# TODO - Settings change
-# from ..config.settings import Settings
-
-# from ..util.helpers import minimal_sets, power_set, str_map, disjoint
+from ..core.helpers import minimal_sets, power_set, str_map, disjoint
 
 
 class BackdoorController:
@@ -35,7 +23,7 @@ class BackdoorController:
         self.graph = graph.copy()
         self.graph.reset_disabled()
 
-    def backdoor_paths(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> List[Path]:
+    def backdoor_paths(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> List[Path]:
         """
         Get all possible backdoor paths between some source set of vertices in the internal graph to any vertices in
         some destination set of vertices. A given (possibly empty) set of deconfounding vertices may serve to block, or
@@ -126,7 +114,7 @@ class BackdoorController:
         # Filter out the paths that don't "enter" x; see the definition of a backdoor path
         return list(filter(lambda l: len(l) > 2 and l[0] in self.graph.children(l[1]) and l[1] != t, backdoor_paths))
 
-    def all_dcf_sets(self, src: Vertices, dst: Vertices) -> List[Collection[str]]:
+    def all_dcf_sets(self, src: Collection[Vertex], dst: Collection[Vertex]) -> List[Collection[str]]:
         """
         Finds all Z subsets that serve as deconfounding sets between two sets of vertices, such as for the purpose of
         measuring interventional distributions.
@@ -188,7 +176,7 @@ class BackdoorController:
                 path_list = self.all_paths_cumulative(child, t, path + [s], path_list)
         return path_list
 
-    def independent(self, src: Vertices, dst: Vertices, dcf: Optional[Vertices]) -> bool:
+    def independent(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
         """
         Helper function that makes some do_calculus logic more readable; determine if two sets are independent, given
         some third set.

@@ -1,12 +1,8 @@
-from .core.API import Core_API
-from .deconfounding.API import Deconfounding_API
+from .core.API import API as Core
+from .deconfounding.API import API as Deconfounding
 
-class API(Core_API, Deconfounding_API):
+apis = [Core, Deconfounding]
+
+class API(*apis):
 
     ...
-
-
-x = API()
-
-x.foo()
-x.bar()

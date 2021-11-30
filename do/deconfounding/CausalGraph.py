@@ -1,26 +1,16 @@
-#########################################################
-#                                                       #
-#   Causal Graph                                        #
-#                                                       #
-#   Author: Braden Dubois (braden.dubois@usask.ca)      #
-#   Written for: Dr. Eric Neufeld                       #
-#                                                       #
-#########################################################
-
 from itertools import product
-from typing import Collection, Dict, Union
+from typing import Collection, Union
 
-from .BackdoorController import BackdoorController
-from .ConditionalProbabilityTable import ConditionalProbabilityTable
-from .Graph import Graph
-from .Probability_Engine import ProbabilityEngine
-from .Types import V_Type
-from .Exceptions import NoDeconfoundingSet
-from .VariableStructures import Variable, Outcome, Intervention
+from ..core.Graph import Graph
+from ..core.Inference import ProbabilityEngine
+from ..core.Variables import Outcome, Intervention
+from ..core.helpers import p_str
 
-from ..config.settings import Settings
-from ..util.OutputLogger import OutputLogger
-from ..util.helpers import p_str
+from .Backdoor import BackdoorController
+
+# from ..config.settings import Settings
+# from ..util.OutputLogger import OutputLogger
+
 
 
 class CausalGraph:
@@ -46,7 +36,7 @@ class CausalGraph:
         self.outcomes = outcomes.copy()
         self.tables = tables.copy()
         self.latent = latent.copy()
-        self.output = kwargs["output"] if "output" in kwargs else OutputLogger()
+        self.output = kwargs["output"] if "output" in kwargs else None #  OutputLogger()
 
     def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
@@ -103,7 +93,8 @@ class CausalGraph:
                 # Filter down the deconfounding sets not overlapping with our query body
                 vertex_dcf = list(filter(lambda s: len(set(s) & strings(body)) == 0, deconfounding_sets))
                 if len(vertex_dcf) == 0:
-                    raise NoDeconfoundingSet
+                    # raise NoDeconfoundingSet
+                    raise Exception
 
                 # Compute with every possible deconfounding set as a safety measure; ensuring they all match
                 probability = None  # Sentinel value
@@ -116,7 +107,8 @@ class CausalGraph:
                     # If results do NOT match; error
                     assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
-        msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=Settings.output_levels_of_precision + 1)
+        # msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=Settings.output_levels_of_precision + 1)
+        msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=1)
         self.output.detail(msg)
         self.graph.reset_disabled()
         return probability

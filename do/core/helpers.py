@@ -1,9 +1,8 @@
 from itertools import chain, combinations
 from typing import Collection, Iterator, Union
 
-from ..config.settings import Settings
-from ..structures.Types import Intervention, Outcome, Vertices
-
+# from ..config.settings import Settings
+from .Types import Intervention, Outcome, Vertex
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
     """
@@ -61,8 +60,9 @@ def within_precision(a: float, b: float) -> bool:
     @param b: The second value
     @return: True if the values are within the margin of error acceptable, False otherwise
     """
-    return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
+    return 0
+    #return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
 
 
-def str_map(to_filter: Vertices):
+def str_map(to_filter: Collection[Vertex]):
     return set(map(lambda v: v if isinstance(v, str) else v.name, to_filter))

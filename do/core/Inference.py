@@ -1,9 +1,10 @@
 from itertools import product
 from typing import Collection, Union
 
-from ..core.Graph import Graph
-from ..core.Exceptions import ProbabilityException, ProbabilityIndeterminableException
-from ..core.VariableStructures import Outcome, Intervention
+from .Graph import Graph
+from .Exceptions import ProbabilityException, ProbabilityIndeterminableException
+from .Types import VMeasured
+from .Variables import Outcome, Intervention
 
 # from ..config.settings import Settings
 # from ..util.OutputLogger import OutputLogger
@@ -264,7 +265,7 @@ class ProbabilityEngine:
                 print("Uh-oh:", string_representation, "has already been cached, but with a different value...")
 
 
-def contradictory_outcome_set(outcomes: Collection[Union[Outcome, Intervention]]) -> bool:
+def contradictory_outcome_set(outcomes: Collection[VMeasured]) -> bool:
     """
     Check whether a list of outcomes contain any contradictory values, such as Y = y and Y = ~y
     @param outcomes: A list of Outcome objects
