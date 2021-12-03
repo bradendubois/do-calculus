@@ -8,10 +8,6 @@ from ..core.helpers import p_str
 
 from .Backdoor import BackdoorController
 
-# from ..config.settings import Settings
-# from ..util.OutputLogger import OutputLogger
-
-
 
 class CausalGraph:
     """Handles probability queries / joint distributions on the given Causal Graph"""
@@ -36,7 +32,6 @@ class CausalGraph:
         self.outcomes = outcomes.copy()
         self.tables = tables.copy()
         self.latent = latent.copy()
-        self.output = kwargs["output"] if "output" in kwargs else None #  OutputLogger()
 
     def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
         """
