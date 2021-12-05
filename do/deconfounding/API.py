@@ -1,26 +1,25 @@
-from itertools import product
-from typing import Collection, Dict, Optional, Union
+from typing import Collection, Optional
 
-from ..core.ConditionalProbabilityTable import ConditionalProbabilityTable
 from ..core.Expression import Expression
+from ..core.Graph import Graph
 from ..core.Model import Model
 from ..core.Types import Vertex, Path
-from ..core.Variables import Intervention, Outcome, Variable, parse_outcomes_and_interventions
+from ..core.Variables import Intervention
 
-from .Backdoor import BackdoorController
-from .Do import CausalGraph
+from .Backdoor import backdoors, deconfound
+from .Do import treat
 
 
 class API:
 
     def treat(self, expression: Expression, interventions: Collection[Intervention], model: Model) -> float:
-        ...
+        return treat(expression, interventions, model)
 
-    def backdoors(self, x: Union[Vertex, Collection[Vertex]], y: Union[Vertex, Collection[Vertex]]) -> Collection[Path]:
-        ...
+    def backdoors(self, x: Collection[Vertex], y: Collection[Vertex], graph: Graph, z: Optional[Collection[Vertex]] = None) -> Collection[Path]:
+        return backdoors(x, y, graph, z)
 
-    def deconfound(self, x: Union[Vertex, Collection[Vertex]], y: Union[Vertex, Collection[Vertex]]) -> Collection[Collection[Vertex]]:
-        ...
-    
-    def blocks(self, x: Union[Vertex, Collection[Vertex]], y: Union[Vertex, Collection[Vertex]], z: Union[Vertex, Collection[Vertex]]) -> bool:
-        ...
+    def blocks(self, x: Collection[Vertex], y: Collection[Vertex], graph: Graph, z: Collection[Vertex]) -> bool:
+        return len(backdoors(x, y, graph, z)) == 0
+
+    def deconfound(self, x: Collection[Vertex], y: Collection[Vertex], graph: Graph) -> Collection[Collection[Vertex]]:
+        return deconfound(x, y, graph)

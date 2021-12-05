@@ -1,148 +1,98 @@
 from itertools import product
-from typing import Collection, Union
+from loguru import logger
+from typing import Collection
 
-from ..core.Graph import Graph
-from ..core.Inference import ProbabilityEngine
+from ..core.Expression import Expression
+from ..core.Inference import inference
+from ..core.Model import Model
 from ..core.Variables import Outcome, Intervention
 from ..core.helpers import p_str
 
-from .Backdoor import BackdoorController
+from .Backdoor import backdoors, deconfound
+from .Exceptions import NoDeconfoundingSet
 
 
-class CausalGraph:
-    """Handles probability queries / joint distributions on the given Causal Graph"""
+def treat(expression: Expression, interventions: Collection[Intervention], model: Model) -> float:
+    
+    head = set(expression.head())
+    body = set(expression.body())
 
-    def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, latent: set, **kwargs):
-        """
-        Initialize a Causal Graph to compute standard probability queries as well as interventional, as per the
-        do-calculus of Judea Pearl, with deconfounding sets handled automatically.
-        @param graph: A Graph object representing a given model
-        @param variables: A dictionary mapping a string name of a variable to a Variable object
-        @param outcomes: A dictionary mapping both a string name of a Variable, as well as the Variable object itself
-            to a list of possible outcome values for the variable.
-        @param tables: A dictionary mapping both a string name of a Variable, as well as the Variable object itself to
-            a given ConditionalProbabilityTable object.
-        @param latent: A set of variables, both string name as well as the Variable object itself, representing all
-            latent (unobservable) variables in the given model.
-        @param kwargs: Any arbitrary additional keyword arguments, allowing a model loaded using a library to be
-            unpacked into an initializer call using the ** prefix.
-        """
-        self.graph = graph.copy()
-        self.variables = variables.copy()
-        self.outcomes = outcomes.copy()
-        self.tables = tables.copy()
-        self.latent = latent.copy()
+    # If there are no Interventions, we can compute a standard query
+    if len(interventions) == 0:
+        return inference(expression, model)
 
-    def probability_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]]) -> float:
-        """
-        Compute a probability in the given model.
-        @param head: A set of Outcome objects
-        @param body: A set of Outcome and/or Intervention objects.
-        @return: A value in the range [0.0, 1.0] if the probability can be computed, None otherwise.
-        """
-        def strings(s: Collection[Union[Outcome, Intervention]]):
-            return set(map(lambda x: x.name, s))
+    # There are interventions; may need to find some valid Z to compute
+    else:
 
-        head = set(head)
-        body = set(body)
+        paths = backdoors(head, body, interventions)
 
-        self.graph.reset_disabled()
+        # No backdoor paths; augment graph space and compute
+        if len(paths) == 0:
+            expression_transform = Expression(expression.head(), set(expression.body()) | set(Outcome(x.name, x.value) for x in interventions))
+            model.graph().disable_incoming(*interventions)
+            p = inference(expression_transform, model)
+            model.graph().reset_disabled()
+            return p
 
-        # String representation of the given query
-        str_rep = p_str(list(head), list(body))
-        self.output.detail(f"Query: {str_rep}")
+        # Backdoor paths found; find deconfounding set to compute
+        # Find all possible deconfounding sets, and use possible subsets
+        deconfounding_sets = deconfound(interventions, head, model.graph())
 
-        interventions = set(filter(lambda x: isinstance(x, Intervention), body))
-        observations = body - interventions
+        # Filter down the deconfounding sets not overlapping with our query body
+        vertex_dcf = list(filter(lambda s: len(set(s) & {x.name for x in body}) == 0, deconfounding_sets))
+        if len(vertex_dcf) == 0:
+            raise NoDeconfoundingSet
 
-        # If there are no Interventions, we can compute a standard query
-        if len(interventions) == 0:
+        # Compute with every possible deconfounding set as a safety measure; ensuring they all match
+        probability = None  # Sentinel value
+        for z_set in vertex_dcf:
 
-            engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
-            probability = engine.probability(head, body)
+            result = _marginalize_query(head, body, z_set)
+            if probability is None:  # Storing first result
+                probability = result
 
-        # There are interventions; may need to find some valid Z to compute
-        else:
+            # If results do NOT match; error
+            assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
-            bc = BackdoorController(self.graph)
+        logger.info(f"{0} = {1:.{5}f}".format(p_str(head, set(body) | set(interventions)), probability, precision=1))
+        return result
 
-            src = strings(interventions)
-            dst = strings(head)
-            dcf = strings(observations)
 
-            # No backdoor paths; augment graph space and compute
-            if len(bc.backdoor_paths(src, dst, dcf)) == 0:
+def _marginalize_query(expression: Expression, deconfound: Collection[str], model: Model) -> float:
+    """
+    Handle the modified query where we require a deconfounding set due to Interventions / treatments.
+    @param head: The head of the query, a set containing Outcome objects
+    @param body: The body of the query, a set containing Outcome and Intervention objects
+    @param dcf: A set of (string) names of variables to serve as a deconfounding set, blocking all backdoor paths
+        between the head and body
+    @return:
+    """
 
-                # Block all the incoming edges for interventions, making them roots
-                self.graph.disable_incoming(*interventions)
+    head = set(expression.head())
+    body = set(expression.body())
 
-                engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
-                probability = engine.probability(head, body)
+    interventions = set(filter(lambda x: isinstance(x, Intervention), body))
 
-            # Backdoor paths found; find deconfounding set to compute
-            else:
+    # Augment graph (isolating interventions as roots) and create engine
+    model.graph().disable_incoming(*interventions)
 
-                # Find all possible deconfounding sets, and use possible subsets
-                deconfounding_sets = bc.all_dcf_sets(src, dst)
+    probability = 0.0
 
-                # Filter down the deconfounding sets not overlapping with our query body
-                vertex_dcf = list(filter(lambda s: len(set(s) & strings(body)) == 0, deconfounding_sets))
-                if len(vertex_dcf) == 0:
-                    # raise NoDeconfoundingSet
-                    raise Exception
+    # We take every possible combination of outcomes of Z and compute each probability separately
+    for cross in product(*[model.variable(var).outcomes for var in deconfound]):
 
-                # Compute with every possible deconfounding set as a safety measure; ensuring they all match
-                probability = None  # Sentinel value
-                for z_set in vertex_dcf:
+        # Construct the respective Outcome list of each Z outcome cross product
+        z_outcomes = {Outcome(x, cross[i]) for i, x in enumerate(deconfound)}
 
-                    result = self._marginalize_query(head, body, z_set)
-                    if probability is None:  # Storing first result
-                        probability = result
+        # First, we do P(Y | do(X), Z)
+        logger.info(f"computing sub-query: {p_str(list(head), list(body | z_outcomes))}")
+        p_y_x_z = inference(Expression(head, body | z_outcomes), model)
 
-                    # If results do NOT match; error
-                    assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
+        # Second, P(Z)
+        logger.info(f"computing sub-query: {p_str(list(z_outcomes), list(body))}")
+        p_z = inference(Expression(z_outcomes, body), model)
 
-        # msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=Settings.output_levels_of_precision + 1)
-        msg = "{0} = {1:.{precision}f}".format(str_rep, probability, precision=1)
-        self.output.detail(msg)
-        self.graph.reset_disabled()
-        return probability
+        probability += p_y_x_z * p_z
 
-    def _marginalize_query(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], dcf: Collection[str]) -> float:
-        """
-        Handle the modified query where we require a deconfounding set due to Interventions / treatments.
-        @param head: The head of the query, a set containing Outcome objects
-        @param body: The body of the query, a set containing Outcome and Intervention objects
-        @param dcf: A set of (string) names of variables to serve as a deconfounding set, blocking all backdoor paths
-            between the head and body
-        @return:
-        """
-
-        head = set(head)
-        body = set(body)
-
-        interventions = set(filter(lambda x: isinstance(x, Intervention), body))
-
-        # Augment graph (isolating interventions as roots) and create engine
-        self.graph.disable_incoming(*interventions)
-        engine = ProbabilityEngine(self.graph, self.outcomes, self.tables)
-
-        probability = 0.0
-
-        # We take every possible combination of outcomes of Z and compute each probability separately
-        for cross in product(*[self.outcomes[var] for var in dcf]):
-
-            # Construct the respective Outcome list of each Z outcome cross product
-            z_outcomes = {Outcome(x, cross[i]) for i, x in enumerate(dcf)}
-
-            # First, we do P(Y | do(X), Z)
-            self.output.detail(f"Computing sub-query: {p_str(list(head), list(body | z_outcomes))}")
-            p_y_x_z = engine.probability(head, body | set(z_outcomes))
-
-            # Second, P(Z)
-            self.output.detail(f"Computing sub-query: {p_str(list(z_outcomes), list(body))}")
-            p_z = engine.probability(z_outcomes, body)
-
-            probability += p_y_x_z * p_z
-
-        return probability
+    model.graph().reset_disabled()
+    return probability

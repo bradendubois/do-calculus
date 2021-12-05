@@ -62,7 +62,3 @@ def within_precision(a: float, b: float) -> bool:
     """
     return 0
     #return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
-
-
-def str_map(to_filter: Collection[Vertex]):
-    return set(map(lambda v: v if isinstance(v, str) else v.name, to_filter))
