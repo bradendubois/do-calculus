@@ -17,6 +17,12 @@ class Expression:
     def body_contains(self, outcome: Outcome) -> bool:
         return outcome in self._body
 
+    def head(self) -> Collection[Outcome]:
+        return self._head.copy()
+
+    def body(self) -> Collection[Outcome]:
+        return self._body.copy()
+
     # setters
 
     def add_to_head(self, outcome: Outcome) -> bool:

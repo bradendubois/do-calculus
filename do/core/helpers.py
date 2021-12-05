@@ -1,8 +1,8 @@
 from itertools import chain, combinations
 from typing import Collection, Iterator, Union
 
-# from ..config.settings import Settings
 from .Types import Intervention, Outcome, Vertex
+
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:
     """

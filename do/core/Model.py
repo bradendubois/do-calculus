@@ -10,7 +10,18 @@ from .Variables import Variable
 class Model:
 
     def __init__(self, graph: Graph, variables: Mapping[str, Variable], distribution: Mapping[Variable, ConditionalProbabilityTable]):
-        ...
+        self._g = graph.copy()
+        self._v = {k: variables[k] for k in variables}
+        self._d = {k: distribution[k] for k in distribution}
+
+    def graph(self) -> Graph:
+        return self._g
+
+    def variable(self, key: str) -> Variable:
+        if key not in self._v:
+            raise Exception     # TODO: custom exception
+        return self._v[key]
+
 
 class CausalGraph:
     """Handles probability queries / joint distributions on the given Causal Graph"""
@@ -37,7 +48,7 @@ class CausalGraph:
         self.latent = latent.copy()
 
 
-def parse_model(file: Union[dict, str, Path]):
+def parse_model(file: dict):
     """
     Parse a given model for use within the project, such as to create a CausalGraph
     @param file: a string path to either a JSON or YML file containing a valid model, or a dictionary
@@ -46,38 +57,7 @@ def parse_model(file: Union[dict, str, Path]):
     @raise Exception if a string given does not end in .yml, .yaml, or .json
     @return a dictionary of the parsed model, with keys "variables", "outcomes", "tables", "graph", "latent"
     """
-
-    # str: path to a file, or Path
-    if not isinstance(file, dict):
-
-        if isinstance(file, Path):
-            p = file
-
-        else:
-            p = Path(file)
-
-        if not p.is_file():
-            print(f"ERROR: Can't find {file}")
-            raise FileNotFoundError
-
-        extension = p.suffix.lower()
-
-        if extension in [".yml", ".yaml"]:
-            loader = yaml_load
-
-        elif extension == ".json":
-            loader = json_load
-
-        else:
-            print(f"Unknown extension '{extension}' for file: {file}, needs to end with .yml, .yaml, or .json")
-            raise FileNotFoundError
-
-        with p.open("r") as f:
-            data = loader(f)
-
-    # dict: assume valid model
-    else:
-        data = file
+    data = file
 
     """
     variables: maps string name to the Variable object instantiated
@@ -87,6 +67,8 @@ def parse_model(file: Union[dict, str, Path]):
     variables = dict()
     outcomes = dict()
     tables = dict()
+
+    # TODO - new scheme for files
 
     # set of latent variables
     latent = set()
