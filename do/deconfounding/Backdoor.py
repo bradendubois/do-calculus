@@ -70,12 +70,8 @@ def deconfound(src: Collection[Vertex], dst: Collection[Vertex], graph: Graph) -
     return list(minimal_sets(*valid_deconfounding_sets))
 
 
-def blocks(x: Collection[Vertex], y: Collection[Vertex], graph: Graph, z: Collection[Vertex]) -> bool:
-    return len(backdoors(x, y, graph, z)) == 0
 
-
-
-def all_paths_cumulative(self, s: str, t: str, path: list, path_list: list, graph: Graph) -> List[Path]:
+def all_paths_cumulative(s: str, t: str, path: list, path_list: list, graph: Graph) -> List[Path]:
     """
     Return a list of lists of all paths from a source to a target, with conditional movement from child to parent,
     or parent to child.
@@ -94,7 +90,7 @@ def all_paths_cumulative(self, s: str, t: str, path: list, path_list: list, grap
     return path_list
 
 
-def independent(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
+def independent(src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
     """
     Helper function that makes some do_calculus logic more readable; determine if two sets are independent, given
     some third set.
@@ -124,7 +120,7 @@ def independent(self, src: Collection[Vertex], dst: Collection[Vertex], dcf: Opt
 
 
 
-def _backdoor_paths_pair(self, s: Collection[str], t: Collection[str], graph: Graph, dcf: Collection[str]) -> List[Path]:
+def _backdoor_paths_pair(s: Collection[str], t: Collection[str], graph: Graph, dcf: Collection[str]) -> List[Path]:
     """
     Find all backdoor paths between any particular pair of vertices in the loaded graph
     @param s: A source (string) vertex in the graph

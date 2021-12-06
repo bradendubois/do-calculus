@@ -48,6 +48,11 @@ class CausalGraph:
         self.latent = latent.copy()
 
 
+
+def validate(model: Model) -> bool:
+    ...
+
+
 def parse_model(file: dict):
     """
     Parse a given model for use within the project, such as to create a CausalGraph

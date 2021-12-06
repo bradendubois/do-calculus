@@ -13,12 +13,11 @@ def main():
     config.read("test.ini")
     print(config.sections())
 
-    co = ConfigParser()
-    print(co.sections())
-
     parser = ArgumentParser("do-calculus", description="desc", epilog="epilog")
     args = parser.parse_args()
     ...
+
+    # TODO Model Verification/Specification(YML/JSON)
 
     logger.debug("parsing arguments")
     
