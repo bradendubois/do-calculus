@@ -2,17 +2,15 @@ from itertools import product
 from loguru import logger
 from typing import Collection, Union
 
-from .Exceptions import ProbabilityException, ProbabilityIndeterminableException
+from .Exceptions import ProbabilityIndeterminableException
 from .Expression import Expression
 from .Model import Model
 from .Variables import Outcome, Intervention
 
-from .helpers import p_str
-
 
 def inference(expression: Expression, model: Model):
 
-    def _compute(self, head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], depth=0) -> float:
+    def _compute(head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], depth=0) -> float:
         """
         Compute the probability of some head given some body
         @param head: A list of some number of Outcome objects
@@ -26,20 +24,8 @@ def inference(expression: Expression, model: Model):
         #   Begin with bookkeeping / error-checking   #
         ###############################################
 
-        # Sort the head and body if enabled
-        # if Settings.topological_sort_variables:
-        #     head, body = self.graph.descendant_first_sort(head), self.graph.descendant_first_sort(body)
-
-        # Create a string representation of this query, and see if it's been done / in-progress / contradictory
-        rep = p_str(head, body)
-
-        logger.info(f"query: {rep}")
-
-        # If the calculation has been done and cached, just return it from storage
-        # if Settings.cache_computation_results and rep in self._stored_computations:
-        #     result = self._stored_computations[rep]
-        #     logger.info("Computation already calculated:", rep, "=", result, x=depth)
-        #     return result
+        current_expression = Expression(head, body)
+        logger.info(f"query: {current_expression}")
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
         if contradictory_outcome_set(head + body):
@@ -52,31 +38,25 @@ def inference(expression: Expression, model: Model):
         ###############################################
 
         if len(head) > 1:
-            try:
-                logger.info(f"applying reverse product rule to {rep}")
+            logger.info(f"applying reverse product rule to {current_expression}")
 
-                result_1 = _compute(head[:-1], [head[-1]] + body, depth+1)
-                result_2 = _compute([head[-1]], body, depth+1)
-                result = result_1 * result_2
+            result_1 = _compute(head[:-1], [head[-1]] + body, depth+1)
+            result_2 = _compute([head[-1]], body, depth+1)
+            result = result_1 * result_2
 
-                logger.info(f"{rep} = {result}")
-                # _store_computation(rep, result)
-                return result
-
-            except ProbabilityException:    # coverage: skip
-                logger.info("Failed to resolve by reverse product rule.", x=depth)
+            logger.info(f"{current_expression} = {result}")
+            return result
 
         ###############################################
         #            Attempt direct lookup            #
         ###############################################
 
-        if len(head) == 1 and model.graph().parents(head[0].name) == set(v.name for v in body):
-
-            logger.info(f"querying table for: {rep}")
-            table = model.tables[head[0].name]                           # Get table
-            logger.info(f"{table}")                  # Show table
+        if model.graph().parents(head[0].name) == set(v.name for v in body):
+            logger.info(f"querying table for: {current_expression}")
+            table = model.tables[head[0].name]                          # Get table
+            logger.info(f"{table}")                                     # Show table
             probability = table.probability_lookup(head[0], body)       # Get specific row
-            logger.info(f"{rep} = {probability}")
+            logger.info(f"{current_expression} = {probability}")
 
             return probability
         else:
@@ -87,7 +67,7 @@ def inference(expression: Expression, model: Model):
         ##################################################################
 
         if set(head).issubset(set(body)):
-            logger.info(f"identity rule: X|X = 1.0, therefore {rep} = 1.0")
+            logger.info(f"identity rule: X|X = 1.0, therefore {current_expression} = 1.0")
             return 1.0
 
         #################################################
@@ -103,32 +83,24 @@ def inference(expression: Expression, model: Model):
             logger.info(f"Children of the LHS in the RHS: {','.join(descendants_in_rhs)}")
             logger.info("Applying Bayes' rule.")
 
-            try:
-                # Not elegant, but simply take one of the children from the body out and recurse
-                child = list(descendants_in_rhs)[0]
-                child = list(filter(lambda x: x.name == child, body))
-                new_body = list(set(body) - set(child))
+            # Not elegant, but simply take one of the children from the body out and recurse
+            child = list(descendants_in_rhs)[0]
+            child = list(filter(lambda x: x.name == child, body))
+            new_body = list(set(body) - set(child))
 
-                str_1 = p_str(child, head + new_body)
-                str_2 = p_str(head, new_body)
-                str_3 = p_str(child, new_body)
-                logger.info(f"{str_1} * {str_2} / {str_3}")
+            logger.info(f"{Expression([child], head + new_body)} * {Expression(head, new_body)} / {Expression([child], new_body)}")
 
-                result_1 = _compute(child, head + new_body, depth+1)
-                result_2 = _compute(head, new_body, depth+1)
-                result_3 = _compute(child, new_body, depth+1)
-                if result_3 == 0:       # Avoid dividing by 0! coverage: skip
-                    logger.info(f"{str_3} = 0, therefore the result is 0.")
-                    return 0
+            result_1 = _compute(child, head + new_body, depth+1)
+            result_2 = _compute(head, new_body, depth+1)
+            result_3 = _compute(child, new_body, depth+1)
+            if result_3 == 0:       # Avoid dividing by 0! coverage: skip
+                logger.info(f"{Expression([child], new_body)} = 0, therefore the result is 0.")
+                return 0
 
-                # flip flop flippy flop
-                result = result_1 * result_2 / result_3
-                logger.info(f"{rep} = {result}")
-                # _store_computation(rep, result)
-                return result
-
-            except ProbabilityException:    # coverage: skip
-                logger.info("Failed to resolve by Bayes")
+            # flip flop flippy flop
+            result = result_1 * result_2 / result_3
+            logger.info(f"{current_expression} = {result}")
+            return result
 
         #######################################################################################################
         #                                  Jeffrey's Rule / Distributive Rule                                 #
@@ -144,30 +116,25 @@ def inference(expression: Expression, model: Model):
 
             for missing_parent in missing_parents:
 
-                try:
-                    # Add one parent back in and recurse
-                    parent_outcomes = model.variable(missing_parent).outcomes
+                # Add one parent back in and recurse
+                parent_outcomes = model.variable(missing_parent).outcomes
 
-                    # Consider the missing parent and sum every probability involving it
-                    total = 0.0
-                    for parent_outcome in parent_outcomes:
+                # Consider the missing parent and sum every probability involving it
+                total = 0.0
+                for parent_outcome in parent_outcomes:
 
-                        as_outcome = Outcome(missing_parent, parent_outcome)
+                    as_outcome = Outcome(missing_parent, parent_outcome)
 
-                        logger.info(p_str(head, [as_outcome] + body), "*", p_str([as_outcome], body), x=depth)
+                    logger.info(f"{Expression(head, [as_outcome] + body)}, * {Expression([as_outcome], body)}")
 
-                        result_1 = _compute(head, [as_outcome] + body, depth+1)
-                        result_2 = _compute([as_outcome], body, depth+1)
-                        outcome_result = result_1 * result_2
+                    result_1 = _compute(head, [as_outcome] + body, depth+1)
+                    result_2 = _compute([as_outcome], body, depth+1)
+                    outcome_result = result_1 * result_2
 
-                        total += outcome_result
+                    total += outcome_result
 
-                    logger.info(rep, "=", total, x=depth)
-                    # _store_computation(rep, total)
-                    return total
-
-                except ProbabilityException:    # coverage: skip
-                    logger.info("Failed to resolve by Jeffrey's Rule", x=depth)
+                logger.info(f"{current_expression} = {total}")
+                return total
 
         ###############################################
         #            Single element on LHS            #
@@ -180,21 +147,16 @@ def inference(expression: Expression, model: Model):
             can_drop = [v for v in body if v.name not in model.graph().parents(head_variable)]
 
             if can_drop:
-                try:
-                    logger.info("Can drop:", [str(item) for item in can_drop], x=depth)
-                    result = _compute(head, list(set(body) - set(can_drop)), depth+1)
-                    logger.info(rep, "=", str(result), x=depth)
-                    # _store_computation(rep, result)
-                    return result
-
-                except ProbabilityException:    # coverage: skip
-                    pass
+                logger.info(f"can drop: {[str(item) for item in can_drop]}")
+                result = _compute(head, list(set(body) - set(can_drop)), depth+1)
+                logger.info(f"{current_expression} = {result}")
+                return result
 
         ###############################################
         #               Cannot compute                #
         ###############################################
 
-        raise ProbabilityIndeterminableException    # coverage: skip
+        raise ProbabilityIndeterminableException
 
     head = set(expression.head())
     body = set(expression.body())

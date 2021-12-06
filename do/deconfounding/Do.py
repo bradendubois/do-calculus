@@ -6,7 +6,6 @@ from ..core.Expression import Expression
 from ..core.Inference import inference
 from ..core.Model import Model
 from ..core.Variables import Outcome, Intervention
-from ..core.helpers import p_str
 
 from .Backdoor import backdoors, deconfound
 from .Exceptions import NoDeconfoundingSet
@@ -47,18 +46,18 @@ def treat(expression: Expression, interventions: Collection[Intervention], model
         probability = None  # Sentinel value
         for z_set in vertex_dcf:
 
-            result = _marginalize_query(head, body, z_set)
+            result = _marginalize_query(expression, interventions, z_set, model)
             if probability is None:  # Storing first result
                 probability = result
 
             # If results do NOT match; error
             assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
-        logger.info(f"{0} = {1:.{5}f}".format(p_str(head, set(body) | set(interventions)), probability, precision=1))
+        logger.info(f"{0} = {1:.{5}f}".format(Expression(head, set(body) | set(interventions)), probability, precision=1))
         return result
 
 
-def _marginalize_query(expression: Expression, deconfound: Collection[str], model: Model) -> float:
+def _marginalize_query(expression: Expression, interventions: Collection[Intervention], deconfound: Collection[str], model: Model) -> float:
     """
     Handle the modified query where we require a deconfounding set due to Interventions / treatments.
     @param head: The head of the query, a set containing Outcome objects
@@ -71,10 +70,9 @@ def _marginalize_query(expression: Expression, deconfound: Collection[str], mode
     head = set(expression.head())
     body = set(expression.body())
 
-    interventions = set(filter(lambda x: isinstance(x, Intervention), body))
-
     # Augment graph (isolating interventions as roots) and create engine
     model.graph().disable_incoming(*interventions)
+    as_outcomes = {Outcome(x.name, x.outcome) for x in interventions}
 
     probability = 0.0
 
@@ -85,12 +83,14 @@ def _marginalize_query(expression: Expression, deconfound: Collection[str], mode
         z_outcomes = {Outcome(x, cross[i]) for i, x in enumerate(deconfound)}
 
         # First, we do P(Y | do(X), Z)
-        logger.info(f"computing sub-query: {p_str(list(head), list(body | z_outcomes))}")
-        p_y_x_z = inference(Expression(head, body | z_outcomes), model)
+        ex1 = Expression(head, body | as_outcomes | z_outcomes)
+        logger.info(f"computing sub-query: {ex1}")
+        p_y_x_z = inference(ex1, model)
 
         # Second, P(Z)
-        logger.info(f"computing sub-query: {p_str(list(z_outcomes), list(body))}")
-        p_z = inference(Expression(z_outcomes, body), model)
+        ex2 = Expression(z_outcomes, body | as_outcomes)
+        logger.info(f"computing sub-query: {ex2}")
+        p_z = inference(ex2, model)
 
         probability += p_y_x_z * p_z
 

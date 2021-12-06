@@ -1,6 +1,6 @@
-from do.structures.ConditionalProbabilityTable import ConditionalProbabilityTable
-from do.structures.Exceptions import MissingTableRow
-from do.structures.VariableStructures import Outcome
+from do.core.ConditionalProbabilityTable import ConditionalProbabilityTable
+from do.core.Exceptions import MissingTableRow
+from do.core.Variables import Outcome
 
 from tests.test_driver import cg
 

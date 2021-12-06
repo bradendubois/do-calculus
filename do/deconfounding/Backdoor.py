@@ -70,8 +70,7 @@ def deconfound(src: Collection[Vertex], dst: Collection[Vertex], graph: Graph) -
     return list(minimal_sets(*valid_deconfounding_sets))
 
 
-
-def all_paths_cumulative(s: str, t: str, path: list, path_list: list, graph: Graph) -> List[Path]:
+def all_paths_cumulative(s: str, t: str, path: list, path_list: list, graph: Graph) -> Collection[Path]:
     """
     Return a list of lists of all paths from a source to a target, with conditional movement from child to parent,
     or parent to child.
@@ -90,7 +89,7 @@ def all_paths_cumulative(s: str, t: str, path: list, path_list: list, graph: Gra
     return path_list
 
 
-def independent(src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]]) -> bool:
+def independent(src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[Collection[Vertex]], graph: Graph) -> bool:
     """
     Helper function that makes some do_calculus logic more readable; determine if two sets are independent, given
     some third set.
@@ -105,19 +104,18 @@ def independent(src: Collection[Vertex], dst: Collection[Vertex], dcf: Optional[
     dcf_str = str_map(dcf) if dcf else set()
 
     # Not independent if there are any unblocked backdoor paths
-    if len(backdoors(src_str, dst_str, dcf_str)) > 0:
+    if len(backdoors(src_str, dst_str, graph, dcf_str)) > 0:
         return False
 
     # Ensure no straight-line variables from any X -> Y or Y -> X
     for s, t in product(src_str, dst_str):
-        if len(all_paths_cumulative(s, t, [], [])) != 0:
+        if len(all_paths_cumulative(s, t, [], [], graph)) != 0:
             return False        # x -> y
-        if len(all_paths_cumulative(t, s, [], [])) != 0:
+        if len(all_paths_cumulative(t, s, [], [], graph)) != 0:
             return False        # y -> x
 
     # No paths, must be independent
     return True
-
 
 
 def _backdoor_paths_pair(s: Collection[str], t: Collection[str], graph: Graph, dcf: Collection[str]) -> List[Path]:

@@ -9,6 +9,13 @@ class Expression:
         self._head = set(head)
         self._body = set(body) if body else set()
 
+    def __str__(self) -> str:
+        if len(self._body) == 0:
+            return f'P({", ".join(map(str, self._head))})'
+
+        return f'P({", ".join(map(str, self._head))} | {", ".join(map(str, self._body))})'
+
+
     # getters
 
     def head_contains(self, outcome: Outcome) -> bool:

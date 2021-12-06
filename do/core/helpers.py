@@ -40,19 +40,6 @@ def disjoint(*sets) -> bool:
     return len(set().union(*sets)) == sum(map(lambda iterable: len(iterable), sets))
 
 
-def p_str(lhs: Collection[Outcome], rhs: Collection[Union[Outcome, Intervention]]) -> str:
-    """
-    Convert a head&body to a properly-formatted string
-    @param lhs: The head/LHS of the query; a list of Outcome/Intervention objects
-    @param rhs: The body/RHS of the query; a list of Outcome/Intervention objects
-    @return: A string representation "P(X | Y)"
-    """
-    if len(rhs) == 0:
-        return f'P({", ".join(map(str, lhs))})'
-
-    return f'P({", ".join(map(str, lhs))} | {", ".join(map(str, rhs))})'
-
-
 def within_precision(a: float, b: float) -> bool:
     """
     Check whether two values differ by an amount less than some number of digits of precision
@@ -60,5 +47,4 @@ def within_precision(a: float, b: float) -> bool:
     @param b: The second value
     @return: True if the values are within the margin of error acceptable, False otherwise
     """
-    return 0
-    #return abs(a - b) < 1 / (10 ** Settings.regression_levels_of_precision)
+    return abs(a - b) < 1 / (10 ** 8)
