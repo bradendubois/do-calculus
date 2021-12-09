@@ -36,3 +36,8 @@ class IntersectingSets(ProbabilityException):
     set of vertices intersect.
     """
     pass
+
+
+
+class MissingVariable(ProbabilityException):
+    pass

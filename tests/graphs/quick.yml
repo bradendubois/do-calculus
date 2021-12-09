@@ -1,0 +1,26 @@
+name: Quick-Test
+endogenous:
+  Y:
+    outcomes:
+    - y
+    - ~y
+    parents:
+    - X
+    table: [
+      [y, x, 0.3],
+      [y, ~x, 0.4],     
+      [~y, x, 0.7],
+      [~y, ~x, 0.6]
+    ]
+  X:
+    outcomes:
+    - x
+    - ~x
+    table: [
+      [x, 0.2],
+      [~x, 0.8]
+    ]
+exogenous:
+  Z:
+  - Y
+  - X

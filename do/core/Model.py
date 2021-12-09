@@ -1,7 +1,10 @@
 from json import load as json_load
 from pathlib import Path
-from typing import Mapping, Union
+from typing import Mapping
+from loguru import logger
 from yaml import safe_load as yaml_load
+
+from do.core.Exceptions import MissingVariable
 
 from .ConditionalProbabilityTable import ConditionalProbabilityTable
 from .Graph import Graph
@@ -19,50 +22,47 @@ class Model:
 
     def variable(self, key: str) -> Variable:
         if key not in self._v:
-            raise Exception     # TODO: custom exception
+            logger.error(f"unknown variable: {key}")
+            raise MissingVariable(key)
         return self._v[key]
 
-
-class CausalGraph:
-    """Handles probability queries / joint distributions on the given Causal Graph"""
-
-    def __init__(self, graph: Graph, variables: dict, outcomes: dict, tables: dict, latent: set, **kwargs):
-        """
-        Initialize a Causal Graph to compute standard probability queries as well as interventional, as per the
-        do-calculus of Judea Pearl, with deconfounding sets handled automatically.
-        @param graph: A Graph object representing a given model
-        @param variables: A dictionary mapping a string name of a variable to a Variable object
-        @param outcomes: A dictionary mapping both a string name of a Variable, as well as the Variable object itself
-            to a list of possible outcome values for the variable.
-        @param tables: A dictionary mapping both a string name of a Variable, as well as the Variable object itself to
-            a given ConditionalProbabilityTable object.
-        @param latent: A set of variables, both string name as well as the Variable object itself, representing all
-            latent (unobservable) variables in the given model.
-        @param kwargs: Any arbitrary additional keyword arguments, allowing a model loaded using a library to be
-            unpacked into an initializer call using the ** prefix.
-        """
-        self.graph = graph.copy()
-        self.variables = variables.copy()
-        self.outcomes = outcomes.copy()
-        self.tables = tables.copy()
-        self.latent = latent.copy()
-
+    def table(self, key: str) -> ConditionalProbabilityTable:
+        if key not in self._v:
+            logger.error(f"unknown variable: {key}")
+            raise MissingVariable(key)
+        return self._d[key]
 
 
 def validate(model: Model) -> bool:
+    """
+    Ensures a model is 'valid' and 'consistent'.
+    1. Ensures the is a DAG (contains no cycles)
+    2. Ensures all variables denoted as exogenous lack a table and are roots.
+    3. Ensures all variables denoted as endogenous contain a table.
+    4. Ensures all distributions are consistent (the sum of probability of each outcome is 1.0)
+
+    Returns True on success (indicating a valid model), or raises an appropriate Exception indicating a failure.
+    """
     ...
 
 
-def parse_model(file: dict):
-    """
-    Parse a given model for use within the project, such as to create a CausalGraph
-    @param file: a string path to either a JSON or YML file containing a valid model, or a dictionary
-        containing a model
-    @raise FileNotFoundError if a string is provided that does not lead to a file
-    @raise Exception if a string given does not end in .yml, .yaml, or .json
-    @return a dictionary of the parsed model, with keys "variables", "outcomes", "tables", "graph", "latent"
-    """
-    data = file
+def from_json(path: str) -> Model:
+    with Path(path).open() as f:
+        data = json_load(f)
+    return parse_model(data)
+
+
+def from_yaml(path: str) -> Model:
+    with Path(path).open() as f:
+        data = yaml_load(f)
+    return parse_model(data)
+
+
+def from_dict(data: dict) -> Model:
+    return parse_model(data)
+
+
+def parse_model(data: dict) -> Model:
 
     """
     variables: maps string name to the Variable object instantiated
@@ -73,12 +73,7 @@ def parse_model(file: dict):
     outcomes = dict()
     tables = dict()
 
-    # TODO - new scheme for files
-
-    # set of latent variables
-    latent = set()
-
-    for name, detail in data["model"].items():
+    for name, detail in data["endogenous"].items():
 
         # Load the relevant data to construct a Variable
         v_outcomes = detail["outcomes"] if "outcomes" in detail else []
@@ -94,32 +89,26 @@ def parse_model(file: dict):
         outcomes[name] = v_outcomes
         outcomes[variable] = v_outcomes
 
-        if "table" not in detail:
-            latent.add(name)
-            latent.add(variable)
+        # Load in the table and construct a CPT
+        table = detail["table"]
+        cpt = ConditionalProbabilityTable(variable, v_parents, table)
 
-        else:
-            # Load in the table and construct a CPT
-            table = detail["table"]
-            cpt = ConditionalProbabilityTable(variable, v_parents, table)
-
-            # Map the name/variable to the table
-            tables[name] = cpt
-            tables[variable] = cpt
+        # Map the name/variable to the table
+        tables[name] = cpt
+        tables[variable] = cpt
 
     v = set(variables.keys())
     e = set()
+
     for child in variables.keys():
         e.update(list(map(lambda parent: (parent, child), variables[child].parents)))
+
+    for variable, children in data["exogenous"].items():
+        v.add(variable)
+        for c in children:
+            v.add(c)
+            e.add((variable, c))
+
     graph = Graph(v, e)
 
-    # Store all the different dictionaries of data as one large dictionary
-    parsed = {
-        "variables": variables,
-        "outcomes": outcomes,
-        "tables": tables,
-        "graph": graph,
-        "latent": latent
-    }
-
-    return parsed
+    return Model(graph, variables, tables)

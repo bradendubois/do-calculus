@@ -9,5 +9,5 @@ class API:
     def validate(self, model: Model) -> bool:
         return validate(model)
 
-    def probability(query: Expression, model: Model) -> float:
+    def probability(self, query: Expression, model: Model) -> float:
         return inference(query, model)

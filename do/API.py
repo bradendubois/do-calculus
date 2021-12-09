@@ -1,8 +1,9 @@
 from .core.API import API as Core
 from .deconfounding.API import API as Deconfounding
 
-apis = [Core, Deconfounding]
 
-class API(*apis):
+class API(Core, Deconfounding):
 
-    ...
+    def __init__(self) -> None:
+        Core.__init__(self)
+        Deconfounding.__init__(self)

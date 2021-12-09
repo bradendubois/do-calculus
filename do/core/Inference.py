@@ -1,6 +1,6 @@
 from itertools import product
 from loguru import logger
-from typing import Collection, Union
+from typing import Collection
 
 from .Exceptions import ProbabilityIndeterminableException
 from .Expression import Expression
@@ -10,7 +10,7 @@ from .Variables import Outcome, Intervention
 
 def inference(expression: Expression, model: Model):
 
-    def _compute(head: Collection[Outcome], body: Collection[Union[Outcome, Intervention]], depth=0) -> float:
+    def _compute(head: Collection[Outcome], body: Collection[Intervention], depth=0) -> float:
         """
         Compute the probability of some head given some body
         @param head: A list of some number of Outcome objects
@@ -51,9 +51,9 @@ def inference(expression: Expression, model: Model):
         #            Attempt direct lookup            #
         ###############################################
 
-        if model.graph().parents(head[0].name) == set(v.name for v in body):
+        if set(model.variable(head[0].name).parents) == set(v.name for v in body):
             logger.info(f"querying table for: {current_expression}")
-            table = model.tables[head[0].name]                          # Get table
+            table = model.table(head[0].name)                           # Get table
             logger.info(f"{table}")                                     # Show table
             probability = table.probability_lookup(head[0], body)       # Get specific row
             logger.info(f"{current_expression} = {probability}")
@@ -77,6 +77,7 @@ def inference(expression: Expression, model: Model):
         #################################################
 
         reachable_from_head = set().union(*[model.graph().descendants(outcome) for outcome in head])
+        print(f"REACH {reachable_from_head}")
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:
@@ -88,7 +89,7 @@ def inference(expression: Expression, model: Model):
             child = list(filter(lambda x: x.name == child, body))
             new_body = list(set(body) - set(child))
 
-            logger.info(f"{Expression([child], head + new_body)} * {Expression(head, new_body)} / {Expression([child], new_body)}")
+            logger.info(f"{Expression(child, head + new_body)} * {Expression(head, new_body)} / {Expression(child, new_body)}")
 
             result_1 = _compute(child, head + new_body, depth+1)
             result_2 = _compute(head, new_body, depth+1)
@@ -109,7 +110,7 @@ def inference(expression: Expression, model: Model):
 
         missing_parents = set()
         for outcome in head:
-            missing_parents.update(model.graph().parents(outcome) - set([parent.name for parent in head + body]))
+            missing_parents.update(set(model.variable(outcome.name).parents) - set([parent.name for parent in head + body]))
 
         if missing_parents:
             logger.info("Attempting application of Jeffrey's Rule")
@@ -144,7 +145,7 @@ def inference(expression: Expression, model: Model):
         if len(head) == 1 and not missing_parents and not descendants_in_rhs:
 
             head_variable = head[0]
-            can_drop = [v for v in body if v.name not in model.graph().parents(head_variable)]
+            can_drop = [v for v in body if v.name not in model.variable(head_variable).parents]
 
             if can_drop:
                 logger.info(f"can drop: {[str(item) for item in can_drop]}")
@@ -163,7 +164,7 @@ def inference(expression: Expression, model: Model):
 
     for out in head | body:
         assert out.name in model.graph().v, f"Error: Unknown variable {out}"
-        assert out.outcome in model.variable(out.name).outcomes[out.name], f"Error: Unknown outcome {out.outcome} for {out.name}"
+        assert out.outcome in model.variable(out.name).outcomes, f"Error: Unknown outcome {out.outcome} for {out.name}"
         assert not isinstance(out, Intervention), f"Error: basic inference engine does not handle Interventions ({out.name} is an Intervention)"
 
     return _compute(list(head), list(body))

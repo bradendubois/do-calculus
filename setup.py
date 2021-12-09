@@ -8,7 +8,7 @@ README = (cwd / "README.md").read_text()
 dependencies = (cwd / "requirements.txt").read_text().strip().split("\n")
 
 # This should be set by the automated Github workflow
-VERSION = environ["SEMANTIC_VERSION"]
+VERSION = environ["SEMANTIC_VERSION"] if "SEMANTIC_VERSION" in environ else "0.0.1"
 
 setup(
     name="do-calculus",
