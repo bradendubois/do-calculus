@@ -41,3 +41,6 @@ class IntersectingSets(ProbabilityException):
 
 class MissingVariable(ProbabilityException):
     pass
+
+class EmptyExpressionHead(ProbabilityException):
+    pass

@@ -1,13 +1,20 @@
-from typing import Collection, Optional
+from typing import Collection, Optional, Union
 
+from .Exceptions import EmptyExpressionHead
 from .Types import Outcome
 
 
 class Expression:
 
-    def __init__(self, head: Collection[Outcome], body: Optional[Collection[Outcome]]):
-        self._head = set(head)
-        self._body = set(body) if body else set()
+    def __init__(self, head: Union[Outcome, Collection[Outcome]], body: Optional[Collection[Outcome]] = None):
+        if head is None:
+            raise EmptyExpressionHead
+
+        if body is None:
+            body = []
+
+        self._head = set(head) if not isinstance(head, Outcome) else {head}
+        self._body = set(body) if not isinstance(body, Outcome) else {body}
 
     def __str__(self) -> str:
         if len(self._body) == 0:
