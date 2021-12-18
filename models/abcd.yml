@@ -1,5 +1,5 @@
 name: ABCD Trace
-model:
+endogenous:
   A:
     outcomes:
     - a

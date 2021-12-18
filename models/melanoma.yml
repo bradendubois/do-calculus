@@ -1,5 +1,5 @@
 name: "Melanoma"
-model:
+endogenous:
   Y:
     outcomes:
     - "y"

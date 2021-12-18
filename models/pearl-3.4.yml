@@ -1,5 +1,5 @@
 name: 'Pearl: Figure 3.4'
-model:
+endogenous:
   X1:
     outcomes:
     - x1

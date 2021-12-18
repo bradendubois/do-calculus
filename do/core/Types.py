@@ -4,7 +4,7 @@ from .Variables import Variable, Outcome, Intervention
 
 # Variable-related
 
-VClass = Variable | Outcome | Intervention
+VClass = Union[Variable, Outcome, Intervention]
 """
 A VClass is any of a Variable, Outcome, or Intervention.
 
@@ -15,7 +15,7 @@ the variable be provided as any of the Variable, Outcome, or Intervention class 
 """
 
 
-VMeasured = Outcome | Intervention
+VMeasured = Union[Outcome, Intervention]
 """
 A VMeasured is either of an Outcome or Intervention.
 

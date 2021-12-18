@@ -1,5 +1,5 @@
 name: Fumigants / Eelworms
-model:
+endogenous:
   B:
     outcomes:
     - b

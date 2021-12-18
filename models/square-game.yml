@@ -1,5 +1,5 @@
 name: Square-Game
-model:
+endogenous:
   T:
     outcomes:
     - t

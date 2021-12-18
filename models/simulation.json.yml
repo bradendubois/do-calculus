@@ -1,5 +1,5 @@
 name: Simulation Test
-model:
+endogenous:
   A:
     outcomes:
     - a

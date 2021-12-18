@@ -1,5 +1,5 @@
 name: M-Game
-model:
+endogenous:
   A:
     outcomes:
     - a

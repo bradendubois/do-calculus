@@ -1,4 +1,4 @@
-model:
+endogenous:
   U1:
     outcomes:
     - u1
