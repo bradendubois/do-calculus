@@ -47,4 +47,4 @@ def within_precision(a: float, b: float) -> bool:
     @param b: The second value
     @return: True if the values are within the margin of error acceptable, False otherwise
     """
-    return abs(a - b) < 1 / (10 ** 8)
+    return abs(a - b) < 1 / (10 ** 5)

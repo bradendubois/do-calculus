@@ -31,7 +31,7 @@ class Outcome:
     def __eq__(self, other) -> bool:
         if isinstance(other, str):
             return self.name == other
-        return self.name == other.name and self.outcome == other.outcome
+        return self.name == other.name and self.outcome == other.outcome and type(self) == type(other)
 
 
 class Variable:

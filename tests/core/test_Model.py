@@ -5,7 +5,7 @@ from do.core.Model import from_yaml
 file_s = "tests/graphs/quick.yml"
 file_p = Path(file_s)
 
-def test_parse():
+def taest_parse():
 
     m = from_yaml(file_s)
     

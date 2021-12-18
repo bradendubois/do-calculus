@@ -77,7 +77,6 @@ def inference(expression: Expression, model: Model):
         #################################################
 
         reachable_from_head = set().union(*[model.graph().descendants(outcome) for outcome in head])
-        print(f"REACH {reachable_from_head}")
         descendants_in_rhs = set([var.name for var in body]) & reachable_from_head
 
         if descendants_in_rhs:
@@ -144,7 +143,7 @@ def inference(expression: Expression, model: Model):
 
         if len(head) == 1 and not missing_parents and not descendants_in_rhs:
 
-            head_variable = head[0]
+            head_variable = head[0].name
             can_drop = [v for v in body if v.name not in model.variable(head_variable).parents]
 
             if can_drop:

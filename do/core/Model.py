@@ -103,11 +103,12 @@ def parse_model(data: dict) -> Model:
     for child in variables.keys():
         e.update(list(map(lambda parent: (parent, child), variables[child].parents)))
 
-    for variable, children in data["exogenous"].items():
-        v.add(variable)
-        for c in children:
-            v.add(c)
-            e.add((variable, c))
+    if "exogenous" in data:
+        for variable, children in data["exogenous"].items():
+            v.add(variable)
+            for c in children:
+                v.add(c)
+                e.add((variable, c))
 
     graph = Graph(v, e)
 

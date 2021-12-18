@@ -16,6 +16,8 @@ def treat(expression: Expression, interventions: Collection[Intervention], model
     head = set(expression.head())
     body = set(expression.body())
 
+    print(head, body, interventions)
+
     # If there are no Interventions, we can compute a standard query
     if len(interventions) == 0:
         return inference(expression, model)
@@ -23,19 +25,25 @@ def treat(expression: Expression, interventions: Collection[Intervention], model
     # There are interventions; may need to find some valid Z to compute
     else:
 
-        paths = backdoors(head, body, interventions)
+        paths = backdoors(interventions, head, model.graph(), body)
 
         # No backdoor paths; augment graph space and compute
         if len(paths) == 0:
-            expression_transform = Expression(expression.head(), set(expression.body()) | set(Outcome(x.name, x.value) for x in interventions))
+            logger.info(f"no backdoor paths; translating into standard inference query")
+            expression_transform = Expression(expression.head(), set(expression.body()) | set(Outcome(x.name, x.outcome) for x in interventions))
+            logger.info(f"translated expression: {expression_transform}")
+            logger.info(f"disabling incoming edges on graph: {[x.name for x in interventions]}")
             model.graph().disable_incoming(*interventions)
             p = inference(expression_transform, model)
+            logger.info("resetting edge transformations")
             model.graph().reset_disabled()
             return p
 
         # Backdoor paths found; find deconfounding set to compute
         # Find all possible deconfounding sets, and use possible subsets
+        logger.info("computing deconfounding sets")
         deconfounding_sets = deconfound(interventions, head, model.graph())
+        logger.info(f"resulting deconfounding sets: {deconfounding_sets}")
 
         # Filter down the deconfounding sets not overlapping with our query body
         vertex_dcf = list(filter(lambda s: len(set(s) & {x.name for x in body}) == 0, deconfounding_sets))
@@ -53,7 +61,7 @@ def treat(expression: Expression, interventions: Collection[Intervention], model
             # If results do NOT match; error
             assert abs(result-probability) < 0.00000001,  f"Error: Distinct results: {probability} vs {result}"
 
-        logger.info(f"{0} = {1:.{5}f}".format(Expression(head, set(body) | set(interventions)), probability, precision=1))
+        logger.info("{0} = {1:.5f}".format(Expression(head, set(body) | set(interventions)), probability, precision=1))
         return result
 
 

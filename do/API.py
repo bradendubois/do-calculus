@@ -4,6 +4,6 @@ from .deconfounding.API import API as Deconfounding
 
 class API(Core, Deconfounding):
 
-    def __init__(self) -> None:
+    def __init__(self):
         Core.__init__(self)
         Deconfounding.__init__(self)

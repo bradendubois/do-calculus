@@ -59,7 +59,7 @@ def deconfound(src: Collection[Vertex], dst: Collection[Vertex], graph: Graph) -
 
             # Get any/all backdoor paths for this particular pair of vertices in src,dst with given potential
             #   deconfounding set
-            if len(_backdoor_paths_pair(s, t, set(tentative_dcf))) > 0:
+            if len(_backdoor_paths_pair(s, t, graph, set(tentative_dcf))) > 0:
                 any_backdoor_paths = True
                 break
 

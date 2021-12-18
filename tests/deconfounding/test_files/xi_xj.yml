@@ -1,0 +1,26 @@
+graph_filename: pearl-3.4.yml
+tests:
+  - type: backdoors
+    src: [ Xi ]
+    dst: [ Xj ]
+    expect: [
+      [ Xi, X4, Xj ],
+      [ Xi, X4, X2, X5, Xj ],
+      [ Xi, X3, X1, X4, Xj ]
+    ]
+    exhaustive: true
+
+  - type: treatment
+    head: Xj=xj
+    body: do(Xi=xi)
+    expect: 0.362828
+
+  - type: treatment
+    head: Xj=xj
+    body: do(X1=x1)
+    expect: 0.45597
+
+  - type: treatment
+    head: Xi=xi
+    body: do(Xj=xj)
+    expect: 0.2669
