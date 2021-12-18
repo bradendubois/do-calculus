@@ -1,8 +1,8 @@
 from itertools import product
-from typing import List, Optional
+from typing import Collection, List, Optional
 
 from ..core.Graph import Graph
-from ..core.Types import Collection, Path, Vertex
+from ..core.Types import Path, Vertex
 from ..core.Exceptions import IntersectingSets
 
 from ..core.helpers import disjoint, minimal_sets, power_set
