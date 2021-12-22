@@ -2,10 +2,12 @@ from itertools import product
 from loguru import logger
 from typing import Collection
 
-from .Exceptions import ProbabilityIndeterminableException
+from .Exceptions import ExogenousNonRoot, ProbabilityIndeterminableException
 from .Expression import Expression
 from .Model import Model
 from .Variables import Outcome, Intervention
+
+from .helpers import within_precision
 
 
 def inference(expression: Expression, model: Model):
@@ -179,3 +181,35 @@ def contradictory_outcome_set(outcomes: Collection[Outcome]) -> bool:
         if x.name == y.name and x.outcome != y.outcome:
             return True
     return False
+
+
+def validate(model: Model) -> bool:
+    """
+    Ensures a model is 'valid' and 'consistent'.
+    1. Ensures the is a DAG (contains no cycles)
+    2. Ensures all variables denoted as exogenous are roots.
+    3. Ensures all distributions are consistent (the sum of probability of each outcome is 1.0)
+
+    Returns True on success (indicating a valid model), or raises an appropriate Exception indicating a failure.
+    """
+    
+    # no cycles
+    ...
+
+    # exogenous variables are all roots
+    exogenous = model._g.v - set(model._v.keys())
+    roots = model._g.roots()
+    for variable in exogenous:
+        if variable not in roots:
+            raise ExogenousNonRoot(variable)
+
+    # consistent distributions
+    for name, variable in model._v.items():
+        t = 0
+        for outcome in variable.outcomes:
+            t += inference(Expression(Outcome(name, outcome)), model)
+
+        assert within_precision(t, 1)
+
+    # all checks passed -> valid model
+    return True

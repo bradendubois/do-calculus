@@ -1,20 +1,19 @@
 from os.path import dirname, abspath
 from pathlib import Path
 from typing import Collection, Mapping
-from yaml import safe_load as load
+from yaml import safe_load
 
-from do.API import API
 from do.core.Expression import Expression
-from do.core.Model import Model, from_dict
+from do.core.Model import Model
 from do.core.Variables import Intervention, parse_outcomes_and_interventions
 from do.core.helpers import within_precision
 
-test_file_directory = Path(dirname(abspath(__file__))) / "test_files"
+from ..source import api, models
+
+test_file_directory = Path(dirname(abspath(__file__))) / "backdoor_files"
 
 
 def deconfounding_validation(model: Model, tests: Collection[Mapping]):
-
-    api = API()
 
     for test in tests:
 
@@ -48,14 +47,11 @@ def test_Deconfounding():
     files = sorted(list(filter(lambda x: x.suffix.lower() == ".yml", test_file_directory.iterdir())))
     assert len(files) > 0, f"Found no backdoor module tests"
 
-    for test_file in files:
+    for file in files:
 
-        with test_file.open("r") as f:
-            yml_test_data = load(f)
+        with file.open("r") as f:
+            data = safe_load(f)
+        
+        model = models[data["graph_filename"]]
 
-        graph_filename = yml_test_data["graph_filename"]        
-        with (test_file_directory / "graphs" / graph_filename).open("r") as f:
-            graph_data = load(f)
-
-        model = from_dict(graph_data)
-        deconfounding_validation(model, yml_test_data["tests"])
+        deconfounding_validation(model, data["tests"])

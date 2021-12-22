@@ -1,7 +1,6 @@
-from .ConditionalProbabilityTable import ConditionalProbabilityTable
 from .Expression import Expression
-from .Inference import inference
-from .Model import Model, validate
+from .Inference import inference, validate
+from .Model import Model
 
 
 class API:

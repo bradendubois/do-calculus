@@ -44,3 +44,6 @@ class MissingVariable(ProbabilityException):
 
 class EmptyExpressionHead(ProbabilityException):
     pass
+
+class ExogenousNonRoot(ProbabilityException):
+    pass

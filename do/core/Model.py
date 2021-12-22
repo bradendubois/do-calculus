@@ -1,14 +1,14 @@
 from json import load as json_load
 from pathlib import Path
-from typing import Mapping
+from typing import Collection, Mapping
 from loguru import logger
 from yaml import safe_load as yaml_load
 
-from do.core.Exceptions import MissingVariable
-
 from .ConditionalProbabilityTable import ConditionalProbabilityTable
+from .Exceptions import MissingVariable
 from .Graph import Graph
 from .Variables import Variable
+
 
 class Model:
 
@@ -32,18 +32,8 @@ class Model:
             raise MissingVariable(key)
         return self._d[key]
 
-
-def validate(model: Model) -> bool:
-    """
-    Ensures a model is 'valid' and 'consistent'.
-    1. Ensures the is a DAG (contains no cycles)
-    2. Ensures all variables denoted as exogenous lack a table and are roots.
-    3. Ensures all variables denoted as endogenous contain a table.
-    4. Ensures all distributions are consistent (the sum of probability of each outcome is 1.0)
-
-    Returns True on success (indicating a valid model), or raises an appropriate Exception indicating a failure.
-    """
-    ...
+    def all_variables(self) -> Collection[Variable]:
+        return self._v.values()
 
 
 def from_json(path: str) -> Model:
