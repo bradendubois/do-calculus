@@ -1,4 +1,5 @@
-import itertools
+from itertools import product
+from typing import Set
 
 from ..core.Graph import Graph
 
@@ -8,14 +9,13 @@ from ..core.Graph import Graph
 
 class LatentGraph(Graph):
 
-    def __init__(self, g: Graph):
-        super().__init__(g.v, g.e)
+    def __init__(self, g: Graph, u: Set[str]):
+        super().__init__(g.v, g.e, topology=g.topology_sort())
 
-        V = G.v.copy()
-        E = set(G.e.copy())
-        Un = U.copy()
-
-        topology = G.topology_sort()
+        V = g.v.copy()
+        E = set(g.e.copy())
+        
+        Un = u.copy()
 
         # Collapse unobservable variables, such as U1 -> U2 -> V ==> U1 -> V
         reduction = True
@@ -29,7 +29,7 @@ class LatentGraph(Graph):
                 children = [edge[1] for edge in E if edge[0] == u]      # Edges : u -> child
 
                 # All parents are unobservable, all children are observable, at least one parent
-                if all(x in U for x in parents) and len(parents) > 0 and all(x not in U for x in children):
+                if all(x in u for x in parents) and len(parents) > 0 and all(x not in u for x in children):
                     reduction = True
 
                     # Remove edges from parents to u
@@ -41,7 +41,7 @@ class LatentGraph(Graph):
                         E.remove((u, child))
 
                     # Replace with edge from edge parent to each child
-                    for cr in itertools.product(parents, children):
+                    for cr in product(parents, children):
                         E.add((cr[0], cr[1]))
 
                     # U can be removed entirely from graph
@@ -74,4 +74,4 @@ class LatentGraph(Graph):
                 E.add((a[1], b[1]))
                 E.add((b[1], a[1]))
 
-        return LatentGraph(V, E, topology)
+        super().__init__(V, E, [x for x in g.topology_sort() if x in V - u])
