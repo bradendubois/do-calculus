@@ -5,7 +5,7 @@ from string import ascii_uppercase
 from random import choice, choices, randrange
 from itertools import product
 
-from do.structures.Graph import Graph
+from ..core.Graph import Graph
 
 
 def cycle(v, e):

@@ -1,21 +1,17 @@
-from pathlib import Path
+from pytest import raises
+
 from do.core.Exceptions import MissingVariable
-from do.core.Model import from_yaml
 
-file_s = "tests"
-file_p = Path(file_s)
+from ..source import models
+model = models["pearl-3.4.yml"]
 
-def atest_parse():
 
-    m = from_yaml(file_s)
+def test_Lookup():
 
     # these should raise no issue
-    assert m.variable("X")
-    assert m.variable("Y")
+    assert model.variable("Xj")
+    assert model.variable("Xi")
     
     # ensure a latent variable fails to be retrieved...
-    try:
-        m.variable("Z")
-        raise Exception
-    except MissingVariable:
-        pass
+    with raises(MissingVariable):
+        model.variable("Z")

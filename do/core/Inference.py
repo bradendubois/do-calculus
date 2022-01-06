@@ -31,7 +31,7 @@ def inference(expression: Expression, model: Model):
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
         if contradictory_outcome_set(head + body):
-            logger.info(f"two separate outcomes for one variable, P = 0.0")
+            logger.error(f"two separate outcomes for one variable, P = 0.0")
             return 0.0
 
         ###############################################
@@ -46,7 +46,7 @@ def inference(expression: Expression, model: Model):
             result_2 = _compute([head[-1]], body, depth+1)
             result = result_1 * result_2
 
-            logger.info(f"{current_expression} = {result}")
+            logger.success(f"{current_expression} = {result}")
             return result
 
         ###############################################
@@ -56,9 +56,8 @@ def inference(expression: Expression, model: Model):
         if set(model.variable(head[0].name).parents) == set(v.name for v in body):
             logger.info(f"querying table for: {current_expression}")
             table = model.table(head[0].name)                           # Get table
-            logger.info(f"{table}")                                     # Show table
             probability = table.probability_lookup(head[0], body)       # Get specific row
-            logger.info(f"{current_expression} = {probability}")
+            logger.success(f"{current_expression} = {probability}")
 
             return probability
         else:
@@ -69,7 +68,7 @@ def inference(expression: Expression, model: Model):
         ##################################################################
 
         if set(head).issubset(set(body)):
-            logger.info(f"identity rule: X|X = 1.0, therefore {current_expression} = 1.0")
+            logger.success(f"identity rule: X|X = 1.0, therefore {current_expression} = 1.0")
             return 1.0
 
         #################################################
@@ -96,12 +95,12 @@ def inference(expression: Expression, model: Model):
             result_2 = _compute(head, new_body, depth+1)
             result_3 = _compute(child, new_body, depth+1)
             if result_3 == 0:       # Avoid dividing by 0! coverage: skip
-                logger.info(f"{Expression([child], new_body)} = 0, therefore the result is 0.")
+                logger.success(f"{Expression([child], new_body)} = 0, therefore the result is 0.")
                 return 0
 
             # flip flop flippy flop
             result = result_1 * result_2 / result_3
-            logger.info(f"{current_expression} = {result}")
+            logger.success(f"{current_expression} = {result}")
             return result
 
         #######################################################################################################
@@ -135,7 +134,7 @@ def inference(expression: Expression, model: Model):
 
                     total += outcome_result
 
-                logger.info(f"{current_expression} = {total}")
+                logger.success(f"{current_expression} = {total}")
                 return total
 
         ###############################################
@@ -151,7 +150,7 @@ def inference(expression: Expression, model: Model):
             if can_drop:
                 logger.info(f"can drop: {[str(item) for item in can_drop]}")
                 result = _compute(head, list(set(body) - set(can_drop)), depth+1)
-                logger.info(f"{current_expression} = {result}")
+                logger.success(f"{current_expression} = {result}")
                 return result
 
         ###############################################

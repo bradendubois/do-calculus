@@ -1,4 +1,4 @@
-from do.util.helpers import disjoint, minimal_sets, power_set
+from do.core.helpers import disjoint, minimal_sets, power_set
 
 
 def test_disjoint():
