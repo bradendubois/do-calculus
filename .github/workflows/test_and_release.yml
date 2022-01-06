@@ -15,13 +15,13 @@ jobs:
         - ubuntu-latest
         - macos-latest
         - windows-latest
-        python-version: [ 3.8, 3.9, 3.10 ]
+        python-version: [ '3.8', '3.9', '3.10' ]
         report-coverage: [ false ]
 
         # Special matrix job to report coverage only once
         include:
           - os: ubuntu-latest
-            python-version: 3.10
+            python-version: '3.10'
             report-coverage: true
 
     runs-on: ${{ matrix.os }}
