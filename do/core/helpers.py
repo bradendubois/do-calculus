@@ -1,7 +1,5 @@
 from itertools import chain, combinations
-from typing import Collection, Iterator, Union
-
-from .Types import Intervention, Outcome, Vertex
+from typing import Iterator
 
 
 def power_set(variable_list: list or set, allow_empty_set=True) -> Iterator[any]:

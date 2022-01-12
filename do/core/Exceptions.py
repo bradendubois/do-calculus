@@ -29,7 +29,6 @@ class InvalidOutcome(ProbabilityException):
     pass
 
 
-
 class IntersectingSets(ProbabilityException):
     """
     Raised when attempting any backdoor-path related searches, where the source, destination, and/or optional deconfounding
@@ -38,12 +37,13 @@ class IntersectingSets(ProbabilityException):
     pass
 
 
-
 class MissingVariable(ProbabilityException):
     pass
 
+
 class EmptyExpressionHead(ProbabilityException):
     pass
+
 
 class ExogenousNonRoot(ProbabilityException):
     pass

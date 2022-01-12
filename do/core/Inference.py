@@ -31,7 +31,7 @@ def inference(expression: Expression, model: Model):
 
         # If the calculation for this contains two separate outcomes for a variable (Y = y | Y = ~y), 0
         if contradictory_outcome_set(head + body):
-            logger.error(f"two separate outcomes for one variable, P = 0.0")
+            logger.error("two separate outcomes for one variable, P = 0.0")
             return 0.0
 
         ###############################################
@@ -165,7 +165,8 @@ def inference(expression: Expression, model: Model):
     for out in head | body:
         assert out.name in model.graph().v, f"Error: Unknown variable {out}"
         assert out.outcome in model.variable(out.name).outcomes, f"Error: Unknown outcome {out.outcome} for {out.name}"
-        assert not isinstance(out, Intervention), f"Error: basic inference engine does not handle Interventions ({out.name} is an Intervention)"
+        assert not isinstance(out, Intervention), \
+            f"Error: basic inference engine does not handle Interventions ({out.name} is an Intervention)"
 
     return _compute(list(head), list(body))
 
@@ -191,7 +192,6 @@ def validate(model: Model) -> bool:
 
     Returns True on success (indicating a valid model), or raises an appropriate Exception indicating a failure.
     """
-    
     # no cycles
     ...
 

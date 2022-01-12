@@ -22,12 +22,10 @@ class Expression:
 
         return f'P({", ".join(map(str, self._head))} | {", ".join(map(str, self._body))})'
 
-
     # getters
-
     def head_contains(self, outcome: Outcome) -> bool:
         return outcome in self._head
-    
+
     def body_contains(self, outcome: Outcome) -> bool:
         return outcome in self._body
 
@@ -38,7 +36,6 @@ class Expression:
         return self._body.copy()
 
     # setters
-
     def add_to_head(self, outcome: Outcome) -> bool:
         if outcome in self._head:
             return False
@@ -56,7 +53,7 @@ class Expression:
             return False
         self._head.remove(outcome)
         return True
-    
+
     def remove_from_body(self, outcome: Outcome) -> bool:
         if outcome not in self._body:
             return False
