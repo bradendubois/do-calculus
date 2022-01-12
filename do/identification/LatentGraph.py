@@ -1,5 +1,5 @@
 from itertools import product
-from typing import Set
+from typing import List, Iterable, Set, Tuple
 
 from ..core.Graph import Graph
 
