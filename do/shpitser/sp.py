@@ -1,22 +1,3 @@
-# Potential Problem  #1
-# the pdist and pexpr vary only by having a set of variables over which to sum.
-# At step 2 of the algorithm certain local distributions and certain variables are removed
-# because they sum to 1 and the result is a simpler calculation and more intuitive to the reader
-
-# Potential Problem  #2
-# Consider the graph C->A<-B, except imagine that underneath B and C lie complex but disjoint graphs.
-# this might lead to a complex expression of the form sum(X)<C|X)> * sum(Y) <B|Y)
-# is this a concern? is it different from Sum(X,Y) <C|X> <B|Y)
-
-# it would be nice to get rid of the empty summations currently output, and then push the summations as far inwards as
-# possible
-# However, there has to be care taken because of the front-door type of expressions where a variable appears in the
-# total expression summed out in a local expression, but appearing instantiated also.
-
-# Potential Problem #3
-# haven't really sorted out the small letter versus large letter variables in line 7
-# they must have some meaning but this certainly isn't spelled out in the papers
-
 from itertools import product
 from typing import Iterable, List, Set, Tuple, Union, Optional
 
