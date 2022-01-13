@@ -1,8 +1,9 @@
-from typing import List, Optional, Set, Tuple, Union
+from typing import List, Optional, Sequence, Set, Tuple, Union
 
 from .Exceptions import Fail as FAIL
 from .LatentGraph import Graph
-from .PExpression import PExpr
+from .PExpression import PExpr, TemplateExpression
+
 
 # noinspection PyPep8Naming
 def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = True, i=0, passdown_proof: Optional[List[Tuple[int, List[str]]]] = None) -> PExpr:
@@ -26,6 +27,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
     # 1
     if x == set():
+        print(1)
         proof_chain.append((i, [
             "1: if X == Ø, return Σ_{V \\ Y} P(V)",
             f"  --> Σ_{s(g.V - y)} P({s(g.V)})",
@@ -37,6 +39,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
     # 2
     if g.V != An(y):
+        print(2)
         w = g.V - An(y)
         proof_chain.append((i, [
             "2: if V != An(Y)",
@@ -57,6 +60,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
         return Identification(y, x & An(y), p_operator(g.V - g[An(y)].V, p, None, debug), g[An(y)], debug, i+1, proof_chain)
 
+
     # 3
     w = (g.V - x) - g.without_incoming(x).ancestors(y)
 
@@ -68,6 +72,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
     ]))
 
     if w != set():
+        print(3)
         proof_chain.append((i, [
             "3: W != Ø",
             "  return ID(y, x ∪ w, P, G)",
@@ -86,6 +91,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
     # Line 4
     if len(C_V_minus_X) > 1:
+        print(4)
         proof_chain.append((i, [
             "4: C(G \\ X) = {S_1, ..., S_k}",
             f"--> C(G \\ X) = C({s(g.V)} \\ {s(x)}) = {', '.join(list(map(s, C_V_minus_X)))}",
@@ -175,13 +181,14 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
         # Line 6 - a single c-component
         if S in g.C:
+            print(6)
 
             dists = []
             dist_str = []
             for vi in S:
                 given = g.v_Pi[:g.v_Pi.index(vi)]
                 dist_str.append(f"P({vi})" if len(given) == 0 else f"P({vi} | {', '.join(given)})")
-                dists.append([vi, given])
+                dists.append(TemplateExpression(vi, given))
 
             proof_chain.append((i, [
                 f"6: S ∈ C(G)",
@@ -198,6 +205,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
 
         # 7
         else:
+            print(7)
 
             s_prime = next(s for s in g.C if set(s) > set(S))
             p = []
@@ -211,7 +219,7 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
                 rhs0 = list(set(rhs0) & s_prime)
                 rhs1 = list(set(rhs1) - s_prime)
                 rhs = rhs0 + rhs1
-                p.append([v, rhs])
+                p.append(TemplateExpression(v, rhs))
                 msg += f"[{v}{(f' | ' + ', '.join(rhs)) if len(rhs) > 0 else ''}]"
 
             g_s_prime = g[s_prime]
@@ -230,17 +238,20 @@ def Identification(y: Set[str], x: Set[str], p: PExpr, g: Graph, debug: bool = T
                 "  P_{x} = P_{x ∩ S', X \\ S'} = P_{x ∩ S'}.",
             ]))
 
-            return Identification(y, x & s_prime, PExpr({}, p), g_s_prime, debug, i+1, proof_chain)
-
+            return Identification(y, x & s_prime, PExpr([], p), g_s_prime, debug, i+1, proof_chain)
 
 
 def simplify_expression(original: PExpr, g: Graph, debug=False) -> PExpr:
 
-    def _simplify(current):
+    def _simplify(current,i = 0):
 
-        cpt_list_copy = list(filter(lambda i: not isinstance(i, PExpr), list(current).copy()))
-        for s in [s for s in current if isinstance(s, PExpr)]:
-            c = _simplify(s)
+        cpt_list_copy = list(filter(lambda i: isinstance(i, TemplateExpression), current.terms))
+        for s in current.terms:
+
+            if isinstance(s, TemplateExpression):
+                continue
+
+            c = _simplify(s, i + 1)
 
             if s.internal_proof:
                 offset = original.internal_proof[-1][0] + 2
@@ -257,18 +268,18 @@ def simplify_expression(original: PExpr, g: Graph, debug=False) -> PExpr:
 
             while True:
                 removed_one = False
-                x = {expression[0]}
-                for variable in expression[1]:
+                x = {expression.head}
+                for variable in expression.given:
                     y = {variable}
-                    z = set(expression[1]) - y
+                    z = set(expression.given) - y
                     if g.ci(x, y, z):
                         msg1 = f"{', '.join(x)} is independent of {', '.join(y)} given {', '.join(z)}, and can be removed."
-                        msg2 = f"p operator removed {variable} from body of {expression[0]} | {expression[1]}"
+                        msg2 = f"p operator removed {variable} from body of {expression}"
                         if debug:
                             print(msg1)
                             print(msg2)
                         steps.append(msg1)
-                        expression[1].remove(variable)
+                        expression.given.remove(variable)
                         removed_one = True
 
                 if not removed_one:
@@ -278,32 +289,32 @@ def simplify_expression(original: PExpr, g: Graph, debug=False) -> PExpr:
         # Remove unnecessary expressions
         # """
         while True:
-            bodies = set().union(*[el[1] for el in current if not isinstance(el, PExpr)])
-            search = filter(lambda el: el[0] in current.sigma, current)
-            remove = list(filter(lambda el: el[0] not in bodies, search))
+            bodies = set().union(*[el.given for el in current.terms if isinstance(el, TemplateExpression)])
+            search = filter(lambda el: isinstance(el, TemplateExpression) and el.head in current.sigma, current.terms)
+            remove = list(filter(lambda el: el.head not in bodies, search))
 
             if len(remove) == 0:
                 break
 
             for query in remove:
-                current.sigma.remove(query[0])
-                current.remove(query)
-                msg = f"{query[0]} can be removed."
+                current.sigma.remove(query.head)
+                current.terms.remove(query)
+                msg = f"{query.head} can be removed."
                 if debug:
                     print(msg)
                 steps.append(msg)
         # """
 
         while True:
-            sumout = [cpt for cpt in current if cpt[0] in current.sigma and not any([cpt[0] in el[1] for el in current])]
+            sumout = [cpt for cpt in current.terms if isinstance(cpt, TemplateExpression) and cpt.head in current.sigma and not any([cpt.head in el.given for el in current.terms if isinstance(el, TemplateExpression)])]
             if not sumout:
                 break
             for cpt in sumout:
-                current.remove(cpt)
-                current.sigma.remove(cpt[0])
+                current.terms.remove(cpt)
+                current.sigma.remove(cpt.head)
 
         if len(steps) > 0:
-            tables = ", ".join(f"P({table[0]} | {', '.join(table[1])})" if len(table[1]) > 0 else f"P({table[0]})" for table in cpt_list_copy)
+            tables = ", ".join(f"P({table.head} | {', '.join(table.given)})" if len(table.given) > 0 else f"P({table.head})" for table in cpt_list_copy)
             steps.append(f"After simplification: {tables}")
 
         """
@@ -323,16 +334,16 @@ def simplify_expression(original: PExpr, g: Graph, debug=False) -> PExpr:
                         removals = True
         """
 
-        def distribution_position(item: Union[list, PExpr]):
+        def distribution_position(item: Union[PExpr, TemplateExpression]):
             if isinstance(item, PExpr):
                 if len(item.sigma) == 0:
                     return len(g.v_Pi)
                 return len(g.v_Pi) + min(0, *list(map(lambda v: g.v_Pi.index(v), item.sigma)))
             else:
-                return g.v_Pi.index(item[0])
+                return g.v_Pi.index(item.head)
 
         # Sort remaining expressions by the topological ordering
-        current.sort(key=distribution_position)
+        current.terms.sort(key=distribution_position)
 
         if len(steps) > 0:
             steps.insert(0, "[***** Simplification *****]")
@@ -350,14 +361,5 @@ def simplify_expression(original: PExpr, g: Graph, debug=False) -> PExpr:
     return p
 
 
-def p_operator(v: Set[str], p: Union[PExpr, list], proof: List[Tuple[int, List[str]]] = None, debug: bool = True):
-
-    sigma = p.sigma if isinstance(p, PExpr) else []
-    cpt_list_copy = list(p).copy()
-    v_copy = v.copy()
-
-    ans = PExpr(list(v_copy | set(sigma)), cpt_list_copy, proof)
-    if debug:
-        print("p_operator returns = ", ans, " v_copy = ", v_copy, " sigma = ", sigma)
-    return ans
-
+def p_operator(v: Set[str], p: PExpr, proof: List[Tuple[int, List[str]]] = None, debug: bool = True):
+    return PExpr(list(v.copy() | set(p.sigma)), p.terms.copy(), proof)

@@ -3,7 +3,7 @@ from typing import List, Set, Tuple, Union, Optional
 
 from do.identification.Identification import Identification, simplify_expression
 from do.identification.LatentGraph import Graph
-from do.identification.PExpression import PExpr, P
+from do.identification.PExpression import PExpr, P, TemplateExpression
 
 d = '->'
 b = '<->'
@@ -277,7 +277,7 @@ def test_GraphParse6():
 def test_GraphParse7():
     assert g_7 == parse_graph_string(g_7_string)
 
-def test_GraphParse7():
+def test_GraphParse8():
     assert g_8 == parse_graph_string(g_8_string)
 
 
@@ -291,7 +291,7 @@ def tests():
         print("*" * 20, f"Beginning Graph {index}", "*" * 20)
 
         g = problem_set["g"]
-        p = P(g)
+        p = PExpr([], [TemplateExpression(x, list(g.Parents[x])) for x in g.V])
 
         # Verify Graph-Parsing
         g_str = problem_set["as_string"]
@@ -313,24 +313,25 @@ def tests():
             print(f"Beginning problem: {query_str}")
 
             result = Identification(y, x, p, g, debug, proof)
-
             simplify = simplify_expression(result, g, debug)
 
-            if debug:
-                print("Debugged Original / Simplified")
-                debugPExpr(result)
-                debugPExpr(simplify)
+            print(result, simplify)
 
-            print(f"{query_str} (Original)   = {result}")
-            print(f"{query_str} (Simplified) = {simplify}")
-            print(f"expected g{index}_a{i} = ", end="")
-            print(answer)
+            # if debug:
+            #     print("Debugged Original / Simplified")
+            #     debugPExpr(result)
+            #     debugPExpr(simplify)
 
-            print("*********** REPRODUCE")
-            print(simplify.proof())
+            # print(f"{query_str} (Original)   = {result}")
+            # print(f"{query_str} (Simplified) = {simplify}")
+            # print(f"expected g{index}_a{i} = ", end="")
+            # print(answer)
 
-            with open(f"graph_{index}_{i}.txt", "w") as f:
-                f.write(simplify.proof())
+            # print("*********** REPRODUCE")
+            # print(simplify.proof())
+
+            # with open(f"graph_{index}_{i}.txt", "w") as f:
+            #     f.write(simplify.proof())
 
             print("*" * 40)
     print("*" * 20, "all done", "*" * 20)
