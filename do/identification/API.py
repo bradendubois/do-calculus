@@ -5,9 +5,12 @@ from ..core.Expression import Expression
 from ..core.Model import Model
 from ..core.Variables import Intervention, Outcome
 
-from .LatentGraph import LatentGraph
+from .LatentGraph import LatentGraph, latent_transform
 from .Identification import Identification
 from .PExpression import PExpr, TemplateExpression
+
+RIGHT_DIRECTED = "->"
+BIDIRECTED = "<->"
 
 
 class API:
@@ -17,7 +20,8 @@ class API:
         endogenous = set(model._v.keys())
         exogenous = model._g.v - endogenous
 
-        latent = LatentGraph(model._g.copy(), exogenous)
+        latent = latent_transform(model._g.copy(), exogenous)
+        
         p = PExpr([], [TemplateExpression(x, list(latent.parents(x))) for x in latent.v])
         expression = Identification({v.name for v in y}, {v.name for v in x}, p, latent)
 
@@ -25,7 +29,7 @@ class API:
             
             if isinstance(current, TemplateExpression):
                 t = model.table(current.head)
-                return t.probability_lookup(Outcome(current.head), known[current.head], [Outcome(v, known[v]) for v in model.variable(current.head).parents])
+                return t.probability_lookup(Outcome(current.head, known[current.head]), [Outcome(v, known[v]) for v in model.variable(current.head).parents])
 
 
             elif len(current.sigma) == 0:
@@ -50,7 +54,7 @@ class API:
         endogenous = set(model._v.keys())
         exogenous = model._g.v - endogenous
 
-        latent = LatentGraph(model._g.copy(), exogenous)
+        latent = latent_transform(model._g.copy(), exogenous)
         p = PExpr([], [TemplateExpression(x, list(latent._g.parents(x))) for x in latent._g.v])
         expression = Identification(y, x, p, latent)
         print(expression.proof())

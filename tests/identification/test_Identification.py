@@ -1,9 +1,11 @@
 from itertools import product
 
 from do.API import API
+from do.core.Expression import Expression
 from do.core.Variables import Intervention, Outcome
+from do.core.helpers import within_precision
 from do.identification.Identification import Identification, simplify_expression
-from do.identification.LatentGraph import Graph
+from do.identification.LatentGraph import LatentGraph
 from do.identification.PExpression import PExpr, TemplateExpression
 
 from ..source import models
@@ -23,7 +25,7 @@ def debugPExpr(f, s=0):
         debugPExpr(item, s + 1)
 
 
-def parse_graph_string(graph_string: str) -> Graph:
+def parse_graph_string(graph_string: str) -> LatentGraph:
 
     from re import split
 
@@ -34,6 +36,7 @@ def parse_graph_string(graph_string: str) -> Graph:
 
     e = set()
     v = set()
+    e_b = set()
 
     for item in splits:
 
@@ -55,18 +58,18 @@ def parse_graph_string(graph_string: str) -> Graph:
             for s, t in product(left, right):
 
                 if arrow == "<-":
-                    e.add((t, s, d))
+                    e.add((t, s))
 
                 elif arrow == "->":
-                    e.add((s, t, d))
+                    e.add((s, t))
 
                 elif arrow == "<->":
-                    e.add((s, t, b))
+                    e_b.add((s, t))
 
                 else:
                     print("Invalid Arrow Type:", arrow)
 
-    return Graph(e, v)
+    return LatentGraph(v, e, e_b)
     
 
 ##################################################################################
@@ -75,7 +78,7 @@ def parse_graph_string(graph_string: str) -> Graph:
 # graph 1
 #########################################
 
-g_1 = Graph({('M', 'S', d), ('S', 'C', d), ('M', 'C', d)}, {'C', 'S', 'M'})
+g_1 = LatentGraph({'C', 'S', 'M'}, {('M', 'S'), ('S', 'C'), ('M', 'C')}, set())
 g_1_string = "M->S.S,M->C."
 
 g1_q1 = ({'C'}, {'S'})
@@ -90,14 +93,15 @@ g1_queries = [g1_q1, g1_q2, g1_q3]
 g1_answers = [g1_a1, g1_a2, g1_a3]
 
 def test_g1q1():
-    assert api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma) == 5
+    assert within_precision(api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma), api.treat(Expression(Outcome("Y", "y")), [Intervention("X", "x")], melanoma))
+
 
 
 #########################################
 # queries - graph 2
 #########################################
 
-g_2 = Graph({('A', 'B', d), ('A', 'C', d), ('B', 'D', d), ('C', 'D', d)}, {'A', 'B', 'C', 'D'})
+g_2 = LatentGraph({'A', 'B', 'C', 'D'}, {('A', 'B'), ('A', 'C'), ('B', 'D'), ('C', 'D')}, set())
 g_2_string = "A->B,C.B,C->D."
 
 g2_q1 = ({'D'}, {'A'})
@@ -117,7 +121,7 @@ g2_answers = [g2_a1, g2_a2, g2_a3, g2_a4]
 # queries - graph 3
 #########################################
 
-g_3 = Graph({('B', 'C', b), ('B', 'D', d), ('C', 'D', d)}, {'B', 'C', 'D'})
+g_3 = LatentGraph({'B', 'C', 'D'}, {('B', 'D'), ('C', 'D')}, {('B', 'C')})
 g_3_string = "B<->C.B,C->D."
 
 g3_q1 = ({'D'}, {'B'})
@@ -135,7 +139,7 @@ g3_answers = [g3_a1, g3_a2, g3_a3]
 # queries - graph 4
 #########################################
 
-g_4 = Graph({('S', 'T', d), ('T', 'C', d), ('S', 'C', b)}, {'S', 'T', 'C'})
+g_4 = LatentGraph({'S', 'T', 'C'}, {('S', 'T'), ('T', 'C')}, {('S', 'C')})
 g_4_string = "S->T->C.S<->C."
 
 g4_q1 = ({'C'}, {'S'})
@@ -149,10 +153,8 @@ g4_answers = [g4_a1]
 # queries - graph 5
 #########################################
 
-g_5 = Graph(
-    {("X", "Z1", b), ("Z1", "Z3", b),
-     ("Z1", "Z2", d), ("X", "Z2", d), ("Z2", "Z3", d), ("X", "Y", d), ("Z2", "Y", d), ("Z3", "Y", d)},
-    {"X", "Y", "Z1", "Z2", "Z3"}
+g_5 = LatentGraph({"X", "Y", "Z1", "Z2", "Z3"},
+    {("Z1", "Z2"), ("X", "Z2"), ("Z2", "Z3"), ("X", "Y"), ("Z2", "Y"), ("Z3", "Y")}, {("X", "Z1"), ("Z1", "Z3")}
 )
 g_5_string = "X<->Z1<->Z3.X,Z1->Z2->Z3.X,Z2,Z3->Y."
 
@@ -169,9 +171,8 @@ g5_answers = [g5_a1, g5_a2]
 # queries - graph 6
 #########################################
 
-g_6 = Graph(
-    {("W1", "W2", b), ("W1", "Y1", b), ("W2", "X", b), ("W1", "X", d), ("X", "Y1", d), ("W2", "Y2", d)},
-    {"X", "Y1", "Y2", "W1", "W2"}
+g_6 = LatentGraph({"X", "Y1", "Y2", "W1", "W2"},
+    {("W1", "X"), ("X", "Y1"), ("W2", "Y2")}, {("W1", "W2"), ("W1", "Y1"), ("W2", "X")}
 )
 g_6_string = "Y1<->W1<->W2<->X.W1->X->Y1.W2->Y2."
 
@@ -185,9 +186,8 @@ g6_answers = [g6_a1]
 # queries - graph 7
 #########################################
 
-g_7 = Graph(
-    {("Z1", "Z2", b), ("Z2", "W", b), ("Z1", "W", b), ("Z2", "X", d), ("X", "W", d), ("W", "Y", d), ("Z1", "Y", d)},
-    {"Z1", "Z2", "W", "X", "Y"}
+g_7 = LatentGraph({"Z1", "Z2", "W", "X", "Y"},
+    {("Z2", "X"), ("X", "W"), ("W", "Y"), ("Z1", "Y")}, {("Z1", "Z2"), ("Z2", "W"), ("Z1", "W")}
 )
 g_7_string = "Z1<->Z2<->W<->Z1.Z2->X->W->Y<-Z1."
 
@@ -201,8 +201,8 @@ g7_answers = [g7_a1]
 # queries - graph 8
 #########################################
 
-g_8 = Graph({('S1', 'T1', d), ('T1', 'C1', d), ('S1', 'C1', b), ('S2', 'T2', d), ('T2', 'C2', d), ('S2', 'C2', b), ('C2', 'C', d), ('C1', 'C', d)},
-            {'S1', 'T1', 'C1', 'S2', 'T2', 'C2', 'C'})
+g_8 = LatentGraph({'S1', 'T1', 'C1', 'S2', 'T2', 'C2', 'C'}, {('S1', 'T1'), ('T1', 'C1'), ('S2', 'T2'), ('T2', 'C2'), ('C2', 'C'), ('C1', 'C')}, {('S1', 'C1'), ('S2', 'C2')})
+
 g_8_string = "S1->T1->C1<->S1.S2->T2->C2<->S2.C2->C<-C1."
 
 g8_q1 = ({'C1'}, {'S1'})
@@ -290,7 +290,7 @@ def test_GraphParse8():
     assert g_8 == parse_graph_string(g_8_string)
 
 
-def tests():
+def teasts():
 
     debug = False
     proof = False
