@@ -1,36 +1,31 @@
 from itertools import product
 from typing import Mapping, Set, Union
 
-from ..core.Expression import Expression
 from ..core.Model import Model
 from ..core.Variables import Intervention, Outcome
 
-from .LatentGraph import LatentGraph, latent_transform
+from .LatentGraph import latent_transform
 from .Identification import Identification
-from .PExpression import PExpr, TemplateExpression
-
-RIGHT_DIRECTED = "->"
-BIDIRECTED = "<->"
+from .PExpression import PExpression, TemplateExpression
 
 
 class API:
 
-    def identification(self, y: Set[Outcome], x: Set[Intervention], model: Model):
+    def identification(self, y: Set[Outcome], x: Set[Intervention], model: Model) -> float:
         
         endogenous = set(model._v.keys())
         exogenous = model._g.v - endogenous
 
         latent = latent_transform(model._g.copy(), exogenous)
         
-        p = PExpr([], [TemplateExpression(x, list(latent.parents(x))) for x in latent.v])
-        expression = Identification({v.name for v in y}, {v.name for v in x}, p, latent)
+        p = PExpression([], [TemplateExpression(x, list(latent.parents(x))) for x in latent.v])
+        expression = Identification({v.name for v in y}, {v.name for v in x}, p, latent, True)
 
-        def _process(current: Union[PExpr, TemplateExpression], known: Mapping[str, str]):
+        def _process(current: Union[PExpression, TemplateExpression], known: Mapping[str, str]):
             
             if isinstance(current, TemplateExpression):
                 t = model.table(current.head)
                 return t.probability_lookup(Outcome(current.head, known[current.head]), [Outcome(v, known[v]) for v in model.variable(current.head).parents])
-
 
             elif len(current.sigma) == 0:
                 i = 1
@@ -49,12 +44,13 @@ class API:
 
         return _process(expression, {v.name: v.outcome for v in y} | {v.name: v.outcome for v in x})
 
-    def proof(self, y: Set[Outcome], x: Set[Intervention], model: Model):
+    def proof(self, y: Set[Outcome], x: Set[Intervention], model: Model) -> str:
 
         endogenous = set(model._v.keys())
         exogenous = model._g.v - endogenous
 
         latent = latent_transform(model._g.copy(), exogenous)
-        p = PExpr([], [TemplateExpression(x, list(latent._g.parents(x))) for x in latent._g.v])
-        expression = Identification(y, x, p, latent)
-        print(expression.proof())
+        
+        p = PExpression([], [TemplateExpression(x, list(latent.parents(x))) for x in latent.v])
+        expression = Identification({v.name for v in y}, {v.name for v in x}, p, latent, True)
+        return expression.proof()

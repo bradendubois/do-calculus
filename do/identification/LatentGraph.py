@@ -3,22 +3,13 @@ from typing import List, Iterable, Set, Tuple
 
 from ..core.Graph import Graph
 
-# A method to convert a Graph and a set of unobservable variables into a LatentGraph,
-#   in which all unobservable variables are replaced with bidirected arcs
 
-
-
-
-# TODO Merge this into the above LatentGraph
 class LatentGraph(Graph):
 
     def __init__(self, vertices: Set[str], edges: Set[Tuple[str, str]], e_bidirected: Set[Tuple[str, str]], fixed_topology: List[str] = None):
-
         super().__init__(vertices, edges, fixed_topology)
         self.e_bidirected = e_bidirected.copy()
-
         self.V = vertices
-
         self.C = self.make_components()
 
         # Allows passing a topology down to a subgraph
@@ -37,16 +28,6 @@ class LatentGraph(Graph):
         else:
             self.v_Pi = self.__kahns()
 
-    def biadjacent(self, v: str):
-        return {e for e in self.e_bidirected if v in e}
-
-    def ancestors(self, y: Set[str]):
-        ans = y.copy()
-        for v in y:
-            for p in self.parents(v):
-                ans |= self.ancestors({p})
-        return ans
-
     def __str__(self):
         return f"Graph: V = {', '.join(self.v)}, E = {', '.join(list(map(str, self.e)))}, E (Bidirected) = {', '.join(list(map(str, self.e_bidirected)))}"
 
@@ -63,6 +44,15 @@ class LatentGraph(Graph):
             all([(e[0], e[1]) in other.e_bidirected or (e[1], e[0]) in other.e_bidirected for e in self.e_bidirected]) and \
             all([(e[0], e[1]) in self.e_bidirected or (e[1], e[0]) in self.e_bidirected for e in other.e_bidirected])
 
+    def biadjacent(self, v: str):
+        return {e[0] if e[0] != v else e[1] for e in self.e_bidirected if v in e}
+
+    def ancestors(self, y: Set[str]):
+        ans = y.copy()
+        for v in y:
+            for p in self.parents(v):
+                ans |= self.ancestors({p})
+        return ans
 
     # puts nodes in topological ordering
     def __kahns(self):
@@ -103,7 +93,7 @@ class LatentGraph(Graph):
                 if v not in visited:
                     visited.add(v)
                     component.append(v)
-                    q.extend({vs for vs in self.biadjacent(v) if vs not in visited})
+                    q.extend([vs for vs in self.biadjacent(v) if vs not in visited])
 
             if component:
                 ans.append(set(component))
@@ -112,14 +102,19 @@ class LatentGraph(Graph):
 
     def without_incoming(self, x: Iterable[str]):
         # return Graph(self.Edges - {edge for edge in self.Edges if edge[1] in x and edge[2] == "->"}, self.V)
-        return LatentGraph(self.v, self.e - {e for e in (self.e | self.e_bidirected) if e[1] in x}, self.v_Pi)
+        return LatentGraph(self.v, self.e - {e for e in self.e if e[1] in x}, self.e_bidirected, self.v_Pi)
 
     def collider(self, v1, v2, v3):
-        return v1 in self.parents(v2) and v3 in self.children(v2)
+        return v1 in self.V and v2 in self.V and v3 in self.V and v1 in self.parents(v2) and v3 in self.children(v2)
 
     def all_paths(self, x: Iterable[str], y: Iterable[str]):
 
         def path_list(s, t):  # returns all paths from X to Y regardless of direction of link (no bd links)
+
+            # generate a fake variable to represent unobservable variables
+            UNOBSERVABLE = "U"
+            while UNOBSERVABLE in self.V:
+                UNOBSERVABLE += "U"
 
             from_s_s = [[s]]
             ans = []
@@ -141,12 +136,12 @@ class LatentGraph(Graph):
                 for each in self.biadjacent(from_s[-1]):
                     if each == t:
                         path = from_s.copy()
-                        path.append("U")
+                        path.append(UNOBSERVABLE)
                         path.append(t)
                         ans.append(path)
                     elif each not in from_s:
                         r = from_s.copy()
-                        r.append("U")
+                        r.append(UNOBSERVABLE)
                         r.append(each)
                         from_s_s.append(r)
             return ans

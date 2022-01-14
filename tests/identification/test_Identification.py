@@ -29,7 +29,10 @@ def test_p34():
     assert within_precision(api.identification({Outcome("Xj", "xj")}, {Intervention("Xi", "xi")}, pearl34), api.treat(Expression(Outcome("Xj", "xj")), [Intervention("Xi", "xi")], pearl34))
 
 
-def test_g1q1():
+def test_melanoma():
     assert within_precision(api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma), api.treat(Expression(Outcome("Y", "y")), [Intervention("X", "x")], melanoma))
+
+def test_proof():
+    print(api.proof({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma))
 
 ##################################################################################
