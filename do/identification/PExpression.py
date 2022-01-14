@@ -1,4 +1,4 @@
-from typing import List, Sequence, Tuple
+from typing import Collection, List, Sequence, Tuple
 
 from .LatentGraph import Graph
 
@@ -7,16 +7,16 @@ MUL = "*"
 
 class PExpr:
 
-    def __init__(self, vs, ps: list = None, proof: List[Tuple[int, List[str]]] = None):
-        self.sigma = list(vs)
-        self.terms = list(ps) if ps else []
+    def __init__(self, sigma: Collection[str], terms: list = None, proof: List[Tuple[int, List[str]]] = None):
+        self.sigma = list(sigma)
+        self.terms = list(terms) if terms else []
         self.internal_proof = proof if proof else []
 
     def __str__(self):
 
         buf = ""
         if self.sigma:
-            buf += "<sum {" + ", ".join(self.sigma) + "} "
+            buf += "<Σ {" + ", ".join(self.sigma) + "} "
 
         # Put Distributions (or PExprs with empty summations) first
         for el in filter(lambda x: isinstance(x, TemplateExpression) or isinstance(x, PExpr) and len(x.sigma) == 0, self.terms):
@@ -55,12 +55,6 @@ class PExpr:
         for child in filter(lambda x: isinstance(x, PExpr), self.terms):
             s += child.proof()
         return s
-
-
-# noinspection PyPep8Naming
-def P(g: Graph) -> PExpr:
-    return PExpr([], [TemplateExpression(x, list(g.Parents[x])) for x in g.V])
-
 
 
 class TemplateExpression:

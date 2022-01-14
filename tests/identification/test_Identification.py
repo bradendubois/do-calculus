@@ -1,13 +1,18 @@
 from itertools import product
-from typing import List, Set, Tuple, Union, Optional
 
+from do.API import API
+from do.core.Variables import Intervention, Outcome
 from do.identification.Identification import Identification, simplify_expression
 from do.identification.LatentGraph import Graph
-from do.identification.PExpression import PExpr, P, TemplateExpression
+from do.identification.PExpression import PExpr, TemplateExpression
+
+from ..source import models
+melanoma = models["melanoma.yml"]
+
+api = API()
 
 d = '->'
 b = '<->'
-
 
 # noinspection PyPep8Naming
 def debugPExpr(f, s=0):
@@ -83,6 +88,10 @@ g1_a3 = "C | S, M = [C|M,S]"
 
 g1_queries = [g1_q1, g1_q2, g1_q3]
 g1_answers = [g1_a1, g1_a2, g1_a3]
+
+def test_g1q1():
+    assert api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma) == 5
+
 
 #########################################
 # queries - graph 2
