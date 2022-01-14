@@ -1,5 +1,3 @@
-from itertools import product
-
 from do.API import API
 from do.core.Expression import Expression
 from do.core.Variables import Intervention, Outcome
