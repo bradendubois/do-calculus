@@ -1,5 +1,5 @@
 from itertools import product
-from typing import Mapping, Set, Union
+from typing import Mapping, Set, Tuple, Union
 
 from ..core.Model import Model
 from ..core.Variables import Intervention, Outcome
@@ -11,7 +11,7 @@ from .PExpression import PExpression, TemplateExpression
 
 class API:
 
-    def identification(self, y: Set[Outcome], x: Set[Intervention], model: Model) -> float:
+    def identification(self, y: Set[Outcome], x: Set[Intervention], model: Model, include_proof: bool = False) -> Union[float, Tuple[float, str]]:
         
         endogenous = set(model._v.keys())
         exogenous = model._g.v - endogenous
@@ -42,7 +42,9 @@ class API:
                     t += i
                 return t
 
-        return _process(expression, {v.name: v.outcome for v in y} | {v.name: v.outcome for v in x})
+        result = _process(expression, {v.name: v.outcome for v in y} | {v.name: v.outcome for v in x})
+
+        return (result, expression.proof()) if include_proof else result
 
     def proof(self, y: Set[Outcome], x: Set[Intervention], model: Model) -> str:
 

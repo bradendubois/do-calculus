@@ -5,8 +5,28 @@ from .LatentGraph import LatentGraph as Graph
 from .PExpression import PExpression, TemplateExpression
 
 
-# noinspection PyPep8Naming
 def Identification(y: Set[str], x: Set[str], p: PExpression, g: Graph, prove: bool = True, i=0, passdown_proof: Optional[List[Tuple[int, List[str]]]] = None) -> PExpression:
+    """
+    The Identification algorithm presented in Shpitser & Pearl, 2007.
+
+    Args:
+        y (Set[str]): A set of (outcome) variable names, corresponding to vertices present in graph G.
+        x (Set[str]): A set of (treatment) variable names, corresponding to vertices present in graph G.
+        p (PExpression): A custom data structure representing a distribution as a summation of variables 
+            (which can be empty) and collection of 'tables' (TemplateExpressions) represented as a variable 
+            name "given" some set of prior variables.
+        g (Graph): A LatentGraph which has undergone augmentation to remove any exogenous variables, replacing
+            them with bidirected arcs connecting their children.
+        prove (bool, optional): Controls whether or not an additional process of proof generation should be
+            undertaken when identifying the resulting expression. Defaults to True.
+        i (int, optional): [description]. Defaults to 0.
+        passdown_proof (Optional[List[Tuple[int, List[str]]]], optional): [description]. Defaults to None.
+
+    Returns:
+        PExpression: A resulting PExpression containing any number of nested PExpressions or (terminal)
+            TemplateExpressions. This is not particularly useful on its own, but instead, can be evaluated 
+            through the main API.
+    """
 
     def s(a_set):
         if len(a_set) == 0:
