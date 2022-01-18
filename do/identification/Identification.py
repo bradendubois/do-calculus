@@ -5,7 +5,7 @@ from .LatentGraph import LatentGraph as Graph
 from .PExpression import PExpression, TemplateExpression
 
 
-def Identification(y: Set[str], x: Set[str], p: PExpression, g: Graph, prove: bool = True, i=0, passdown_proof: Optional[List[Tuple[int, List[str]]]] = None) -> PExpression:
+def Identification(y: Set[str], x: Set[str], p: PExpression, g: Graph, prove: bool = True):
     """
     The Identification algorithm presented in Shpitser & Pearl, 2007.
 
@@ -19,8 +19,6 @@ def Identification(y: Set[str], x: Set[str], p: PExpression, g: Graph, prove: bo
             them with bidirected arcs connecting their children.
         prove (bool, optional): Controls whether or not an additional process of proof generation should be
             undertaken when identifying the resulting expression. Defaults to True.
-        i (int, optional): [description]. Defaults to 0.
-        passdown_proof (Optional[List[Tuple[int, List[str]]]], optional): [description]. Defaults to None.
 
     Returns:
         PExpression: A resulting PExpression containing any number of nested PExpressions or (terminal)
@@ -28,240 +26,243 @@ def Identification(y: Set[str], x: Set[str], p: PExpression, g: Graph, prove: bo
             through the main API.
     """
 
-    def s(a_set):
-        if len(a_set) == 0:
-            return "Ø"
-        return "{" + ', '.join(a_set) + "}"
+    def _identification(_y: Set[str], _x: Set[str], _p: PExpression, _g: Graph, _prove: bool = True, i=0, passdown_proof: Optional[List[Tuple[int, List[str]]]] = None) -> PExpression:
+        
+        def s(a_set):
+            if len(a_set) == 0:
+                return "Ø"
+            return "{" + ', '.join(a_set) + "}"
 
-    # The continuation of a proof that is ongoing if this is a recursive ID call, or a 'fresh' new proof sequence otherwise
-    proof_chain = passdown_proof if passdown_proof else []
+        # The continuation of a proof that is ongoing if this is a recursive ID call, or a 'fresh' new proof sequence otherwise
+        proof_chain = passdown_proof if passdown_proof else []
 
-    # noinspection PyPep8Naming
-    def An(vertices):
-        return g.ancestors(vertices)
+        # noinspection PyPep8Naming
+        def An(vertices):
+            return _g.ancestors(vertices)
 
-    if prove:
-        proof_chain.append((i, [f"ID Begin: Y = {s(y)}, X = {s(x)}"]))
+        if _prove:
+            proof_chain.append((i, [f"ID Begin: Y = {s(_y)}, X = {s(_x)}"]))
 
-    # 1
-    if x == set():
-        if prove:
-            proof_chain.append((i, [
-                "1: if X == Ø, return Σ_{V \\ Y} P(V)",
-                f"  --> Σ_{s(g.V - y)} P({s(g.V)})",
-                "",
-                f"[***** Standard Probability Rules *****]"
-            ]))
-
-        return p_operator(g.V - y, p, proof_chain)
-
-    # 2
-    if g.V != An(y):
-        w = g.V - An(y)
-        if prove:
-            proof_chain.append((i, [
-                "2: if V != An(Y)",
-                f"--> {s(g.V)} != {s(An(y))}",
-                "  return ID(y, x ∩ An(y), P(An(Y)), An(Y)_G)",
-                f"  --> ID({s(y)}, {s(x)} ∩ {s(An(y))}, P({s(An(y))}), An({s(An(y))})_G)",
-                "",
-                f"  [***** Do-Calculus: Rule 3 *****]",
-                "  let W = V \\ An(Y)_G",
-                f"      W = {s(g.V)} \\ {s(An(y))}",
-                f"      W = {s(w)}",
-                f"  G \\ W = An(Y)_G",
-                f"  {s(g.V)} \\ {s(w)} = {s(An(y))}",
-                "  P_{x,z} (y | w) = P_{x} (y | w) if (Y ⊥⊥ Z | X, W) _G_X,Z(W)",
-                f"  let y = y ({s(y)}), x = x ∩ An(Y) ({s(x & An(y))}), z = w ({s(w)})" ", w = Ø",
-                "  P_{" f"{s((x & An(y)) | w)}" "} " f"({s(y)}) = P_{s(x & An(y))} ({s(y)}) if ({s(y)} ⊥⊥ {s(w)} | {s(x & An(y))}) _G_{s(x)}",
-            ]))
-
-        return Identification(y, x & An(y), p_operator(g.V - g[An(y)].V, p), g[An(y)], prove, i+1, proof_chain)
-
-
-    # 3
-    w = (g.V - x) - g.without_incoming(x).ancestors(y)
-
-    if prove:
-        proof_chain.append((i, [
-            "let W = (V \\ X) \\ An(Y)_G_X",
-            f"--> W = ({s(g.V)} \\ {s(x)}) \\ An({s(y)})_G_{s(x)}",
-            f"--> W = {s(g.V - x)} \\ {s(g.without_incoming(x).ancestors(y))}",
-            f"--> W = {s(w)}"
-        ]))
-
-    if w != set():
-        if prove:
-            proof_chain.append((i, [
-                "3: W != Ø",
-                "  return ID(y, x ∪ w, P, G)",
-                f"  --> ID({s(y)}, {s(x)} ∪ {s(w)}, P, G)",
-                "",
-                "  [***** Do-Calculus: Rule 3 *****]",
-                "  P_{x, z} (y | w) = P_{x} if (Y ⊥⊥ Z | X, W)_G_X_Z(W)",
-                "  let y = y, x = x, z = w, w = Ø",
-                "  P_{x} (y | w) = P_{x,z} (y | w) if (Y ⊥⊥ Z | X, W) _G_X,Z(W)",
-                f"  P_{s(x)} ({s(y)}) = P_" "{" f"{s(x)[1:-1]}, {s(w)[1:-1]}" "}" f" ({s(y)}) if ({s(y)} ⊥⊥ {s(w)} | {s(x)})_G_{s(x)}"
-            ]))
-
-        return Identification(y, x | w, p, g, prove, i+1, proof_chain)
-
-    C_V_minus_X = g[g.V - x].C
-
-    # Line 4
-    if len(C_V_minus_X) > 1:
-        if prove:
-            proof_chain.append((i, [
-                "4: C(G \\ X) = {S_1, ..., S_k}",
-                f"--> C(G \\ X) = C({s(g.V)} \\ {s(x)}) = {', '.join(list(map(s, C_V_minus_X)))}",
-                "  return Σ_{V \\ y ∪ x} Π_i ID(Si, v \\ Si, P, G)",
-                "  --> Σ_{" f"{s(g.V)} \\ {s(y)} ∪ {s(x)}" "} Π [",
-                *[f"      --> ID({s(Si)}, {s(g.V - Si)}, P, G)" for Si in C_V_minus_X],
-                "  ]",
-                "",
-                "  [***** Proof *****]",
-                "  P_{x} (y) = Σ_{v \\ (y ∪ x)} Π_i P_{v \\ S_i} (S_i)",
-                "  1. [***** Do-Calculus: Rule 3 *****]",
-                "     Π_i P_{v \\ S_i} (S_i) = Π_i P_{A_i} (S_i), where A_i = An(S_i)_G \\ S_i",
-                "     Π [",
-                    *[f"       P_{s(g.V - si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
-                "     ] = Π [",
-                    *[f"       P_{s(g.ancestors(si)-si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
-                "     ]",
-
-                "  2. [***** Chain Rule *****]",
-                "     Π_i P_{A_i} (S_i) = Π_i Π_{V_j ∈ S_i} P_{A_i} (V_j | V_π^(j-1) \\ A_i)",
-
-                "     Π [",
-                    *[f"       P_{s(g.ancestors(si)-si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
-                "     ] = Π [",
-                    *[" ".join(["       Π ["]  + [
-                        f"P_{s(g.ancestors(si)-si)} ({vj} | {s(set(g.v_Pi[:g.v_Pi.index(vj)]) - g.ancestors({vj}))})" for vj in si
-                    ] + ["]"]) for si in C_V_minus_X],
-                "     ]",
-
-                "  3. [***** Rule 2 or Rule 3 *****]",
-                "     Π_i Π_{V_j ∈ S_i} P_{A_i} (V_j | V_π^(j-1) \\ A_i) = Π_i Π_{V_j ∈ S_i} P(V_j | V_π^(j-1))",
-                "     a. if A ∈ A_i ∩ V_π^(j-1), A can be removed as an intervention by Rule 2",
-                "        All backdoor paths from A_i to V_j with a node not in V_π^(j-1) are d-separated.",
-                "        Paths must also be bidirected arcs only.",
-                "        let x = x, y = y, z = {A}, w = Ø",
-                "        P_{x,z} (y | w) = P_{x} (y | z, w) if (Y ⊥⊥ Z | X, W)_X_Z_",
-                "     b. if A ∈ A_i \\ V_π^(j-1), A can be removed as an intervention by Rule 3",
-                "         let x = x, y = V_j, z = {A}, w = Ø",
-                "         P_{x,z} (y | w) = P_{x} (y | w) if (Y ⊥⊥ Z | X, W)_G_X_Z(W)",
-                "         (V_j ⊥⊥ A | V_π^(j-1)) G_{A_i}",
-
-                "     Π [",
-                    *[" ".join(["       Π ["]  + [
-                        f"P_{s(g.ancestors(si)-si)} ({vj} | {s(set(g.v_Pi[:g.v_Pi.index(vj)]) - g.ancestors({vj}))})" for vj in si
-                    ] + ["]"]) for si in C_V_minus_X],
-                "     ] = Π [",
-                    *[" ".join(["       Π ["]  + [
-                        f"P ({vj} | {s(set(g.v_Pi[:g.v_Pi.index(vj)]))})" for vj in si
-                    ] + ["]"]) for si in C_V_minus_X],
-                "     ]",
-
-                "  4. [***** Grouping *****]",
-                "     Π_i Π_{V_j ∈ S_i} P(V_j | V_π^(j-1)) = Π_i P(V_i | V_π^(i-1))",
-
-                "     Π [",
-                    *[" ".join(["       Π ["]  + [
-                        f"P ({vj} | {s(set(g.v_Pi[:g.v_Pi.index(vj)]))})" for vj in si
-                    ] + ["]"]) for si in C_V_minus_X],
-                "     ] = Π [",
-
-                "     ]",
-
-                "  5. [***** Chain Rule *****]",
-                "     Π_i P(V_i | V_π^(i-1)) = P(v)"
-            ]))
-
-        return PExpression(g.V - (y | x), [Identification(s_i, g.V - s_i, p, g, prove, i+1) for s_i in C_V_minus_X], proof_chain)
-
-    else:
-
-        # At this point we have a single component
-        S = C_V_minus_X[0]
-
-        if prove:
-            proof_chain.append((i, [
-                "if C(G \\ X) = {S}",
-                f"--> C({s(g.V)} \\ {s(x)}) = {s(S)}"
-            ]))
-
-        # Line 5
-        if set(S) == g.V:
-            if prove:
+        # 1
+        if _x == set():
+            if _prove:
                 proof_chain.append((i, [
-                    "5: if C(G) = {G}: FAIL(G, S)",
-                    f"--> G, S form hedges F, F' for Px(Y) -> {g}, {S} for P_{x}({y})"
+                    "1: if X == Ø, return Σ_{V \\ Y} P(V)",
+                    f"  --> Σ_{s(_g.V - _y)} P({s(_g.V)})",
+                    "",
+                    f"[***** Standard Probability Rules *****]"
                 ]))
 
-            raise FAIL(g, S, proof_chain)
+            return p_operator(_g.V - _y, _p, proof_chain)
 
-        # Line 6 - a single c-component
-        if S in g.C:
-
-            dists = []
-            dist_str = []
-            for vi in S:
-                given = g.v_Pi[:g.v_Pi.index(vi)]
-                if prove:
-                    dist_str.append(f"P({vi})" if len(given) == 0 else f"P({vi} | {', '.join(given)})")
-                dists.append(TemplateExpression(vi, given))
-
-            if prove:
+        # 2
+        if _g.V != An(_y):
+            w = _g.V - An(_y)
+            if _prove:
                 proof_chain.append((i, [
-                    f"6: S ∈ C(G)",
-                    f"--> {s(S)} ∈ {', '.join(list(map(s, g.C)))}",
-                    "  return Σ_{S-Y} π_{Vi ∈ S} P(Vi | V_π^(i-1))",
-                    f"  --> Σ_{s(S - y)} π [{', '.join(dist_str)}]",
+                    "2: if V != An(Y)",
+                    f"--> {s(_g.V)} != {s(An(_y))}",
+                    "  return ID(y, x ∩ An(y), P(An(Y)), An(Y)_G)",
+                    f"  --> ID({s(_y)}, {s(_x)} ∩ {s(An(_y))}, P({s(An(_y))}), An({s(An(_y))})_G)",
+                    "",
+                    f"  [***** Do-Calculus: Rule 3 *****]",
+                    "  let W = V \\ An(Y)_G",
+                    f"      W = {s(_g.V)} \\ {s(An(_y))}",
+                    f"      W = {s(w)}",
+                    f"  G \\ W = An(Y)_G",
+                    f"  {s(_g.V)} \\ {s(w)} = {s(An(_y))}",
+                    "  P_{x,z} (y | w) = P_{x} (y | w) if (Y ⊥⊥ Z | X, W) _G_X,Z(W)",
+                    f"  let y = y ({s(_y)}), x = x ∩ An(Y) ({s(_x & An(_y))}), z = w ({s(w)})" ", w = Ø",
+                    "  P_{" f"{s((_x & An(_y)) | w)}" "} " f"({s(_y)}) = P_{s(_x & An(_y))} ({s(_y)}) if ({s(_y)} ⊥⊥ {s(w)} | {s(_x & An(_y))}) _G_{s(_x)}",
+                ]))
+
+            return _identification(_y, _x & An(_y), p_operator(_g.V - _g[An(_y)].V, _p), _g[An(_y)], _prove, i+1, proof_chain)
+
+
+        # 3
+        w = (_g.V - _x) - _g.without_incoming(_x).ancestors(_y)
+
+        if _prove:
+            proof_chain.append((i, [
+                "let W = (V \\ X) \\ An(Y)_G_X",
+                f"--> W = ({s(_g.V)} \\ {s(_x)}) \\ An({s(_y)})_G_{s(_x)}",
+                f"--> W = {s(_g.V - _x)} \\ {s(_g.without_incoming(_x).ancestors(_y))}",
+                f"--> W = {s(w)}"
+            ]))
+
+        if w != set():
+            if _prove:
+                proof_chain.append((i, [
+                    "3: W != Ø",
+                    "  return ID(y, x ∪ w, P, G)",
+                    f"  --> ID({s(_y)}, {s(_x)} ∪ {s(w)}, P, G)",
+                    "",
+                    "  [***** Do-Calculus: Rule 3 *****]",
+                    "  P_{x, z} (y | w) = P_{x} if (Y ⊥⊥ Z | X, W)_G_X_Z(W)",
+                    "  let y = y, x = x, z = w, w = Ø",
+                    "  P_{x} (y | w) = P_{x,z} (y | w) if (Y ⊥⊥ Z | X, W) _G_X,Z(W)",
+                    f"  P_{s(_x)} ({s(_y)}) = P_" "{" f"{s(_x)[1:-1]}, {s(w)[1:-1]}" "}" f" ({s(_y)}) if ({s(_y)} ⊥⊥ {s(w)} | {s(_x)})_G_{s(_x)}"
+                ]))
+
+            return _identification(_y, _x | w, _p, _g, _prove, i+1, proof_chain)
+
+        C_V_minus_X = _g[_g.V - _x].C
+
+        # Line 4
+        if len(C_V_minus_X) > 1:
+            if _prove:
+                proof_chain.append((i, [
+                    "4: C(G \\ X) = {S_1, ..., S_k}",
+                    f"--> C(G \\ X) = C({s(_g.V)} \\ {s(_x)}) = {', '.join(list(map(s, C_V_minus_X)))}",
+                    "  return Σ_{V \\ y ∪ x} Π_i ID(Si, v \\ Si, P, G)",
+                    "  --> Σ_{" f"{s(_g.V)} \\ {s(_y)} ∪ {s(_x)}" "} Π [",
+                    *[f"      --> ID({s(Si)}, {s(_g.V - Si)}, P, G)" for Si in C_V_minus_X],
+                    "  ]",
                     "",
                     "  [***** Proof *****]",
-                    f"  G has been partitioned into S = {s(S)} and X = {s(x)} in G = {s(g.V)}.",
-                    "  There are no bidirected arcs between S and X."
+                    "  P_{x} (y) = Σ_{v \\ (y ∪ x)} Π_i P_{v \\ S_i} (S_i)",
+                    "  1. [***** Do-Calculus: Rule 3 *****]",
+                    "     Π_i P_{v \\ S_i} (S_i) = Π_i P_{A_i} (S_i), where A_i = An(S_i)_G \\ S_i",
+                    "     Π [",
+                        *[f"       P_{s(_g.V - si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
+                    "     ] = Π [",
+                        *[f"       P_{s(_g.ancestors(si)-si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
+                    "     ]",
+
+                    "  2. [***** Chain Rule *****]",
+                    "     Π_i P_{A_i} (S_i) = Π_i Π_{V_j ∈ S_i} P_{A_i} (V_j | V_π^(j-1) \\ A_i)",
+
+                    "     Π [",
+                        *[f"       P_{s(_g.ancestors(si)-si)} ({s(si)[1:-1]})" for si in C_V_minus_X],
+                    "     ] = Π [",
+                        *[" ".join(["       Π ["]  + [
+                            f"P_{s(_g.ancestors(si)-si)} ({vj} | {s(set(_g.v_Pi[:_g.v_Pi.index(vj)]) - _g.ancestors({vj}))})" for vj in si
+                        ] + ["]"]) for si in C_V_minus_X],
+                    "     ]",
+
+                    "  3. [***** Rule 2 or Rule 3 *****]",
+                    "     Π_i Π_{V_j ∈ S_i} P_{A_i} (V_j | V_π^(j-1) \\ A_i) = Π_i Π_{V_j ∈ S_i} P(V_j | V_π^(j-1))",
+                    "     a. if A ∈ A_i ∩ V_π^(j-1), A can be removed as an intervention by Rule 2",
+                    "        All backdoor paths from A_i to V_j with a node not in V_π^(j-1) are d-separated.",
+                    "        Paths must also be bidirected arcs only.",
+                    "        let x = x, y = y, z = {A}, w = Ø",
+                    "        P_{x,z} (y | w) = P_{x} (y | z, w) if (Y ⊥⊥ Z | X, W)_X_Z_",
+                    "     b. if A ∈ A_i \\ V_π^(j-1), A can be removed as an intervention by Rule 3",
+                    "         let x = x, y = V_j, z = {A}, w = Ø",
+                    "         P_{x,z} (y | w) = P_{x} (y | w) if (Y ⊥⊥ Z | X, W)_G_X_Z(W)",
+                    "         (V_j ⊥⊥ A | V_π^(j-1)) G_{A_i}",
+
+                    "     Π [",
+                        *[" ".join(["       Π ["]  + [
+                            f"P_{s(_g.ancestors(si)-si)} ({vj} | {s(set(_g.v_Pi[:_g.v_Pi.index(vj)]) - _g.ancestors({vj}))})" for vj in si
+                        ] + ["]"]) for si in C_V_minus_X],
+                    "     ] = Π [",
+                        *[" ".join(["       Π ["]  + [
+                            f"P ({vj} | {s(set(_g.v_Pi[:_g.v_Pi.index(vj)]))})" for vj in si
+                        ] + ["]"]) for si in C_V_minus_X],
+                    "     ]",
+
+                    "  4. [***** Grouping *****]",
+                    "     Π_i Π_{V_j ∈ S_i} P(V_j | V_π^(j-1)) = Π_i P(V_i | V_π^(i-1))",
+
+                    "     Π [",
+                        *[" ".join(["       Π ["]  + [
+                            f"P ({vj} | {s(set(_g.v_Pi[:_g.v_Pi.index(vj)]))})" for vj in si
+                        ] + ["]"]) for si in C_V_minus_X],
+                    "     ] = Π [",
+
+                    "     ]",
+
+                    "  5. [***** Chain Rule *****]",
+                    "     Π_i P(V_i | V_π^(i-1)) = P(v)"
                 ]))
 
-            return PExpression(S - y, dists, proof_chain)
+            return PExpression(_g.V - (_y | _x), [_identification(s_i, _g.V - s_i, _p, _g, _prove, i+1) for s_i in C_V_minus_X], proof_chain)
 
-        # 7
         else:
-            s_prime = next(s for s in g.C if set(s) > set(S))
-            p = []
 
-            msg = "  --> P = "
+            # At this point we have a single component
+            S = C_V_minus_X[0]
 
-            for v in s_prime:
-                rhs0 = g.v_Pi[:g.v_Pi.index(v)]
-                rhs1 = rhs0.copy()
-
-                rhs0 = list(set(rhs0) & s_prime)
-                rhs1 = list(set(rhs1) - s_prime)
-                rhs = rhs0 + rhs1
-                p.append(TemplateExpression(v, rhs))
-                if prove:
-                    msg += f"[{v}{(f' | ' + ', '.join(rhs)) if len(rhs) > 0 else ''}]"
-
-            g_s_prime = g[s_prime]
-
-            if prove:
+            if _prove:
                 proof_chain.append((i, [
-                    f"7: if ∃(S') S ⊂ S' ∈ C(G)",
-                    f"--> let S = {s(S)}, S' = {s(s_prime)}",
-                    f"--> {s(S)} ⊂ {s(s_prime)} ∈ {', '.join(list(map(s, g.C)))}",
-                    "  return ID(y, x ∩ S', π_{V_i ∈ S'} P(V_i | V_π^(i-1) ∩ S', V_π^(i-1) \\ S'), S')",
-                    msg,
-                    f"  --> ID({s(y)}, {s(x)} ∩ {s(s_prime)}, P, G = ({g_s_prime.V}, {g_s_prime.e}, {g_s_prime.e_bidirected}))",
-                    "",
-                    "  [***** Proof *****]",
-                    f"  G is partitioned into X = {s(x)} and S = {s(S)}, where X ⊂ An(S).",
-                    "  M_{X \\ S'} induces G \\ (X \\ S') = S'.",
-                    "  P_{x} = P_{x ∩ S', X \\ S'} = P_{x ∩ S'}.",
+                    "if C(G \\ X) = {S}",
+                    f"--> C({s(_g.V)} \\ {s(_x)}) = {s(S)}"
                 ]))
 
-            return Identification(y, x & s_prime, PExpression([], p), g_s_prime, prove, i+1, proof_chain)
+            # Line 5
+            if set(S) == _g.V:
+                if _prove:
+                    proof_chain.append((i, [
+                        "5: if C(G) = {G}: FAIL(G, S)",
+                        f"--> G, S form hedges F, F' for Px(Y) -> {_g}, {S} for P_{_x}({_y})"
+                    ]))
 
+                raise FAIL(_g, S, proof_chain)
+
+            # Line 6 - a single c-component
+            if S in _g.C:
+
+                dists = []
+                dist_str = []
+                for vi in S:
+                    given = _g.v_Pi[:_g.v_Pi.index(vi)]
+                    if _prove:
+                        dist_str.append(f"P({vi})" if len(given) == 0 else f"P({vi} | {', '.join(given)})")
+                    dists.append(TemplateExpression(vi, given))
+
+                if _prove:
+                    proof_chain.append((i, [
+                        f"6: S ∈ C(G)",
+                        f"--> {s(S)} ∈ {', '.join(list(map(s, _g.C)))}",
+                        "  return Σ_{S-Y} π_{Vi ∈ S} P(Vi | V_π^(i-1))",
+                        f"  --> Σ_{s(S - _y)} π [{', '.join(dist_str)}]",
+                        "",
+                        "  [***** Proof *****]",
+                        f"  G has been partitioned into S = {s(S)} and X = {s(_x)} in G = {s(_g.V)}.",
+                        "  There are no bidirected arcs between S and X."
+                    ]))
+
+                return PExpression(S - _y, dists, proof_chain)
+
+            # 7
+            else:
+                s_prime = next(s for s in _g.C if set(s) > set(S))
+                p = []
+
+                msg = "  --> P = "
+
+                for v in s_prime:
+                    rhs0 = _g.v_Pi[:_g.v_Pi.index(v)]
+                    rhs1 = rhs0.copy()
+
+                    rhs0 = list(set(rhs0) & s_prime)
+                    rhs1 = list(set(rhs1) - s_prime)
+                    rhs = rhs0 + rhs1
+                    p.append(TemplateExpression(v, rhs))
+                    if _prove:
+                        msg += f"[{v}{(f' | ' + ', '.join(rhs)) if len(rhs) > 0 else ''}]"
+
+                g_s_prime = _g[s_prime]
+
+                if _prove:
+                    proof_chain.append((i, [
+                        f"7: if ∃(S') S ⊂ S' ∈ C(G)",
+                        f"--> let S = {s(S)}, S' = {s(s_prime)}",
+                        f"--> {s(S)} ⊂ {s(s_prime)} ∈ {', '.join(list(map(s, _g.C)))}",
+                        "  return ID(y, x ∩ S', π_{V_i ∈ S'} P(V_i | V_π^(i-1) ∩ S', V_π^(i-1) \\ S'), S')",
+                        msg,
+                        f"  --> ID({s(_y)}, {s(_x)} ∩ {s(s_prime)}, P, G = ({g_s_prime.V}, {g_s_prime.e}, {g_s_prime.e_bidirected}))",
+                        "",
+                        "  [***** Proof *****]",
+                        f"  G is partitioned into X = {s(_x)} and S = {s(S)}, where X ⊂ An(S).",
+                        "  M_{X \\ S'} induces G \\ (X \\ S') = S'.",
+                        "  P_{x} = P_{x ∩ S', X \\ S'} = P_{x ∩ S'}.",
+                    ]))
+
+                return _identification(_y, _x & s_prime, PExpression([], p), g_s_prime, _prove, i+1, proof_chain)
+
+    return _identification(y, x, p, g, prove)
 
 def simplify_expression(original: PExpression, g: Graph, debug=False) -> PExpression:
 
