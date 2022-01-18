@@ -18,19 +18,19 @@ require substantial deconfounding.
 """
 
 def test_NoDeconfounding_Pearl34():
-    assert within_precision(api.probability(Expression(Outcome("Xj", "xj")), pearl34), api.identification({Outcome("Xj", "xj")}, [], pearl34))
+    assert within_precision(api.probability(Expression(Outcome("Xj", "xj")), pearl34), api.identification({Outcome("Xj", "xj")}, [], pearl34, False))
 
 
 def test_NoDeconfounding_Melanoma():
-    assert within_precision(api.probability(Expression(Outcome("Y", "y")), melanoma), api.identification({Outcome("Y", "y")}, [], melanoma))
+    assert within_precision(api.probability(Expression(Outcome("Y", "y")), melanoma), api.identification({Outcome("Y", "y")}, [], melanoma, False))
 
 
 def test_p34():
-    assert within_precision(api.identification({Outcome("Xj", "xj")}, {Intervention("Xi", "xi")}, pearl34), api.treat(Expression(Outcome("Xj", "xj")), [Intervention("Xi", "xi")], pearl34))
+    assert within_precision(api.identification({Outcome("Xj", "xj")}, {Intervention("Xi", "xi")}, pearl34, False), api.treat(Expression(Outcome("Xj", "xj")), [Intervention("Xi", "xi")], pearl34))
 
 
 def test_melanoma():
-    assert within_precision(api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma), api.treat(Expression(Outcome("Y", "y")), [Intervention("X", "x")], melanoma))
+    assert within_precision(api.identification({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma, False), api.treat(Expression(Outcome("Y", "y")), [Intervention("X", "x")], melanoma))
 
 def test_proof():
     print(api.proof({Outcome("Y", "y")}, {Intervention("X", "x")}, melanoma))

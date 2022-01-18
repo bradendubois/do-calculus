@@ -2,6 +2,8 @@ from .core.API import API as Core
 from .deconfounding.API import API as Deconfounding
 from .identification.API import API as Identification
 
+from .core.Expression import Expression
+
 class API(Core, Deconfounding, Identification):
 
     def __init__(self):

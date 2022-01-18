@@ -36,21 +36,22 @@ class Model:
         return self._v.values()
 
 
-def from_json(path: str) -> Model:
-    with Path(path).open() as f:
-        data = json_load(f)
-    return parse_model(data)
-
-
-def from_yaml(path: str) -> Model:
-    with Path(path).open() as f:
-        data = yaml_load(f)
-    return parse_model(data)
-
-
 def from_dict(data: dict) -> Model:
     return parse_model(data)
 
+
+def from_path(p: Path) -> Model:
+    if not p.exists() or not p.is_file():
+        raise FileNotFoundError
+
+    if p.suffix == ".json":
+        return parse_model(json_load(p.read_text()))
+
+    elif p.suffix in [".yml", ".yaml"]:
+        return parse_model(yaml_load(p.read_text()))
+
+    else:
+        raise Exception(f"Unknown extension for {p}")
 
 def parse_model(data: dict) -> Model:
 
