@@ -179,10 +179,10 @@ def latent_transform(g: Graph, u: Set[str]):
         reduction = False
 
         remove = set()
-        for u in Un:
+        for un in Un:
 
-            parents = [edge[0] for edge in E if edge[1] == u]       # Edges : parent -> u
-            children = [edge[1] for edge in E if edge[0] == u]      # Edges : u -> child
+            parents = [edge[0] for edge in E if edge[1] == un]       # Edges : parent -> u
+            children = [edge[1] for edge in E if edge[0] == un]      # Edges : u -> child
 
             # All parents are unobservable, all children are observable, at least one parent
             if all(x in u for x in parents) and len(parents) > 0 and all(x not in u for x in children):
@@ -190,18 +190,18 @@ def latent_transform(g: Graph, u: Set[str]):
 
                 # Remove edges from parents to u
                 for parent in parents:
-                    E.remove((parent, u))
+                    E.remove((parent, un))
 
                 # Remove edges from u to children
                 for child in children:
-                    E.remove((u, child))
+                    E.remove((un, child))
 
                 # Replace with edge from edge parent to each child
                 for cr in product(parents, children):
                     E.add((cr[0], cr[1]))
 
                 # U can be removed entirely from graph
-                remove.add(u)
+                remove.add(un)
 
         V -= remove
         Un -= remove
@@ -229,4 +229,5 @@ def latent_transform(g: Graph, u: Set[str]):
             a, b = child_edges[i], child_edges[(i + 1) % len(child_edges)]
             E_Bidirected.add((a[1], b[1]))
 
+    print(V, u)
     return LatentGraph(V, E, E_Bidirected, [x for x in g.topology_sort() if x in V - u])

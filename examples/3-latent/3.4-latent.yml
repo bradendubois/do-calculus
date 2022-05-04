@@ -1,0 +1,90 @@
+name: 'Pearl: Figure 3.4'
+endogenous:
+  X1:
+    outcomes:
+    - x1
+    - ~x1
+    parents: []
+    table: [
+      [x1, 0.4],
+      [~x1, 0.6]
+    ]
+  X2:
+    outcomes:
+    - x2
+    - ~x2
+    parents: []
+    table: [
+      [x2, 0.15],
+      [~x2, 0.85]
+    ]
+  X3:
+    outcomes:
+    - x3
+    - ~x3
+    table: [
+      [x3, 0.1],
+      [~x3, 0.9],
+    ]
+  X4:
+    outcomes:
+    - x4
+    - ~x4
+    parents:
+    - Xi
+    table: [
+      [x4, xi, 0.9],
+      [x4, ~xi, 0.25],
+      [~x4, xi, 0.1],
+      [~x4, ~xi, 0.75]
+   ]
+  Xi:
+    outcomes:
+    - xi
+    - ~xi
+    parents:
+    - X1
+    - X2
+    table: [
+      [xi, x1, x2, 0.5],
+      [xi, x1, ~x2, 0.65],
+      [xi, ~x1, x2, 0.1],
+      [xi, ~x1, ~x2, 0.25],
+      [~xi, x1, x2, 0.5],
+      [~xi, x1, ~x2, 0.35],
+      [~xi, ~x1, x2, 0.9],
+      [~xi, ~x1, ~x2, 0.75]
+    ]
+  Xj:
+    outcomes:
+    - xj
+    - ~xj
+    parents:
+    - X2
+    - X3
+    - X4
+    table: [
+      [xj, x2, x3, x4, 0.0],
+      [xj, x2, x3, ~x4, 0.25],
+      [xj, x2, ~x3, x4, 0.7],
+      [xj, x2, ~x3, ~x4, 0.45],
+      [xj, ~x2, x3, x4, 0.15],
+      [xj, ~x2, x3, ~x4, 0.8],
+      [xj, ~x2, ~x3, x4, 0.95],
+      [xj, ~x2, ~x3, ~x4, 0.05],
+      [~xj, x2, x3, x4, 1.0],
+      [~xj, x2, x3, ~x4, 0.75],
+      [~xj, x2, ~x3, x4, 0.3],
+      [~xj, x2, ~x3, ~x4, 0.55],
+      [~xj, ~x2, x3, x4, 0.85],
+      [~xj, ~x2, x3, ~x4, 0.2],
+      [~xj, ~x2, ~x3, x4, 0.05],
+      [~xj, ~x2, ~x3, ~x4, 0.95]
+    ]
+exogenous:
+  U1:
+  - X1
+  - X2
+  U2:
+  - X2
+  - X3

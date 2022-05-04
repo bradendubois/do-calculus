@@ -5,7 +5,7 @@ from ..core.Model import Model
 from ..core.Variables import Intervention, Outcome
 
 from .LatentGraph import latent_transform
-from .Identification import Identification
+from .Identification import Identification, simplify_expression
 from .PExpression import PExpression, TemplateExpression
 
 
@@ -62,7 +62,6 @@ class API:
                 return t
 
         result = _process(expression, {v.name: v.outcome for v in y} | {v.name: v.outcome for v in x})
-
         return (result, expression.proof()) if include_proof else result
 
     def proof(self, y: Set[Outcome], x: Set[Intervention], model: Model) -> str:
