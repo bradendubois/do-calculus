@@ -28,3 +28,12 @@
 * **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
 
 See the [wiki](https://github.com/bradendubois/do-calculus/wiki) to get started.
+
+
+## Development Status
+
+A full overhaul has been completed, and marks important milestones in my life and (consequently) this project's. Development on this project is halted until further notice, barring further changes to my own life, or necessary bug fixes and/or security fixes.
+
+## Acknowledgements
+
+This project represents approximately two years of part- and full-time work as part of an indescribably fulfilling undergraduate research project. This project was done under the supervision of Dr. Eric Neufeld from approximately Spring 2020 - Winter 2022. Without Dr. Neufeld's support, guidance, patience, expertise (and of course, funding), this project would never have been started, let alone completed. I cannot overstate my appreciation - you've changed my academic and professional path, and provided me with so many wonderful experiences and memories that I will never forget. Thanks, Eric.

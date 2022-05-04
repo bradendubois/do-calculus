@@ -1,5 +1,3 @@
-# Installation
-
 How to install and set up the software.
 
 ## Table of Contents
