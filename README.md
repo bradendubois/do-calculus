@@ -25,7 +25,7 @@
 * **PyPI**: [pypi.org/project/do-calculus/](https://pypi.org/project/do-calculus/)
 * **Releases**: [github.com/bradendubois/do-calculus/releases](https://github.com/bradendubois/do-calculus/releases)
 * **Bug reports**: [github.com/bradendubois/do-calculus/issues](https://github.com/bradendubois/do-calculus/issues)
-* **Contact**: [braden.dubois@usask.ca](mailto:braden.dubois@usask.ca)
+* **Contact**: [braden.dubois@outlook.com](mailto:braden.dubois@outlook.com)
 
 See the [wiki](https://github.com/bradendubois/do-calculus/wiki) to get started.
 
